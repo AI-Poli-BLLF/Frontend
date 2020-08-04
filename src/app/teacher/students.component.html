@@ -1,0 +1,39 @@
+<form class="search-form">
+  <mat-form-field class="search-form-field">
+    <mat-label>Add student</mat-label>
+    <input matInput type="search" placeholder="Name of the Student" [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="studentSelected($event)">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="addStudent()" type="submit"><mat-icon>person_add</mat-icon> Add</button>
+</form>
+<button mat-raised-button color="warn" (click)="deleteStudents()"><mat-icon>delete</mat-icon> Delete Students</button>
+<table mat-table matSort [dataSource]="dataSource">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef><mat-checkbox [checked]=isChecked() [indeterminate]=isIntermediate() (change)="selectHeaderChange($event)" ></mat-checkbox></th>
+      <td mat-cell *matCellDef="let element"><mat-checkbox  (change)="selectChange($event, element)" [checked]="element.selected"></mat-checkbox></td>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> firstName </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="group">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> group </th>
+      <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

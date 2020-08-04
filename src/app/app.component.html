@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <mat-icon (click)="toggleForMenuClick()">menu</mat-icon><a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
+  <span class="fill_space"></span>
+  <span ><app-login-dialog></app-login-dialog></span>
+</mat-toolbar>
+<mat-toolbar>
+  <span>Applicazioni Internet</span>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav opened mode="side" position="start">
+    <div class="container">
+      <mat-nav-list>
+        <mat-list-item>Applicazioni internet</mat-list-item>
+        <mat-list-item>Programmazione di sistema</mat-list-item>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive"
+         [routerLink]="link.url"
+      *ngFor="let link of links">{{link.name}}</a>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

@@ -1,0 +1,12 @@
+
+mat-sidenav-container{ height: 100%; }
+
+#home_link{
+  padding-left: 1em;
+  color: white;
+  text-decoration: none;
+}
+
+.fill_space{
+  flex: 1 1 auto;
+}

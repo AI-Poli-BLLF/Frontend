@@ -1,0 +1,18 @@
+<div class="login_form">
+<h1>Login</h1>
+<form #loginForm>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput type="text" [formControl]="usernameValidator" required/>
+    <mat-error *ngIf="usernameValidator.invalid">{{getUsernameErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" [formControl]="passwordValidator" required/>
+    <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <label>{{labelValue}}</label>
+  <button mat-button (click)="login()">Login</button>
+  <button class="right" mat-button routerLink="/home" mat-dialog-close="true">Cancel</button>
+</form>
+</div>

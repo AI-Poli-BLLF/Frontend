@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+
+form {
+  min-width: 150px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.search-form-field{
+  margin-left: 1em;
+  width: 80%;
+  max-width: 400px;
+}
+
+button {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
