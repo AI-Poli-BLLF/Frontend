@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Student} from '../student.model';
+import {Student} from '../models/student.model';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';

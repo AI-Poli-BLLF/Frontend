@@ -4,7 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoginDialogComponent} from './auth/login-dialog.component';
 import {NavModel} from './nav.model';
 import {Subscription} from 'rxjs';
-import {AuthService} from './auth/auth.service';
+import {AuthService} from './services/auth.service';
+import {Course} from './models/course.model';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,13 @@ export class AppComponent implements OnDestroy{
     new NavModel('teacher/course/applicazioni-internet/students', 'Students'),
     new NavModel('teacher/course/applicazioni-internet/vms', 'VMs')
   ];
+  courses: Array<Course> = [
+    new Course('Aaaa', true, 10, 100),
+    new Course('Bbbb', false, 10, 100),
+    new Course('Cccc', true, 10, 100),
+    new Course('Dddd', true, 10, 100),
+  ];
+
 
   constructor(route: ActivatedRoute, private authService: AuthService) {
     this.doLogin = route.queryParams.subscribe(

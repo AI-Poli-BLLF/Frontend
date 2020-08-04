@@ -1,18 +1,18 @@
 export class Student {
-  id: number;
+  id: string;
   name: string;
   firstName: string;
-  group: string;
-  courseId: number;
+  photoName: string;
   selected: boolean;
+  email: string;
 
-  constructor(id: number, name: string, firstName: string, group: string, courseId: number) {
+  constructor(id: string, name: string, firstName: string, photoName: string, email: string) {
     this.selected = false;
     this.id = id;
     this.name = name;
     this.firstName = firstName;
-    this.group = group;
-    this.courseId = courseId;
+    this.photoName = photoName;
+    this.email = email;
   }
 
   toString(){

@@ -9,10 +9,11 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav opened mode="side" position="start">
     <div class="container">
-      <mat-nav-list>
-        <mat-list-item>Applicazioni internet</mat-list-item>
-        <mat-list-item>Programmazione di sistema</mat-list-item>
-      </mat-nav-list>
+      <mat-selection-list #coursesList [multiple]="false">
+        <mat-list-option *ngFor="let course of courses" [value]="course" [disabled]="!course.enabled">
+          {{course.name}}
+        </mat-list-option>
+      </mat-selection-list>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
