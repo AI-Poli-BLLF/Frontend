@@ -4,26 +4,22 @@
   <span ><app-login-dialog></app-login-dialog></span>
 </mat-toolbar>
 <mat-toolbar>
-  <span>Applicazioni Internet</span>
+  <span>{{selectedItem}}</span>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav opened mode="side" position="start">
     <div class="container">
-      <mat-selection-list #coursesList [multiple]="false">
-        <mat-list-option *ngFor="let course of courses" [value]="course" [disabled]="!course.enabled">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let course of courses"
+                          (click)="handleClick(course)"
+                         [disabled]="!course.enabled"
+                         [routerLink]="['/teacher/course', course.name]">
           {{course.name}}
-        </mat-list-option>
-      </mat-selection-list>
+        </mat-list-item>
+      </mat-nav-list>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <nav mat-tab-nav-bar>
-      <a mat-tab-link
-         routerLinkActive #rla="routerLinkActive"
-         [active]="rla.isActive"
-         [routerLink]="link.url"
-      *ngFor="let link of links">{{link.name}}</a>
-    </nav>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

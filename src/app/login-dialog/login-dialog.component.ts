@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
+import {RegistrationDialogComponent} from '../registration-dialog/registration-dialog.component';
 
 @Component({
   selector: 'app-login-dialog',
-  template: '<button mat-button [queryParams]=getQueryParams() routerLink="/home"><mat-icon>login</mat-icon><span>{{loginButtonState}}</span></button>',
+  templateUrl: 'login-dialog.component.html',
   styleUrls: ['login-dialog.component.css']
 })
 export class LoginDialogComponent implements OnInit {
@@ -19,14 +20,21 @@ export class LoginDialogComponent implements OnInit {
     this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
   }
 
+  regIsVisible(){
+    return !this.authService.isLogged();
+  }
+
   getQueryParams(){
     return this.authService.isLogged() ? { doLogin: 'false' } : { doLogin: 'true' };
+  }
+
+  getQueryParamsReg(){
+    return { doReg: 'true' };
   }
 
   openDialog() {
     if (!this.authService.isLogged()){
       const dialogRef = this.dialog.open(LoginDialogContentComponent);
-
       dialogRef.afterClosed().subscribe(() => {
         this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
         this.router.navigate(['/home']);
@@ -37,11 +45,21 @@ export class LoginDialogComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
+
+  openDialogReg() {
+    if (!this.authService.isLogged()){
+      const dialogRef = this.dialog.open(RegistrationDialogComponent);
+      dialogRef.afterClosed().subscribe(() => {
+        this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
+        this.router.navigate(['/home']);
+      });
+    }
+  }
 }
 
 @Component({
   selector: 'app-dialog-content',
-  templateUrl: 'login-dialog.component.html',
+  templateUrl: 'login-dialog-content.component.html',
   styleUrls: ['login-dialog.component.css']
 })
 export class LoginDialogContentComponent {

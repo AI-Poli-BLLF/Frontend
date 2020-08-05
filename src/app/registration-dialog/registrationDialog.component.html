@@ -1,0 +1,39 @@
+<div class="login_form">
+  <h1>Registrazione</h1>
+  <form #registrationForm>
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" [formControl]="nameValidator" required/>
+      <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cognome</mat-label>
+      <input matInput type="text" [formControl]="surnameValidator" required/>
+      <mat-error *ngIf="surnameValidator.invalid">{{getSurnameErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Matricola</mat-label>
+      <input matInput type="text" [formControl]="idValidator" required/>
+      <mat-error *ngIf="idValidator.invalid">{{getIdErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="text" [formControl]="emailValidator" required/>
+      <mat-error *ngIf="emailValidator.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formControl]="passwordValidator" required/>
+      <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+    </mat-form-field>
+<!--    todo: conferma password form-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>Verifica Password</mat-label>-->
+<!--      <input matInput type="password" [formControl]="passwordValidator" required/>-->
+<!--      <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>-->
+<!--    </mat-form-field>-->
+    <label>{{labelValue}}</label>
+    <button mat-button (click)="login()">Registrati</button>
+    <button class="right" mat-button routerLink="/home" mat-dialog-close="true">Annulla</button>
+  </form>
+</div>

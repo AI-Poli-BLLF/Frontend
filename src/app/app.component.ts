@@ -1,8 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
-import {ActivatedRoute, Router} from '@angular/router';
-import {LoginDialogComponent} from './auth/login-dialog.component';
-import {NavModel} from './nav.model';
+import {ActivatedRoute} from '@angular/router';
+import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {Subscription} from 'rxjs';
 import {AuthService} from './services/auth.service';
 import {Course} from './models/course.model';
@@ -21,10 +20,7 @@ export class AppComponent implements OnDestroy{
 
   @ViewChild(LoginDialogComponent)
   loginDialog: LoginDialogComponent;
-  links: Array<NavModel> = [
-    new NavModel('teacher/course/applicazioni-internet/students', 'Students'),
-    new NavModel('teacher/course/applicazioni-internet/vms', 'VMs')
-  ];
+
   courses: Array<Course> = [
     new Course('Aaaa', true, 10, 100),
     new Course('Bbbb', false, 10, 100),
@@ -32,12 +28,21 @@ export class AppComponent implements OnDestroy{
     new Course('Dddd', true, 10, 100),
   ];
 
+  selectedItem = 'Seleziona un corso';
 
   constructor(route: ActivatedRoute, private authService: AuthService) {
+    // route.paramMap.subscribe(params => console.log(params.get()));
     this.doLogin = route.queryParams.subscribe(
-      q =>
+      q => {
         (q.doLogin === 'true' && !authService.isLogged()) || (q.doLogin === 'false' && authService.isLogged()) ?
-          this.loginDialog.openDialog() : q);
+          this.loginDialog.openDialog() : q;
+        (q.doReg === 'true' && !authService.isLogged()) || (q.doReg === 'false' && authService.isLogged()) ?
+          this.loginDialog.openDialogReg() : q;
+      });
+  }
+
+  handleClick(selectedItem: Course) {
+    this.selectedItem = selectedItem.name;
   }
 
   toggleForMenuClick() {

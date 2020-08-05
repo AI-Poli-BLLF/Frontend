@@ -25,8 +25,10 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import {VmsComponent} from './vms.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
-import {LoginDialogComponent, LoginDialogContentComponent} from './auth/login-dialog.component';
+import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/login-dialog.component';
 import {JwtInterceptor} from './auth/JwtInterceptor';
+import { TabComponentComponent } from './tab-component/tab-component.component';
+import { RegistrationDialogComponent } from './registration-dialog/registration-dialog.component';
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import {JwtInterceptor} from './auth/JwtInterceptor';
     PageNotFoundComponent,
     VmsComponent,
     LoginDialogComponent,
-    LoginDialogContentComponent
+    LoginDialogContentComponent,
+    TabComponentComponent,
+    RegistrationDialogComponent
   ],
   imports: [
     BrowserModule,
