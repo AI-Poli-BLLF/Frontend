@@ -18,7 +18,7 @@ export class RegistrationDialogComponent implements OnInit {
 
   labelValue: string;
 
-  constructor(private service: AuthService, private dialogRef: MatDialogRef<LoginDialogComponent>) {
+  constructor(private service: AuthService) {
   }
 
   getNameErrorMessage() {

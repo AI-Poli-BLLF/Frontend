@@ -4,7 +4,20 @@
   <span ><app-login-dialog></app-login-dialog></span>
 </mat-toolbar>
 <mat-toolbar>
-  <span>{{selectedItem}}</span>
+  <div *ngIf="!editCourseName">
+    <span>{{selectedItem}}</span>
+  </div>
+  <div *ngIf="editCourseName">
+    <input matInput type="text" [(ngModel)]="selectedItem"/>
+    <button (click)="stopEditCourseName()" mat-button>Salva</button>
+  </div>
+
+  <span class="fill_space"></span>
+  <div *ngIf="editCourseOptions">
+    <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
+    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="startToEditCourseName()">edit</mat-icon></button>
+    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="toggleForMenuClick()">delete</mat-icon></button>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav opened mode="side" position="start">

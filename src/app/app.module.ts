@@ -29,6 +29,7 @@ import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/
 import {JwtInterceptor} from './auth/JwtInterceptor';
 import { TabComponentComponent } from './tab-component/tab-component.component';
 import { RegistrationDialogComponent } from './registration-dialog/registration-dialog.component';
+import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { RegistrationDialogComponent } from './registration-dialog/registration-
     LoginDialogComponent,
     LoginDialogContentComponent,
     TabComponentComponent,
-    RegistrationDialogComponent
+    RegistrationDialogComponent,
+    AddCourseDialogComponent
   ],
   imports: [
     BrowserModule,
