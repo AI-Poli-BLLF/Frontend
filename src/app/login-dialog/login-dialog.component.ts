@@ -89,10 +89,10 @@ export class LoginDialogContentComponent {
     this.service.login(this.usernameValidator.value, this.passwordValidator.value)
       .subscribe(
         data => {
-          this.service.setJwt(data.accessToken);
+          this.service.setJwt(data.token);
           this.dialogRef.close();
         },
-        error => error.status === 400 ?
+        error => error.status === 401 ?
           this.labelValue = 'Username or password not valid' : this.labelValue = 'An error has occurred'
       );
   }
