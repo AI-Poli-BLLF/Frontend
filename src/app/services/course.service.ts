@@ -8,9 +8,9 @@ import {Course} from '../models/course.model';
 @Injectable({
   providedIn: 'root'
 })
-export class StudentService {
+export class CourseService {
 
-  private url = 'https://localhost:8080/API/courses';
+  private url = 'https://localhost:4200/API/courses';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class StudentService {
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
         catchError( err => {
           console.error(err);
-          return throwError('CourseService add error: ${err.message}');
+          return throwError(err);
         })
       );
   }

@@ -1,7 +1,6 @@
 {
   "/API": {
   "target": "http://localhost:8080",
-  "pathRewrite": { "/API" : "" },
   "secure": false
 },
   "/authenticate":{

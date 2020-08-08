@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/login-dialog.component';
@@ -7,13 +7,14 @@ import {AuthService} from './services/auth.service';
 import {Course} from './models/course.model';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCourseDialogComponent} from './add-course-dialog/add-course-dialog.component';
+import {CourseService} from "./services/course.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnDestroy, OnInit{
   title = 'ai20-lab04';
   doLogin: Subscription;
   homeS: Subscription;
@@ -24,18 +25,18 @@ export class AppComponent implements OnDestroy{
   @ViewChild(LoginDialogComponent)
   loginDialog: LoginDialogComponent;
 
-  courses: Array<Course> = [
-    new Course('Aaaa', true, 10, 100),
-    new Course('Bbbb', false, 10, 100),
-    new Course('Cccc', true, 10, 100),
-    new Course('Dddd', true, 10, 100),
-  ];
+  courses: Array<Course> = [];
 
   selectedItem = 'Seleziona un corso';
   editCourseOptions = true;
   editCourseName = false;
 
-  constructor(route: ActivatedRoute, private authService: AuthService, private router: Router, private dialog: MatDialog) {
+  constructor(
+    route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog,
+    private courseService: CourseService) {
     // route.paramMap.subscribe(params => console.log(params.get()));
 
     this.homeS = router.events.subscribe(
@@ -50,8 +51,16 @@ export class AppComponent implements OnDestroy{
       });
   }
 
+  ngOnInit(): void {
+    this.loadCourses();
+  }
+
   openAddCourseDialog(){
+    // todo: unsubrscribe?
     const dialogRef = this.dialog.open(AddCourseDialogComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCourses();
+    });
   }
 
   startToEditCourseName(){
@@ -77,4 +86,14 @@ export class AppComponent implements OnDestroy{
     this.homeS.unsubscribe();
   }
 
+  loadCourses(){
+    // todo: sarebbe più saggio visualizzare solo i corsi di quel prof
+      this.courseService.getAll().subscribe(
+        data => {
+          console.log(data);
+          this.courses = data;
+        },
+        error => console.log(error)
+      );
+  }
 }
