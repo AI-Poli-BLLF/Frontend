@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
-  private url = 'http://localhost:8080/authenticate';
+  private url = 'https://localhost:4200/authenticate';
 
   constructor(private httpClient: HttpClient) { }
 
