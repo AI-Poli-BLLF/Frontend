@@ -1,0 +1,9 @@
+mat-sidenav-container{ height: 100%; }
+
+#hamburger {
+  padding-right: 1em;
+}
+
+.fill_space{
+  flex: 1 1 auto;
+}
