@@ -43,7 +43,6 @@ export class AddCourseDialogComponent implements OnInit {
   }
 
   // todo: il max deve essere maggiore del min
-
   add(){
     // todo: opzione per modificare l'enabled
     const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);

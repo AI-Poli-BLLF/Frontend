@@ -4,8 +4,9 @@ import {AddCourseDialogComponent} from '../add-course-dialog/add-course-dialog.c
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {CourseService} from '../services/course.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSidenav} from '@angular/material/sidenav';
+import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-teacher-view',
@@ -49,6 +50,14 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  deleteCourseDialog(){
+    // todo: unsubrscribe?
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCourses();
+    });
+  }
+
   startToEditCourseName(){
     this.editCourseOptions = false;
     this.editCourseName = true;
@@ -73,6 +82,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
       data => {
         console.log(data);
         this.courses = data;
+        this.selectedItem = this.courses.findIndex(c => c.name === this.selectedItem) === -1 ? 'Seleziona un corso' : this.selectedItem;
       },
       error => console.log(error)
     );

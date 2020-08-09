@@ -12,7 +12,7 @@
   <div *ngIf="editCourseOptions">
     <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
     <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="startToEditCourseName()">edit</mat-icon></button>
-    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="toggleForMenuClick()">delete</mat-icon></button>
+    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="deleteCourseDialog()">delete</mat-icon></button>
   </div>
 </mat-toolbar>
 

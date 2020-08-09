@@ -1,0 +1,7 @@
+<div class="login_form">
+  <h1>Cancellazione corso</h1>
+  <p>Sei sicuro di volere cancellare il corso "{{courseName}}"?</p>
+  <label *ngIf="labelValue!=''">{{labelValue}}</label>
+  <button mat-button (click)="deleteCourse()">Conferma</button>
+  <button class="right" mat-button mat-dialog-close="true">Annulla</button>
+</div>

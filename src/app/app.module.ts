@@ -32,6 +32,7 @@ import { RegistrationDialogComponent } from './registration-dialog/registration-
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 import { TeacherViewComponent } from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from "./welcome.component";
+import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {WelcomeComponent} from "./welcome.component";
     RegistrationDialogComponent,
     AddCourseDialogComponent,
     TeacherViewComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    DeleteConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,11 @@ export class CourseService {
       );
   }
 
+  deleteOne(name: string): Observable<any>{
+    // todo: gestire eccezioni
+    return this.httpClient.delete(this.url + '/' + name);
+  }
+
   // get a course
   getOne(name: string): Observable<Course>{
     console.log('FIND');

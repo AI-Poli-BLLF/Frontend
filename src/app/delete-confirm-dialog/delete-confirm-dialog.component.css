@@ -1,0 +1,14 @@
+.right{
+  float: right;
+}
+h1 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  color: red;
+  text-align: center;
+  padding: 1.5em;
+}
+
