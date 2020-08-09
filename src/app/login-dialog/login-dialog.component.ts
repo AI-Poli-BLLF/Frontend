@@ -37,7 +37,7 @@ export class LoginDialogComponent implements OnInit {
       const dialogRef = this.dialog.open(LoginDialogContentComponent);
       dialogRef.afterClosed().subscribe(() => {
         this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       });
     } else {
       this.authService.removeJwt();

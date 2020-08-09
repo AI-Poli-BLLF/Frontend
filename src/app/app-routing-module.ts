@@ -6,17 +6,25 @@ import {PageNotFoundComponent} from './page-not-found.component';
 import {VmsComponent} from './vms.component';
 import {AuthGuard} from './auth/auth.guard';
 import {TabComponentComponent} from './tab-component/tab-component.component';
+import {TeacherViewComponent} from './teacher-view/teacher-view.component';
+import {WelcomeComponent} from './welcome.component';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent },
-  {path: '', component: HomeComponent },
-  {path: 'teacher/course/:name',
+  // {path: 'home', component: HomeComponent },
+  {path: '', component: WelcomeComponent },
+  {path: 'home', component: WelcomeComponent },
+  {path: 'teacher',
     canActivate: [AuthGuard],
-    component: TabComponentComponent,
+    component: TeacherViewComponent,
     children: [
-      {path: '', component: HomeComponent, canActivateChild: [AuthGuard] },
-      {path: 'students', component: StudentsContComponent, canActivateChild: [AuthGuard] },
-      {path: 'vms', component: VmsComponent, canActivateChild: [AuthGuard] },
+      {path: '', component: HomeComponent },
+      {path: 'course/:name',
+        component: TabComponentComponent,
+        children: [
+          {path: '', component: HomeComponent },
+          {path: 'students', component: StudentsContComponent},
+          {path: 'vms', component: VmsComponent }
+        ]},
     ]},
   {path: '**', component: PageNotFoundComponent },
 ];

@@ -1,39 +1,7 @@
 <mat-toolbar color="primary">
-  <mat-icon (click)="toggleForMenuClick()">menu</mat-icon><a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
+  <a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
   <span class="fill_space"></span>
   <span ><app-login-dialog></app-login-dialog></span>
 </mat-toolbar>
-<mat-toolbar>
-  <div *ngIf="!editCourseName">
-    <span>{{selectedItem}}</span>
-  </div>
-  <div *ngIf="editCourseName">
-    <input matInput type="text" [(ngModel)]="selectedItem"/>
-    <button (click)="stopEditCourseName()" mat-button>Salva</button>
-  </div>
-
-  <span class="fill_space"></span>
-  <div *ngIf="editCourseOptions">
-    <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
-    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="startToEditCourseName()">edit</mat-icon></button>
-    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="toggleForMenuClick()">delete</mat-icon></button>
-  </div>
-</mat-toolbar>
-<mat-sidenav-container>
-  <mat-sidenav #sidenav opened mode="side" position="start">
-    <div class="container">
-      <mat-nav-list>
-        <mat-list-item *ngFor="let course of courses"
-                          (click)="handleClick(course)"
-                         [disabled]="!course.enabled"
-                         [routerLink]="['/teacher/course', course.name]">
-          {{course.name}}
-        </mat-list-item>
-      </mat-nav-list>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<router-outlet></router-outlet>
 

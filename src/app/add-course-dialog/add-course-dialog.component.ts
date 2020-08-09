@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Course} from "../models/course.model";
-import {CourseService} from "../services/course.service";
-import {MatDialogRef} from "@angular/material/dialog";
-import {LoginDialogComponent} from "../login-dialog/login-dialog.component";
+import {Course} from '../models/course.model';
+import {CourseService} from '../services/course.service';
+import {MatDialogRef} from '@angular/material/dialog';
+import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-add-course-dialog',

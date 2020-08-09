@@ -3,14 +3,11 @@ import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  template: '<h2>Home component works!!</h2><p>Selected course: {{name}}</p>',
+  template: '<h2>Home component works!!</h2><p>Qui si potrebbe spiegare all\'utente cosa può fare.</p>',
   styleUrls: []
 })
 export class HomeComponent implements OnInit {
-  name  = '';
-
-  constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(params => this.name = params.name);
+  constructor() {
   }
 
   ngOnInit(): void {
