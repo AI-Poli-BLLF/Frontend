@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <mat-icon  id="hamburger" (click)="toggleForMenuClick()">menu</mat-icon>
+  <div>
+    <span>{{selectedItem}}</span>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" position="start">
+    <div class="container">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let course of courses"
+                       (click)="handleClick(course)"
+                       [disabled]="!course.enabled"
+                       [routerLink]="['/student/course', course.name]">
+          {{course.name}}
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

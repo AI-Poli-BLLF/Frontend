@@ -31,8 +31,10 @@ import { TabComponentComponent } from './tab-component/tab-component.component';
 import { RegistrationDialogComponent } from './registration-dialog/registration-dialog.component';
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 import { TeacherViewComponent } from './teacher-view/teacher-view.component';
-import {WelcomeComponent} from "./welcome.component";
+import {WelcomeComponent} from './welcome.component';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
+import { StudentViewComponent } from './student-view/student-view.component';
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-con
     AddCourseDialogComponent,
     TeacherViewComponent,
     WelcomeComponent,
-    DeleteConfirmDialogComponent
+    DeleteConfirmDialogComponent,
+    StudentViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-con
     AppRoutingModule,
     HttpClientModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [

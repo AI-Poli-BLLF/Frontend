@@ -24,6 +24,9 @@ export class WelcomeComponent implements OnInit {
       case 'ROLE_PROFESSOR':
         this.router.navigate(['/teacher']);
         break;
+      case 'ROLE_STUDENT':
+        this.router.navigate(['/student']);
+        break;
     }
   }
 }

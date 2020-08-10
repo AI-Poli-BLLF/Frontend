@@ -8,6 +8,7 @@ import {AuthGuard} from './auth/auth.guard';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
+import {StudentViewComponent} from "./student-view/student-view.component";
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -16,6 +17,19 @@ const routes: Routes = [
   {path: 'teacher',
     canActivate: [AuthGuard],
     component: TeacherViewComponent,
+    children: [
+      {path: '', component: HomeComponent },
+      {path: 'course/:name',
+        component: TabComponentComponent,
+        children: [
+          {path: '', component: HomeComponent },
+          {path: 'students', component: StudentsContComponent},
+          {path: 'vms', component: VmsComponent }
+        ]},
+    ]},
+  {path: 'student',
+    canActivate: [AuthGuard],
+    component: StudentViewComponent,
     children: [
       {path: '', component: HomeComponent },
       {path: 'course/:name',
