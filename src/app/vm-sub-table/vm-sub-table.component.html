@@ -1,0 +1,69 @@
+<div>
+  <h2>VMs create</h2>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="creator">
+      <th mat-header-cell *matHeaderCellDef>Creatore</th>
+      <td mat-cell *matCellDef="let element"> {{element.student.toString()}} </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>Stato</th>
+      <td mat-cell *matCellDef="let element"> {{element.state ? 'Attiva' : 'Spenta'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="cpu">
+      <th mat-header-cell *matHeaderCellDef>CPU</th>
+      <td mat-cell *matCellDef="let element"> {{element.cpu}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ramSize">
+      <th mat-header-cell *matHeaderCellDef>ramSize</th>
+      <td mat-cell *matCellDef="let element"> {{element.ramSize}} </td>
+    </ng-container>
+    <ng-container matColumnDef="diskSize">
+      <th mat-header-cell *matHeaderCellDef>diskSize</th>
+      <td mat-cell *matCellDef="let element"> {{element.diskSize}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+</div>
+<div>
+  <h2>Modifica risorse</h2>
+  <table>
+    <tr>
+      <th>CPU</th>
+      <th>RAM</th>
+      <th>Disk</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          min="1"
+          max="8"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="128"
+          min="128"
+          max="10240"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          min="1"
+          max="512"></mat-slider>
+
+      </td>
+      <td>
+        <button mat-flat-button color="primary">Salva</button>
+      </td>
+    </tr>
+  </table>
+</div>

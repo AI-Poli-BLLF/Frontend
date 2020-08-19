@@ -70,9 +70,9 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
   undoSnackBar(course: Course){
+    // todo: unsubrscribe?
     console.log(this.courses.findIndex(c => c.name === this.selectedItem) === -1);
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1){
-      console.log("Dovrebbe apri")
       const snackBarRef = this.snackBar.open('Corso cancellato', 'Anulla');
       snackBarRef.afterDismissed().subscribe(d => {
         console.log(d.dismissedByAction);

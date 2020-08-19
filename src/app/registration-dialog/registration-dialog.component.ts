@@ -14,7 +14,7 @@ export class RegistrationDialogComponent implements OnInit {
   surnameValidator = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]);
   idValidator = new FormControl('', [Validators.required, Validators.pattern('[sSdD][0-9]{6}')]);
   passwordValidator = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]);
-  emailValidator = new FormControl('', [Validators.required, Validators.email, Validators.pattern('.*@((polito\\.it)|(studenti\\.polito\\.it))')]);
+  emailValidator = new FormControl('', [Validators.required, Validators.email, Validators.pattern('[sSdD][0-9]{6}@((polito\\.it)|(studenti\\.polito\\.it))')]);
 
   labelValue: string;
 

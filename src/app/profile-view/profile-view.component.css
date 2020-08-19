@@ -1,0 +1,42 @@
+h1 {
+  text-align: center;
+}
+mat-form-field {
+  margin-right: 5%;
+  margin-left: 5%;
+  /*width: 10em;*/
+  width: 40%;
+}
+
+input[type="text"][disabled] {
+  color: black;
+}
+
+#img_div {
+  width: 100%;
+  text-align: center;
+  vertical-align: center;
+  margin: 2em auto;
+}
+
+#edit_img_button {
+  margin: 1em auto;
+  display: block;
+}
+
+img {
+  width: 50%;
+  border-radius: 50%;
+  border: 0.4em solid #555;
+}
+
+.right{
+  float: right;
+}
+
+label {
+  display: block;
+  color: red;
+  text-align: center;
+  padding: 1.5em;
+}

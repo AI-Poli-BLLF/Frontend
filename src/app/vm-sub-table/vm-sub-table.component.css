@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+}
+mat-slider {
+  display: block;
+}
+body {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+button {
+  margin-left: 1em;
+}

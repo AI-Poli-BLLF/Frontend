@@ -22,7 +22,7 @@ import { StudentsContComponent } from './teacher/students-cont.component';
 import {AppRoutingModule} from './app-routing-module';
 import { HomeComponent } from './home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
-import {VmsComponent} from './vms.component';
+import {VmsComponent} from './vms/vms.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/login-dialog.component';
@@ -35,6 +35,11 @@ import {WelcomeComponent} from './welcome.component';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 import { StudentViewComponent } from './student-view/student-view.component';
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import {ProfileViewButtonComponent} from "./profile-view/profile-view-button.component";
+import { VmTableComponent } from './vm-table/vm-table.component';
+import { VmSubTableComponent } from './vm-sub-table/vm-sub-table.component';
+import {MatSliderModule} from "@angular/material/slider";
 
 
 @NgModule({
@@ -54,31 +59,36 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
     WelcomeComponent,
     DeleteConfirmDialogComponent,
     StudentViewComponent,
+    ProfileViewComponent,
+    ProfileViewButtonComponent,
+    VmTableComponent,
+    VmSubTableComponent
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    MatTabsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTableModule,
-    MatCheckboxModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatSortModule,
-    MatPaginatorModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatTableModule,
+        MatCheckboxModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatSortModule,
+        MatPaginatorModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatSliderModule
+    ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {

@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {StudentsContComponent} from './teacher/students-cont.component';
 import {HomeComponent} from './home.component';
 import {PageNotFoundComponent} from './page-not-found.component';
-import {VmsComponent} from './vms.component';
+import {VmsComponent} from './vms/vms.component';
 import {AuthGuard} from './auth/auth.guard';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
