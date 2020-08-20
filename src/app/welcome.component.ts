@@ -4,7 +4,7 @@ import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-welcome',
-  template: '<h2>Welcome!!</h2>',
+  template: '<h2>Welcome!!</h2><p>Qua qualcuno meno pigro di me dovrebbe fare una home figa da vedere.</p>',
   styleUrls: []
 })
 export class WelcomeComponent implements OnInit {

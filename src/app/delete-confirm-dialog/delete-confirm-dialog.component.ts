@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Route} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CourseService} from "../services/course.service";
-import {LoginDialogComponent} from "../login-dialog/login-dialog.component";
+import {CourseService} from '../services/course.service';
+import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-delete-confirm-dialog',

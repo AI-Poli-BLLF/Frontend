@@ -1,27 +1,27 @@
 <h1>Profilo</h1>
 <div id="img_div">
-  <img src="assets/img/blank-profile-picture-973460.svg" alt="Foto profilo"/>
+  <img [src]="photoPath" alt="Foto profilo"/>
   <button id="edit_img_button" color="primary" *ngIf="isEditing" mat-raised-button>Cambia immagine</button>
 </div>
 <p>
   <mat-form-field>
     <mat-label>Nome</mat-label>
-    <input matInput type="text" value="Stefano" [disabled]="!isEditing">
+    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.name">
   </mat-form-field>
   <mat-form-field appearance="legacy">
     <mat-label>Cognome</mat-label>
-    <input matInput type="text" value="Stefano" [disabled]="!isEditing">
+    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.firstName">
   </mat-form-field>
 </p>
 <p>
   <mat-form-field>
     <mat-label>Matricola</mat-label>
-    <input matInput type="text" value="s123456" [disabled]="!isEditing">
+    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.id">
   </mat-form-field>
   <mat-form-field appearance="legacy">
     <mat-label>Email</mat-label>
-    <input matInput type="text" value="s123456@studenti.polito.it" [disabled]="!isEditing">
+    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.email">
   </mat-form-field>
 </p>
-<button mat-button (click)="edit()">{{editButton}}</button>
+<!--<button mat-button (click)="edit()">{{editButton}}</button>-->
 <button class="right" mat-button mat-dialog-close="true">Chiudi</button>

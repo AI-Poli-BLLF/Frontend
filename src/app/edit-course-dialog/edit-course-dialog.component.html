@@ -1,24 +1,24 @@
 <div>
-  <h1>Aggiungi corso</h1>
+  <h1>Modifica corso "{{course.name}}"</h1>
   <form>
     <mat-form-field>
       <mat-label>Nome corso</mat-label>
-      <input matInput type="text" [formControl]="nameValidator" required/>
+      <input matInput type="text" [formControl]="nameValidator" [(ngModel)]="course.name" required/>
       <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Minimo numero studenti</mat-label>
-      <input matInput type="number" [formControl]="minValidator" required/>
+      <input matInput type="number" [formControl]="minValidator" [(ngModel)]="course.min" required/>
       <mat-error *ngIf="minValidator.invalid">{{getMinErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Massimo numero studenti</mat-label>
-      <input matInput type="number" [formControl]="maxValidator" required/>
+      <input matInput type="number" [formControl]="maxValidator" [(ngModel)]="course.max" required/>
       <mat-error *ngIf="maxValidator.invalid">{{getMaxErrorMessage()}}</mat-error>
     </mat-form-field>
-    <mat-slide-toggle class="example-margin" color="primary">Abilitato</mat-slide-toggle>
+    <mat-slide-toggle class="example-margin" [checked]="course.enabled" color="primary">Abilitato</mat-slide-toggle>
     <label>{{labelValue}}</label>
-    <button mat-button (click)="add()">Aggiungi</button>
+    <button mat-button (click)="edit()">Salva</button>
     <button class="right" mat-button mat-dialog-close="true">Annulla</button>
   </form>
 </div>

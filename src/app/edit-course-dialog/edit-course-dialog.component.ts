@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {Course} from '../models/course.model';
 import {CourseService} from '../services/course.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
+import {Course} from '../models/course.model';
 
 @Component({
-  selector: 'app-add-course-dialog',
-  templateUrl: './add-course-dialog.component.html',
-  styleUrls: ['./add-course-dialog.component.css']
+  selector: 'app-edit-course-dialog',
+  templateUrl: './edit-course-dialog.component.html',
+  styleUrls: ['./edit-course-dialog.component.css']
 })
-export class AddCourseDialogComponent implements OnInit {
+export class EditCourseDialogComponent implements OnInit {
   nameValidator = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
   minValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   labelValue: string;
+  course: Course;
 
-  constructor(private service: CourseService, private dialogRef: MatDialogRef<LoginDialogComponent>) { }
+  ngOnInit(): void {
+  }
+
+  constructor(private service: CourseService,
+              private dialogRef: MatDialogRef<LoginDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Course) {
+    this.course = data;
+  }
 
   getNameErrorMessage() {
     if (this.nameValidator.hasError('required')) {
@@ -43,26 +51,20 @@ export class AddCourseDialogComponent implements OnInit {
   }
 
   // todo: il max deve essere maggiore del min
-  add(){
-    // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
-    console.log(JSON.stringify(course));
-    this.service.add(course).subscribe(
-      data => {
-        console.log(data);
-        this.dialogRef.close();
-      },
-      error => {
-        console.log(error);
-        (error.status === 401 || error.status === 403) ?
-          this.labelValue = 'Utente non autorizzato' : this.labelValue = 'Si è verificato un errore';
-      }
+  edit(){
+    console.log(JSON.stringify(this.course));
+    // todo: manca il metodo per fare la edi del corso
+    // this.service.edit(this.course).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.dialogRef.close();
+    //   },
+    //   error => {
+    //     console.log(error);
+    //     (error.status === 401 || error.status === 403) ?
+    //       this.labelValue = 'Utente non autorizzato' : this.labelValue = 'Si è verificato un errore';
+    //   }
 
-    );
+    // );
   }
-
-
-  ngOnInit(): void {
-  }
-
 }

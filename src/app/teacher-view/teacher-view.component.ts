@@ -8,6 +8,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSidenav} from '@angular/material/sidenav';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {EditCourseDialogComponent} from '../edit-course-dialog/edit-course-dialog.component';
 
 @Component({
   selector: 'app-teacher-view',
@@ -18,7 +19,6 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
   editCourseOptions = true;
-  editCourseName = false;
   courses: Array<Course> = [];
 
   @ViewChild(MatSidenav)
@@ -99,7 +99,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
         },
         error => {
           console.log(error);
-          this.snackBar.open('Si è verificato un errore', 'Chiudi')
+          this.snackBar.open('Si è verificato un errore', 'Chiudi');
         }
         );
 
@@ -107,13 +107,11 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
   startToEditCourseName(){
-    this.editCourseOptions = false;
-    this.editCourseName = true;
-  }
-
-  stopEditCourseName() {
-    this.editCourseOptions = true;
-    this.editCourseName = false;
+    const course: Course = this.courses.find(c => c.name === this.selectedItem);
+    const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: course});
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCourses();
+    });
   }
 
   handleClick(selectedItem: Course) {

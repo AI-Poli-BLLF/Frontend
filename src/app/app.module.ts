@@ -40,6 +40,8 @@ import {ProfileViewButtonComponent} from "./profile-view/profile-view-button.com
 import { VmTableComponent } from './vm-table/vm-table.component';
 import { VmSubTableComponent } from './vm-sub-table/vm-sub-table.component';
 import {MatSliderModule} from "@angular/material/slider";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import {MatSliderModule} from "@angular/material/slider";
     ProfileViewComponent,
     ProfileViewButtonComponent,
     VmTableComponent,
-    VmSubTableComponent
+    VmSubTableComponent,
+    EditCourseDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -87,7 +90,8 @@ import {MatSliderModule} from "@angular/material/slider";
         MatDialogModule,
         MatIconModule,
         MatSnackBarModule,
-        MatSliderModule
+        MatSliderModule,
+        MatSlideToggleModule
     ],
   entryComponents: [LoginDialogComponent],
   providers: [

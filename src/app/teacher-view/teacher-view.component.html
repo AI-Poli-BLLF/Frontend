@@ -1,12 +1,6 @@
 <mat-toolbar>
   <mat-icon  id="hamburger" (click)="toggleForMenuClick()">menu</mat-icon>
-  <div *ngIf="!editCourseName">
-    <span>{{selectedItem}}</span>
-  </div>
-  <div *ngIf="editCourseName">
-    <input matInput type="text" [(ngModel)]="selectedItem"/>
-    <button (click)="stopEditCourseName()" mat-button>Salva</button>
-  </div>
+  <span>{{selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="editCourseOptions">
     <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
