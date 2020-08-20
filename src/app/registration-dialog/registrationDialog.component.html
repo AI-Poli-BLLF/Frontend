@@ -23,7 +23,8 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput type="password" [formControl]="passwordValidator" required/>
+      <input matInput  [type]="hide ? 'password' : 'text'" [formControl]="passwordValidator" required/>
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
     </mat-form-field>
 <!--    todo: conferma password form-->

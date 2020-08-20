@@ -14,10 +14,10 @@ import {VmGroup} from '../models/vm.group.model';
     ]),
   ]
 })
-export class VmTableComponent implements OnInit {
+export class VmTableComponent{
   dataSource = ELEMENT_DATA;
   columnsToDisplay: string[] = ['id', 'groupName', 'maxCpu', 'maxRam', 'maxDisk', 'maxVm', 'maxActive'];
-  expandedElement: PeriodicElement | null;
+  expandedElement: VmGroup | null;
 }
 
 const ELEMENT_DATA: VmGroup[] = [

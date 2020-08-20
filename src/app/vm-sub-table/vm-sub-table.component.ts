@@ -8,7 +8,7 @@ import {FormControl, Validators} from '@angular/forms';
   templateUrl: './vm-sub-table.component.html',
   styleUrls: ['./vm-sub-table.component.css']
 })
-export class VmSubTableComponent implements OnInit {
+export class VmSubTableComponent{
   cpuValidator = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(8)]);
   diskValidator = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(512)]);
   ramValidator = new FormControl('', [Validators.required, Validators.minLength(128), Validators.maxLength(10240)]);

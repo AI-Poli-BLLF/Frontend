@@ -5,10 +5,11 @@ mat-slider {
   display: block;
 }
 body {
-  margin-left: 1em;
-  margin-bottom: 1em;
+  /*padding-left: 1em;*/
+  /*padding-bottom: 1em;*/
 }
 
 button {
   margin-left: 1em;
 }
+
