@@ -42,6 +42,7 @@ import { VmSubTableComponent } from './vm-sub-table/vm-sub-table.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
+import {TeamComponent} from "./teams/team.component";
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dial
     RegistrationDialogComponent,
     AddCourseDialogComponent,
     TeacherViewComponent,
+    TeamComponent,
     WelcomeComponent,
     DeleteConfirmDialogComponent,
     StudentViewComponent,

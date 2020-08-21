@@ -9,6 +9,7 @@ import {TabComponentComponent} from './tab-component/tab-component.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
 import {StudentViewComponent} from "./student-view/student-view.component";
+import { TeamComponent } from './teams/team.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -37,7 +38,8 @@ const routes: Routes = [
         children: [
           {path: '', component: HomeComponent },
           {path: 'students', component: StudentsContComponent},
-          {path: 'vms', component: VmsComponent }
+          {path: 'vms', component: VmsComponent },
+          {path: 'teams', component: TeamComponent}
         ]},
     ]},
   {path: '**', component: PageNotFoundComponent },
