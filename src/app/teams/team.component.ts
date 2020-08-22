@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {TeamService} from '../services/team.service';
+import {Observable} from 'rxjs';
+import {Team} from '../models/team.model';
 
 @Component({
   selector: 'app-team-home',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamComponent implements OnInit {
 
-  constructor() { }
+  teams$: Observable<Team[]>;
+
+  constructor(private service: TeamService) {
+  }
+
+
 
   ngOnInit(): void {
+    this.teams$ = this.service.getTeamsByStudent('ai', 'abc');
   }
 
 }
