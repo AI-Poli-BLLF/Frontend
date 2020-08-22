@@ -8,12 +8,18 @@ import {Observable} from 'rxjs';
 export class AuthService {
 
   private url = 'https://localhost:4200/authenticate';
+  private urlRegister = 'https://localhost:4200/register';
 
   constructor(private httpClient: HttpClient) { }
 
   login(username: string, password: string): Observable<any>{
     const v = { username, password};
     return this.httpClient.post(this.url, v);
+  }
+
+  register(userId: string, firstName: string, name: string, password: string, email: string): Observable<any>{
+    const v = { userId, firstName, name, email, password};
+    return this.httpClient.post(this.urlRegister, v);
   }
 
   isLogged(): boolean{
@@ -36,6 +42,7 @@ export class AuthService {
     }
     const jwt = localStorage.getItem('jwt');
     const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
+    console.log(jwtParse);
     return jwtParse.roles[0];
   }
 

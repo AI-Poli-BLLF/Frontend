@@ -42,13 +42,13 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   getPhoto(role: string, id: string): void {
     this.service.getPhoto(role, id).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         const objectURL = URL.createObjectURL(data);
         this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       },
       error => {
         this.photoPath = 'assets/img/blank-profile-picture-973460.svg';
-        console.log(error);
+        // console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamento della foto profilo.', 'Chiudi');
       }
     );

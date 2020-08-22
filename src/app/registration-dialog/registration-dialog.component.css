@@ -20,3 +20,7 @@ label {
 span {
   padding-left: 1em;
 }
+
+input[type="text"][disabled] {
+  color: black;
+}

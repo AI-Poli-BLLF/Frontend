@@ -13,13 +13,13 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Matricola</mat-label>
-      <input matInput type="text" [formControl]="idValidator" required/>
+      <input matInput type="text" (input)="fillEmail()" [formControl]="idValidator" required/>
       <mat-error *ngIf="idValidator.invalid">{{getIdErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput type="text" [formControl]="emailValidator" required/>
-      <mat-error *ngIf="emailValidator.invalid">{{getEmailErrorMessage()}}</mat-error>
+      <input matInput type="text" [value]="emailValue" disabled/>
+<!--      <mat-error *ngIf="emailValidator.invalid">{{getEmailErrorMessage()}}</mat-error>-->
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
@@ -34,7 +34,7 @@
 <!--      <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>-->
 <!--    </mat-form-field>-->
     <label>{{labelValue}}</label>
-    <button mat-button (click)="login()">Registrati</button>
+    <button mat-button (click)="register()">Registrati</button>
     <button class="right" mat-button routerLink="/home" mat-dialog-close="true">Annulla</button>
   </form>
 </div>

@@ -73,19 +73,25 @@ export class LoginDialogContentComponent {
 
   getUsernameErrorMessage() {
     if (this.usernameValidator.hasError('required')) {
-      return 'You must enter a value';
+      return 'Devi inserire un valore.';
     }
-    return this.usernameValidator.hasError('email') || this.usernameValidator.hasError('maxLength') ? 'Not a valid email' : '';
+    return this.usernameValidator.hasError('email') || this.usernameValidator.hasError('maxlength') ? 'Email non valida.' : '';
   }
 
   getPasswordErrorMessage() {
     if (this.passwordValidator.hasError('required')) {
-      return 'You must enter a value';
+      return 'Devi inserire un valore.';
     }
-    return this.passwordValidator.hasError('maxLength') ? 'Not a valid email' : '';
+    return this.passwordValidator.hasError('maxlength') ? 'Password non valida.' : '';
   }
 
   login(){
+    if (
+      this.usernameValidator.invalid ||
+      this.passwordValidator.invalid) {
+      this.labelValue = 'Completa correttamente tutti i campi.';
+      return;
+    }
     this.service.login(this.usernameValidator.value, this.passwordValidator.value)
       .subscribe(
         data => {
