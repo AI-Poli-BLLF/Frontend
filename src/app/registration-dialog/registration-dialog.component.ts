@@ -100,7 +100,8 @@ export class RegistrationDialogComponent implements OnInit {
       this.passwordValidator.value,
       this.emailValue)
       .subscribe(
-        () => {
+        data => {
+          console.log(data);
           this.snackBar.open('Registrazione effettuata. Effettua il login.', 'Chiudi');
           this.dialogRef.close();
         },

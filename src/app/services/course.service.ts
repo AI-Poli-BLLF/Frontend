@@ -11,6 +11,7 @@ import {Course} from '../models/course.model';
 export class CourseService {
 
   private url = 'https://localhost:4200/API/courses';
+  private urlProfessors = 'https://localhost:4200/API/professors';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -47,6 +48,18 @@ export class CourseService {
   // get all courses
   getAll(): Observable<Array<Course>>{
     return this.httpClient.get<Array<Course>>(this.url)
+      .pipe(
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getAll error: ${err.message}');
+        })
+      );
+  }
+
+  // get all courses
+  getAllByProfessor(professorId: string): Observable<Array<Course>>{
+    return this.httpClient.get<Array<Course>>(this.urlProfessors + '/courses/' + professorId)
       .pipe(
         map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
         catchError( err => {

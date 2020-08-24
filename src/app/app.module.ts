@@ -34,13 +34,13 @@ import { TeacherViewComponent } from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 import { StudentViewComponent } from './student-view/student-view.component';
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
-import {ProfileViewButtonComponent} from "./profile-view/profile-view-button.component";
+import {ProfileViewButtonComponent} from './profile-view/profile-view-button.component';
 import { VmTableComponent } from './vm-table/vm-table.component';
 import { VmSubTableComponent } from './vm-sub-table/vm-sub-table.component';
-import {MatSliderModule} from "@angular/material/slider";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
 
 
@@ -67,39 +67,44 @@ import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dial
     VmSubTableComponent,
     EditCourseDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatTabsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatTableModule,
-        MatCheckboxModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatAutocompleteModule,
-        MatSortModule,
-        MatPaginatorModule,
-        AppRoutingModule,
-        HttpClientModule,
-        MatDialogModule,
-        MatIconModule,
-        MatSnackBarModule,
-        MatSliderModule,
-        MatSlideToggleModule
-    ],
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatSortModule,
+    MatPaginatorModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatSliderModule,
+    MatSlideToggleModule
+  ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }],
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {duration: 2500}
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

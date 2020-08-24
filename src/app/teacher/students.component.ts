@@ -90,7 +90,11 @@ export class StudentsComponent implements OnInit, AfterViewInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.allStudents.map(s => s.toString()).filter(a => a.toLowerCase().includes(filterValue)).sort();
+    return this.allStudents
+      .filter(s => this.enrolledStudents.findIndex(s1 => s1.id === s.id) === -1)
+      .map(s => s.toString())
+      .filter(a => a.toLowerCase().includes(filterValue))
+      .sort();
   }
 
   listChange() {

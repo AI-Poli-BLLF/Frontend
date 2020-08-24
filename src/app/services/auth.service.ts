@@ -46,6 +46,15 @@ export class AuthService {
     return jwtParse.roles[0];
   }
 
+  getId(){
+    if (!this.isLogged()) {
+      return '';
+    }
+    const jwt = localStorage.getItem('jwt');
+    const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
+    return jwtParse.sub.split('@')[0];
+  }
+
   getJwt(): string{
     return localStorage.getItem('jwt');
   }

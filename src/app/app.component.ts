@@ -1,13 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from '@angular/material/sidenav';
-import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
-import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/login-dialog.component';
+import {Component, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {Subscription} from 'rxjs';
 import {AuthService} from './services/auth.service';
-import {Course} from './models/course.model';
-import {MatDialog} from '@angular/material/dialog';
-import {AddCourseDialogComponent} from './add-course-dialog/add-course-dialog.component';
-import {CourseService} from "./services/course.service";
+
+
 
 @Component({
   selector: 'app-root',

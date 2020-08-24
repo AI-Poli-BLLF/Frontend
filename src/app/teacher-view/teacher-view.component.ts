@@ -9,6 +9,7 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {EditCourseDialogComponent} from '../edit-course-dialog/edit-course-dialog.component';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-teacher-view',
@@ -26,6 +27,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private courseService: CourseService,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
@@ -123,8 +125,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
   loadCourses(){
-    // todo: sarebbe più saggio visualizzare solo i corsi di quel prof
-    this.courseService.getAll().subscribe(
+    this.courseService.getAllByProfessor(this.authService.getId()).subscribe(
       data => {
         console.log(data);
         this.courses = data;

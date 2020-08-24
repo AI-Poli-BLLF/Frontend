@@ -1,31 +1,42 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Student} from '../models/student.model';
-import {forkJoin, Observable} from 'rxjs';
+import {forkJoin, Observable, Subscription} from 'rxjs';
 import {StudentsComponent} from './students.component';
 import {StudentService} from '../services/student.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-students-cont',
   templateUrl: './students-cont.component.html',
   styleUrls: ['./students-cont.component.css']
 })
-export class StudentsContComponent implements AfterViewInit{
+export class StudentsContComponent implements AfterViewInit, OnDestroy{
+  courseName = '';
+  private sub: Subscription;
 
   @ViewChild(StudentsComponent)
   studentsComponent: StudentsComponent;
 
-  constructor(private service: StudentService) {
+  constructor(
+    private service: StudentService,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute) {
+    this.sub = this.route.parent.params.subscribe(params => {
+      this.courseName = params.name;
+      console.log(params);
+    });
   }
 
   add(student: Student){
-    // this.service.updateEnrolled(student, 1)
-    //   .subscribe(
-    //     s => this.studentsComponent.addTableStudents(s),
-    //     () => this.service.getEnrolled(1).subscribe(s2 => {
-    //       this.studentsComponent.EnrolledStudents = s2;
-    //       // console.log('GET ALL ENROLLED -=> ADD ERROR');
-    //     })
-    //   );
+    this.service.enrollStudent(this.courseName, student.id)
+      .subscribe(
+        () => this.studentsComponent.addTableStudents(student),
+        () => this.service.getEnrolled(this.courseName).subscribe(s2 => {
+          this.studentsComponent.EnrolledStudents = s2;
+          // console.log('GET ALL ENROLLED -=> ADD ERROR');
+        })
+      );
   }
 
   del(students: Array<Student>) {
@@ -47,7 +58,16 @@ export class StudentsContComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    // this.service.getEnrolled(1).subscribe(s => this.studentsComponent.EnrolledStudents = s );
-    // this.service.query().subscribe(s => this.studentsComponent.AllStudents = s);
+    this.service.getEnrolled(this.courseName).subscribe(s => this.studentsComponent.EnrolledStudents = s );
+    this.service.getAll().subscribe(
+      s => this.studentsComponent.AllStudents = s,
+      error => {
+        console.log(error);
+        this.snackBar.open('Si è verificato un errore nel caricamento degli studenti.', 'Chiudi');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

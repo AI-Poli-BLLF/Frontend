@@ -9,7 +9,8 @@ import {catchError, map} from 'rxjs/operators';
 })
 export class StudentService {
 
-  private url = 'https://localhost:8080/API/students';
+  private url = 'https://localhost:4200/API/students';
+  private urlCourses = 'https://localhost:4200/API/courses';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,7 +22,7 @@ export class StudentService {
         map(s =>  new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
         catchError( err => {
           console.error(err);
-          return throwError('StudentService add error: ${err.message}');
+          return throwError('StudentService add error: ' + err.message);
         })
       );
   }
@@ -34,7 +35,7 @@ export class StudentService {
         map(s =>  new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
         catchError( err => {
           console.error(err);
-          return throwError('StudentService getOne error: ${err.message}');
+          return throwError('StudentService getOne error: ' + err.message);
         }));
   }
 
@@ -46,7 +47,29 @@ export class StudentService {
         map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
         catchError( err => {
           console.error(err);
-          return throwError('StudentService getAll error: ${err.message}');
+          return throwError('StudentService getAll error: ' + err.message);
+        })
+      );
+  }
+
+  // get all enrolled students
+  getEnrolled(courseName: string): Observable<Array<Student>>{
+    return this.httpClient.get<Array<Student>>(this.urlCourses + '/' + courseName + '/enrolled')
+      .pipe(
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        catchError( err => {
+          console.error(err);
+          return throwError('StudentService getEnrolled error: ' + err.message);
+        })
+      );
+  }
+
+  enrollStudent(courseName: string, studentId: string): Observable<any>{
+    return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('StudentService getAll error: ' + err.message);
         })
       );
   }

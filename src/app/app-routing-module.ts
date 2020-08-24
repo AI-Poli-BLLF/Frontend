@@ -8,14 +8,16 @@ import {AuthGuard} from './auth/auth.guard';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
-import {StudentViewComponent} from "./student-view/student-view.component";
+import {StudentViewComponent} from './student-view/student-view.component';
+import {TeacherAuthGuard} from './auth/teacher-auth.guard';
+import {StudentAuthGuard} from './auth/student-auth.guard';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
   {path: 'home', component: WelcomeComponent },
   {path: 'teacher',
-    canActivate: [AuthGuard],
+    canActivate: [TeacherAuthGuard],
     component: TeacherViewComponent,
     children: [
       {path: '', component: HomeComponent },
@@ -28,7 +30,7 @@ const routes: Routes = [
         ]},
     ]},
   {path: 'student',
-    canActivate: [AuthGuard],
+    canActivate: [StudentAuthGuard],
     component: StudentViewComponent,
     children: [
       {path: '', component: HomeComponent },
