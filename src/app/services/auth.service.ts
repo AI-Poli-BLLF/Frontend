@@ -39,6 +39,16 @@ export class AuthService {
     return jwtParse.roles[0];
   }
 
+  // returns entire username (e.g. 'test@studenti.polito.it')
+  getUsername(): string {
+    if (!this.isLogged()) {
+      return '';
+    }
+    const jwt = localStorage.getItem('jwt');
+    const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
+    return jwtParse.sub;
+  }
+
   getJwt(): string{
     return localStorage.getItem('jwt');
   }

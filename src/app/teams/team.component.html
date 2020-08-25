@@ -1,11 +1,20 @@
 <div class="container">
   <h2>Elenco Gruppi</h2>
 
-  <li *ngFor="let team of teams$ | async">
+  <li *ngFor="let team of teams">
     {{team.name}}
   </li>
 
-  Se l'utente è iscritto ad un gruppo, qui ci saranno il nome ed i membri del gruppo.<br>
-  Se no, ci saranno le proposte pendenti ed una vista per creare nuove proposte
+  <tr *ngFor="let members of teamMembers; let i = index">
+    <li *ngFor="let member of members">
+      {{member.name}}
+    </li>
+  </tr>
+
+  <br>
+  <p *ngIf="activeTeam; else elseBlock">C'è un team attivo</p>
+  <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
+  <br><br>
+
 </div>
 
