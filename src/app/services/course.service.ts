@@ -59,7 +59,7 @@ export class CourseService {
 
   // get all courses
   getAllByProfessor(professorId: string): Observable<Array<Course>>{
-    return this.httpClient.get<Array<Course>>(this.urlProfessors + '/courses/' + professorId)
+    return this.httpClient.get<Array<Course>>(this.urlProfessors + '/' + professorId + '/courses')
       .pipe(
         map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
         catchError( err => {

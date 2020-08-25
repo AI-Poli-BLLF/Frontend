@@ -11,8 +11,6 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./profile-view.component.css']
 })
 export class ProfileViewComponent implements OnInit, OnDestroy {
-  isEditing = false;
-  editButton = 'Modifica';
   profileData: Profile;
   photoPath: any;
 
@@ -54,11 +52,22 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  edit() {
-    this.isEditing = !this.isEditing;
-    this.editButton = this.isEditing ? 'Salva' : 'Modifica';
+  ngOnDestroy(): void {
   }
 
-  ngOnDestroy(): void {
+  changePhoto($event) {
+    console.log($event);
+    const selectedFile: File = $event.target.files[0];
+    console.log(selectedFile);
+    if (selectedFile === undefined){
+      return;
+    }
+    this.service.uploadPhoto(this.profileData.roles[0], this.profileData.id, selectedFile).subscribe(
+      data => {
+        console.log(data);
+        this.getPhoto(this.profileData.roles[0], this.profileData.id);
+      },
+      error => console.log(error)
+    );
   }
 }

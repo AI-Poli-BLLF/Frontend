@@ -1,27 +1,30 @@
 <h1>Profilo</h1>
 <div id="img_div">
-  <img [src]="photoPath" alt="Foto profilo"/>
-  <button id="edit_img_button" color="primary" *ngIf="isEditing" mat-raised-button>Cambia immagine</button>
+<!--  todo: cut image-->
+  <img [src]="photoPath" class="image-cropper" alt="Foto profilo"/>
+  <button mat-fab aria-label="Cambia immagine" id="edit_img_button" color="accent" (click)="fileInput.click()">
+    <mat-icon>camera_alt</mat-icon>
+  </button>
+  <input #fileInput type="file" [hidden]="true" accept="image/*" (change)="changePhoto($event)">
 </div>
 <p>
   <mat-form-field>
     <mat-label>Nome</mat-label>
-    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.name">
+    <input matInput type="text" disabled [(ngModel)]="profileData.name">
   </mat-form-field>
   <mat-form-field appearance="legacy">
     <mat-label>Cognome</mat-label>
-    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.firstName">
+    <input matInput type="text" disabled [(ngModel)]="profileData.firstName">
   </mat-form-field>
 </p>
 <p>
   <mat-form-field>
     <mat-label>Matricola</mat-label>
-    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.id">
+    <input matInput type="text" disabled [(ngModel)]="profileData.id">
   </mat-form-field>
   <mat-form-field appearance="legacy">
     <mat-label>Email</mat-label>
-    <input matInput type="text" [disabled]="!isEditing" [(ngModel)]="profileData.email">
+    <input matInput type="text" disabled [(ngModel)]="profileData.email">
   </mat-form-field>
 </p>
-<!--<button mat-button (click)="edit()">{{editButton}}</button>-->
 <button class="right" mat-button mat-dialog-close="true">Chiudi</button>

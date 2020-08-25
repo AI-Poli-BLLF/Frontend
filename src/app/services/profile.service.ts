@@ -25,26 +25,26 @@ export class ProfileService {
         }));
   }
 
-  getPhotoPath(role: string, id: string): string {
+  getPath(role: string, id: string): string {
     switch (role) {
       case 'ROLE_PROFESSOR':
-        return this.baseUrl + '/professors/' + id + '/photo';
+        return this.baseUrl + '/professors/' + id;
       case 'ROLE_STUDENT':
-        return this.baseUrl + '/students/' + id + '/photo';
+        return this.baseUrl + '/students/' + id;
       default:
-        return 'assets/img/blank-profile-picture-973460.svg';
+      throwError('Not valid role');
     }
   }
 
   getPhoto(role: string, id: string): Observable<any> {
-    const path = this.getPhotoPath(role, id);
+    const path = this.getPath(role, id) + '/photo';
     return this.httpClient.get(path,  { responseType: 'blob' });
-      // .pipe(
-      //   map(e => URL.createObjectURL(e)),
-      //   catchError(err => {
-      //     console.error(err);
-      //     return throwError('ProfileService getImg error: ' + err.message);
-      //   })
-      // );
+  }
+
+  uploadPhoto(role: string, id: string, file: File): Observable<any>{
+    const path = this.getPath(role, id) + '/uploadPhoto';
+    const body = new FormData();
+    body.append('image', file);
+    return this.httpClient.post(path, body);
   }
 }

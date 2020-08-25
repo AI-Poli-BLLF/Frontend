@@ -13,21 +13,33 @@ input[type="text"][disabled] {
 }
 
 #img_div {
+  position: relative;
   width: 100%;
   text-align: center;
   vertical-align: center;
   margin: 2em auto;
 }
 
-#edit_img_button {
-  margin: 1em auto;
-  display: block;
+#img_div button {
+  position: absolute;
+  top: 80%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
-img {
-  width: 50%;
+/*img {*/
+/*  width: 50%;*/
+/*  border-radius: 50%;*/
+/*  border: 0.4em solid #555;*/
+/*}*/
+
+.image-cropper {
+  width: 13em;
+  height: 13em;
+  position: relative;
+  overflow: hidden;
   border-radius: 50%;
-  border: 0.4em solid #555;
 }
 
 .right{
@@ -40,3 +52,4 @@ label {
   text-align: center;
   padding: 1.5em;
 }
+
