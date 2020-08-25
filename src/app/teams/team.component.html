@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Elenco Gruppi</h2>
+
+  <li *ngFor="let team of teams">
+    {{team.name}}
+  </li>
+
+  <tr *ngFor="let members of teamMembers; let i = index">
+    <li *ngFor="let member of members">
+      {{member.name}}
+    </li>
+  </tr>
+
+  <br>
+  <p *ngIf="activeTeam; else elseBlock">C'è un team attivo</p>
+  <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
+  <br><br>
+
+</div>
+

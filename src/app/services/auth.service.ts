@@ -42,7 +42,6 @@ export class AuthService {
     }
     const jwt = localStorage.getItem('jwt');
     const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
-    console.log(jwtParse);
     return jwtParse.roles[0];
   }
 

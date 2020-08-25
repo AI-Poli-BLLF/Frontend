@@ -9,7 +9,8 @@ import {NavModel} from '../nav.model';
 export class TabComponentComponent implements OnInit {
   links: Array<NavModel> = [
     new NavModel('./students', 'Students'),
-    new NavModel('./vms', 'VMs')
+    new NavModel('./vms', 'VMs'),
+    new NavModel('./teams', 'Teams')
   ];
   constructor() { }
 
