@@ -4,6 +4,7 @@ import {Profile} from "../models/profile.model";
 import {MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DomSanitizer} from "@angular/platform-browser";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-profile-view',
@@ -67,7 +68,12 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
         console.log(data);
         this.getPhoto(this.profileData.roles[0], this.profileData.id);
       },
-      error => console.log(error)
+      error => {
+        console.log(error);
+        this.snackBar.open(
+          'Si è verificato un errore nell\'upload della foto. La massima dimensione consentita dei file è 3 MB.',
+          'Chiudi');
+      }
     );
   }
 }

@@ -35,12 +35,23 @@ input[type="text"][disabled] {
 /*}*/
 
 .image-cropper {
-  width: 13em;
-  height: 13em;
-  position: relative;
-  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  /*position: relative;*/
+  /*overflow: hidden;*/
   border-radius: 50%;
 }
+
+/*.image-cropper img {*/
+/*  !*height: 200px;*!*/
+/*  background-position: center;*/
+/*  background-size: cover;*/
+/*  resize=width:200/crop=d:[0,25,200,100]*/
+
+/*  !*margin-left: -37%;*!*/
+/*}*/
 
 .right{
   float: right;
