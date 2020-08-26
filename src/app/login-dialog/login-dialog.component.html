@@ -1,2 +1,8 @@
-<button *ngIf="regIsVisible()" mat-button [queryParams]=getQueryParamsReg() routerLink="/home"><mat-icon>person_add</mat-icon><span>Registrazione</span></button>
-<button mat-button [queryParams]=getQueryParams() routerLink="/home"><mat-icon>login</mat-icon><span>{{loginButtonState}}</span></button>
+<button *ngIf="regIsVisible()" mat-button [queryParams]=getQueryParamsReg() routerLink="/home">
+  <mat-icon>person_add</mat-icon>
+  <span>Registrazione</span>
+</button>
+<button mat-button [queryParams]=getQueryParams() routerLink="/home">
+  <mat-icon>login</mat-icon>
+  <span>{{loginButtonState}}</span>
+</button>

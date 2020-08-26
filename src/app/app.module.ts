@@ -43,6 +43,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
 import {TeamComponent} from "./teams/team.component";
+import {CreateTeamDialogComponent} from "./teams/create-team-dialog/create-team-dialog.component";
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import {TeamComponent} from "./teams/team.component";
     ProfileViewButtonComponent,
     VmTableComponent,
     VmSubTableComponent,
-    EditCourseDialogComponent
+    EditCourseDialogComponent,
+    CreateTeamDialogComponent
   ],
   imports: [
     BrowserModule,
