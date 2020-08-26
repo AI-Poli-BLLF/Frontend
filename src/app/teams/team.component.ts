@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TeamService} from '../services/team.service';
 import {Observable} from 'rxjs';
 import {Team} from '../models/team.model';
-import {Student} from "../models/student.model";
+import {Student} from '../models/student.model';
 
 @Component({
   selector: 'app-team-home',
@@ -26,7 +26,7 @@ export class TeamComponent implements OnInit {
         for (const i in data) {
           if (data.hasOwnProperty(i)) {
             const team = data[i];
-            if (team.status === 1) {
+            if (team.status === 'ACTIVE') {
               this.activeTeam = true;
             }
             console.log('Requesting members of team ' + team.id);
