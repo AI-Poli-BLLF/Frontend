@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {TeamService} from '../services/team.service';
-import {Observable} from 'rxjs';
 import {Team} from '../models/team.model';
 import {Student} from '../models/student.model';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateTeamDialogComponent} from './create-team-dialog/create-team-dialog.component';
 
 @Component({
   selector: 'app-team-home',
@@ -14,7 +15,7 @@ export class TeamComponent implements OnInit {
   teams: Team[];
   teamMembers: Array<Array<Student>>;
   activeTeam: boolean;
-  constructor(private service: TeamService) {
+  constructor(private service: TeamService, public dialog: MatDialog) {
     this.teamMembers = new Array<Array<Student>>();
     this.activeTeam = false;
   }
@@ -35,6 +36,23 @@ export class TeamComponent implements OnInit {
           }
         }
       });
+  }
+
+  openCreateTeamDialog(): void {
+    const dialogRef = this.dialog.open(CreateTeamDialogComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        /*
+        this.authService.login(result.email, result.password);
+        // this.authService.login('olivier@mail.com', 'bestPassw0rd');
+      } else {
+        this.router.navigate(['/home']);
+        */
+      }
+    });
   }
 
 }

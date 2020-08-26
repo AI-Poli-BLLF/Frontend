@@ -5,10 +5,10 @@
   <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
   <br>
 
-  <button *ngIf="!activeTeam" mat-button>
-    <mat-icon>create_team</mat-icon>
+  <button *ngIf="!activeTeam" mat-raised-button (click)="openCreateTeamDialog()">
     <span>Create team</span>
   </button>
+  <br><br>
 
   <li *ngFor="let team of teams">
     {{team.name}}
