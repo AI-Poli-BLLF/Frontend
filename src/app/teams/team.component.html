@@ -1,6 +1,15 @@
 <div class="container">
   <h2>Elenco Gruppi</h2>
 
+  <p *ngIf="activeTeam; else elseBlock">C'è un team attivo</p>
+  <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
+  <br>
+
+  <button *ngIf="!activeTeam" mat-raised-button (click)="openCreateTeamDialog()">
+    <span>Create team</span>
+  </button>
+  <br><br>
+
   <li *ngFor="let team of teams">
     {{team.name}}
   </li>
@@ -11,10 +20,6 @@
     </li>
   </tr>
 
-  <br>
-  <p *ngIf="activeTeam; else elseBlock">C'è un team attivo</p>
-  <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
-  <br><br>
 
 </div>
 
