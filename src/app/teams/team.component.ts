@@ -46,12 +46,10 @@ export class TeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        /*
-        this.authService.login(result.email, result.password);
-        // this.authService.login('olivier@mail.com', 'bestPassw0rd');
+        console.log('Result obtained');
+        console.log(result);
       } else {
-        this.router.navigate(['/home']);
-        */
+        console.log('No result');
       }
     });
   }

@@ -63,7 +63,12 @@ export class CreateTeamDialogComponent implements OnInit {
   }
 
   selectStudent(student: Student) {
-    this.selectedStudents.push(student);
+    const index = this.selectedStudents.findIndex(s => s.id === student.id);
+    if (index === -1) {
+      this.selectedStudents.push(student);
+    } else {
+      console.log('Student ' + student.id + ' already selected');
+    }
   }
 
   deleteStudent(student: Student) {
@@ -73,5 +78,13 @@ export class CreateTeamDialogComponent implements OnInit {
     } else {
       console.log('DELETING NOT SELECTED STUDENT ' + student.id);
     }
+  }
+
+  submit() {
+    this.dialogRef.close(this.selectedStudents);
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
   }
 }
