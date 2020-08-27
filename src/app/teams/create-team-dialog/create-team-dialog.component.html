@@ -3,7 +3,7 @@
   <form>
     <mat-form-field>
       <mat-label>Nome team</mat-label>
-      <input matInput type="text" required/>
+      <input matInput type="text" [formControl]="courseNameControl" required/>
     </mat-form-field>
 
     <mat-form-field [style.width.px]=350>

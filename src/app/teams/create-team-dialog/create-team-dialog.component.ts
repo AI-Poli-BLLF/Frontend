@@ -15,6 +15,7 @@ import {TeamService} from '../../services/team.service';
 })
 export class CreateTeamDialogComponent implements OnInit {
 
+  courseNameControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
   nameControl = new FormControl();
   filteredOptions: Observable<Student[]>;
   options: Student[];
@@ -81,7 +82,12 @@ export class CreateTeamDialogComponent implements OnInit {
   }
 
   submit() {
-    this.dialogRef.close(this.selectedStudents);
+    // TODO: controlla che né il nome né la lista dei membri siano vuoti!
+    const retValue = {
+      teamName: this.courseNameControl.value,
+      members: this.selectedStudents
+    };
+    this.dialogRef.close(retValue);
   }
 
   onNoClick() {

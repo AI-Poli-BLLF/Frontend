@@ -65,4 +65,21 @@ export class TeamService {
         })
       );
   }
+
+  proposeTeam(courseName: string, teamName: string, members: Student[]) {
+    console.log('PROPOSE TEAM');
+    const memberIds = members.map(m => m.id);
+    const body = {
+      teamName,
+      memberIds
+    };
+    return this.httpClient.post(this.url + '/courses/' + courseName + '/proposeTeam',
+      body)
+      .pipe(
+        catchError(err => {
+          console.error(err);
+          return throwError('TeamService proposeTeam error: ' + err.message);
+        })
+      );
+  }
 }
