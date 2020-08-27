@@ -6,7 +6,23 @@
       <input matInput type="text" required/>
     </mat-form-field>
 
-    <label>{{labelValue}}</label>
+    <mat-form-field [style.width.px]=350>
+      <mat-label>Add student</mat-label>
+      <input type="text" placeholder="Ex. Mario Rossi"
+             matInput [formControl]="nameControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)='selectStudent($event.option.value)'>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{displayFn(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-option *ngFor="let member of selectedStudents">
+      {{member.name}} {{member.firstName}}
+      <button mat-button (click)="deleteStudent(member)">x</button>
+    </mat-option>
+
     <button mat-button>Aggiungi</button>
     <button class="right" mat-button mat-dialog-close="true">Annulla</button>
   </form>

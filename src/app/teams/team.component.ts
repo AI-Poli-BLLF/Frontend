@@ -4,6 +4,7 @@ import {Team} from '../models/team.model';
 import {Student} from '../models/student.model';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateTeamDialogComponent} from './create-team-dialog/create-team-dialog.component';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-team-home',
@@ -40,7 +41,7 @@ export class TeamComponent implements OnInit {
 
   openCreateTeamDialog(): void {
     const dialogRef = this.dialog.open(CreateTeamDialogComponent, {
-      width: '250px',
+      data: { courseName: 'ai' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
