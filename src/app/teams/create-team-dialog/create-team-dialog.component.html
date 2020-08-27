@@ -18,7 +18,11 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <label>{{labelValue}}</label>
+    <mat-option *ngFor="let member of selectedStudents">
+      {{member.name}} {{member.firstName}}
+      <button mat-button (click)="deleteStudent(member)">x</button>
+    </mat-option>
+
     <button mat-button>Aggiungi</button>
     <button class="right" mat-button mat-dialog-close="true">Annulla</button>
   </form>

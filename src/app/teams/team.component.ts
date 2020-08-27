@@ -40,9 +40,8 @@ export class TeamComponent implements OnInit {
   }
 
   openCreateTeamDialog(): void {
-    const optionsObs$ = this.service.getAvailableStudents('ai');
     const dialogRef = this.dialog.open(CreateTeamDialogComponent, {
-      data: { options$: optionsObs$ }
+      data: { courseName: 'ai' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

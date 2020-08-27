@@ -6,6 +6,7 @@ import {Team} from '../../models/team.model';
 import {Observable} from 'rxjs';
 import {Student} from '../../models/student.model';
 import {map, startWith} from 'rxjs/operators';
+import {TeamService} from '../../services/team.service';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -13,12 +14,24 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./create-team-dialog.component.css']
 })
 export class CreateTeamDialogComponent implements OnInit {
-  labelValue: string;
+
   nameControl = new FormControl();
   filteredOptions: Observable<Student[]>;
   options: Student[];
+  selectedStudents: Student[];
+
+  constructor(private service: TeamService,
+              private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
+    this.selectedStudents = [];
+  }
 
   ngOnInit(): void {
+    this.service.getAvailableStudents('ai').subscribe(
+      obsData => {
+        this.options = obsData;
+      }
+    );
+
     this.filteredOptions = this.nameControl.valueChanges
       .pipe(
         startWith(''),
@@ -33,18 +46,6 @@ export class CreateTeamDialogComponent implements OnInit {
           }
         })
       );
-
-  }
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-              private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
-    data.options$.subscribe(
-      obsData => {
-        console.log('Received available students');
-        console.log(obsData);
-        this.options = obsData;
-      }
-    );
   }
 
   private _filter(name: string): Student[] {
@@ -62,9 +63,15 @@ export class CreateTeamDialogComponent implements OnInit {
   }
 
   selectStudent(student: Student) {
-    // Probably nothing: quando si schiaccia aggiungi si può cercare di
-    // leggere il campo di testo e mandare quello. Sennò c'è il rischio di
-    // mandare informazioni vecchie (ad es. clicco su uno studente, cancello,
-    // clicco aggiungi e viene aggiunto lo studente :/ )
+    this.selectedStudents.push(student);
+  }
+
+  deleteStudent(student: Student) {
+    const index = this.selectedStudents.findIndex(s => s.id === student.id);
+    if (index !== -1) {
+      this.selectedStudents.splice(index, 1);
+    } else {
+      console.log('DELETING NOT SELECTED STUDENT ' + student.id);
+    }
   }
 }
