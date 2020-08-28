@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Student} from '../models/student.model';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, filter, map} from 'rxjs/operators';
 import {Team} from '../models/team.model';
 import {AuthService} from './auth.service';
 
@@ -58,7 +58,10 @@ export class TeamService {
     console.log('AVAILABLE STUDENTS');
     return this.httpClient.get<Student[]>(this.url + '/courses/' + courseName + '/availableStudents')
       .pipe(
-        map(t => t.map(t2 => new Student(t2.id, t2.name, t2.firstName, t2.photoName, t2.email))),
+        map(arr => {
+          return arr.map(s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))
+                    .filter(s => s.id !== this.authService.getId()); // l'utente non è mostrato nella lista
+        }),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getAvailableStudents error: ' + err.message);
