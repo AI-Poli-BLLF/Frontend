@@ -46,7 +46,7 @@ export class TeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.proposeTeam('ai', result.teamName, result.members)
+        this.service.proposeTeam('ai', result.teamName, result.members, result.timeout)
           .subscribe(
             data => {
               console.log(data);

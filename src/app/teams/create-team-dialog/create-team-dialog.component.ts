@@ -1,12 +1,10 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {CourseService} from '../../services/course.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Team} from '../../models/team.model';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {Student} from '../../models/student.model';
 import {map, startWith} from 'rxjs/operators';
 import {TeamService} from '../../services/team.service';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -15,15 +13,21 @@ import {TeamService} from '../../services/team.service';
 })
 export class CreateTeamDialogComponent implements OnInit {
 
-  courseNameControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
+  form: FormGroup;
+  teamName: string;
+  timeout: number;
   nameControl = new FormControl();
   filteredOptions: Observable<Student[]>;
   options: Student[];
   selectedStudents: Student[];
 
-  constructor(private service: TeamService,
+  constructor(fb: FormBuilder, private service: TeamService,
               private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
     this.selectedStudents = [];
+    this.form = fb.group({
+      teamName: [this.teamName, [Validators.required, Validators.minLength(3), Validators.maxLength(9)]],
+      timeout: [this.timeout, [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
@@ -82,15 +86,21 @@ export class CreateTeamDialogComponent implements OnInit {
   }
 
   submit() {
-    // TODO: controlla che né il nome né la lista dei membri siano vuoti!
-    const retValue = {
-      teamName: this.courseNameControl.value,
-      members: this.selectedStudents
-    };
-    this.dialogRef.close(retValue);
+    if (this.form.valid) {
+      const retValue = {
+        teamName: this.form.value.teamName,
+        timeout: this.form.value.timeout,
+        members: this.selectedStudents
+      };
+      this.dialogRef.close(retValue);
+    }
   }
 
   onNoClick() {
     this.dialogRef.close();
+  }
+
+  public checkError(controlName: string): boolean {
+    return this.form.controls[controlName].invalid;
   }
 }

@@ -17,9 +17,11 @@ export class TeamService {
 
   // Get all (active and inactive) teams for course
   getAllTeams(courseName: string): Observable<Array<Team>>{
-    return this.httpClient.get<Array<Team>>(this.url + '/courses/' + courseName + '/teams')
+    return this.httpClient
+      .get<Array<Team>>(this.url + '/courses/' + courseName + '/teams')
       .pipe(
-        map(t => t.map(t2 => new Team(t2.id, t2.name, t2.status))),
+        map(arr => arr.map(
+          t => new Team(t.id, t.name, t.status, t.proposerId))),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getAllTeams error: ' + err.message);
@@ -33,9 +35,11 @@ export class TeamService {
   getTeamsByStudent(courseName: string, studentId: string): Observable<Array<Team>>{
     const userId = this.authService.getId();
     console.log('userId: ' + userId);
-    return this.httpClient.get<Array<Team>>(this.url + '/students/' + userId + '/teams/' + courseName)
+    return this.httpClient
+      .get<Array<Team>>(this.url + '/students/' + userId + '/teams/' + courseName)
       .pipe(
-        map(t => t.map(t2 => new Team(t2.id, t2.name, t2.status))),
+        map(arr => arr.map(
+          t => new Team(t.id, t.name, t.status, t.proposerId))),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamsByStudent error: ' + err.message);
@@ -44,9 +48,11 @@ export class TeamService {
   }
 
   getTeamMembers(courseName: string, teamId: number): Observable<Array<Student>>{
-    return this.httpClient.get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/members')
+    return this.httpClient
+      .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/members')
       .pipe(
-        map(t => t.map(t2 => new Student(t2.id, t2.name, t2.firstName, t2.photoName, t2.email))),
+        map(arr => arr.map(
+          s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamsByStudent error: ' + err.message);
@@ -56,7 +62,8 @@ export class TeamService {
 
   getAvailableStudents(courseName: string): Observable<Student[]> {
     console.log('AVAILABLE STUDENTS');
-    return this.httpClient.get<Student[]>(this.url + '/courses/' + courseName + '/availableStudents')
+    return this.httpClient
+      .get<Student[]>(this.url + '/courses/' + courseName + '/availableStudents')
       .pipe(
         map(arr => {
           return arr.map(s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))
@@ -69,15 +76,14 @@ export class TeamService {
       );
   }
 
-  proposeTeam(courseName: string, teamName: string, members: Student[]) {
+  proposeTeam(courseName: string, teamName: string, members: Student[], timeout: number) {
     console.log('PROPOSE TEAM');
     const memberIds = members.map(m => m.id);
-    const body = {
-      teamName,
-      memberIds
-    };
-    return this.httpClient.post(this.url + '/courses/' + courseName + '/proposeTeam',
-      body)
+    const proposerId = this.authService.getId();
+    memberIds.push(proposerId);
+    const body = { teamName, memberIds, timeout, proposerId };
+    return this.httpClient
+      .post(this.url + '/courses/' + courseName + '/proposeTeam', body)
       .pipe(
         catchError(err => {
           console.error(err);
