@@ -11,14 +11,18 @@
   <br><br>
 
   <li *ngFor="let team of teams">
-    {{team.name}}
+    <mat-card>
+      <mat-card-header [style.backgroundColor]="'yellow'">
+        <mat-card-title>{{team.team.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>proposer: {{team.teamProposer | async}}</p>
+        <p>team members</p>
+      </mat-card-content>
+    </mat-card>
   </li>
 
-  <tr *ngFor="let members of teamMembers; let i = index">
-    <li *ngFor="let member of members">
-      {{member.name}}
-    </li>
-  </tr>
+
 
 
 </div>

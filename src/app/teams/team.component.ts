@@ -4,7 +4,13 @@ import {Team} from '../models/team.model';
 import {Student} from '../models/student.model';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateTeamDialogComponent} from './create-team-dialog/create-team-dialog.component';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
+
+type TeamData = {
+  team: Team;
+  teamMembers: Observable<Student[]>;
+  teamProposer: Observable<Student>;
+};
 
 @Component({
   selector: 'app-team-home',
@@ -13,27 +19,27 @@ import {Observable} from "rxjs";
 })
 export class TeamComponent implements OnInit {
 
-  teams: Team[];
-  teamMembers: Array<Array<Student>>;
+  teams: TeamData[];
   activeTeam: boolean;
   constructor(private service: TeamService, public dialog: MatDialog) {
-    this.teamMembers = new Array<Array<Student>>();
     this.activeTeam = false;
   }
 
   ngOnInit(): void {
+    this.teams = new Array<TeamData>();
     this.service.getTeamsByStudent('ai', 'abc')
       .subscribe(data => {
-        this.teams = data;
-        for (const i in data) {
+        const teamArray: Team[] = data;
+        for (const i in teamArray) {
           if (data.hasOwnProperty(i)) {
-            const team = data[i];
+            const team: Team = data[i];
             if (team.status === 'ACTIVE') {
               this.activeTeam = true;
             }
             console.log('Requesting members of team ' + team.id);
-            this.service.getTeamMembers('ai', team.id)
-              .subscribe(membersData => this.teamMembers[i] = membersData);
+            const members$ = this.service.getTeamMembers('ai', team.id);
+            const proposer$ = this.service.getTeamProposer('ai', team.id);
+            this.teams.push({team, teamMembers: members$, teamProposer: proposer$});
           }
         }
       });
