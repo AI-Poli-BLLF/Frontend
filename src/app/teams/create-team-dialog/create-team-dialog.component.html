@@ -15,20 +15,23 @@
 
     <mat-form-field [style.width.px]=350>
       <mat-label>Add student</mat-label>
-      <input type="text" placeholder="Ex. Mario Rossi"
-             matInput [formControl]="nameControl" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                        (optionSelected)='selectStudent($event.option.value)'>
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{displayFn(option)}}
+      <mat-select formControlName="members" value={{selectedStudents}} multiple>
+        <mat-form-field>
+          <input matInput
+                 [formControl]="filterControl"
+                 type="text"
+                 name="filter-options"
+                 id="filter-options"
+                 placeholder="Search">
+        </mat-form-field>
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+          {{option.firstName}} {{option.name}} ({{option.id}})
         </mat-option>
-      </mat-autocomplete>
+      </mat-select>
+      <mat-error *ngIf="checkError('members')">
+        You must select between {{course.min-1}} and {{course.max-1}} other students
+      </mat-error>
     </mat-form-field>
-
-    <mat-option *ngFor="let member of selectedStudents">
-      {{member.name}} {{member.firstName}}
-      <button mat-button (click)="deleteStudent(member)">x</button>
-    </mat-option>
 
     <button mat-button (click)="submit()">Aggiungi</button>
     <button (click)="onNoClick()" class="right" mat-button>Annulla</button>

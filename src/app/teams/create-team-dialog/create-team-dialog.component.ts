@@ -18,19 +18,22 @@ export class CreateTeamDialogComponent implements OnInit {
   teamName: string;
   timeout: number;
   nameControl = new FormControl();
+  filterControl = new FormControl();
   filteredOptions: Observable<Student[]>;
   options: Student[];
-  selectedStudents: Student[];
+  selectedStudents: string[];
   course: Course;
 
   constructor(fb: FormBuilder, private service: TeamService,
-              @Inject(MAT_DIALOG_DATA) course: Course,
+              @Inject(MAT_DIALOG_DATA) data: any,
               private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
-    this.course = course;
-    this.selectedStudents = [];
+    this.course = data.course;
     this.form = fb.group({
       teamName: [this.teamName, [Validators.required, Validators.minLength(3), Validators.maxLength(9)]],
-      timeout: [this.timeout, [Validators.required]]
+      timeout: [this.timeout, [Validators.required]],
+      members: [this.selectedStudents, [Validators.required,
+        Validators.minLength(this.course.min - 1),
+        Validators.maxLength(this.course.max - 1)]]
     });
   }
 
@@ -38,18 +41,18 @@ export class CreateTeamDialogComponent implements OnInit {
     this.service.getAvailableStudents(this.course.name).subscribe(
       obsData => {
         this.options = obsData;
+        this.filterControl.setValue('');
       }
     );
 
-    this.filteredOptions = this.nameControl.valueChanges
+    this.filteredOptions = this.filterControl.valueChanges
       .pipe(
         startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
         map(name => {
           if (!this.options) {
             return [];
           } else if (name) {
-            return this._filter(name);
+            return this.filterFn(name);
           } else {
             return this.options.slice();
           }
@@ -57,46 +60,25 @@ export class CreateTeamDialogComponent implements OnInit {
       );
   }
 
-  private _filter(name: string): Student[] {
-    const filterValue = name.toLowerCase();
-    return this.options.filter(option => option.name.toLowerCase().includes(filterValue)
-      || option.firstName.toLowerCase().includes(filterValue));
-  }
-
   displayFn(student: Student): string {
     if (student) {
-      return student.name + ' ' + student.firstName + ' ' + student.id;
+      return student.name + ' ' + student.firstName;
     } else {
       return '';
     }
   }
 
-  selectStudent(student: Student) {
-    const index = this.selectedStudents.findIndex(s => s.id === student.id);
-    if (index === -1) {
-      this.selectedStudents.push(student);
-    } else {
-      console.log('Student ' + student.id + ' already selected');
-    }
-  }
-
-  deleteStudent(student: Student) {
-    const index = this.selectedStudents.findIndex(s => s.id === student.id);
-    if (index !== -1) {
-      this.selectedStudents.splice(index, 1);
-    } else {
-      console.log('DELETING NOT SELECTED STUDENT ' + student.id);
-    }
+  private filterFn(name: string): Student[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(option => option.name.toLowerCase().includes(filterValue)
+      || option.firstName.toLowerCase().includes(filterValue));
   }
 
   submit() {
     if (this.form.valid) {
-      const retValue = {
-        teamName: this.form.value.teamName,
-        timeout: this.form.value.timeout,
-        members: this.selectedStudents
-      };
-      this.dialogRef.close(retValue);
+      this.dialogRef.close(this.form);
+    } else {
+      console.log('Form not valid');
     }
   }
 

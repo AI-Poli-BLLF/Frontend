@@ -88,9 +88,8 @@ export class TeamService {
       );
   }
 
-  proposeTeam(courseName: string, teamName: string, members: Student[], timeout: number) {
+  proposeTeam(courseName: string, teamName: string, memberIds: string[], timeout: number) {
     console.log('PROPOSE TEAM');
-    const memberIds = members.map(m => m.id);
     const proposerId = this.authService.getId();
     memberIds.push(proposerId);
     const body = { teamName, memberIds, timeout, proposerId };

@@ -45,6 +45,7 @@ import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dial
 import {TeamComponent} from "./teams/team.component";
 import {CreateTeamDialogComponent} from "./teams/create-team-dialog/create-team-dialog.component";
 import {MatCardModule} from "@angular/material/card";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -72,33 +73,34 @@ import {MatCardModule} from "@angular/material/card";
     EditCourseDialogComponent,
     CreateTeamDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatTabsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatTableModule,
-        MatCheckboxModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatAutocompleteModule,
-        MatSortModule,
-        MatPaginatorModule,
-        AppRoutingModule,
-        HttpClientModule,
-        MatDialogModule,
-        MatIconModule,
-        MatSnackBarModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatCardModule
-    ],
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatSortModule,
+    MatPaginatorModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatSelectModule
+  ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {

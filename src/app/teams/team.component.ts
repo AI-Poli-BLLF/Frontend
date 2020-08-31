@@ -34,27 +34,32 @@ export class TeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // 1. Get the course name
     this.route.parent.paramMap.subscribe((params: ParamMap) => {
       const courseName = params.get('name');
-      this.courseService.getOne(courseName).subscribe( c => this.course = c);
-    });
 
-    this.teamService.getTeamsByStudent(this.course.name)
-      .subscribe(data => {
-        const teamArray: Team[] = data;
-        for (const i in teamArray) {
-          if (data.hasOwnProperty(i)) {
-            const team: Team = data[i];
-            if (team.status === 'ACTIVE') {
-              this.activeTeam = true;
+      // 2. Get infos about the user's teams in this course
+      this.teamService.getTeamsByStudent(courseName)
+        .subscribe(data => {
+          const teamArray: Team[] = data;
+          for (const i in teamArray) {
+            if (data.hasOwnProperty(i)) {
+              const team: Team = data[i];
+              if (team.status === 'ACTIVE') {
+                this.activeTeam = true;
+              }
+              console.log('Requesting members of team ' + team.id);
+              const members$ = this.teamService.getTeamMembers(courseName, team.id);
+              const proposer$ = this.teamService.getTeamProposer(courseName, team.id);
+              this.teams.push({team, teamMembers: members$, teamProposer: proposer$});
             }
-            console.log('Requesting members of team ' + team.id);
-            const members$ = this.teamService.getTeamMembers(this.course.name, team.id);
-            const proposer$ = this.teamService.getTeamProposer(this.course.name, team.id);
-            this.teams.push({team, teamMembers: members$, teamProposer: proposer$});
           }
-        }
-      });
+        });
+
+      // 3. Get infos about the course (e.g. min/max of team members)
+      // TODO: this.courseService.getOne(courseName).subscribe( c => this.course = c);
+      this.course = new Course(courseName, true, 2, 4);
+    });
   }
 
   openCreateTeamDialog(): void {
@@ -64,7 +69,7 @@ export class TeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.teamService.proposeTeam(this.course.name, result.teamName, result.members, result.timeout)
+        this.teamService.proposeTeam(this.course.name, result.value.teamName, result.value.members, result.value.timeout)
           .subscribe(
             data => {
               console.log(data);
