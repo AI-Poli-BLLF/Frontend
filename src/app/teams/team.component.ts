@@ -6,6 +6,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {CreateTeamDialogComponent} from './create-team-dialog/create-team-dialog.component';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, ParamMap} from '@angular/router';
+import {Course} from '../models/course.model';
+import {CourseService} from '../services/course.service';
 
 type TeamData = {
   team: Team;
@@ -22,8 +24,9 @@ export class TeamComponent implements OnInit {
 
   teams: TeamData[];
   activeTeam: boolean;
-  courseName: string;
-  constructor(private service: TeamService,
+  course: Course;
+  constructor(private teamService: TeamService,
+              private courseService: CourseService,
               public dialog: MatDialog,
               private route: ActivatedRoute) {
     this.activeTeam = false;
@@ -32,10 +35,11 @@ export class TeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.parent.paramMap.subscribe((params: ParamMap) => {
-      this.courseName = params.get('name');
+      const courseName = params.get('name');
+      this.courseService.getOne(courseName).subscribe( c => this.course = c);
     });
 
-    this.service.getTeamsByStudent(this.courseName)
+    this.teamService.getTeamsByStudent(this.course.name)
       .subscribe(data => {
         const teamArray: Team[] = data;
         for (const i in teamArray) {
@@ -45,8 +49,8 @@ export class TeamComponent implements OnInit {
               this.activeTeam = true;
             }
             console.log('Requesting members of team ' + team.id);
-            const members$ = this.service.getTeamMembers(this.courseName, team.id);
-            const proposer$ = this.service.getTeamProposer(this.courseName, team.id);
+            const members$ = this.teamService.getTeamMembers(this.course.name, team.id);
+            const proposer$ = this.teamService.getTeamProposer(this.course.name, team.id);
             this.teams.push({team, teamMembers: members$, teamProposer: proposer$});
           }
         }
@@ -55,12 +59,12 @@ export class TeamComponent implements OnInit {
 
   openCreateTeamDialog(): void {
     const dialogRef = this.dialog.open(CreateTeamDialogComponent, {
-      data: { courseName: this.courseName }
+      data: { course: this.course }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.proposeTeam(this.courseName, result.teamName, result.members, result.timeout)
+        this.teamService.proposeTeam(this.course.name, result.teamName, result.members, result.timeout)
           .subscribe(
             data => {
               console.log(data);
