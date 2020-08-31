@@ -32,7 +32,7 @@ export class TeamService {
   // Get team(s) a certain student is member of for a specific course.
   // If a student is part of an active team, only this will be returned,
   // otherwise all inactive teams the student is part of will be returned
-  getTeamsByStudent(courseName: string, studentId: string): Observable<Array<Team>>{
+  getTeamsByStudent(courseName: string): Observable<Array<Team>>{
     const userId = this.authService.getId();
     console.log('userId: ' + userId);
     return this.httpClient

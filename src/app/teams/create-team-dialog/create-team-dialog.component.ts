@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {Student} from '../../models/student.model';
 import {map, startWith} from 'rxjs/operators';
 import {TeamService} from '../../services/team.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -20,9 +20,12 @@ export class CreateTeamDialogComponent implements OnInit {
   filteredOptions: Observable<Student[]>;
   options: Student[];
   selectedStudents: Student[];
+  courseName: string;
 
   constructor(fb: FormBuilder, private service: TeamService,
+              @Inject(MAT_DIALOG_DATA) courseName: string,
               private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
+    this.courseName = courseName;
     this.selectedStudents = [];
     this.form = fb.group({
       teamName: [this.teamName, [Validators.required, Validators.minLength(3), Validators.maxLength(9)]],
@@ -31,7 +34,7 @@ export class CreateTeamDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getAvailableStudents('ai').subscribe(
+    this.service.getAvailableStudents(this.courseName).subscribe(
       obsData => {
         this.options = obsData;
       }
