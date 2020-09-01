@@ -57,8 +57,8 @@ export class TeamComponent implements OnInit {
         });
 
       // 3. Get infos about the course (e.g. min/max of team members)
-      // TODO: this.courseService.getOne(courseName).subscribe( c => this.course = c);
-      this.course = new Course(courseName, true, 2, 4);
+      this.courseService.getOne(courseName).subscribe( c => this.course = c);
+      // this.course = new Course(courseName, true, 2, 4);
     });
   }
 

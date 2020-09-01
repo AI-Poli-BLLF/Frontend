@@ -27,12 +27,12 @@ export class CreateTeamDialogComponent implements OnInit {
   constructor(fb: FormBuilder, private service: TeamService,
               @Inject(MAT_DIALOG_DATA) data: any,
               private dialogRef: MatDialogRef<CreateTeamDialogComponent>) {
+    this.selectedStudents = [];
     this.course = data.course;
     this.form = fb.group({
       teamName: [this.teamName, [Validators.required, Validators.minLength(3), Validators.maxLength(9)]],
       timeout: [this.timeout, [Validators.required]],
-      members: [this.selectedStudents, [Validators.required,
-        Validators.minLength(this.course.min - 1),
+      members: [this.selectedStudents, [Validators.minLength(this.course.min - 1),
         Validators.maxLength(this.course.max - 1)]]
     });
   }
