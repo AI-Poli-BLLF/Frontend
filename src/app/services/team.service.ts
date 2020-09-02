@@ -55,7 +55,21 @@ export class TeamService {
           s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
         catchError( err => {
           console.error(err);
-          return throwError('TeamService getTeamsByStudent error: ' + err.message);
+          return throwError('TeamService getTeamsMembers error: ' + err.message);
+        })
+      );
+  }
+
+  getTeamMembersByStatus(courseName: string, teamId: number, activeMembers: boolean): Observable<Array<Student>>{
+    const postfix = activeMembers ? '/activeMembers' : '/pendingMembers';
+    return this.httpClient
+      .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + postfix)
+      .pipe(
+        map(arr => arr.map(
+          s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService getTeamsMembersByStatus error: ' + err.message);
         })
       );
   }

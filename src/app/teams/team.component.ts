@@ -11,8 +11,9 @@ import {CourseService} from '../services/course.service';
 
 type TeamData = {
   team: Team;
-  teamMembers: Observable<Student[]>;
-  teamProposer: Observable<Student>;
+  activeMembers: Observable<Student[]>;
+  pendingMembers: Observable<Student[]>;
+  proposer: Observable<Student>;
 };
 
 @Component({
@@ -44,14 +45,7 @@ export class TeamComponent implements OnInit {
           const teamArray: Team[] = data;
           for (const i in teamArray) {
             if (data.hasOwnProperty(i)) {
-              const team: Team = data[i];
-              if (team.status === 'ACTIVE') {
-                this.activeTeam = true;
-              }
-              console.log('Requesting members of team ' + team.id);
-              const members$ = this.teamService.getTeamMembers(courseName, team.id);
-              const proposer$ = this.teamService.getTeamProposer(courseName, team.id);
-              this.teams.push({team, teamMembers: members$, teamProposer: proposer$});
+              this.getTeamInfos(courseName, data[i]);
             }
           }
         });
@@ -60,6 +54,17 @@ export class TeamComponent implements OnInit {
       this.courseService.getOne(courseName).subscribe( c => this.course = c);
       // this.course = new Course(courseName, true, 2, 4);
     });
+  }
+
+  private getTeamInfos(courseName: string, team: Team) {
+    if (team.status === 'ACTIVE') {
+      this.activeTeam = true;
+    }
+    console.log('Requesting members of team ' + team.id);
+    const activeMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, true);
+    const pendingMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, false);
+    const proposer$ = this.teamService.getTeamProposer(courseName, team.id);
+    this.teams.push({team, activeMembers: activeMembers$, pendingMembers: pendingMembers$, proposer: proposer$});
   }
 
   openCreateTeamDialog(): void {
