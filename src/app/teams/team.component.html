@@ -10,31 +10,29 @@
   </button>
   <br><br>
 
-  <li *ngFor="let team of teams">
+  <li *ngFor="let team of getTeams(teams)">
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{team.team.name}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>proposer: {{team.proposer | async}}</p>
+        <div *ngIf="!activeTeam">
+          <p>proposer: {{team.proposer | async}}</p>
+          pending members:
+          <ul>
+            <p *ngFor="let member of  team.pendingMembers | async">
+              {{member}}
+            </p>
+          </ul>
+        </div>
         active members:
         <ul>
           <p *ngFor="let member of team.activeMembers | async">
             {{member}}
           </p>
         </ul>
-        pending members:
-        <ul>
-          <p *ngFor="let member of team.pendingMembers | async">
-            {{member}}
-          </p>
-        </ul>
       </mat-card-content>
     </mat-card>
   </li>
-
-
-
-
 </div>
 

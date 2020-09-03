@@ -14,6 +14,7 @@ type TeamData = {
   activeMembers: Observable<Student[]>;
   pendingMembers: Observable<Student[]>;
   proposer: Observable<Student>;
+  token: string;
 };
 
 @Component({
@@ -23,7 +24,8 @@ type TeamData = {
 })
 export class TeamComponent implements OnInit {
 
-  teams: TeamData[];
+  nomi = ['matteo', 'maria', 'susanna'];
+  teams: Map<number, TeamData>;
   activeTeam: boolean;
   course: Course;
   constructor(private teamService: TeamService,
@@ -31,7 +33,7 @@ export class TeamComponent implements OnInit {
               public dialog: MatDialog,
               private route: ActivatedRoute) {
     this.activeTeam = false;
-    this.teams = new Array<TeamData>();
+    this.teams = new Map<number, TeamData>();
   }
 
   ngOnInit(): void {
@@ -57,14 +59,22 @@ export class TeamComponent implements OnInit {
   }
 
   private getTeamInfos(courseName: string, team: Team) {
+    console.log('Requesting members of team ' + team.id);
+    let activeMembers$;
+    let pendingMembers$;
+    let proposer$;
+    const token$ = 'ciao';
     if (team.status === 'ACTIVE') {
       this.activeTeam = true;
+      activeMembers$ = this.teamService.getTeamMembers(courseName, team.id);
+    } else {
+      activeMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, true);
+      pendingMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, false);
+      proposer$ = this.teamService.getTeamProposer(courseName, team.id);
     }
-    console.log('Requesting members of team ' + team.id);
-    const activeMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, true);
-    const pendingMembers$ = this.teamService.getTeamMembersByStatus(courseName, team.id, false);
-    const proposer$ = this.teamService.getTeamProposer(courseName, team.id);
-    this.teams.push({team, activeMembers: activeMembers$, pendingMembers: pendingMembers$, proposer: proposer$});
+    const data: TeamData = {team, activeMembers: activeMembers$, pendingMembers: pendingMembers$,
+      proposer: proposer$, token: token$};
+    this.teams.set(team.id, data);
   }
 
   openCreateTeamDialog(): void {
@@ -82,6 +92,10 @@ export class TeamComponent implements OnInit {
           );
       }
     });
+  }
+
+  getTeams(map: Map<number, TeamData>): TeamData[] {
+    return Array.from(map.values());
   }
 
 }

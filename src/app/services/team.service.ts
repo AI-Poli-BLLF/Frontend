@@ -116,4 +116,17 @@ export class TeamService {
         })
       );
   }
+
+  getTeamConfirmationToken(courseName: string, teamId: string): Observable<string> {
+    const userId = this.authService.getId();
+    console.log('CONFIRMATION TOKEN');
+    return this.httpClient
+      .get<string>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/pendingMembers/' + userId + '/token')
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService getTeamConfirmationToken error: ' + err.message);
+        })
+      );
+  }
 }
