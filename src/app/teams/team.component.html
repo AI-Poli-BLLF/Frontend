@@ -31,8 +31,13 @@
             {{member}}
           </p>
         </ul>
-        <div *ngIf="team.token !== null">
-          <p>token: {{(team.token | async)?.id}}</p>
+        <div *ngIf="team.token | async as token">
+          <button mat-raised-button (click)="respondToProposal(token, true)">
+            <span>Accept</span>
+          </button>
+          <button mat-raised-button (click)="respondToProposal(token, false)">
+            <span>Reject</span>
+          </button>
         </div>
       </mat-card-content>
     </mat-card>

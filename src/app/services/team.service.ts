@@ -12,7 +12,8 @@ import {Token} from "../models/token.model";
 })
 export class TeamService {
 
-  private url = 'https://localhost:4200/API';
+  private host = 'https://localhost:4200';
+  private url = this.host + '/API';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
@@ -127,6 +128,19 @@ export class TeamService {
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamConfirmationToken error: ' + err.message);
+        })
+      );
+  }
+
+  respondToProposal(tokenId: string, accept: boolean) {
+    console.log('RESPOND TO PROPOSAL');
+    const action: string = accept ? 'confirm/' : 'reject/';
+    return this.httpClient
+      .get(this.host + '/notification/' + action + tokenId)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService respondToProposal error: ' + err.message);
         })
       );
   }
