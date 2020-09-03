@@ -12,6 +12,7 @@ export class CourseService {
 
   private url = 'https://localhost:4200/API/courses';
   private urlProfessors = 'https://localhost:4200/API/professors';
+  private urlStudents = 'https://localhost:4200/API/students';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -52,7 +53,7 @@ export class CourseService {
         map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
         catchError( err => {
           console.error(err);
-          return throwError('CourseService getAll error: ${err.message}');
+          return throwError('CourseService getAll of professor error: ${err.message}');
         })
       );
   }
@@ -65,6 +66,18 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError('CourseService getAll error: ${err.message}');
+        })
+      );
+  }
+
+  // get all courses of a student
+  getAllByStudent(studentId: string): Observable<Array<Course>>{
+    return this.httpClient.get<Array<Course>>(this.urlStudents + '/' + studentId + '/courses')
+      .pipe(
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getAll of student error: ${err.message}');
         })
       );
   }

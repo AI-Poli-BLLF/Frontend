@@ -5,6 +5,7 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {CourseService} from "../services/course.service";
 import {MatDialog} from "@angular/material/dialog";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-student-view',
@@ -21,7 +22,8 @@ export class StudentViewComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private courseService: CourseService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authService: AuthService) {
     this.homeS = router.events.subscribe(
       e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
@@ -46,8 +48,7 @@ export class StudentViewComponent implements OnInit, OnDestroy {
   }
 
   loadCourses(){
-    // todo: sarebbe più saggio visualizzare solo i corsi di quel prof
-    this.courseService.getAll().subscribe(
+    this.courseService.getAllByStudent(this.authService.getId()).subscribe(
       data => {
         console.log(data);
         this.courses = data;
