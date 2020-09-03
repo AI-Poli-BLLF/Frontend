@@ -8,13 +8,15 @@ import {Observable} from 'rxjs';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Course} from '../models/course.model';
 import {CourseService} from '../services/course.service';
+import {AuthService} from '../services/auth.service';
+import {Token} from '../models/token.model';
 
 type TeamData = {
   team: Team;
   activeMembers: Observable<Student[]>;
   pendingMembers: Observable<Student[]>;
   proposer: Observable<Student>;
-  token: string;
+  token: Observable<Token>;
 };
 
 @Component({
@@ -30,6 +32,7 @@ export class TeamComponent implements OnInit {
   course: Course;
   constructor(private teamService: TeamService,
               private courseService: CourseService,
+              private authService: AuthService,
               public dialog: MatDialog,
               private route: ActivatedRoute) {
     this.activeTeam = false;
@@ -62,8 +65,7 @@ export class TeamComponent implements OnInit {
     console.log('Requesting members of team ' + team.id);
     let activeMembers$;
     let pendingMembers$;
-    let proposer$;
-    const token$ = 'ciao';
+    let proposer$: Observable<Student>;
     if (team.status === 'ACTIVE') {
       this.activeTeam = true;
       activeMembers$ = this.teamService.getTeamMembers(courseName, team.id);
@@ -73,8 +75,17 @@ export class TeamComponent implements OnInit {
       proposer$ = this.teamService.getTeamProposer(courseName, team.id);
     }
     const data: TeamData = {team, activeMembers: activeMembers$, pendingMembers: pendingMembers$,
-      proposer: proposer$, token: token$};
+      proposer: proposer$, token: null};
     this.teams.set(team.id, data);
+
+    if (team.status !== 'ACTIVE') {
+      pendingMembers$.subscribe(sArr => {
+        if (sArr.map(s => s.id).indexOf(this.authService.getId()) !== -1) {
+          const token$ = this.teamService.getTeamConfirmationToken(courseName, team.id);
+          this.teams.get(team.id).token = token$;
+        }
+      });
+    }
   }
 
   openCreateTeamDialog(): void {

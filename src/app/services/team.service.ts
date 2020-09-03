@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, filter, map} from 'rxjs/operators';
 import {Team} from '../models/team.model';
 import {AuthService} from './auth.service';
+import {Token} from "../models/token.model";
 
 @Injectable({
   providedIn: 'root'
@@ -117,11 +118,11 @@ export class TeamService {
       );
   }
 
-  getTeamConfirmationToken(courseName: string, teamId: string): Observable<string> {
+  getTeamConfirmationToken(courseName: string, teamId: number): Observable<Token> {
     const userId = this.authService.getId();
     console.log('CONFIRMATION TOKEN');
     return this.httpClient
-      .get<string>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/pendingMembers/' + userId + '/token')
+      .get<Token>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/pendingMembers/' + userId + '/token')
       .pipe(
         catchError( err => {
           console.error(err);

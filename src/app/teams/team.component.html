@@ -31,6 +31,9 @@
             {{member}}
           </p>
         </ul>
+        <div *ngIf="team.token !== null">
+          <p>token: {{(team.token | async)?.id}}</p>
+        </div>
       </mat-card-content>
     </mat-card>
   </li>
