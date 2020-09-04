@@ -38,7 +38,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
   addCourse(course: Course){
-    this.service.add(course).subscribe(
+    this.service.update(course).subscribe(
       data => {
         console.log(data);
         this.loadCourses();
@@ -75,17 +75,19 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     // todo: unsubrscribe?
     console.log(this.courses.findIndex(c => c.name === this.selectedItem) === -1);
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1){
-      const snackBarRef = this.snackBar.open('Corso cancellato', 'Anulla');
-      snackBarRef.afterDismissed().subscribe(d => {
-        console.log(d.dismissedByAction);
-        if (d.dismissedByAction){
-          this.addCourse(course);
-        }
-        else {
-          this.selectedItem = 'Seleziona un corso';
-          this.router.navigate(['/teacher']);
-        }
-      });
+      const snackBarRef = this.snackBar.open('Corso cancellato', 'Chiudi');
+      this.selectedItem = 'Seleziona un corso';
+      this.router.navigate(['/teacher']);
+      // snackBarRef.afterDismissed().subscribe(d => {
+      //   console.log(d.dismissedByAction);
+      //   if (d.dismissedByAction){
+      //     this.addCourse(course);
+      //   }
+      //   else {
+      //     this.selectedItem = 'Seleziona un corso';
+      //     this.router.navigate(['/teacher']);
+      //   }
+      // });
     }
   }
 

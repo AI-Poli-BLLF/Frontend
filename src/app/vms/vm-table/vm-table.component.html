@@ -1,5 +1,5 @@
 <table mat-table
-       [dataSource]="dataSource" multiTemplateDataRows>
+       [dataSource]="vmConfig" multiTemplateDataRows>
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-header-cell *matHeaderCellDef> {{column}} </th>
     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
@@ -11,7 +11,7 @@
 
       <div class="element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <app-vm-sub-table></app-vm-sub-table>
+        <app-vm-sub-table [vmConfig]="element"></app-vm-sub-table>
       </div>
     </td>
   </ng-container>

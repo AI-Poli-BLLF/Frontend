@@ -4,6 +4,9 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Course} from '../models/course.model';
+import {Team} from "../models/team.model";
+import {VmConfig} from "../models/vm.config.model";
+import {Vm} from "../models/vm.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +20,9 @@ export class CourseService {
   constructor(private httpClient: HttpClient) { }
 
   // add a course
-  add(course: Course): Observable<Course>{
+  update(course: Course): Observable<Course>{
     console.log('UPDATE');
-    return this.httpClient.post<Course>(this.url, course)
+    return this.httpClient.put<Course>(this.url + '/' + course.name, course)
       .pipe(
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
         catchError( err => {
@@ -78,6 +81,44 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError('CourseService getAll of student error: ${err.message}');
+        })
+      );
+  }
+
+  // get all teams of a course
+  getTeamsForCourse(courseName: string): Observable<Array<Team>>{
+    return this.httpClient.get<Array<Team>>(this.url + '/' + courseName + '/teams')
+      .pipe(
+        map(c => c.map(c2 => new Team(c2.id, c2.name, c2.status))),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getTeamsForCourse error: ${err.message}');
+        })
+      );
+  }
+
+  getTeamVMConfig(courseName: string, teamId: number, teamName: string): Observable<VmConfig>{
+    return this.httpClient.get<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config')
+      .pipe(
+        map(c => new VmConfig(c.id, teamId, teamName, c.maxCpu, c.maxRam, c.maxDisk, c.maxVm, c.maxActive)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getTeamVMConfig error: ${err.message}');
+        })
+      );
+  }
+
+  getTeamVMs(courseName: string, teamId: number): Observable<Array<Vm>>{
+    return this.httpClient.get<Array<Vm>>(this.url + '/' + courseName + '/teams/' + teamId + '/vms')
+      .pipe(
+        map(c => {
+          console.log(c);
+          // todo: ricavare lo studente
+          return c.map(c2 => new Vm(c2.id, c2.active, c2.cpu, c2.ramSize, c2.diskSize));
+        }),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getTeamVMs error: ${err.message}');
         })
       );
   }
