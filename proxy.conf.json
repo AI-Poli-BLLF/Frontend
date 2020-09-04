@@ -1,12 +1,18 @@
 {
   "/API": {
-  "target": "http://localhost:8080",
-  "secure": false
-},
-  "/authenticate":{
     "target": "http://localhost:8080",
-    "secure": false  },
-  "/register":{
+    "secure": false
+  },
+  "/authenticate": {
     "target": "http://localhost:8080",
-    "secure": false  }
+    "secure": false
+  },
+  "/register": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/notification": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
 }

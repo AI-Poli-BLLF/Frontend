@@ -105,6 +105,11 @@ export class TeamComponent implements OnInit {
     });
   }
 
+  respondToProposal(token: Token, accepted: boolean): void {
+    this.teamService.respondToProposal(token.id, accepted)
+      .subscribe();
+  }
+
   getTeams(map: Map<number, TeamData>): TeamData[] {
     return Array.from(map.values());
   }
