@@ -46,6 +46,9 @@ import {TeamComponent} from './teams/team.component';
 import {CreateTeamDialogComponent} from './teams/create-team-dialog/create-team-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
+import { AssignmentComponent } from './assignment/assignment.component';
+import { AssignmentsContComponent } from './assignment/assignments-cont.component';
+import { DraftComponent } from './assignment/draft/draft.component';
 
 
 @NgModule({
@@ -71,7 +74,10 @@ import {MatSelectModule} from '@angular/material/select';
     VmTableComponent,
     VmSubTableComponent,
     EditCourseDialogComponent,
-    CreateTeamDialogComponent
+    CreateTeamDialogComponent,
+    AssignmentComponent,
+    AssignmentsContComponent,
+    DraftComponent
   ],
   imports: [
     BrowserModule,
