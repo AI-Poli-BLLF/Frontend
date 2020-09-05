@@ -7,6 +7,10 @@ import {ActivatedRoute} from '@angular/router';
 import {VmConfig} from '../../models/vm.config.model';
 import {Course} from '../../models/course.model';
 import {CourseService} from '../../services/course.service';
+import {AddCourseDialogComponent} from '../../teacher-view/add-course-dialog/add-course-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateVmDialogComponent} from '../create-vm-dialog/create-vm-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-vms-students',
@@ -16,16 +20,22 @@ import {CourseService} from '../../services/course.service';
 export class VmsStudentsComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[] = ['id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'accensione', 'modifica', 'elimina'];
   dataSource: Vm[];
+  courseName: string;
   vmConfig: VmConfig = new VmConfig(-1, -1, '', 0, 0, 0, 0, 0);
   sub: Subscription;
   team: Team = new Team(-1, '', '');
 
 
-  constructor(private courseService: CourseService, private teamService: TeamService, private route: ActivatedRoute) {
+  constructor(
+      private courseService: CourseService,
+      private dialog: MatDialog,
+      private snackBar: MatSnackBar,
+      private teamService: TeamService,
+      private route: ActivatedRoute) {
     this.dataSource = vmsTest;
     this.sub = this.route.parent.params.subscribe(params => {
       this.getTeamId(params.name);
-
+      this.courseName = params.name;
     });
   }
 
@@ -52,6 +62,42 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     return sum;
   }
 
+  active(){
+    return this.dataSource.filter(vm => vm.active).length;
+  }
+
+  vmNumber(){
+    return this.dataSource.length;
+  }
+
+  openCreateVm(){
+    // todo: unsubrscribe?
+    if (this.team.id === -1){
+      this.snackBar.open('Si sono verificati problemi nel recuperare il team.', 'Chiudi');
+      return;
+    }
+    if ((this.vmConfig.maxVm - this.vmNumber()) < 1) {
+      this.snackBar.open('Massimo numero VMs raggiunto.', 'Chiudi');
+      return;
+    }
+    const vmConfigLeft = new VmConfig(
+        undefined,
+        this.team.id,
+        this.team.name,
+        this.vmConfig.maxCpu - this.cpu(),
+        this.vmConfig.maxRam - this.ram(),
+        this.vmConfig.maxDisk - this.disk(),
+        this.vmConfig.maxVm - this.vmNumber(),
+        this.vmConfig.maxActive - this.active());
+    console.log(vmConfigLeft);
+    // todo: unsubscribe
+    const d = {config: vmConfigLeft, courseName: this.courseName};
+    const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
+    dialogRef.afterClosed().subscribe(() => {
+      this.getVmsInstances(this.courseName, this.team.id);
+    });
+  }
+
   getTeamId(courseName: string){
     this.teamService.getTeamsByStudent(courseName)
         .subscribe(data => {
@@ -70,7 +116,10 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   getVmConfig(courseName: string, teamId: number, teamName: string){
     this.courseService.getTeamVMConfig(courseName, teamId, teamName)
         .subscribe(
-            data => this.vmConfig = data,
+            data => {
+              console.log(data);
+              this.vmConfig = data;
+            },
             error => console.log(error)
             );
   }

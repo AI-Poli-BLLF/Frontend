@@ -142,7 +142,7 @@ export class CourseService {
         map(s2 => new VmModel(s2.id, s2.os, s2.version)),
         catchError( err => {
           console.error(err);
-          return throwError('CourseService vmModel error:' + err.message);
+          return throwError('CourseService addCourseVmModel error:' + err.message);
         })
       );
   }
@@ -153,7 +153,18 @@ export class CourseService {
         map(s2 => new VmConfig(s2.id, teamId, teamName, s2.maxCpu, s2.maxRam, s2.maxDisk, s2.maxVm, s2.maxActive)),
         catchError( err => {
           console.error(err);
-          return throwError('CourseService vmModel error:' + err.message);
+          return throwError('CourseService editCourseVmConfig error:' + err.message);
+        })
+      );
+  }
+
+  createVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
+    return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
+      .pipe(
+        map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
         })
       );
   }

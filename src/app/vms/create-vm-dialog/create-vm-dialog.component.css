@@ -1,0 +1,14 @@
+h1 {
+  margin-bottom: 1.5em;
+}
+button {
+  float: right;
+}
+
+.error {
+  color: red;
+}
+
+mat-slider {
+  margin-top: 1em;
+}
