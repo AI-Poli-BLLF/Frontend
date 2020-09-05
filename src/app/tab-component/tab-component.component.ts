@@ -16,6 +16,7 @@ export class TabComponentComponent implements OnInit {
   linksTeacher: Array<NavModel> = [
     new NavModel('./students', 'Students'),
     new NavModel('./vms', 'VMs'),
+    new NavModel('./assignments', 'Assignments'),
   ];
   constructor(private authService: AuthService) { }
 

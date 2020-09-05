@@ -48,6 +48,9 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { VmsStudentsComponent } from './vms/vms-students/vms-students.component';
 import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog.component';
+import { AssignmentComponent } from './assignment/assignment.component';
+import { AssignmentsContComponent } from './assignment/assignments-cont.component';
+import { DraftComponent } from './assignment/draft/draft.component';
 
 
 @NgModule({
@@ -75,7 +78,10 @@ import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog
     EditCourseDialogComponent,
     CreateTeamDialogComponent,
     VmsStudentsComponent,
-    CreateVmDialogComponent
+    CreateVmDialogComponent,
+    AssignmentComponent,
+    AssignmentsContComponent,
+    DraftComponent
   ],
   imports: [
     BrowserModule,

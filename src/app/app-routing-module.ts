@@ -13,6 +13,8 @@ import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
 import { TeamComponent } from './teams/team.component';
 import {VmsStudentsComponent} from "./vms/vms-students/vms-students.component";
+import {AssignmentComponent} from './assignment/assignment.component';
+import {AssignmentsContComponent} from './assignment/assignments-cont.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -28,7 +30,8 @@ const routes: Routes = [
         children: [
           {path: '', component: HomeComponent },
           {path: 'students', component: StudentsContComponent},
-          {path: 'vms', component: VmsComponent }
+          {path: 'vms', component: VmsComponent },
+          {path: 'assignments', component: AssignmentsContComponent}
         ]},
     ]},
   {path: 'student',
