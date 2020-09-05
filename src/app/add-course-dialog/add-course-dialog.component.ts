@@ -47,7 +47,7 @@ export class AddCourseDialogComponent implements OnInit {
     // todo: opzione per modificare l'enabled
     const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));
-    this.service.add(course).subscribe(
+    this.service.update(course).subscribe(
       data => {
         console.log(data);
         this.dialogRef.close();

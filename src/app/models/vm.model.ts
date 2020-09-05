@@ -2,23 +2,23 @@ import {Student} from './student.model';
 
 export class Vm {
   id: number;
-  student: Student;
-  state: boolean;
+  active: boolean;
   cpu: number;
   ramSize: number;
   diskSize: number;
+  student: Student;
 
-  constructor(id: number, student: Student, state: boolean, cpu: number, ramSize: number, diskSize: number) {
+  constructor(id: number, active: boolean, cpu: number, ramSize: number, diskSize: number) {
     this.id = id;
-    this.student = student;
-    this.state = state;
+    this.active = active;
     this.cpu = cpu;
     this.ramSize = ramSize;
     this.diskSize = diskSize;
+    this.student = new Student('s123456', 'Pluto', 'Paperino', 'aaa', 's123456@polito.it');
   }
 
   toString(){
-    return this.id + ' ' + this.state + ' (' + this.student.id + ')';
+    return this.id + ' ' + this.active + ' (' + this.student.id + ')';
   }
 
   get link(): string {

@@ -52,19 +52,19 @@ export class EditCourseDialogComponent implements OnInit {
 
   // todo: il max deve essere maggiore del min
   edit(){
-    console.log(JSON.stringify(this.course));
-    // todo: manca il metodo per fare la edi del corso
-    // this.service.edit(this.course).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.dialogRef.close();
-    //   },
-    //   error => {
-    //     console.log(error);
-    //     (error.status === 401 || error.status === 403) ?
-    //       this.labelValue = 'Utente non autorizzato' : this.labelValue = 'Si è verificato un errore';
-    //   }
-
-    // );
+    // todo: opzione per modificare l'enabled
+    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
+    console.log(JSON.stringify(course));
+    this.service.update(course).subscribe(
+      data => {
+        console.log(data);
+        this.dialogRef.close();
+      },
+      error => {
+        console.log(error);
+        (error.status === 401 || error.status === 403) ?
+          this.labelValue = 'Utente non autorizzato' : this.labelValue = 'Si è verificato un errore';
+      }
+    );
   }
 }

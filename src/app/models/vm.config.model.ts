@@ -1,5 +1,6 @@
-export class VmGroup {
+export class VmConfig {
   id: number;
+  teamId: number;
   groupName: string;
   maxCpu: number;
   maxRam: number;
@@ -7,8 +8,10 @@ export class VmGroup {
   maxVm: number;
   maxActive: number;
 
-  constructor(id: number, groupName: string, maxCpu: number, maxRam: number, maxDisk: number, maxVm: number, maxActive: number) {
+  constructor(id: number, teamId: number, groupName: string, maxCpu: number,
+              maxRam: number, maxDisk: number, maxVm: number, maxActive: number) {
     this.id = id;
+    this.teamId = teamId;
     this.groupName = groupName;
     this.maxCpu = maxCpu;
     this.maxRam = maxRam;

@@ -22,7 +22,7 @@ export class RegistrationDialogComponent implements OnInit {
 
   constructor(private service: AuthService,
               private dialogRef: MatDialogRef<RegistrationDialogComponent>,
-              private snackBar: MatSnackBar,) {
+              private snackBar: MatSnackBar) {
   }
 
   getNameErrorMessage() {
@@ -108,7 +108,7 @@ export class RegistrationDialogComponent implements OnInit {
         error => {
           console.log(error);
           error.status === 409 ?
-            this.labelValue = 'Utente già registrato.' : this.labelValue = 'Si è verificato un errore.'
+            this.labelValue = 'Utente già registrato.' : this.labelValue = 'Si è verificato un errore.';
         }
       );
   }

@@ -42,7 +42,6 @@ const routes: Routes = [
         component: TabComponentComponent,
         children: [
           {path: '', component: HomeComponent },
-          {path: 'students', component: StudentsContComponent},
           {path: 'vms', component: VmsComponent },
           {path: 'teams', component: TeamComponent}
         ]},

@@ -10,7 +10,6 @@ import {AuthService} from "../services/auth.service";
 export class TabComponentComponent implements OnInit {
   links: Array<NavModel>;
   linksStudent: Array<NavModel> = [
-    new NavModel('./students', 'Students'),
     new NavModel('./vms', 'VMs'),
     new NavModel('./teams', 'Teams')
   ];

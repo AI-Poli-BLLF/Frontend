@@ -3,7 +3,7 @@
   <form>
     <mat-form-field>
       <mat-label>Nome corso</mat-label>
-      <input matInput type="text" [formControl]="nameValidator" [(ngModel)]="course.name" required/>
+      <input matInput type="text" disabled [formControl]="nameValidator" [(ngModel)]="course.name" required/>
       <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
