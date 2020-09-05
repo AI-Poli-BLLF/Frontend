@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Student} from '../models/student.model';
+import {Student} from '../../models/student.model';
 import {forkJoin, Observable, Subscription} from 'rxjs';
 import {StudentsComponent} from './students.component';
-import {StudentService} from '../services/student.service';
+import {StudentService} from '../../services/student.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
 

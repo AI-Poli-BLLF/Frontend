@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+}
+mat-slider {
+  display: block;
+}
+body {
+  /*padding-left: 1em;*/
+  /*padding-bottom: 1em;*/
+}
+
+button.add {
+  margin-left: 1em;
+}
+
+.resources {
+  margin-top: 1em;
+}
+mat-slider {
+  margin-top: 1em;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  background-color: #ffd740 !important;
+  border-radius: 50% 50% 0 !important;
+}
+
+::ng-deep .mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+::ng-deep .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}

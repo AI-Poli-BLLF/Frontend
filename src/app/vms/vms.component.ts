@@ -20,16 +20,17 @@ export class VmsComponent implements OnInit {
     private route: ActivatedRoute) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
-      this.loadTeams(this.courseName);
-      console.log(params);
+      // console.log(params);
     });
   }
 
   loadTeams(courseName: string){
+    // console.log('load teams');
     this.courseService.getTeamsForCourse(courseName).subscribe(teams => this.teams = teams);
   }
 
   ngOnInit(): void {
+    this.loadTeams(this.courseName);
   }
 
 }

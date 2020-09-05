@@ -11,7 +11,7 @@
 
       <div class="element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <app-vm-sub-table [vmConfig]="element"></app-vm-sub-table>
+        <app-vm-sub-table [courseName]="courseName" (updateElement)="updateElement($event)" [vmConfig]="element"></app-vm-sub-table>
       </div>
     </td>
   </ng-container>

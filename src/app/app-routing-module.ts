@@ -1,6 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {StudentsContComponent} from './teacher/students-cont.component';
+import {StudentsContComponent} from './teacher-view/students/students-cont.component';
 import {HomeComponent} from './home.component';
 import {PageNotFoundComponent} from './page-not-found.component';
 import {VmsComponent} from './vms/vms.component';
@@ -12,6 +12,7 @@ import {StudentViewComponent} from './student-view/student-view.component';
 import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
 import { TeamComponent } from './teams/team.component';
+import {VmsStudentsComponent} from "./vms/vms-students/vms-students.component";
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -39,7 +40,7 @@ const routes: Routes = [
         component: TabComponentComponent,
         children: [
           {path: '', component: HomeComponent },
-          {path: 'vms', component: VmsComponent },
+          {path: 'vms', component: VmsStudentsComponent },
           {path: 'teams', component: TeamComponent}
         ]},
     ]},

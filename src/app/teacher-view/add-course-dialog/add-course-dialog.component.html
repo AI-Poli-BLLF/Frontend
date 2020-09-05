@@ -16,6 +16,20 @@
       <input matInput type="number" [formControl]="maxValidator" required/>
       <mat-error *ngIf="maxValidator.invalid">{{getMaxErrorMessage()}}</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sistema operativo</mat-label>
+      <mat-select [formControl]="selectedOs">
+        <mat-option value="{{element}}" *ngFor="let element of getOs()">{{element}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="maxValidator.invalid">{{getOsErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Versione sistema operativo</mat-label>
+      <mat-select [formControl]="selectedV">
+        <mat-option value="{{element}}" *ngFor="let element of getVersions()">{{element}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="maxValidator.invalid">{{getVersionErrorMessage()}}</mat-error>
+    </mat-form-field>
     <mat-slide-toggle class="example-margin" color="primary">Abilitato</mat-slide-toggle>
     <label>{{labelValue}}</label>
     <button mat-button (click)="add()">Aggiungi</button>

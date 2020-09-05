@@ -3,6 +3,7 @@ import {Student} from '../models/student.model';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
+import {Team} from "../models/team.model";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,16 @@ export class StudentService {
   }
 
   enrollStudent(courseName: string, studentId: string): Observable<any>{
+    return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('StudentService getAll error: ' + err.message);
+        })
+      );
+  }
+
+  getTeam(courseName: string, studentId: string): Observable<Team>{
     return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
       .pipe(
         catchError( err => {

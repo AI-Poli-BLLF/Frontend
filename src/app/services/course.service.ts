@@ -7,6 +7,7 @@ import {Course} from '../models/course.model';
 import {Team} from "../models/team.model";
 import {VmConfig} from "../models/vm.config.model";
 import {Vm} from "../models/vm.model";
+import {VmModel} from "../models/vm.model.model";
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +104,7 @@ export class CourseService {
         map(c => new VmConfig(c.id, teamId, teamName, c.maxCpu, c.maxRam, c.maxDisk, c.maxVm, c.maxActive)),
         catchError( err => {
           console.error(err);
-          return throwError('CourseService getTeamVMConfig error: ${err.message}');
+          return throwError('CourseService getTeamVMConfig error: ' + err.message);
         })
       );
   }
@@ -131,6 +132,28 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError('CourseService getEnrolled error: ${err.message}');
+        })
+      );
+  }
+
+  addCourseVmModel(courseName: string, model: VmModel): Observable<VmModel>{
+    return this.httpClient.post<VmModel>(this.url + '/' + courseName + '/vm-model', model)
+      .pipe(
+        map(s2 => new VmModel(s2.id, s2.os, s2.version)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService vmModel error:' + err.message);
+        })
+      );
+  }
+
+  editCourseVmConfig(courseName: string, teamId: number, teamName: string, model: VmConfig, ): Observable<VmConfig>{
+    return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' + model.id, model)
+      .pipe(
+        map(s2 => new VmConfig(s2.id, teamId, teamName, s2.maxCpu, s2.maxRam, s2.maxDisk, s2.maxVm, s2.maxActive)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService vmModel error:' + err.message);
         })
       );
   }

@@ -17,8 +17,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { StudentsComponent } from './teacher/students.component';
-import { StudentsContComponent } from './teacher/students-cont.component';
+import { StudentsComponent } from './teacher-view/students/students.component';
+import { StudentsContComponent } from './teacher-view/students/students-cont.component';
 import {AppRoutingModule} from './app-routing-module';
 import { HomeComponent } from './home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -29,10 +29,10 @@ import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/
 import {JwtInterceptor} from './auth/JwtInterceptor';
 import { TabComponentComponent } from './tab-component/tab-component.component';
 import { RegistrationDialogComponent } from './registration-dialog/registration-dialog.component';
-import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
+import { AddCourseDialogComponent } from './teacher-view/add-course-dialog/add-course-dialog.component';
 import { TeacherViewComponent } from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
-import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
+import { DeleteConfirmDialogComponent } from './teacher-view/delete-confirm-dialog/delete-confirm-dialog.component';
 import { StudentViewComponent } from './student-view/student-view.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
@@ -41,11 +41,13 @@ import { VmTableComponent } from './vms/vm-table/vm-table.component';
 import { VmSubTableComponent } from './vms/vm-sub-table/vm-sub-table.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { EditCourseDialogComponent } from './edit-course-dialog/edit-course-dialog.component';
+import { EditCourseDialogComponent } from './teacher-view/edit-course-dialog/edit-course-dialog.component';
 import {TeamComponent} from './teams/team.component';
 import {CreateTeamDialogComponent} from './teams/create-team-dialog/create-team-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
+import { VmsStudentsComponent } from './vms/vms-students/vms-students.component';
+import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog.component';
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import {MatSelectModule} from '@angular/material/select';
     VmTableComponent,
     VmSubTableComponent,
     EditCourseDialogComponent,
-    CreateTeamDialogComponent
+    CreateTeamDialogComponent,
+    VmsStudentsComponent,
+    CreateVmDialogComponent
   ],
   imports: [
     BrowserModule,

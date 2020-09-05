@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, filter, map} from 'rxjs/operators';
 import {Team} from '../models/team.model';
 import {AuthService} from './auth.service';
-import {Token} from "../models/token.model";
+import {Token} from '../models/token.model';
 
 @Injectable({
   providedIn: 'root'
