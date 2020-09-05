@@ -76,10 +76,6 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       this.snackBar.open('Si sono verificati problemi nel recuperare il team.', 'Chiudi');
       return;
     }
-    if ((this.vmConfig.maxVm - this.vmNumber()) < 1) {
-      this.snackBar.open('Massimo numero VMs raggiunto.', 'Chiudi');
-      return;
-    }
     const vmConfigLeft = new VmConfig(
         undefined,
         this.team.id,
@@ -89,7 +85,12 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
         this.vmConfig.maxDisk - this.disk(),
         this.vmConfig.maxVm - this.vmNumber(),
         this.vmConfig.maxActive - this.active());
-    console.log(vmConfigLeft);
+    if (vmConfigLeft.maxVm === 0 || vmConfigLeft.maxCpu === 0 || vmConfigLeft.maxRam === 0 ||
+        vmConfigLeft.maxDisk === 0 || vmConfigLeft.maxActive === 0) {
+      this.snackBar.open('Massimo numero risorse raggiunto.', 'Chiudi');
+      return;
+    }
+    // console.log(vmConfigLeft);
     // todo: unsubscribe
     const d = {config: vmConfigLeft, courseName: this.courseName};
     const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
@@ -103,7 +104,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           data.forEach(d => {
             if (d.status === 'ACTIVE'){
-              console.log(d);
+              // console.log(d);
               this.team = d;
               this.getVmConfig(courseName, d.id, d.name);
               this.getVmsInstances(courseName, d.id);
@@ -117,7 +118,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     this.courseService.getTeamVMConfig(courseName, teamId, teamName)
         .subscribe(
             data => {
-              console.log(data);
+              // console.log(data);
               this.vmConfig = data;
             },
             error => console.log(error)

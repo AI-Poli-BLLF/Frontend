@@ -42,7 +42,6 @@ export class CreateVmDialogComponent implements OnInit {
       .subscribe(
         data => {
           this.snackBar.open('Creazione VM riuscita.', 'Chiudi');
-          console.log(data);
           this.dialogRef.close();
         },
         error => {
