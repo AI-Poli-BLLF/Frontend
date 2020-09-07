@@ -132,11 +132,11 @@ export class TeamService {
       );
   }
 
-  respondToProposal(tokenId: string, accept: boolean) {
+  respondToProposal(token: Token, accept: boolean) {
     console.log('RESPOND TO PROPOSAL');
     const action: string = accept ? 'confirm/' : 'reject/';
     return this.httpClient
-      .get(this.host + '/notification/' + action + tokenId)
+      .post<any>(this.host + '/notification/' + action, token.id)
       .pipe(
         catchError( err => {
           console.error(err);

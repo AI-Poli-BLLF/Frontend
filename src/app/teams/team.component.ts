@@ -26,7 +26,6 @@ type TeamData = {
 })
 export class TeamComponent implements OnInit {
 
-  nomi = ['matteo', 'maria', 'susanna'];
   teams: Map<number, TeamData>;
   activeTeam: boolean;
   course: Course;
@@ -106,7 +105,7 @@ export class TeamComponent implements OnInit {
   }
 
   respondToProposal(token: Token, accepted: boolean): void {
-    this.teamService.respondToProposal(token.id, accepted)
+    this.teamService.respondToProposal(token, accepted)
       .subscribe();
   }
 
