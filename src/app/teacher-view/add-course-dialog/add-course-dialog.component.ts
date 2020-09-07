@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Course} from '../../models/course.model';
 import {CourseService} from '../../services/course.service';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -19,6 +19,7 @@ export class AddCourseDialogComponent implements OnInit {
   selectedV = new FormControl('', [Validators.required]);
   enabled = false;
   labelValue: string;
+  formGroup: FormGroup;
 
   osV: VmModel[] = [
     new VmModel(undefined, 'Windows', '10'),
@@ -88,13 +89,31 @@ export class AddCourseDialogComponent implements OnInit {
 
   // todo: il max deve essere maggiore del min
   add(){
+    // controllo se ci sono errori
+    if (
+      this.nameValidator.hasError('required') ||
+      this.nameValidator.hasError('minLength') ||
+      this.nameValidator.hasError('maxLength') ||
+      this.minValidator.hasError('required') ||
+      this.minValidator.hasError('min') ||
+      this.minValidator.hasError('max') ||
+      this.selectedOs.hasError('required') ||
+      this.selectedV.hasError('required') ||
+      this.maxValidator.hasError('required') ||
+      this.maxValidator.hasError('min') ||
+      this.maxValidator.hasError('max')
+    ) {
+      return;
+    }
+    const selectedV = this.selectedV.value;
+    const selectedOS = this.selectedOs.value;
     // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, this.enabled, this.minValidator.value, this.maxValidator.value);
+    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));
     this.service.update(course).subscribe(
       data => {
         console.log(data);
-        this.addModel(course);
+        this.addModel(course, selectedOS, selectedV);
       },
       error => {
         console.log(error);
@@ -105,7 +124,8 @@ export class AddCourseDialogComponent implements OnInit {
     );
   }
 
-  addModel(course: Course){
+  addModel(course: Course, selectedOS: string, selectedV: string){
+    console.log('Model: ', selectedOS, selectedV);
     this.service.addCourseVmModel(course.name, new VmModel(undefined, this.selectedOs.value, this.selectedV.value))
       .subscribe(
         data => {
