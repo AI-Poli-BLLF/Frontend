@@ -4,8 +4,7 @@ import {Course} from '../../models/course.model';
 import {CourseService} from '../../services/course.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../../login-dialog/login-dialog.component';
-import {VmModel} from "../../models/vm.model.model";
-import {Vm} from "../../models/vm.model";
+import {VmModel} from '../../models/vm.model.model';
 
 @Component({
   selector: 'app-add-course-dialog',
@@ -18,7 +17,7 @@ export class AddCourseDialogComponent implements OnInit {
   maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   selectedOs = new FormControl('', [Validators.required]);
   selectedV = new FormControl('', [Validators.required]);
-
+  enabled = false;
   labelValue: string;
 
   osV: VmModel[] = [
@@ -90,7 +89,7 @@ export class AddCourseDialogComponent implements OnInit {
   // todo: il max deve essere maggiore del min
   add(){
     // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
+    const course: Course = new Course(this.nameValidator.value, this.enabled, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));
     this.service.update(course).subscribe(
       data => {

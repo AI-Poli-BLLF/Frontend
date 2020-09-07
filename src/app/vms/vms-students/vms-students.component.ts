@@ -32,7 +32,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       private snackBar: MatSnackBar,
       private teamService: TeamService,
       private route: ActivatedRoute) {
-    this.dataSource = vmsTest;
+    this.dataSource = [];
     this.sub = this.route.parent.params.subscribe(params => {
       this.getTeamId(params.name);
       this.courseName = params.name;
@@ -133,9 +133,3 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
         );
   }
 }
-
-
-const vmsTest: Vm[] = [
-  new Vm(0, true, 10, 32, 200),
-  new Vm(1, false, 4, 10, 20),
-];

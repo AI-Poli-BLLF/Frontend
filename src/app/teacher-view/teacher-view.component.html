@@ -14,7 +14,6 @@
       <mat-nav-list>
         <mat-list-item *ngFor="let course of courses"
                        (click)="handleClick(course)"
-                       [disabled]="!course.enabled"
                        [routerLink]="['/teacher/course', course.name]">
           {{course.name}}
         </mat-list-item>
