@@ -168,4 +168,56 @@ export class CourseService {
         })
       );
   }
+
+  // editVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
+    // return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
+    //   .pipe(
+    //     map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
+    //     catchError( err => {
+    //       console.error(err);
+    //       return throwError('CourseService createVmInstance error:' + err.message);
+    //     })
+    //   );
+  // }
+
+  deleteVmInstance(courseName: string, teamId: number, vm: any): Observable<any>{
+    return this.httpClient.delete<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vm.id)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
+        })
+      );
+  }
+
+  wakeOnVm(courseName: string, teamId: number, vm: Vm): Observable<any>{
+    return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vm.id + '/boot', null)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
+        })
+      );
+  }
+
+  powerOff(courseName: string, teamId: number, vm: Vm): Observable<any>{
+    return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vm.id + '/shutdown', null)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
+        })
+      );
+  }
+
+  getOwners(courseName: string, teamId: number, vmId: number): Observable<Array<Student>>{
+    return this.httpClient.get<Array<Student>>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners')
+      .pipe(
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
 }

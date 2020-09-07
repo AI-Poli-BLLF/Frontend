@@ -51,6 +51,7 @@ import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog
 import { AssignmentComponent } from './assignment/assignment.component';
 import { AssignmentsContComponent } from './assignment/assignments-cont.component';
 import { DraftComponent } from './assignment/draft/draft.component';
+import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { DraftComponent } from './assignment/draft/draft.component';
     CreateVmDialogComponent,
     AssignmentComponent,
     AssignmentsContComponent,
-    DraftComponent
+    DraftComponent,
+    ShareVmDialogComponent
   ],
   imports: [
     BrowserModule,

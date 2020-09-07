@@ -28,3 +28,7 @@ input {
 form {
   width: 100%;
 }
+
+.content {
+  margin: 1em;
+}

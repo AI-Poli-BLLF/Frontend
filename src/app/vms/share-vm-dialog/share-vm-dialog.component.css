@@ -1,0 +1,19 @@
+.content {
+  margin: 1em;
+}
+
+.right{
+  float: right;
+}
+
+.buttons {
+  display: block;
+}
+
+mat-form-field {
+  display: block;
+  width: 20em;
+}
+h1 {
+  text-align: center;
+}

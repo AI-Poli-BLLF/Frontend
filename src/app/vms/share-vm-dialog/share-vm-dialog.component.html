@@ -1,0 +1,27 @@
+<div>
+  <h1>Condividi VM {{data.vmId}}</h1>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Proprietari</mat-label>
+      <mat-select [formControl]="membersControl" value="{{members}}" multiple>
+        <div class="content">
+          <mat-form-field>
+            <input matInput
+                   [formControl]="filterControl"
+                   type="text"
+                   name="filter-options"
+                   id="filter-options"
+                   placeholder="Cerca studente">
+          </mat-form-field>
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+            {{option.firstName}} {{option.name}} ({{option.id}})
+          </mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+    <div class="buttons">
+      <button mat-button (click)="submit()">Aggiungi</button>
+      <button (click)="onNoClick()" class="right" mat-button>Annulla</button>
+    </div>
+  </mat-dialog-content>
+</div>

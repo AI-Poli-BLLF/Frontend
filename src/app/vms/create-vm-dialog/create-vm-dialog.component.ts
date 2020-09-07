@@ -7,6 +7,9 @@ import {CourseService} from "../../services/course.service";
 import {AuthService} from "../../services/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {LoginDialogComponent} from "../../login-dialog/login-dialog.component";
+import {Observable} from "rxjs";
+import {Student} from "../../models/student.model";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-create-vm-dialog',
@@ -26,10 +29,10 @@ export class CreateVmDialogComponent implements OnInit {
               private authService: AuthService) {
     this.vmConfig = data.config;
     this.courseName = data.courseName;
+    this.vm = data.vm;
   }
 
   ngOnInit(): void {
-    this.vm = new Vm(undefined, false, 0, 0, 0);
   }
 
   create(){
@@ -38,18 +41,32 @@ export class CreateVmDialogComponent implements OnInit {
       return;
     }
     const vmData = {studentId: this.authService.getId(), instance: this.vm};
-    this.courseService.createVmInstance(this.courseName, this.vmConfig.teamId, vmData)
-      .subscribe(
-        data => {
-          this.snackBar.open('Creazione VM riuscita.', 'Chiudi');
-          this.dialogRef.close();
-        },
-        error => {
-          this.snackBar.open('Si è verificato un errore durante la creazione della VM.', 'Chiudi');
-          console.log(error);
-          this.dialogRef.close();
-        }
-      );
+    let request;
+    let mex: string;
+    if (this.data.edit){
+      console.log('edit vm');
+      // todo
+      alert('API NON IMPLEMENTATA LATO SERVER');
+      return;
+      // request = this.courseService.editVmInstance(this.courseName, this.vmConfig.teamId, vmData);
+      mex = 'Modifica VM riuscita.';
+    }
+    else {
+      console.log('crete vm');
+      request = this.courseService.createVmInstance(this.courseName, this.vmConfig.teamId, vmData);
+      mex = 'Creazione VM riuscita.';
+    }
+    request.subscribe(
+      () => {
+        this.snackBar.open(mex, 'Chiudi');
+        this.dialogRef.close();
+      },
+      error => {
+        this.snackBar.open('Si è verificato un errore durante la creazione o la modifica della VM.', 'Chiudi');
+        console.log(error);
+        this.dialogRef.close();
+      }
+    );
   }
 
 }

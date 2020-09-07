@@ -12,6 +12,7 @@ import {VmModel} from '../../models/vm.model.model';
   styleUrls: ['./add-course-dialog.component.css']
 })
 export class AddCourseDialogComponent implements OnInit {
+  // todo: gestione form control sbagliata
   nameValidator = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
   minValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
@@ -91,17 +92,11 @@ export class AddCourseDialogComponent implements OnInit {
   add(){
     // controllo se ci sono errori
     if (
-      this.nameValidator.hasError('required') ||
-      this.nameValidator.hasError('minLength') ||
-      this.nameValidator.hasError('maxLength') ||
-      this.minValidator.hasError('required') ||
-      this.minValidator.hasError('min') ||
-      this.minValidator.hasError('max') ||
-      this.selectedOs.hasError('required') ||
-      this.selectedV.hasError('required') ||
-      this.maxValidator.hasError('required') ||
-      this.maxValidator.hasError('min') ||
-      this.maxValidator.hasError('max')
+      this.nameValidator.invalid ||
+      this.minValidator.invalid ||
+      this.selectedOs.invalid ||
+      this.selectedV.invalid ||
+      this.maxValidator.invalid
     ) {
       return;
     }

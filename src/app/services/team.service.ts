@@ -144,4 +144,17 @@ export class TeamService {
         })
       );
   }
+
+  getVmOwners(courseName: string, teamId: number, vmId: number): Observable<Array<Student>>{
+    return this.httpClient
+      .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners')
+      .pipe(
+        map(arr => arr.map(
+          s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService getTeamsMembers error: ' + err.message);
+        })
+      );
+  }
 }

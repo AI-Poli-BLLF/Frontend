@@ -51,7 +51,15 @@ export class EditCourseDialogComponent implements OnInit {
   }
 
   // todo: il max deve essere maggiore del min
+  // todo: aggiungere modello e versione
   edit(){
+    if (
+      this.nameValidator.invalid ||
+      this.minValidator.invalid ||
+      this.maxValidator.invalid
+    ) {
+      return;
+    }
     // todo: opzione per modificare l'enabled
     const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));

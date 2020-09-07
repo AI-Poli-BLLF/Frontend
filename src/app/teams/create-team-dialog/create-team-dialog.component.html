@@ -16,6 +16,7 @@
     <mat-form-field [style.width.px]=350>
       <mat-label>Add student</mat-label>
       <mat-select formControlName="members" value={{selectedStudents}} multiple>
+        <div class="content">
         <mat-form-field>
           <input matInput
                  [formControl]="filterControl"
@@ -27,6 +28,7 @@
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
           {{option.firstName}} {{option.name}} ({{option.id}})
         </mat-option>
+        </div>
       </mat-select>
       <mat-error *ngIf="checkError('members')">
         You must select between {{course.min-1}} and {{course.max-1}} other students
