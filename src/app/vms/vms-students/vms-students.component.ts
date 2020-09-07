@@ -121,8 +121,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
         this.snackBar.open('Numero masimo di VM attive raggiunto.', 'Chiudi');
         return;
       }
-      this.switchState(vm);
-      request = this.courseService.powerOff(this.courseName, this.team.id, vm);
+      request = this.courseService.wakeOnVm(this.courseName, this.team.id, vm);
     }
     request.subscribe(
       () => this.switchState(vm),

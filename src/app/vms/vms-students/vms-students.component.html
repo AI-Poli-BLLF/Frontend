@@ -40,7 +40,7 @@
     </ng-container>
     <ng-container matColumnDef="elimina">
       <th mat-header-cell *matHeaderCellDef>Elimina</th>
-      <td mat-cell *matCellDef="let element"><button (click)="deleteVm(element)" [disabled]="!isOwner(element)" mat-stroked-button><mat-icon>delete</mat-icon></button></td>
+      <td mat-cell *matCellDef="let element"><button (click)="deleteVm(element)" [disabled]="!(!element.active && isOwner(element))" mat-stroked-button><mat-icon>delete</mat-icon></button></td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
