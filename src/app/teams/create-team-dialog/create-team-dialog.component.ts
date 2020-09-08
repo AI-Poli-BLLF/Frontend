@@ -6,6 +6,7 @@ import {map, startWith} from 'rxjs/operators';
 import {TeamService} from '../../services/team.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Course} from '../../models/course.model';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -71,7 +72,8 @@ export class CreateTeamDialogComponent implements OnInit {
   private filterFn(name: string): Student[] {
     const filterValue = name.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue)
-      || option.firstName.toLowerCase().includes(filterValue));
+      || option.firstName.toLowerCase().includes(filterValue)
+      || this.selectedStudents.indexOf(option.id) > -1);
   }
 
   submit() {
@@ -88,5 +90,9 @@ export class CreateTeamDialogComponent implements OnInit {
 
   public checkError(controlName: string): boolean {
     return this.form.controls[controlName].invalid;
+  }
+
+  onSelectionChange($event: MatSelectChange) {
+    this.selectedStudents = $event.value;
   }
 }

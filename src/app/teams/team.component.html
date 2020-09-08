@@ -6,7 +6,7 @@
   <br>
 
   <button *ngIf="!activeTeam" mat-raised-button (click)="openCreateTeamDialog()">
-    <span>Create team</span>
+    <span>Crea gruppo</span>
   </button>
   <br><br>
 
@@ -17,15 +17,15 @@
       </mat-card-header>
       <mat-card-content>
         <div *ngIf="!activeTeam">
-          <p>proposer: {{team.proposer | async}}</p>
-          pending members:
+          <p>Proponente: {{team.proposer | async}}</p>
+          Membri in attesa:
           <ul>
             <p *ngFor="let member of  team.pendingMembers | async">
               {{member}}
             </p>
           </ul>
         </div>
-        active members:
+        Membri confermati:
         <ul>
           <p *ngFor="let member of team.activeMembers | async">
             {{member}}
@@ -33,10 +33,10 @@
         </ul>
         <div *ngIf="team.token | async as token">
           <button mat-raised-button (click)="respondToProposal(token, true)">
-            <span>Accept</span>
+            <span>Accetta</span>
           </button>
           <button mat-raised-button (click)="respondToProposal(token, false)">
-            <span>Reject</span>
+            <span>Rifiuta</span>
           </button>
         </div>
       </mat-card-content>
