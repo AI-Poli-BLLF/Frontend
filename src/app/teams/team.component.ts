@@ -44,20 +44,23 @@ export class TeamComponent implements OnInit {
       const courseName = params.get('name');
 
       // 2. Get infos about the user's teams in this course
-      this.teamService.getTeamsByStudent(courseName)
-        .subscribe(data => {
-          const teamArray: Team[] = data;
-          for (const i in teamArray) {
-            if (data.hasOwnProperty(i)) {
-              this.getTeamInfos(courseName, data[i]);
-            }
-          }
-        });
+      this.getStudentTeams(courseName);
 
       // 3. Get infos about the course (e.g. min/max of team members)
       this.courseService.getOne(courseName).subscribe( c => this.course = c);
-      // this.course = new Course(courseName, true, 2, 4);
     });
+  }
+
+  private getStudentTeams(courseName: string) {
+    this.teamService.getTeamsByStudent(courseName)
+      .subscribe(data => {
+        const teamArray: Team[] = data;
+        for (const i in teamArray) {
+          if (data.hasOwnProperty(i)) {
+            this.getTeamInfos(courseName, data[i]);
+          }
+        }
+      });
   }
 
   private getTeamInfos(courseName: string, team: Team) {
@@ -96,8 +99,10 @@ export class TeamComponent implements OnInit {
       if (result) {
         this.teamService.proposeTeam(this.course.name, result.value.teamName, result.value.members, result.value.timeout)
           .subscribe(
+            // TODO: catch also error
             data => {
-              console.log(data);
+              this.teams.clear();
+              this.getStudentTeams(this.course.name);
             }
           );
       }
@@ -106,7 +111,12 @@ export class TeamComponent implements OnInit {
 
   respondToProposal(token: Token, accepted: boolean): void {
     this.teamService.respondToProposal(token, accepted)
-      .subscribe();
+      .subscribe(
+        // TODO: catch also error
+        data => {
+        this.teams.clear();
+        this.getStudentTeams(this.course.name);
+      });
   }
 
   getTeams(map: Map<number, TeamData>): TeamData[] {
