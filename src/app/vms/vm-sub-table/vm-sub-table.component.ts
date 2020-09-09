@@ -14,9 +14,6 @@ import {timeInterval} from "rxjs/operators";
   styleUrls: ['./vm-sub-table.component.css']
 })
 export class VmSubTableComponent implements OnInit, OnDestroy{
-  cpuValidator = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(8)]);
-  diskValidator = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(512)]);
-  ramValidator = new FormControl('', [Validators.required, Validators.minLength(128), Validators.maxLength(10240)]);
   interval;
   @Input()
   vmConfig: VmConfig;
@@ -65,8 +62,9 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
   }
 
 
-  save(){
-    this.courseService.editCourseVmConfig(this.courseName, this.vmConfigNew.teamId, this.vmConfigNew.groupName, this.vmConfigNew)
+  save(event: VmConfig){
+    console.log(event);
+    this.courseService.editCourseVmConfig(this.courseName, event.teamId, event.groupName, event)
       .subscribe(
         data => {
           // console.log(data);

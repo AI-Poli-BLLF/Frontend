@@ -53,6 +53,8 @@ import { AssignmentsContComponent } from './assignment/assignments-cont.componen
 import { DraftComponent } from './assignment/draft/draft.component';
 import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.component';
 import { TeamResourcesComponent } from './vms/team-resources/team-resources.component';
+import { VmViewComponent } from './vms/vm-view/vm-view.component';
+import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resources.component';
 
 
 @NgModule({
@@ -85,7 +87,9 @@ import { TeamResourcesComponent } from './vms/team-resources/team-resources.comp
     AssignmentsContComponent,
     DraftComponent,
     ShareVmDialogComponent,
-    TeamResourcesComponent
+    TeamResourcesComponent,
+    VmViewComponent,
+    VmEditResourcesComponent
   ],
   imports: [
     BrowserModule,

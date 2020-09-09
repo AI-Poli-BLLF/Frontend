@@ -6,7 +6,7 @@ import {VmConfig} from '../../models/vm.config.model';
   templateUrl: './team-resources.component.html',
   styleUrls: ['./team-resources.component.css']
 })
-export class TeamResourcesComponent implements OnInit {
+export class TeamResourcesComponent {
   @Input()
   vmConfig: VmConfig = new VmConfig(-1, -1, '', 0, 0, 0, 0, 0);
   @Input()
@@ -22,7 +22,9 @@ export class TeamResourcesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 100) / 10 + 'GB';
+    } else{ return value + 'KB'; }
   }
-
 }

@@ -15,11 +15,13 @@ import { TeamComponent } from './teams/team.component';
 import {VmsStudentsComponent} from "./vms/vms-students/vms-students.component";
 import {AssignmentComponent} from './assignment/assignment.component';
 import {AssignmentsContComponent} from './assignment/assignments-cont.component';
+import {VmViewComponent} from "./vms/vm-view/vm-view.component";
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
   {path: 'home', component: WelcomeComponent },
+  {path: 'vm/:id', component: VmViewComponent },
   {path: 'teacher',
     canActivate: [TeacherAuthGuard],
     component: TeacherViewComponent,
