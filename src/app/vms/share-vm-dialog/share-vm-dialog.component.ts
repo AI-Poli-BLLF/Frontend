@@ -73,7 +73,8 @@ export class ShareVmDialogComponent implements OnInit {
   private filterFn(name: string): Student[] {
     const filterValue = name.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue)
-      || option.firstName.toLowerCase().includes(filterValue));
+      || option.firstName.toLowerCase().includes(filterValue)
+      || this.members.indexOf(option.id) > -1);
   }
 
   submit() {
