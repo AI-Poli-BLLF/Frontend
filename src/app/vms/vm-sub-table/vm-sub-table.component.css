@@ -3,6 +3,7 @@ table {
 }
 mat-slider {
   display: block;
+  margin-top: 1em;
 }
 body {
   /*padding-left: 1em;*/

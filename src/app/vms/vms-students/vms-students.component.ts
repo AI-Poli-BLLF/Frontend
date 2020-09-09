@@ -11,7 +11,7 @@ import {CreateVmDialogComponent} from '../create-vm-dialog/create-vm-dialog.comp
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ShareVmDialogComponent} from '../share-vm-dialog/share-vm-dialog.component';
 import {Student} from '../../models/student.model';
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-vms-students',
