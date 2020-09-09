@@ -99,10 +99,14 @@ export class TeamComponent implements OnInit {
       if (result) {
         this.teamService.proposeTeam(this.course.name, result.value.teamName, result.value.members, result.value.timeout)
           .subscribe(
-            // TODO: catch also error
-            data => {
+            res => {
+              console.log('propose team data');
               this.teams.clear();
               this.getStudentTeams(this.course.name);
+            },
+            err => {
+              // TODO: show it in the page
+              console.log('propose team ERROR');
             }
           );
       }
@@ -112,11 +116,15 @@ export class TeamComponent implements OnInit {
   respondToProposal(token: Token, accepted: boolean): void {
     this.teamService.respondToProposal(token, accepted)
       .subscribe(
-        // TODO: catch also error
-        data => {
+        res => {
         this.teams.clear();
         this.getStudentTeams(this.course.name);
-      });
+        },
+        err => {
+          // TODO: show it in the page
+          console.log('respond to proposal ERROR');
+        }
+      );
   }
 
   getTeams(map: Map<number, TeamData>): TeamData[] {

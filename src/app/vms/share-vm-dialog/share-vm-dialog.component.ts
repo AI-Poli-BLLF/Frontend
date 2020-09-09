@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TeamService} from '../../services/team.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {map, startWith} from 'rxjs/operators';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-share-vm-dialog',
@@ -91,4 +92,7 @@ export class ShareVmDialogComponent implements OnInit {
   }
 
 
+  onSelectionChange($event: MatSelectChange) {
+    this.members = $event.value;
+  }
 }

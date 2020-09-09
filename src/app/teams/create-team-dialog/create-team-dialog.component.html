@@ -15,7 +15,7 @@
 
     <mat-form-field [style.width.px]=350>
       <mat-label>Add student</mat-label>
-      <mat-select formControlName="members" value={{selectedStudents}} multiple>
+      <mat-select formControlName="members" (selectionChange)="onSelectionChange($event)" multiple>
         <div class="content">
         <mat-form-field>
           <input matInput
