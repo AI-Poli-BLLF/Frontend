@@ -6,6 +6,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {Assignment} from '../models/assignment.model';
+import {AddAssignmentDialogComponent} from './add-assignment-dialog/add-assignment-dialog.component';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-assignments-cont',
@@ -24,7 +26,8 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     private service: AssignmentService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private authServ: AuthService
+    private authServ: AuthService,
+    private dialog: MatDialog
   ) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
@@ -51,4 +54,19 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  openCreateAssignment() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.route;
+    const dialogRef = this.dialog.open(AddAssignmentDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe( () => {
+      // this.loadAssignments();
+      this.sub = this.service.getAllAssignments(this.professorId, this.courseName).subscribe(
+        s => this.assignmentsComponent.Assignments = s,
+        error => {
+          console.log(error);
+          this.snackBar.open('Si è verificato un errore nel caricamente delle consegne.', 'Chiudi');
+        }
+      );
+    });
+  }
 }

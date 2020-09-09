@@ -8,7 +8,7 @@ export class Draft {
   lock: boolean;
 
   constructor(id: string, timestamp: Timestamp<any>, grade: number, state: string, lock: boolean) {
-    this.id = id;
+    // this.id = id;
     this.grade = grade;
     this.state = state;
     this.timestamp = timestamp;

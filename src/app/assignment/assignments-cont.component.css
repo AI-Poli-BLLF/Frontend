@@ -2,3 +2,9 @@
 h2 {
   margin: 1em;
 }
+mat-sidenav-container{ height: 100%; }
+
+button {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}

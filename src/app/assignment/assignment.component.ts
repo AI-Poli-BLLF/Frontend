@@ -27,7 +27,7 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
 
   assignments: Array<Assignment> = [];
 
-  columnsToDisplay: string[] = ['id', 'releaseDate', 'expiryDate'];
+  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate'];
   expandedElement: Draft | null;
 
   dataSource: MatTableDataSource<Assignment>;
@@ -42,7 +42,10 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
 
   @Input()
   set Assignments(assignments: Array<Assignment>){
+    // console.log('input');
+    // console.log(assignments);
     this.assignments = assignments;
+    // console.log('dopo');
     this.dataSource.data = this.assignments;
   }
 
@@ -54,6 +57,7 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
 
   }
+
 }
 // const ELEMENT_DATA: Assignment[] = [
 //   new Assignment('ass1', new Timestamp(any, now()), new Timestamp(any, now())),

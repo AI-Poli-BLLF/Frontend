@@ -1,5 +1,4 @@
 <div class="container">
-
   <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows>
     <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> {{column}} </th>
@@ -15,6 +14,7 @@
         </div>
       </td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
         class="element-row"

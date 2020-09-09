@@ -19,8 +19,8 @@ export class AssignmentService {
       .get<Array<Assignment>>(this.url + '/professors/' + professorId + '/' + courseName + '/assignments')
       .pipe(
         map(arr => arr.map(
-          a => new Assignment(a.id, a.releaseDate, a.expiryDate),
-          a => console.log('helo' + a)
+          a => new Assignment(a.name, a.releaseDate, a.expiryDate),
+          // a => console.log('helo' + a)
         )),
         catchError( err => {
           console.error(err);
@@ -28,4 +28,17 @@ export class AssignmentService {
         })
       );
   }
+
+  createAssignment(professorId: string, courseName: string, assignment: Assignment): Observable<Assignment>{
+    return this.httpClient
+      .post<Assignment>(this.url + '/professors/' + professorId + '/' + courseName + '/createAssignment', assignment)
+      .pipe(
+        map(a => new Assignment(a.name, a.releaseDate, a.expiryDate)),
+        catchError (err => {
+          console.error(err);
+          return throwError('AssignmentService addAssignment error: ' + err.message);
+        })
+      );
+  }
+
 }

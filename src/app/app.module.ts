@@ -51,6 +51,9 @@ import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog
 import { AssignmentComponent } from './assignment/assignment.component';
 import { AssignmentsContComponent } from './assignment/assignments-cont.component';
 import { DraftComponent } from './assignment/draft/draft.component';
+import { AddAssignmentDialogComponent } from './assignment/add-assignment-dialog/add-assignment-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.component';
 
 
@@ -83,7 +86,8 @@ import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.co
     AssignmentComponent,
     AssignmentsContComponent,
     DraftComponent,
-    ShareVmDialogComponent
+    ShareVmDialogComponent,
+    AddAssignmentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +115,9 @@ import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.co
     MatSliderModule,
     MatSlideToggleModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [
@@ -123,7 +129,8 @@ import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.co
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {duration: 2500}
-    }
+    },
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })

@@ -112,8 +112,9 @@ export class AddCourseDialogComponent implements OnInit {
       },
       error => {
         console.log(error);
-        (error.status === 401 || error.status === 403) ?
-          this.labelValue = 'Utente non autorizzato' : this.labelValue = 'Si è verificato un errore';
+        this.labelValue =
+          (error.status === 401 || error.status === 403) ?
+          'Utente non autorizzato' :  'Si è verificato un errore';
       }
 
     );

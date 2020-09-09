@@ -1,0 +1,22 @@
+h1 {
+  text-align: center;
+}
+mat-form-field {
+  display: block;
+  width: 20em;
+}
+
+.right{
+  float: right;
+}
+
+label {
+  display: block;
+  color: red;
+  text-align: center;
+  padding: 1.5em;
+}
+
+span {
+  padding-left: 1em;
+}
