@@ -1,0 +1,38 @@
+.container {
+  position: relative;
+  text-align: center;
+  font-weight: bolder;
+  letter-spacing: 3px;
+  font-family: sans-serif;
+  width: 100%;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #000000;
+  color: white;
+}
+
+.course_name {
+  width: 100%;
+  position: absolute;
+  top: 1em;
+  font-size: 4em;
+}
+
+.vm_v {
+  width: 100%;
+  position: absolute;
+  bottom: 3em;
+  font-size: 2em;
+}
+
+.vm_os {
+  width: 100%;
+  position: absolute;
+  bottom: 2em;
+  font-size: 2em;
+}
+
+img {
+  z-index: 9999;
+  width: 100%;
+}
+

@@ -25,7 +25,7 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
 
   vmConfigNew: VmConfig;
 
-  columnsToDisplay: string[] = ['id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize'];
+  columnsToDisplay: string[] = ['id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'link'];
   dataSource: Vm[];
 
   constructor(

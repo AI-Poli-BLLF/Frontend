@@ -147,6 +147,17 @@ export class CourseService {
       );
   }
 
+  getCourseVmModel(courseName: string): Observable<VmModel>{
+    return this.httpClient.get<VmModel>(this.url + '/' + courseName + '/vm-model')
+      .pipe(
+        map(s2 => new VmModel(s2.id, s2.os, s2.version)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService getCourseVmModel error:' + err.message);
+        })
+      );
+  }
+
   editCourseVmConfig(courseName: string, teamId: number, teamName: string, model: VmConfig, ): Observable<VmConfig>{
     return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' + model.id, model)
       .pipe(

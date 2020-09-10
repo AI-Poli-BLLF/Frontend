@@ -12,16 +12,15 @@ import {StudentViewComponent} from './student-view/student-view.component';
 import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
 import { TeamComponent } from './teams/team.component';
-import {VmsStudentsComponent} from "./vms/vms-students/vms-students.component";
+import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
 import {AssignmentComponent} from './assignment/assignment.component';
 import {AssignmentsContComponent} from './assignment/assignments-cont.component';
-import {VmViewComponent} from "./vms/vm-view/vm-view.component";
+import {VmViewComponent} from './vms/vm-view/vm-view.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
   {path: 'home', component: WelcomeComponent },
-  {path: 'vm/:id', component: VmViewComponent },
   {path: 'teacher',
     canActivate: [TeacherAuthGuard],
     component: TeacherViewComponent,
@@ -33,6 +32,7 @@ const routes: Routes = [
           {path: '', component: HomeComponent },
           {path: 'students', component: StudentsContComponent},
           {path: 'vms', component: VmsComponent },
+          {path: 'vms/:id', component: VmViewComponent },
           {path: 'assignments', component: AssignmentsContComponent}
         ]},
     ]},
