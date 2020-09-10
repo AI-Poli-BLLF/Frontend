@@ -10,6 +10,7 @@ import {Course} from '../models/course.model';
 import {CourseService} from '../services/course.service';
 import {AuthService} from '../services/auth.service';
 import {Token} from '../models/token.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 type TeamData = {
   team: Team;
@@ -33,7 +34,8 @@ export class TeamComponent implements OnInit {
               private courseService: CourseService,
               private authService: AuthService,
               public dialog: MatDialog,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) {
     this.activeTeam = false;
     this.teams = new Map<number, TeamData>();
   }
@@ -47,20 +49,29 @@ export class TeamComponent implements OnInit {
       this.getStudentTeams(courseName);
 
       // 3. Get infos about the course (e.g. min/max of team members)
-      this.courseService.getOne(courseName).subscribe( c => this.course = c);
+      this.courseService.getOne(courseName).subscribe(
+        c => this.course = c,
+        error => {
+          this.snackBar.open('Errore nel caricamento del corso ' + courseName, 'Chiudi');
+        });
     });
   }
 
   private getStudentTeams(courseName: string) {
     this.teamService.getTeamsByStudent(courseName)
-      .subscribe(data => {
-        const teamArray: Team[] = data;
-        for (const i in teamArray) {
-          if (data.hasOwnProperty(i)) {
-            this.getTeamInfos(courseName, data[i]);
+      .subscribe(
+        data => {
+          const teamArray: Team[] = data;
+          for (const i in teamArray) {
+            if (data.hasOwnProperty(i)) {
+              this.getTeamInfos(courseName, data[i]);
+            }
           }
+        },
+        err => {
+          this.snackBar.open('Errore nel caricamento dei gruppi', 'Chiudi');
         }
-      });
+      );
   }
 
   private getTeamInfos(courseName: string, team: Team) {
@@ -105,8 +116,7 @@ export class TeamComponent implements OnInit {
               this.getStudentTeams(this.course.name);
             },
             err => {
-              // TODO: show it in the page
-              console.log('propose team ERROR');
+              this.snackBar.open('Non è stato possibile creare il team.', 'Chiudi');
             }
           );
       }
@@ -121,8 +131,9 @@ export class TeamComponent implements OnInit {
         this.getStudentTeams(this.course.name);
         },
         err => {
-          // TODO: show it in the page
-          console.log('respond to proposal ERROR');
+          this.snackBar.open('Il team indicato non è più valido', 'Chiudi');
+          this.teams.clear();
+          this.getStudentTeams(this.course.name);
         }
       );
   }
