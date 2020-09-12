@@ -22,15 +22,18 @@ export class DraftComponent implements OnInit, AfterViewInit {
 
   drafts: Array<Draft> = [];
 
-  columnsToDisplay: string[] = ['id', 'matricola', 'stato', 'ultima modifica'];
+  columnsToDisplayDraft: string[] = ['firstName', 'name', 'id', 'state', 'timestamp'];
   expandedElement: Draft | null;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(MatSort) dSort: MatSort;
+  draft: Draft = null;
 
   dataSource: MatTableDataSource<Draft>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  draft: Draft = null;
+  // private paginator2: MatPaginator;
+  // private sort2: MatSort;
 
   constructor() { }
 
@@ -46,7 +49,22 @@ export class DraftComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.dSort;
   }
+  // @ViewChild(MatSort) set matSort(ms: MatSort){
+  //   this.sort2 = ms;
+  //   this.setDataSourceAttributes();
+  // }
+  //
+  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator){
+  //   this.paginator2 = mp;
+  //   this.setDataSourceAttributes();
+  // }
+  //
+  // setDataSourceAttributes(){
+  //   this.dataSource.paginator = this.paginator2;
+  //   this.dataSource.sort = this.sort2;
+  // }
+
 
 }

@@ -1,0 +1,24 @@
+.resources {
+  margin-top: 1em;
+}
+mat-slider {
+  display: block;
+  margin-top: 1em;
+}
+/*todo: label nera*/
+
+::ng-deep .mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  background-color: #ffd740 !important;
+  border-radius: 50% 50% 0 !important;
+}
+::ng-deep .mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+::ng-deep .mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
+table {
+  width: 100%;
+}

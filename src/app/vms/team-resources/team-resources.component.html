@@ -1,0 +1,65 @@
+<div class="resources">
+  <h2>Risorse usate</h2>
+  <table>
+    <tr>
+      <th>CPU (max: {{vmConfig.maxCpu}})</th>
+      <th>RAM (max: {{formatLabel(vmConfig.maxRam)}})</th>
+      <th>Disk (max: {{vmConfig.maxDisk}}GB)</th>
+      <th>Attive (max: {{vmConfig.maxActive}})</th>
+      <th>Create (max: {{vmConfig.maxVm}})</th>
+    </tr>
+    <tr>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          color="primary"
+          [value]="cpu"
+          style="pointer-events: none;"
+          min="0"
+          max="{{vmConfig.maxCpu}}"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          [displayWith]="formatLabel"
+          tickInterval="128"
+          color="primary"
+          [value]="ram"
+          style="pointer-events: none;"
+          min="128"
+          max="{{vmConfig.maxRam}}"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          color="primary"
+          [value]="disk"
+          style="pointer-events: none;"
+          min="1"
+          max="{{vmConfig.maxDisk}}"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          color="primary"
+          [value]="active"
+          style="pointer-events: none;"
+          min="1"
+          max="{{vmConfig.maxActive}}"></mat-slider>
+      </td>
+      <td>
+        <mat-slider
+          thumbLabel
+          tickInterval="1"
+          color="primary"
+          [value]="vmNumber"
+          style="pointer-events: none;"
+          min="1"
+          max="{{vmConfig.maxVm}}"></mat-slider>
+      </td>
+    </tr>
+  </table>
+</div>

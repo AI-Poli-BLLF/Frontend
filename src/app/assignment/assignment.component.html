@@ -6,13 +6,11 @@
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-
-        <div class="element-detail"
-             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+      <mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
+        <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <app-draft></app-draft>
         </div>
-      </td>
+      </mat-cell>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

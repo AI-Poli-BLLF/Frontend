@@ -3,7 +3,7 @@
   <mat-dialog-content>
     <mat-form-field>
       <mat-label>Proprietari</mat-label>
-      <mat-select formControlName="membersControl" (selectionChange)="onSelectionChange($event)" multiple>
+      <mat-select [formControl]="membersControl"  (selectionChange)="onSelectionChange($event)" multiple>
         <div class="content">
           <mat-form-field>
             <input matInput
