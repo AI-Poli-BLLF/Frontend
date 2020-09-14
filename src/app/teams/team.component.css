@@ -2,3 +2,8 @@
 h2 {
   margin: 1em;
 }
+
+mat-card{
+  width: 50%;
+  margin-left: 15px;
+}

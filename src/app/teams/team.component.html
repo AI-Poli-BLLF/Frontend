@@ -1,17 +1,13 @@
 <div class="container">
   <h2>Elenco Gruppi</h2>
-
-  <p *ngIf="activeTeam; else elseBlock">C'è un team attivo</p>
-  <ng-template #elseBlock>Non c'è nessun team attivo</ng-template>
-  <br>
-
+  
   <button *ngIf="!activeTeam" mat-raised-button (click)="openCreateTeamDialog()">
     <span>Crea gruppo</span>
+    <br><br>
   </button>
-  <br><br>
 
   <li *ngFor="let team of getTeams(teams)">
-    <mat-card>
+    <mat-card [style.backgroundColor]="activeTeam ? '#66ff66' : '#ffe066'">
       <mat-card-header>
         <mat-card-title>{{team.team.name}}</mat-card-title>
       </mat-card-header>
@@ -25,7 +21,8 @@
             </p>
           </ul>
         </div>
-        Membri confermati:
+        <p *ngIf="activeTeam; else elseBlock">Membri:</p>
+          <ng-template #elseBlock>Membri confermati:</ng-template>
         <ul>
           <p *ngFor="let member of team.activeMembers | async">
             {{member}}
