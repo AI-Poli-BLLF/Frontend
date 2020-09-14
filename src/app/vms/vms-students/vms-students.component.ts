@@ -169,7 +169,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   shareVm(vm: Vm){
     // console.log(vmConfigLeft);
     // todo: unsubscribe
-    const d = {teamId: this.team.id, courseName: this.courseName, vmId: vm.id};
+    const d = {teamId: this.team.id, courseName: this.courseName, vm};
     const dialogRef = this.dialog.open(ShareVmDialogComponent, {data: d});
     // dialogRef.afterClosed().subscribe(() => {
     //   this.getVmsInstances(this.courseName, this.team.id);

@@ -8,6 +8,7 @@ import {Team} from "../models/team.model";
 import {VmConfig} from "../models/vm.config.model";
 import {Vm} from "../models/vm.model";
 import {VmModel} from "../models/vm.model.model";
+import {consoleTestResultHandler} from "tslint/lib/test";
 
 @Injectable({
   providedIn: 'root'
@@ -244,11 +245,12 @@ export class CourseService {
   }
 
   shareVm(courseName: string, teamId: number, vmId: string, memberIds: string[]): Observable<any>{
-    return this.httpClient.put<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
+    console.log('SHARE VMs');
+    return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
       .pipe(
         catchError( err => {
           console.error(err);
-          return throwError(`CourseService getOwners error: ${err.message}`);
+          return throwError(`CourseService shareVm error: ${err.message}`);
         })
       );
   }

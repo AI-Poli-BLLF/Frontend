@@ -100,6 +100,7 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.dataSource = [];
     this.getVMs();
+    // todo: l'effetto dell'aggiornamento è brutto
     this.interval = setInterval(() => this.getVMs(), 10000);
     this.vmConfigNew = new VmConfig(
       this.vmConfig.id, this.vmConfig.teamId, this.vmConfig.groupName,

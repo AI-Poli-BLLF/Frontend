@@ -1,5 +1,5 @@
 <div>
-  <h1>Condividi VM {{data.vmId}}</h1>
+  <h1>Condividi VM {{data.vm.id}}</h1>
   <mat-dialog-content>
     <mat-form-field>
       <mat-label>Proprietari</mat-label>
@@ -13,7 +13,7 @@
                    id="filter-options"
                    placeholder="Cerca studente">
           </mat-form-field>
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+          <mat-option [disabled]="option.id === data.vm.student.id" *ngFor="let option of filteredOptions | async" [value]="option.id">
             {{option.firstName}} {{option.name}} ({{option.id}})
           </mat-option>
         </div>
