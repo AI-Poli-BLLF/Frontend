@@ -18,7 +18,7 @@ export class AddCourseDialogComponent implements OnInit {
   maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   selectedOs = new FormControl('', [Validators.required]);
   selectedV = new FormControl('', [Validators.required]);
-  enabled = false;
+  checked = false;
   labelValue: string;
   formGroup: FormGroup;
 
@@ -38,6 +38,10 @@ export class AddCourseDialogComponent implements OnInit {
   ];
 
   constructor(private service: CourseService, private dialogRef: MatDialogRef<LoginDialogComponent>) { }
+
+  changed(event){
+    this.checked = event.checked;
+  }
 
   getOs(){
     const os: string[] = [];
@@ -103,7 +107,10 @@ export class AddCourseDialogComponent implements OnInit {
     const selectedV = this.selectedV.value;
     const selectedOS = this.selectedOs.value;
     // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
+    // todo: inviare insieme modello vm e corso
+    console.log(this.checked);
+
+    const course: Course = new Course(this.nameValidator.value, this.checked, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));
     this.service.update(course).subscribe(
       data => {

@@ -2,14 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Vm} from '../../models/vm.model';
 import {VmConfig} from '../../models/vm.config.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Course} from '../../models/course.model';
-import {CourseService} from "../../services/course.service";
-import {AuthService} from "../../services/auth.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {LoginDialogComponent} from "../../login-dialog/login-dialog.component";
-import {Observable} from "rxjs";
-import {Student} from "../../models/student.model";
-import {FormControl} from "@angular/forms";
+import {CourseService} from '../../services/course.service';
+import {AuthService} from '../../services/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-vm-dialog',
@@ -47,8 +42,7 @@ export class CreateVmDialogComponent implements OnInit {
       console.log('edit vm');
       // todo
       alert('API NON IMPLEMENTATA LATO SERVER');
-      return;
-      // request = this.courseService.editVmInstance(this.courseName, this.vmConfig.teamId, vmData);
+      request = this.courseService.editVmInstance(this.courseName, this.vmConfig.teamId, vmData, this.vm.id);
       mex = 'Modifica VM riuscita.';
     }
     else {

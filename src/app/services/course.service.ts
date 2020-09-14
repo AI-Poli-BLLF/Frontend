@@ -181,6 +181,17 @@ export class CourseService {
       );
   }
 
+  editVmInstance(courseName: string, teamId: number, vm: any, vmId: number): Observable<Vm>{
+    return this.httpClient.put<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId, vm)
+      .pipe(
+        map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
+        })
+      );
+  }
+
   // editVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
     // return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
     //   .pipe(
