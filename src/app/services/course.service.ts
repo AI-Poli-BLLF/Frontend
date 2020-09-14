@@ -159,7 +159,7 @@ export class CourseService {
   }
 
   editCourseVmConfig(courseName: string, teamId: number, teamName: string, model: VmConfig, ): Observable<VmConfig>{
-    return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' + model.id, model)
+    return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' /*+ model.id*/, model)
       .pipe(
         map(s2 => new VmConfig(s2.id, teamId, teamName, s2.maxCpu, s2.maxRam, s2.maxDisk, s2.maxVm, s2.maxActive)),
         catchError( err => {
