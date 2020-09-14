@@ -231,4 +231,25 @@ export class CourseService {
         })
       );
   }
+
+  getVmCreator(courseName: string, teamId: number, vmId: number): Observable<Student>{
+    return this.httpClient.get<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/creator')
+      .pipe(
+        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email)),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
+
+  shareVm(courseName: string, teamId: number, vmId: string, memberIds: string[]): Observable<any>{
+    return this.httpClient.put<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
 }

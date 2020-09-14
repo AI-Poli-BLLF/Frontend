@@ -80,7 +80,21 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
   getVMs(){
     console.log('Get vms');
     this.courseService.getTeamVMs(this.courseName, this.vmConfig.teamId)
-      .subscribe(vm => this.dataSource = vm);
+      .subscribe(vms => {
+        this.dataSource = vms;
+        vms.forEach(v => this.getCreator(this.courseName, this.vmConfig.teamId, v.id, v));
+      });
+  }
+
+  getCreator(courseName: string, teamId: number, vmId: number, vm: Vm) {
+    this.courseService.getVmCreator(courseName, teamId, vmId)
+      .subscribe(
+        data => {
+          vm.student = data;
+          console.log(this.dataSource);
+        },
+        error => console.log(error)
+      );
   }
 
   ngOnInit(): void {
