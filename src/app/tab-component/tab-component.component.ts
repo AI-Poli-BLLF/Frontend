@@ -12,7 +12,6 @@ import {Course} from "../models/course.model";
   styleUrls: ['./tab-component.component.css']
 })
 
-// todo: disabilitare tab se il corso è disabilitato
 export class TabComponentComponent {
   links: Array<NavModel> = [];
   course: Course = new Course('', false, 0, 0);

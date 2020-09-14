@@ -11,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './create-vm-dialog.component.html',
   styleUrls: ['./create-vm-dialog.component.css']
 })
-export class CreateVmDialogComponent implements OnInit {
+export class CreateVmDialogComponent {
   vm: Vm;
   vmConfig: VmConfig;
   courseName: string;
@@ -27,9 +27,6 @@ export class CreateVmDialogComponent implements OnInit {
     this.vm = data.vm;
   }
 
-  ngOnInit(): void {
-  }
-
   create(){
     if (this.vm.cpu === 0 || this.vm.ramSize === 0 || this.vm.diskSize === 0){
       this.errorValue = 'I valori delle risorse non possono essere nulli';
@@ -40,8 +37,6 @@ export class CreateVmDialogComponent implements OnInit {
     let mex: string;
     if (this.data.edit){
       console.log('edit vm');
-      // todo
-      alert('API NON IMPLEMENTATA LATO SERVER');
       request = this.courseService.editVmInstance(this.courseName, this.vmConfig.teamId, vmData, this.vm.id);
       mex = 'Modifica VM riuscita.';
     }

@@ -135,4 +135,26 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     this.add.emit(this.student);
     this.student = null;
   }
+
+  uploadCsv($event) {
+    console.log($event);
+    const selectedFile: File = $event.target.files[0];
+    console.log(selectedFile);
+    if (selectedFile === undefined){
+      return;
+    }
+    alert('Da implementare lato server');
+    // this.service.uploadPhoto(this.profileData.roles[0], this.profileData.id, selectedFile).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.getPhoto(this.profileData.roles[0], this.profileData.id);
+    //   },
+    //   error => {
+    //     console.log(error);
+    //     this.snackBar.open(
+    //       'Si è verificato un errore nell\'upload della foto. La massima dimensione consentita dei file è 3 MB.',
+    //       'Chiudi');
+    //   }
+    // );
+  }
 }

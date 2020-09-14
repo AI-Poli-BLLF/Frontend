@@ -20,9 +20,4 @@ export class Vm {
   toString(){
     return this.id + ' ' + this.active + ' (' + this.student.id + ')';
   }
-
-  get link(): string {
-    // todo: usare url vero
-    return 'pippopluto/vms/' + this.id;
-  }
 }

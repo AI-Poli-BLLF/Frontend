@@ -115,7 +115,6 @@ export class CourseService {
       .pipe(
         map(c => {
           console.log(c);
-          // todo: ricavare lo studente
           return c.map(c2 => new Vm(c2.id, c2.active, c2.cpu, c2.ramSize, c2.diskSize));
         }),
         catchError( err => {

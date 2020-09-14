@@ -9,9 +9,14 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="addStudent()" type="submit"><mat-icon>person_add</mat-icon> Add</button>
+  <div class="add_csv">
+    <button mat-raised-button color="primary" (click)="addStudent()" type="submit"><mat-icon>person_add</mat-icon> Add</button>
+    <button mat-raised-button color="primary" id="upload_csv" (click)="fileInput.click()"><mat-icon>people</mat-icon> Add from CSV</button>
+    <input #fileInput type="file" [hidden]="true" accept="text/csv" (change)="uploadCsv($event)">
+    <button mat-raised-button color="warn" (click)="deleteStudents()"><mat-icon>delete</mat-icon> Delete Students</button>
+  </div>
 </form>
-<button mat-raised-button color="warn" (click)="deleteStudents()"><mat-icon>delete</mat-icon> Delete Students</button>
+
 <table mat-table matSort [dataSource]="dataSource">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef><mat-checkbox [checked]=isChecked() [indeterminate]=isIntermediate() (change)="selectHeaderChange($event)" ></mat-checkbox></th>
