@@ -116,7 +116,8 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(data => {
       console.log(course.enabled, '!=', data);
       this.loadCourses();
-      if (course.enabled !== data) {
+      // tslint:disable-next-line:triple-equals
+      if (!course.enabled == data) {
         this.selectedItem = 'Seleziona un corso';
         this.router.navigate(['/teacher']);
       }

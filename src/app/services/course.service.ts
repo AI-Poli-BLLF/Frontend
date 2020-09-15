@@ -34,6 +34,20 @@ export class CourseService {
       );
   }
 
+  // add a course
+  addCourse(course: Course, vmModel: VmModel, professorId: string): Observable<Course>{
+    console.log('ADD');
+    const v = {course, vmModel, professorId};
+    return this.httpClient.post<Course>(this.url, v)
+      .pipe(
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        catchError( err => {
+          console.error(err);
+          return throwError(err);
+        })
+      );
+  }
+
   deleteOne(name: string): Observable<any>{
     // todo: gestire eccezioni
     return this.httpClient.delete(this.url + '/' + name);
