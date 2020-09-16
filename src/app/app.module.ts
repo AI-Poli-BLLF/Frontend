@@ -55,6 +55,7 @@ import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.co
 import { TeamResourcesComponent } from './vms/team-resources/team-resources.component';
 import { VmViewComponent } from './vms/vm-view/vm-view.component';
 import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resources.component';
+import { TokenComponent } from './token/token.component';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resour
     ShareVmDialogComponent,
     TeamResourcesComponent,
     VmViewComponent,
-    VmEditResourcesComponent
+    VmEditResourcesComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

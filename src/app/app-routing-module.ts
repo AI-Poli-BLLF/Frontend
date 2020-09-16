@@ -16,11 +16,13 @@ import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
 import {AssignmentComponent} from './assignment/assignment.component';
 import {AssignmentsContComponent} from './assignment/assignments-cont.component';
 import {VmViewComponent} from './vms/vm-view/vm-view.component';
+import {TokenComponent} from './token/token.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
   {path: 'home', component: WelcomeComponent },
+  {path: 'confirm-registration/:token', component: TokenComponent },
   {path: 'teacher',
     canActivate: [TeacherAuthGuard],
     component: TeacherViewComponent,
