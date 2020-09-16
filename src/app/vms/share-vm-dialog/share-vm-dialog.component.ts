@@ -6,6 +6,7 @@ import {TeamService} from '../../services/team.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {map, startWith} from 'rxjs/operators';
 import {MatSelectChange} from '@angular/material/select';
+import {CourseService} from "../../services/course.service";
 
 @Component({
   selector: 'app-share-vm-dialog',
@@ -22,6 +23,7 @@ export class ShareVmDialogComponent implements OnInit {
 
   constructor(
     private teamService: TeamService,
+    private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data,
     private dialogRef: MatDialogRef<ShareVmDialogComponent>
   ) {
@@ -60,7 +62,7 @@ export class ShareVmDialogComponent implements OnInit {
         }
       );
 
-    this.teamService.getVmOwners(this.data.courseName, this.data.teamId, this.data.vmId)
+    this.courseService.getOwners(this.data.courseName, this.data.teamId, this.data.vm.id)
       .subscribe(
         data => this.membersControl.setValue(data.map(e => e.id)),
         error => {
@@ -79,9 +81,12 @@ export class ShareVmDialogComponent implements OnInit {
 
   submit() {
     if (this.membersControl.valid) {
-      // todo
-      alert('API NON IMPLEMENTATA LATO SERVER');
-      console.log(this.membersControl);
+      this.courseService.shareVm(this.data.courseName, this.data.teamId, this.data.vm.id, this.membersControl.value)
+        .subscribe(
+          data => data,
+          error => console.log(error)
+          );
+      console.log(this.membersControl.value);
       this.dialogRef.close();
     } else {
       console.log('Form not valid');

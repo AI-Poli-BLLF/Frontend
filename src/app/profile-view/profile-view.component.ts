@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProfileService} from "../services/profile.service";
-import {Profile} from "../models/profile.model";
-import {MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {DomSanitizer} from "@angular/platform-browser";
-import {HttpErrorResponse} from "@angular/common/http";
+import {ProfileService} from '../services/profile.service';
+import {Profile} from '../models/profile.model';
+import {MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {DomSanitizer} from '@angular/platform-browser';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-profile-view',

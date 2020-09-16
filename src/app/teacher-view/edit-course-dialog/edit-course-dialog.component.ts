@@ -19,7 +19,9 @@ export class EditCourseDialogComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  changed(event){
+    this.course.enabled = event.checked;
+  }
   constructor(private service: CourseService,
               private dialogRef: MatDialogRef<LoginDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Course) {
@@ -60,13 +62,12 @@ export class EditCourseDialogComponent implements OnInit {
     ) {
       return;
     }
-    // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
+    const course: Course = new Course(this.nameValidator.value, this.course.enabled, this.minValidator.value, this.maxValidator.value);
     console.log(JSON.stringify(course));
     this.service.update(course).subscribe(
       data => {
         console.log(data);
-        this.dialogRef.close();
+        this.dialogRef.close(this.course.enabled);
       },
       error => {
         console.log(error);

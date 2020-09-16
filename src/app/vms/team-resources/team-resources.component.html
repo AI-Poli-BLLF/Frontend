@@ -27,7 +27,7 @@
           color="primary"
           [value]="ram"
           style="pointer-events: none;"
-          min="128"
+          min="0"
           max="{{vmConfig.maxRam}}"></mat-slider>
       </td>
       <td>
@@ -37,7 +37,7 @@
           color="primary"
           [value]="disk"
           style="pointer-events: none;"
-          min="1"
+          min="0"
           max="{{vmConfig.maxDisk}}"></mat-slider>
       </td>
       <td>
@@ -47,7 +47,7 @@
           color="primary"
           [value]="active"
           style="pointer-events: none;"
-          min="1"
+          min="0"
           max="{{vmConfig.maxActive}}"></mat-slider>
       </td>
       <td>
@@ -57,7 +57,7 @@
           color="primary"
           [value]="vmNumber"
           style="pointer-events: none;"
-          min="1"
+          min="0"
           max="{{vmConfig.maxVm}}"></mat-slider>
       </td>
     </tr>

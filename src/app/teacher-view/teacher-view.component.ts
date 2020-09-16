@@ -113,8 +113,14 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   startToEditCourseName(){
     const course: Course = this.courses.find(c => c.name === this.selectedItem);
     const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: course});
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(course.enabled, '!=', data);
       this.loadCourses();
+      // tslint:disable-next-line:triple-equals
+      if (!course.enabled == data) {
+        this.selectedItem = 'Seleziona un corso';
+        this.router.navigate(['/teacher']);
+      }
     });
   }
 

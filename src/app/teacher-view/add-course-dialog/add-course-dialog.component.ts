@@ -5,20 +5,21 @@ import {CourseService} from '../../services/course.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../../login-dialog/login-dialog.component';
 import {VmModel} from '../../models/vm.model.model';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-course-dialog',
   templateUrl: './add-course-dialog.component.html',
   styleUrls: ['./add-course-dialog.component.css']
 })
-export class AddCourseDialogComponent implements OnInit {
+export class AddCourseDialogComponent {
   // todo: gestione form control sbagliata
   nameValidator = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
   minValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
   selectedOs = new FormControl('', [Validators.required]);
   selectedV = new FormControl('', [Validators.required]);
-  enabled = false;
+  checked = false;
   labelValue: string;
   formGroup: FormGroup;
 
@@ -37,7 +38,13 @@ export class AddCourseDialogComponent implements OnInit {
     new VmModel(undefined, 'Android', '11')
   ];
 
-  constructor(private service: CourseService, private dialogRef: MatDialogRef<LoginDialogComponent>) { }
+  constructor(private service: CourseService,
+              private dialogRef: MatDialogRef<LoginDialogComponent>,
+              private authService: AuthService) { }
+
+  changed(event){
+    this.checked = event.checked;
+  }
 
   getOs(){
     const os: string[] = [];
@@ -103,12 +110,17 @@ export class AddCourseDialogComponent implements OnInit {
     const selectedV = this.selectedV.value;
     const selectedOS = this.selectedOs.value;
     // todo: opzione per modificare l'enabled
-    const course: Course = new Course(this.nameValidator.value, true, this.minValidator.value, this.maxValidator.value);
-    console.log(JSON.stringify(course));
-    this.service.update(course).subscribe(
+    // todo: inviare insieme modello vm e corso
+    console.log(this.checked);
+
+    this.service.addCourse(
+      new Course(this.nameValidator.value, this.checked, this.minValidator.value, this.maxValidator.value),
+      new VmModel(undefined, this.selectedOs.value, this.selectedV.value),
+      this.authService.getId()
+      ).subscribe(
       data => {
         console.log(data);
-        this.addModel(course, selectedOS, selectedV);
+        this.dialogRef.close();
       },
       error => {
         console.log(error);
@@ -116,24 +128,7 @@ export class AddCourseDialogComponent implements OnInit {
           (error.status === 401 || error.status === 403) ?
           'Utente non autorizzato' :  'Si è verificato un errore';
       }
-
     );
-  }
-
-  addModel(course: Course, selectedOS: string, selectedV: string){
-    console.log('Model: ', selectedOS, selectedV);
-    this.service.addCourseVmModel(course.name, new VmModel(undefined, this.selectedOs.value, this.selectedV.value))
-      .subscribe(
-        data => {
-          console.log(data);
-          this.dialogRef.close();
-        },
-        // todo: non ho la più pallida idea di come gestire l'errore se si verifica
-        error => console.log(error)
-      );
-  }
-
-  ngOnInit(): void {
   }
 
 }

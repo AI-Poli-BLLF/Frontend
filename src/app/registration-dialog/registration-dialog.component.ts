@@ -85,6 +85,7 @@ export class RegistrationDialogComponent implements OnInit {
 
   register(){
     // todo: se qualcuno ha un errore non effettuare registrazione
+    // todo: usare form control
     if (
       this.idValidator.invalid ||
       this.surnameValidator.invalid ||

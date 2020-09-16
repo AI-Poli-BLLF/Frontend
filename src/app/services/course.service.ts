@@ -8,6 +8,7 @@ import {Team} from "../models/team.model";
 import {VmConfig} from "../models/vm.config.model";
 import {Vm} from "../models/vm.model";
 import {VmModel} from "../models/vm.model.model";
+import {consoleTestResultHandler} from "tslint/lib/test";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,20 @@ export class CourseService {
   update(course: Course): Observable<Course>{
     console.log('UPDATE');
     return this.httpClient.put<Course>(this.url + '/' + course.name, course)
+      .pipe(
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        catchError( err => {
+          console.error(err);
+          return throwError(err);
+        })
+      );
+  }
+
+  // add a course
+  addCourse(course: Course, vmModel: VmModel, professorId: string): Observable<Course>{
+    console.log('ADD');
+    const v = {course, vmModel, professorId};
+    return this.httpClient.post<Course>(this.url, v)
       .pipe(
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
         catchError( err => {
@@ -114,7 +129,6 @@ export class CourseService {
       .pipe(
         map(c => {
           console.log(c);
-          // todo: ricavare lo studente
           return c.map(c2 => new Vm(c2.id, c2.active, c2.cpu, c2.ramSize, c2.diskSize));
         }),
         catchError( err => {
@@ -159,7 +173,7 @@ export class CourseService {
   }
 
   editCourseVmConfig(courseName: string, teamId: number, teamName: string, model: VmConfig, ): Observable<VmConfig>{
-    return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' + model.id, model)
+    return this.httpClient.put<VmConfig>(this.url + '/' + courseName + '/teams/' + teamId + '/vm-config/' /*+ model.id*/, model)
       .pipe(
         map(s2 => new VmConfig(s2.id, teamId, teamName, s2.maxCpu, s2.maxRam, s2.maxDisk, s2.maxVm, s2.maxActive)),
         catchError( err => {
@@ -171,6 +185,17 @@ export class CourseService {
 
   createVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
     return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
+      .pipe(
+        map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
+        catchError( err => {
+          console.error(err);
+          return throwError('CourseService createVmInstance error:' + err.message);
+        })
+      );
+  }
+
+  editVmInstance(courseName: string, teamId: number, vm: any, vmId: number): Observable<Vm>{
+    return this.httpClient.put<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId, vm)
       .pipe(
         map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
         catchError( err => {
@@ -228,6 +253,28 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
+
+  getVmCreator(courseName: string, teamId: number, vmId: number): Observable<Student>{
+    return this.httpClient.get<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/creator')
+      .pipe(
+        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email)),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
+
+  shareVm(courseName: string, teamId: number, vmId: string, memberIds: string[]): Observable<any>{
+    console.log('SHARE VMs');
+    return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService shareVm error: ${err.message}`);
         })
       );
   }

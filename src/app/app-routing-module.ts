@@ -44,6 +44,7 @@ const routes: Routes = [
         children: [
           {path: '', component: HomeComponent },
           {path: 'vms', component: VmsStudentsComponent },
+          {path: 'vms/:id', component: VmViewComponent },
           {path: 'teams', component: TeamComponent}
         ]},
     ]},

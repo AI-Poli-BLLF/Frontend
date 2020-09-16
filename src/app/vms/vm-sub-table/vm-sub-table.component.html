@@ -11,23 +11,23 @@
     </ng-container>
     <ng-container matColumnDef="state">
       <th mat-header-cell *matHeaderCellDef>Stato</th>
-      <td mat-cell *matCellDef="let element"> {{element.state ? 'Attiva' : 'Spenta'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.active ? 'Attiva' : 'Spenta'}} </td>
     </ng-container>
     <ng-container matColumnDef="cpu">
       <th mat-header-cell *matHeaderCellDef>CPU</th>
       <td mat-cell *matCellDef="let element"> {{element.cpu}} </td>
     </ng-container>
     <ng-container matColumnDef="ramSize">
-      <th mat-header-cell *matHeaderCellDef>ramSize</th>
+      <th mat-header-cell *matHeaderCellDef>RamSize</th>
       <td mat-cell *matCellDef="let element"> {{element.ramSize}} </td>
     </ng-container>
     <ng-container matColumnDef="diskSize">
-      <th mat-header-cell *matHeaderCellDef>diskSize</th>
+      <th mat-header-cell *matHeaderCellDef>DiskSize</th>
       <td mat-cell *matCellDef="let element"> {{element.diskSize}} </td>
     </ng-container>
     <ng-container matColumnDef="link">
-      <th mat-header-cell *matHeaderCellDef>link</th>
-      <td mat-cell *matCellDef="let element"> <button mat-stroked-button  [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button></td>
+      <th mat-header-cell *matHeaderCellDef>Apri</th>
+      <td mat-cell *matCellDef="let element"> <button mat-stroked-button  [disabled]="!element.active" [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button></td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>

@@ -1,17 +1,24 @@
 table {
   width: 100%;
+
 }
+
 
 form {
   min-width: 150px;
-  max-width: 600px;
   width: 100%;
 }
 
 .search-form-field{
   margin-left: 1em;
-  width: 80%;
+  width: 50%;
   max-width: 400px;
+  display: inline-block;
+}
+
+.add_csv {
+  display: inline-block;
+  width: 50%;
 }
 
 button {

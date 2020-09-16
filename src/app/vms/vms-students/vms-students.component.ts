@@ -19,7 +19,9 @@ import {AuthService} from '../../services/auth.service';
   styleUrls: ['./vms-students.component.css']
 })
 export class VmsStudentsComponent implements OnInit, OnDestroy {
-  columnsToDisplay: string[] = ['id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'accensione', 'modifica', 'share', 'elimina'];
+  columnsToDisplay: string[] = [
+    'id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'accensione', 'modifica', 'share', 'elimina', 'link'
+  ];
   dataSource: Vm[];
   courseName: string;
   vmConfig: VmConfig = new VmConfig(-1, -1, '', 0, 0, 0, 0, 0);
@@ -58,6 +60,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     this.dataSource.forEach(vm => sum += vm.ramSize);
     return sum;
   }
+
   disk(){
     let sum = 0;
     this.dataSource.forEach(vm => sum += vm.diskSize);
@@ -71,7 +74,6 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   vmNumber(){
     return this.dataSource.length;
   }
-
 
   deleteVm(vm: Vm){
     this.courseService.deleteVmInstance(this.courseName, this.team.id, vm)
@@ -167,7 +169,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   shareVm(vm: Vm){
     // console.log(vmConfigLeft);
     // todo: unsubscribe
-    const d = {teamId: this.team.id, courseName: this.courseName, vmId: vm.id};
+    const d = {teamId: this.team.id, courseName: this.courseName, vm};
     const dialogRef = this.dialog.open(ShareVmDialogComponent, {data: d});
     // dialogRef.afterClosed().subscribe(() => {
     //   this.getVmsInstances(this.courseName, this.team.id);
@@ -200,11 +202,25 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       );
   }
 
+  getCreator(courseName: string, teamId: number, vmId: number, vm: Vm) {
+    this.courseService.getVmCreator(courseName, teamId, vmId)
+      .subscribe(
+        data => {
+          vm.student = data;
+          console.log(this.dataSource);
+        },
+        error => console.log(error)
+      );
+  }
+
   getVmsInstances(courseName: string, teamId: number){
     this.courseService.getTeamVMs(courseName, teamId)
       .subscribe(
         data => {
-          data.forEach(e => this.getOwners(courseName, teamId, e.id));
+          data.forEach(e => {
+            this.getOwners(courseName, teamId, e.id);
+            this.getCreator(courseName, teamId, e.id, e);
+          });
           this.dataSource = data;
         },
         error => console.log(error)
