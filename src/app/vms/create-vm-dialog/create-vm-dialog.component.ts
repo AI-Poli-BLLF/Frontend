@@ -58,4 +58,10 @@ export class CreateVmDialogComponent {
     );
   }
 
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      return Math.round(value / 100) / 10 + 'GB';
+    } else{ return value + 'KB'; }
+  }
+
 }

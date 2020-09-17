@@ -1,5 +1,5 @@
 <div class="container">
   <h2>Elenco studenti iscritti al corso</h2>
 
-  <app-students #studentsComponent (add)="add($event)" (del)="del($event)"></app-students>
+  <app-students #studentsComponent [EnrolledStudents]="students" (add)="add($event)" (del)="del($event)"></app-students>
 </div>

@@ -83,14 +83,4 @@ export class StudentService {
         })
       );
   }
-
-  getTeam(courseName: string, studentId: string): Observable<Team>{
-    return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
-      .pipe(
-        catchError( err => {
-          console.error(err);
-          return throwError('StudentService getAll error: ' + err.message);
-        })
-      );
-  }
 }

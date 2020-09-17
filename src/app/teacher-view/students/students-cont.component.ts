@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {Student} from '../../models/student.model';
 import {forkJoin, Observable, Subscription} from 'rxjs';
 import {StudentsComponent} from './students.component';
 import {StudentService} from '../../services/student.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
+import {CourseService} from '../../services/course.service';
+import {TeamService} from '../../services/team.service';
+import {Team} from '../../models/team.model';
 
 @Component({
   selector: 'app-students-cont',
@@ -13,6 +16,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class StudentsContComponent implements AfterViewInit, OnDestroy{
   courseName = '';
+  students: Student[] = [];
   private sub: Subscription;
 
   @ViewChild(StudentsComponent)
@@ -20,6 +24,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
 
   constructor(
     private service: StudentService,
+    private courseService: CourseService,
+    private teamService: TeamService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute) {
     this.sub = this.route.parent.params.subscribe(params => {
@@ -33,7 +39,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       .subscribe(
         () => this.studentsComponent.addTableStudents(student),
         () => this.service.getEnrolled(this.courseName).subscribe(s2 => {
-          this.studentsComponent.EnrolledStudents = s2;
+          this.students = s2;
+          this.getTeams(this.courseName);
           // console.log('GET ALL ENROLLED -=> ADD ERROR');
         })
       );
@@ -52,14 +59,18 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
         this.snackBar.open('Si è verificato un errore.', 'Chiudi');
         // console.log('GET ALL ENROLLED -=> DELETE ERROR');
         this.service.getEnrolled(this.courseName).subscribe(s2 => {
-          this.studentsComponent.EnrolledStudents = s2;
+          this.students = s2;
+          this.getTeams(this.courseName);
         });
       }
     );
   }
 
   ngAfterViewInit(): void {
-    this.service.getEnrolled(this.courseName).subscribe(s => this.studentsComponent.EnrolledStudents = s );
+    this.service.getEnrolled(this.courseName).subscribe(s => {
+      this.students = s;
+      this.getTeams(this.courseName);
+    });
     this.service.getAll().subscribe(
       s => this.studentsComponent.AllStudents = s,
       error => {
@@ -70,5 +81,25 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+  getMembers(courseName: string, team: Team){
+    this.teamService.getTeamMembers(courseName, team.id)
+      .subscribe(
+        members => members.forEach(m => this.students.find(s => s.id === m.id).groupName = team.name),
+        error => {
+          console.log(error);
+          this.snackBar.open('Si è verificato un errore nel recupero dei team.', 'Chiudi');
+        }
+      );
+  }
+  getTeams(courseName: string){
+    this.courseService.getTeamsForCourse(courseName)
+      .subscribe(
+        data => data.forEach(t => this.getMembers(courseName, t)),
+        error => {
+          console.log(error);
+          this.snackBar.open('Si è verificato un errore nel recupero dei team.', 'Chiudi');
+        }
+      )
   }
 }

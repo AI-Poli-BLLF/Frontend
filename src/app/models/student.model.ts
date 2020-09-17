@@ -4,6 +4,7 @@ export class Student {
   firstName: string;
   photoName: string;
   selected: boolean;
+  groupName: string;
   email: string;
 
   constructor(id: string, name: string, firstName: string, photoName: string, email: string) {
@@ -13,6 +14,7 @@ export class Student {
     this.firstName = firstName;
     this.photoName = photoName;
     this.email = email;
+    this.groupName = '- -';
   }
 
   toString(){
