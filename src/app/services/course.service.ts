@@ -4,11 +4,11 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Course} from '../models/course.model';
-import {Team} from "../models/team.model";
-import {VmConfig} from "../models/vm.config.model";
-import {Vm} from "../models/vm.model";
-import {VmModel} from "../models/vm.model.model";
-import {consoleTestResultHandler} from "tslint/lib/test";
+import {Team} from '../models/team.model';
+import {VmConfig} from '../models/vm.config.model';
+import {Vm} from '../models/vm.model';
+import {VmModel} from '../models/vm.model.model';
+import {consoleTestResultHandler} from 'tslint/lib/test';
 
 @Injectable({
   providedIn: 'root'

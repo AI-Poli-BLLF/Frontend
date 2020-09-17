@@ -1,5 +1,7 @@
 <mat-toolbar>
-  <mat-icon  id="hamburger" (click)="toggleForMenuClick()">menu</mat-icon>
+  <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
+    <mat-icon >menu</mat-icon>
+  </button>
   <span>{{selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="editCourseOptions">
