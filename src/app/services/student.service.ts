@@ -74,6 +74,15 @@ export class StudentService {
         })
       );
   }
+  removeStudentFromCourse(courseName: string, studentId: string): Observable<any>{
+    return this.httpClient.delete<any>(this.urlCourses + '/' + courseName + '/enrolled/' + studentId)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('StudentService removeStudentFromCourse error: ' + err.message);
+        })
+      );
+  }
 
   getTeam(courseName: string, studentId: string): Observable<Team>{
     return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)

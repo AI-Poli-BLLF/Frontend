@@ -40,21 +40,22 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   }
 
   del(students: Array<Student>) {
-    // const delObs: Array<Observable<Student>> = [];
-    // students.forEach(s => delObs.push(this.service.updateEnrolled(s, 0)));
-    // forkJoin(delObs).subscribe(
-    //   s1 => {
-    //     this.studentsComponent.deleteTableStudents(s1);
-    //
-    //   },
-    //   () => {
-    //     // console.log('GET ALL ENROLLED -=> DELETE ERROR');
-    //     this.service.getEnrolled(1).subscribe(s2 => {
-    //       this.studentsComponent.EnrolledStudents = s2;
-    //       // console.log('GET ALL ENROLLED -=> DELETE ERROR');
-    //     });
-    //   }
-    // );
+    const delObs: Array<Observable<Student>> = [];
+    students.forEach(s => delObs.push(this.service.removeStudentFromCourse(this.courseName, s.id)));
+    // todo: trovare un bel metodo
+    forkJoin(delObs).subscribe(
+      () => {
+        this.studentsComponent.deleteTableStudents(students);
+      },
+      error => {
+        console.log('Delete error: ', error);
+        this.snackBar.open('Si è verificato un errore.', 'Chiudi');
+        // console.log('GET ALL ENROLLED -=> DELETE ERROR');
+        this.service.getEnrolled(this.courseName).subscribe(s2 => {
+          this.studentsComponent.EnrolledStudents = s2;
+        });
+      }
+    );
   }
 
   ngAfterViewInit(): void {
