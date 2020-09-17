@@ -157,4 +157,8 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     //   }
     // );
   }
+
+  triggerDeleteButton(){
+    return this.enrolledStudents.filter(s => s.selected).length === 0;
+  }
 }

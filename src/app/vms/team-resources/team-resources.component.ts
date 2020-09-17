@@ -25,6 +25,10 @@ export class TeamResourcesComponent {
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 100) / 10 + 'GB';
-    } else{ return value + 'KB'; }
+    } else{ return value + ' MB'; }
+  }
+
+  diskLabel(value: number){
+    return value + ' GB';
   }
 }

@@ -3,8 +3,8 @@
   <table>
     <tr>
       <th>CPU (max: {{vmConfig.maxCpu}})</th>
-      <th>RAM (max: {{formatLabel(vmConfig.maxRam)}})</th>
-      <th>Disk (max: {{vmConfig.maxDisk}}GB)</th>
+      <th>Ram (max: {{formatLabel(vmConfig.maxRam)}})</th>
+      <th>Storage (max: {{vmConfig.maxDisk}} GB)</th>
       <th>Attive (max: {{vmConfig.maxActive}})</th>
       <th>Create (max: {{vmConfig.maxVm}})</th>
     </tr>
@@ -33,6 +33,7 @@
       <td>
         <mat-slider
           thumbLabel
+          [displayWith]="diskLabel"
           tickInterval="1"
           color="primary"
           [value]="disk"

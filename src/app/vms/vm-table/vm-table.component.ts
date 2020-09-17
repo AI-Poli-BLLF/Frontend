@@ -21,7 +21,7 @@ export class VmTableComponent{
   @Input()
   courseName: string;
   vmConfig: VmConfig[];
-  columnsToDisplay: string[] = ['id', 'groupName', 'maxCpu', 'maxRam', 'maxDisk', 'maxVm', 'maxActive'];
+  columnsToDisplay: string[] = ['Id', 'Team', 'CPU', 'Ram (MB)', 'Storage (GB)', 'Vm creabili', '# Vm attive'];
   expandedElement: VmConfig | null;
 
   constructor(private courseService: CourseService) {
