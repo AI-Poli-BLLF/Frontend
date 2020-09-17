@@ -49,7 +49,6 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   del(students: Array<Student>) {
     const delObs: Array<Observable<Student>> = [];
     students.forEach(s => delObs.push(this.service.removeStudentFromCourse(this.courseName, s.id)));
-    // todo: trovare un bel metodo
     forkJoin(delObs).subscribe(
       () => {
         this.studentsComponent.deleteTableStudents(students);

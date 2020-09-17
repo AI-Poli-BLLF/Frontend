@@ -10,7 +10,6 @@ import {DeleteConfirmDialogComponent} from './delete-confirm-dialog/delete-confi
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {EditCourseDialogComponent} from './edit-course-dialog/edit-course-dialog.component';
 import {AuthService} from '../services/auth.service';
-import {VmModel} from "../models/vm.model.model";
 
 @Component({
   selector: 'app-teacher-view',

@@ -97,7 +97,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       this.vmConfig.maxDisk - this.disk() + vm.diskSize,
       this.vmConfig.maxVm - this.vmNumber() + 1,
       0);
-    // todo: unsubscribe
+    // todo: unsubscribe?
     const d = {config: vmConfigLeft, courseName: this.courseName, edit: true, vm};
     const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
     dialogRef.afterClosed().subscribe(() => {
@@ -137,7 +137,6 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   }
 
   openCreateVm(){
-    // todo: unsubrscribe?
     if (this.team.id === -1){
       this.snackBar.open('Si sono verificati problemi nel recuperare il team.', 'Chiudi');
       return;
@@ -158,7 +157,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     }
     const vm: Vm = new Vm(undefined, false, 0, 0, 0);
     // console.log(vmConfigLeft);
-    // todo: unsubscribe
+    // todo: unsubscribe ?
     const d = {config: vmConfigLeft, courseName: this.courseName, edit: false, vm};
     const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
     dialogRef.afterClosed().subscribe(() => {
@@ -167,10 +166,8 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   }
 
   shareVm(vm: Vm){
-    // console.log(vmConfigLeft);
-    // todo: unsubscribe
     const d = {teamId: this.team.id, courseName: this.courseName, vm};
-    const dialogRef = this.dialog.open(ShareVmDialogComponent, {data: d});
+    this.dialog.open(ShareVmDialogComponent, {data: d});
     // dialogRef.afterClosed().subscribe(() => {
     //   this.getVmsInstances(this.courseName, this.team.id);
     // });
