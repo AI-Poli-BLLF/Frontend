@@ -1,123 +1,137 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Course} from '../../models/course.model';
 import {CourseService} from '../../services/course.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../../login-dialog/login-dialog.component';
 import {VmModel} from '../../models/vm.model.model';
 import {AuthService} from '../../services/auth.service';
+import {VmModelsList} from '../../models/vm.models.list.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-add-course-dialog',
   templateUrl: './add-course-dialog.component.html',
   styleUrls: ['./add-course-dialog.component.css']
 })
-export class AddCourseDialogComponent {
-  // todo: gestione form control sbagliata
-  nameValidator = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]);
-  minValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
-  maxValidator = new FormControl('', [Validators.required, Validators.min(1), Validators.max(2000)]);
-  selectedOs = new FormControl('', [Validators.required]);
-  selectedV = new FormControl('', [Validators.required]);
+export class AddCourseDialogComponent implements OnDestroy{
   checked = false;
   labelValue: string;
   formGroup: FormGroup;
 
-  osV: VmModel[] = [
-    new VmModel(undefined, 'Windows', '10'),
-    new VmModel(undefined, 'Windows', '7'),
-    new VmModel(undefined, 'Windows', '8'),
-    new VmModel(undefined, 'Ubuntu', '20.04'),
-    new VmModel(undefined, 'Ubuntu', '19.10'),
-    new VmModel(undefined, 'Ubuntu', '19.04'),
-    new VmModel(undefined, 'MacOS', 'Catalina'),
-    new VmModel(undefined, 'MacOS', 'Mojave'),
-    new VmModel(undefined, 'MacOS', 'High Sierra'),
-    new VmModel(undefined, 'Android', '9'),
-    new VmModel(undefined, 'Android', '10'),
-    new VmModel(undefined, 'Android', '11')
-  ];
+  subMax: Subscription;
+  subMin: Subscription;
+
+  osV: VmModelsList[] = [];
 
   constructor(private service: CourseService,
+              private fb: FormBuilder,
+              private snackBar: MatSnackBar,
               private dialogRef: MatDialogRef<LoginDialogComponent>,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+    this.service.getVmModels()
+      .subscribe(
+        data => this.osV = data,
+        error => {
+          console.log(error);
+          this.snackBar.open('Si è verificato un errore nel recuperare i modelli di VM', 'Chiudi');
+        });
+    this.formGroup = fb.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      min: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
+      max: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
+      os: ['', [Validators.required]],
+      version: ['', [Validators.required]]
+    });
+
+    this.subMax = this.formGroup.controls.max.valueChanges.subscribe(() => this.changeMax());
+    this.subMin = this.formGroup.controls.min.valueChanges.subscribe(() => this.changeMin());
+  }
+
+  ngOnDestroy() {
+    this.subMax.unsubscribe();
+    this.subMin.unsubscribe();
+  }
 
   changed(event){
     this.checked = event.checked;
   }
 
+  changeMin(){
+    this.formGroup.controls.max.setValidators([
+      Validators.required,
+      Validators.min(parseInt(this.formGroup.controls.min.value, 10)),
+      Validators.max(50)
+    ]);
+    this.subMax.unsubscribe();
+    this.formGroup.controls.max.updateValueAndValidity();
+    this.subMax = this.formGroup.controls.max.valueChanges.subscribe(() => this.changeMax());
+  }
+
+  changeMax(){
+    this.formGroup.controls.min.setValidators([
+      Validators.required,
+      Validators.min(1),
+      Validators.max(parseInt(this.formGroup.controls.max.value, 10))
+    ]);
+    this.subMin.unsubscribe();
+    this.formGroup.controls.min.updateValueAndValidity();
+    this.subMin = this.formGroup.controls.min.valueChanges.subscribe(() => this.changeMin());
+  }
+
   getOs(){
     const os: string[] = [];
-    this.osV.forEach(o => os.findIndex(oo => o.os === oo) === -1 ? os.push(o.os) : o);
+    this.osV.forEach(o => os.push(o.osName));
     return os;
   }
 
+  public checkError(controlName: string): boolean {
+    return this.formGroup.controls[controlName].invalid;
+  }
+
   getVersions(){
-    const v: string[] = [];
-    this.osV.filter(o => o.os === this.selectedOs.value)
-      .forEach(o => v.findIndex(oo => o.os === oo) === -1 ? v.push(o.version) : o);
+    const vmModelsList: VmModelsList = this.osV.find(o => o.osName === this.formGroup.controls.os.value);
+    const v: string[] = vmModelsList == null ? [] : vmModelsList.versions;
     return v.sort();
   }
 
   getNameErrorMessage() {
-    if (this.nameValidator.hasError('required')) {
+    if (this.formGroup.controls.name.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    return this.nameValidator.hasError('minLength') || this.nameValidator.hasError('maxLength')
+    return this.formGroup.controls.name.hasError('minlength') || this.formGroup.controls.name.hasError('maxlength')
       ? 'Lunghezza nome non valida.' : '';
   }
 
   getMinErrorMessage() {
-    if (this.minValidator.hasError('required')) {
+    if (this.formGroup.controls.min.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    return this.minValidator.hasError('min') || this.minValidator.hasError('max')
+    return this.formGroup.controls.min.hasError('min') || this.formGroup.controls.min.hasError('max')
       ? 'Valore non consentito.' : '';
-  }
-
-  getOsErrorMessage() {
-    if (this.selectedOs.hasError('required')) {
-      return 'Devi inserire un valore.';
-    }
-  }
-
-  getVersionErrorMessage() {
-    if (this.selectedV.hasError('required')) {
-      return 'Devi inserire un valore.';
-    }
   }
 
   getMaxErrorMessage() {
-    if (this.maxValidator.hasError('required')) {
+    if (this.formGroup.controls.max.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    return this.maxValidator.hasError('min') || this.maxValidator.hasError('max')
+    return this.formGroup.controls.max.hasError('min') || this.formGroup.controls.max.hasError('max')
       ? 'Valore non consentito.' : '';
   }
 
-  // todo: il max deve essere maggiore del min
   add(){
     // controllo se ci sono errori
-    if (
-      this.nameValidator.invalid ||
-      this.minValidator.invalid ||
-      this.selectedOs.invalid ||
-      this.selectedV.invalid ||
-      this.maxValidator.invalid
-    ) {
-      return;
-    }
-    const selectedV = this.selectedV.value;
-    const selectedOS = this.selectedOs.value;
-    // todo: opzione per modificare l'enabled
-    // todo: inviare insieme modello vm e corso
-    console.log(this.checked);
-
+    if (this.formGroup.invalid) { return; }
     this.service.addCourse(
-      new Course(this.nameValidator.value, this.checked, this.minValidator.value, this.maxValidator.value),
-      new VmModel(undefined, this.selectedOs.value, this.selectedV.value),
+      new Course(
+        this.formGroup.controls.name.value,
+        this.checked,
+        this.formGroup.controls.min.value,
+        this.formGroup.controls.max.value),
+      new VmModel(undefined, this.formGroup.controls.os.value, this.formGroup.controls.version.value),
       this.authService.getId()
-      ).subscribe(
+    ).subscribe(
       data => {
         console.log(data);
         this.dialogRef.close();

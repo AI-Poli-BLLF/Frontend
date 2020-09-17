@@ -17,13 +17,13 @@ export class TokenComponent implements OnDestroy{
     private router: Router,
     private snackBar: MatSnackBar,
     private tokenService: TokenService) {
-    this.sub = this.route.parent.params.subscribe(params => {
+    this.sub = this.route.params.subscribe(params => {
       this.doPost(params.token);
     });
   }
 
   doPost(token: string){
-    console.log(token);
+    console.log('TOKEN: ', token);
     this.tokenService.verify(token)
       .subscribe(
         () => {

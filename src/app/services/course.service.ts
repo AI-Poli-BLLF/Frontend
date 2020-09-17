@@ -9,6 +9,7 @@ import {VmConfig} from '../models/vm.config.model';
 import {Vm} from '../models/vm.model';
 import {VmModel} from '../models/vm.model.model';
 import {consoleTestResultHandler} from 'tslint/lib/test';
+import {VmModelsList} from "../models/vm.models.list.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ import {consoleTestResultHandler} from 'tslint/lib/test';
 export class CourseService {
 
   private url = 'https://localhost:4200/API/courses';
+  private urlModels = 'https://localhost:4200/API/vm-os';
   private urlProfessors = 'https://localhost:4200/API/professors';
   private urlStudents = 'https://localhost:4200/API/students';
 
@@ -39,6 +41,18 @@ export class CourseService {
     console.log('ADD');
     const v = {course, vmModel, professorId};
     return this.httpClient.post<Course>(this.url, v)
+      .pipe(
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        catchError( err => {
+          console.error(err);
+          return throwError(err);
+        })
+      );
+  }
+  // edit a course
+  editCourse(oldCourseName: string, course: Course, vmModel: VmModel, professorId: string): Observable<Course>{
+    const v = {course, vmModel, professorId};
+    return this.httpClient.put<Course>(this.url + '/' + oldCourseName, v)
       .pipe(
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
         catchError( err => {
@@ -205,17 +219,6 @@ export class CourseService {
       );
   }
 
-  // editVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
-    // return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
-    //   .pipe(
-    //     map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
-    //     catchError( err => {
-    //       console.error(err);
-    //       return throwError('CourseService createVmInstance error:' + err.message);
-    //     })
-    //   );
-  // }
-
   deleteVmInstance(courseName: string, teamId: number, vm: any): Observable<any>{
     return this.httpClient.delete<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vm.id)
       .pipe(
@@ -275,6 +278,17 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError(`CourseService shareVm error: ${err.message}`);
+        })
+      );
+  }
+
+  getVmModels(): Observable<Array<VmModelsList>>{
+    return this.httpClient.get<Array<VmModelsList>>(this.urlModels)
+      .pipe(
+        map(s => s.map(s2 => new VmModelsList(s2.id, s2.osName, s2.versions))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getVmModels error: ${err.message}`);
         })
       );
   }

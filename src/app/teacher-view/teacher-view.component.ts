@@ -9,7 +9,8 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {DeleteConfirmDialogComponent} from './delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {EditCourseDialogComponent} from './edit-course-dialog/edit-course-dialog.component';
-import {AuthService} from "../services/auth.service";
+import {AuthService} from '../services/auth.service';
+import {VmModel} from "../models/vm.model.model";
 
 @Component({
   selector: 'app-teacher-view',
@@ -37,22 +38,6 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  addCourse(course: Course){
-    this.service.update(course).subscribe(
-      data => {
-        console.log(data);
-        this.loadCourses();
-      },
-      error => {
-        console.log(error);
-        const mex = (error.status === 401 || error.status === 403) ?
-          'Utente non autorizzato' : 'Si è verificato un errore';
-        this.snackBar.open(mex);
-      }
-
-    );
-  }
-
   ngOnInit(): void {
     this.loadCourses();
     const courseName = this.route.firstChild.snapshot.params.name;
@@ -71,57 +56,54 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  undoSnackBar(course: Course){
-    // todo: unsubrscribe?
-    console.log(this.courses.findIndex(c => c.name === this.selectedItem) === -1);
-    if (this.courses.findIndex(c => c.name === this.selectedItem) === -1){
-      const snackBarRef = this.snackBar.open('Corso cancellato', 'Chiudi');
+  snackBarDelete() {
+    if (this.courses.findIndex(c => c.name === this.selectedItem) === -1) {
+      this.snackBar.open('Corso cancellato', 'Chiudi');
       this.selectedItem = 'Seleziona un corso';
       this.router.navigate(['/teacher']);
-      // snackBarRef.afterDismissed().subscribe(d => {
-      //   console.log(d.dismissedByAction);
-      //   if (d.dismissedByAction){
-      //     this.addCourse(course);
-      //   }
-      //   else {
-      //     this.selectedItem = 'Seleziona un corso';
-      //     this.router.navigate(['/teacher']);
-      //   }
-      // });
     }
   }
 
   deleteCourseDialog(){
     // todo: unsubrscribe?
-    const course: Course = this.courses.find(c => c.name === this.selectedItem);
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
     dialogRef.afterClosed().subscribe(() => {
       this.service.getAll().subscribe(
         (data) => {
           this.courses = data;
-          this.undoSnackBar(course);
+          this.snackBarDelete();
         },
         error => {
           console.log(error);
           this.snackBar.open('Si è verificato un errore', 'Chiudi');
         }
-        );
+      );
 
     });
   }
 
-  startToEditCourseName(){
+  startToEditCourse(){
     const course: Course = this.courses.find(c => c.name === this.selectedItem);
-    const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: course});
-    dialogRef.afterClosed().subscribe(data => {
-      console.log(course.enabled, '!=', data);
-      this.loadCourses();
-      // tslint:disable-next-line:triple-equals
-      if (!course.enabled == data) {
-        this.selectedItem = 'Seleziona un corso';
-        this.router.navigate(['/teacher']);
-      }
-    });
+    this.courseService.getCourseVmModel(course.name)
+      .subscribe(
+        vmModel => {
+          const d = {course, vmModel};
+          const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: d});
+          dialogRef.afterClosed().subscribe(data => {
+            console.log(course.enabled, '!=', data);
+            this.loadCourses();
+            // tslint:disable-next-line:triple-equals
+            if (!course.enabled == data) {
+              this.selectedItem = 'Seleziona un corso';
+              this.router.navigate(['/teacher']);
+            }
+          });
+        },
+        error => {
+          console.log(error);
+          this.snackBar.open('Impossibile caricare il modello della Vm.', 'Chiudi');
+        }
+      );
   }
 
   handleClick(selectedItem: Course) {

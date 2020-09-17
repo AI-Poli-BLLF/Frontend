@@ -103,7 +103,7 @@ export class RegistrationDialogComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.snackBar.open('Registrazione effettuata. Effettua il login.', 'Chiudi');
+          this.snackBar.open('Registrazione effettuata. Verifica l\'indirizzo mail per effettuare il login.', 'Chiudi');
           this.dialogRef.close();
         },
         error => {

@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Course} from "../models/course.model";
-import {Subscription} from "rxjs";
+import {Course} from '../models/course.model';
+import {Subscription} from 'rxjs';
 import {MatSidenav} from '@angular/material/sidenav';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {CourseService} from "../services/course.service";
+import {CourseService} from '../services/course.service';
 import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-student-view',
