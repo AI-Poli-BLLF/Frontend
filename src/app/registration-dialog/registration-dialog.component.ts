@@ -1,48 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, PatternValidator, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  PatternValidator,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registrationDialog.component.html',
   styleUrls: ['./registration-dialog.component.css']
 })
-export class RegistrationDialogComponent implements OnInit {
-  nameValidator = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]);
-  surnameValidator = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]);
-  idValidator = new FormControl('', [Validators.required, Validators.pattern('[sSdD][0-9]{6}')]);
-  passwordValidator = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]);
+export class RegistrationDialogComponent implements OnDestroy {
+
+  sub: Subscription;
   hide = true;
   emailValue = '';
-
   labelValue: string;
+  formGroup: FormGroup;
 
   constructor(private service: AuthService,
+              private fb: FormBuilder,
               private dialogRef: MatDialogRef<RegistrationDialogComponent>,
               private snackBar: MatSnackBar) {
+    this.formGroup = fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      id: ['', [Validators.required, Validators.pattern('[sSdD][0-9]{6}')]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255),
+        RegistrationDialogComponent.matchValues('password')]]
+    });
+    this.sub = this.formGroup.controls.password.valueChanges.subscribe(() => {
+      this.formGroup.controls.confirmPassword.updateValueAndValidity();
+    });
+  }
+
+  public static matchValues(matchTo: string) // name of the control to match to
+    : (AbstractControl) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return !!control.parent &&
+      !!control.parent.value &&
+      control.value === control.parent.controls[matchTo].value
+        ? null
+        : { isMatching: false };
+    };
+  }
+
+  checkPasswords() {
+    const pass = this.formGroup.get('password').value;
+    const confirmPass = this.formGroup.get('confirmPassword').value;
+    return pass !== confirmPass;
   }
 
   getNameErrorMessage() {
-    if (this.nameValidator.hasError('required')) {
+    if (this.formGroup.controls.firstName.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    return this.nameValidator.hasError('minlength') || this.nameValidator.hasError('maxlength')
+    return this.formGroup.controls.firstName.hasError('minlength')
+    || this.formGroup.controls.firstName.hasError('maxlength')
       ? 'Lunghezza nome non valida.' : '';
   }
 
   getSurnameErrorMessage() {
-    if (this.surnameValidator.hasError('required')) {
+    if (this.formGroup.controls.lastName.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    return this.surnameValidator.hasError('minlength') || this.surnameValidator.hasError('maxlength')
+    return this.formGroup.controls.lastName.hasError('minlength')
+    || this.formGroup.controls.lastName.hasError('maxlength')
       ? 'Lunghezza cognome non valida.' : '';
   }
 
   fillEmail(){
-    const id = this.idValidator.value;
+    const id = this.formGroup.controls.id.value;
 
     if (id.length > 0){
       switch (id[0]) {
@@ -59,45 +97,48 @@ export class RegistrationDialogComponent implements OnInit {
   }
 
   getIdErrorMessage() {
-    return this.idValidator.hasError('required') || this.idValidator.hasError('pattern')
+    return this.formGroup.controls.id.hasError('required')
+    || this.formGroup.controls.id.hasError('pattern')
       ? 'Matricola non valida.' : '';
   }
 
-  // getEmailErrorMessage() {
-  //   if (this.emailValidator.hasError('required')) {
-  //     return 'Devi inserire un valore.';
-  //   }
-  //   if (this.emailValidator.hasError('email')) {
-  //     return 'Email non valida.';
-  //   }
-  //   return this.emailValidator.hasError('pattern') ? 'Indirizzo email non abilitato.' : '';
-  // }
-
   getPasswordErrorMessage() {
-    if (this.passwordValidator.hasError('required')) {
+    if (this.formGroup.controls.password.hasError('required')) {
       return 'Devi inserire un valore.';
     }
-    if (this.passwordValidator.hasError('minlength')) {
+    if (this.formGroup.controls.password.hasError('minlength')) {
       return 'La password deve essere lunga almeno 8 caratteri.';
     }
-    return this.passwordValidator.hasError('maxLength') ? 'Password non valida.' : '';
+    return this.formGroup.controls.password.hasError('maxLength') ? 'Password non valida.' : '';
+  }
+
+  getCheckPasswordErrorMessage() {
+    if (this.formGroup.controls.confirmPassword.hasError('required')) {
+      return 'Devi inserire un valore.';
+    }
+    if (this.formGroup.controls.confirmPassword.hasError('minlength')) {
+      return 'La password deve essere lunga almeno 8 caratteri.';
+    }
+    if (this.checkPasswords()){
+      return 'Le password non corrispondono.';
+    }
+    return this.formGroup.controls.confirmPassword.hasError('maxLength') ? 'Password non valida.' : '';
+  }
+
+  public checkError(controlName: string): boolean {
+    return this.formGroup.controls[controlName].invalid;
   }
 
   register(){
-    // todo: usare form control
-    if (
-      this.idValidator.invalid ||
-      this.surnameValidator.invalid ||
-      this.nameValidator.invalid ||
-      this.passwordValidator.invalid) {
+    if (this.formGroup.invalid) {
       this.labelValue = 'Completa correttamente tutti i campi.';
       return;
     }
     this.service.register(
-      this.idValidator.value,
-      this.surnameValidator.value,
-      this.nameValidator.value,
-      this.passwordValidator.value,
+      this.formGroup.controls.id.value,
+      this.formGroup.controls.lastName.value,
+      this.formGroup.controls.firstName.value,
+      this.formGroup.controls.password.value,
       this.emailValue)
       .subscribe(
         data => {
@@ -113,7 +154,9 @@ export class RegistrationDialogComponent implements OnInit {
       );
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
 }
+
