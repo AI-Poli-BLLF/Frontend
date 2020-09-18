@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CourseService} from '../../services/course.service';
 import {TeamService} from '../../services/team.service';
 import {Team} from '../../models/team.model';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-students-cont',
@@ -27,7 +28,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     private courseService: CourseService,
     private teamService: TeamService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
       console.log(params);
@@ -37,10 +39,14 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   add(student: Student){
     this.service.enrollStudent(this.courseName, student.id)
       .subscribe(
-        () => this.studentsComponent.addTableStudents(student),
+        () => {
+          this.getPhoto(student);
+          this.studentsComponent.addTableStudents(student);
+        },
         () => this.service.getEnrolled(this.courseName).subscribe(s2 => {
           this.students = s2;
           this.getTeams(this.courseName);
+          this.getPhotos(this.students);
           // console.log('GET ALL ENROLLED -=> ADD ERROR');
         })
       );
@@ -60,6 +66,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
         this.service.getEnrolled(this.courseName).subscribe(s2 => {
           this.students = s2;
           this.getTeams(this.courseName);
+          this.getPhotos(this.students);
         });
       }
     );
@@ -69,6 +76,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     this.service.getEnrolled(this.courseName).subscribe(s => {
       this.students = s;
       this.getTeams(this.courseName);
+      this.getPhotos(this.students);
     });
     this.service.getAll().subscribe(
       s => this.studentsComponent.AllStudents = s,
@@ -99,6 +107,24 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
           console.log(error);
           this.snackBar.open('Si è verificato un errore nel recupero dei team.', 'Chiudi');
         }
-      )
+      );
+  }
+
+  getPhotos(students: Student[]){
+    students.forEach(s => this.getPhoto(s));
+  }
+
+  getPhoto(student: Student){
+    this.service.getPhoto(student.id)
+      .subscribe(
+        data => {
+          const objectURL = URL.createObjectURL(data);
+          student.photoUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        },
+        error => {
+          student.photoUrl = 'assets/img/default.png';
+          console.log(error);
+        }
+      );
   }
 }

@@ -19,8 +19,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   enrolledStudents: Array<Student> = [];
   allStudents: Array<Student> = [];
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'firstName', 'group'];
-
+  displayedColumns: string[] = ['select', 'photo', 'id', 'name', 'firstName', 'group'];
   dataSource: MatTableDataSource<Student>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

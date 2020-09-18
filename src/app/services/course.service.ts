@@ -155,7 +155,7 @@ export class CourseService {
   getEnrolled(): Observable<Array<Student>>{
     return this.httpClient.get<Array<Student>>(this.url + '/' + name + '/enrolled')
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getEnrolled error: ${err.message}');
@@ -251,7 +251,7 @@ export class CourseService {
   getOwners(courseName: string, teamId: number, vmId: number): Observable<Array<Student>>{
     return this.httpClient.get<Array<Student>>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners')
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);
@@ -262,7 +262,7 @@ export class CourseService {
   getVmCreator(courseName: string, teamId: number, vmId: number): Observable<Student>{
     return this.httpClient.get<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/creator')
       .pipe(
-        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email)),
+        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email)),
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);

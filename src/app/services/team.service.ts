@@ -54,7 +54,7 @@ export class TeamService {
       .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/members')
       .pipe(
         map(arr => arr.map(
-          s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
+          s => new Student(s.id, s.name, s.firstName, s.email))),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamsMembers error: ' + err.message);
@@ -68,7 +68,7 @@ export class TeamService {
       .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + postfix)
       .pipe(
         map(arr => arr.map(
-          s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))),
+          s => new Student(s.id, s.name, s.firstName, s.email))),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamsMembersByStatus error: ' + err.message);
@@ -80,7 +80,7 @@ export class TeamService {
     return this.httpClient
       .get<Student>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/proposer')
       .pipe(
-        map(s => new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
+        map(s => new Student(s.id, s.name, s.firstName, s.email)),
         catchError( err => {
           console.error(err);
           return throwError('TeamService getTeamsByStudent error: ' + err.message);
@@ -94,7 +94,7 @@ export class TeamService {
       .get<Student[]>(this.url + '/courses/' + courseName + '/availableStudents')
       .pipe(
         map(arr => {
-          return arr.map(s => new Student(s.id, s.name, s.firstName, s.photoName, s.email))
+          return arr.map(s => new Student(s.id, s.name, s.firstName, s.email))
                     .filter(s => s.id !== this.authService.getId()); // l'utente non è mostrato nella lista
         }),
         catchError( err => {
