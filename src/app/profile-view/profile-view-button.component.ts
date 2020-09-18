@@ -32,6 +32,6 @@ export class ProfileViewButtonComponent{
   }
 
   openProfile(){
-    const dialogRef = this.dialog.open(ProfileViewComponent);
+    this.dialog.open(ProfileViewComponent);
   }
 }

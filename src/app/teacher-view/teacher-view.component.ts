@@ -69,7 +69,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => {
       this.service.getAll().subscribe(
         (data) => {
-          this.courses = data;
+          this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
           this.snackBarDelete();
         },
         error => {
@@ -117,7 +117,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     this.courseService.getAllByProfessor(this.authService.getId()).subscribe(
       data => {
         console.log(data);
-        this.courses = data;
+        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
       },
       error => {
         console.log(error);
