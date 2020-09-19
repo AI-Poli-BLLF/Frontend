@@ -2,8 +2,9 @@ mat-slider {
   display: block;
   margin-top: 1em;
 }
+
 ::ng-deep .mat-slider-thumb-label {
-  transform: rotate(45deg) !important;
+  transform: rotate(45deg) scale(1.2) !important;
   background-color: #ffd740 !important;
   border-radius: 50% 50% 0 !important;
 }
@@ -12,18 +13,28 @@ mat-slider {
 }
 
 ::ng-deep .mat-slider-thumb-label-text {
+  transform: rotate(-45deg) scale(0.8) !important;
   opacity: 1 !important;
+  color: black !important;
 }
 
 table {
   width: 100%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 button {
-  margin-left: 2em;
-  margin-right: auto;
+  width: 50px;
+}
+.resources {
+  margin-top: 1em;
+  width: 100%;
+  /*background-color: #ffd740;*/
 }
 
-.edit_res {
-  width: 100%;
+.button_td {
+  padding-left: 1em;
+  width: 70px;
+  /*background-color: cornflowerblue;*/
 }

@@ -12,7 +12,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="cpu"
           style="pointer-events: none;"
@@ -23,7 +23,7 @@
         <mat-slider
           thumbLabel
           [displayWith]="formatLabel"
-          tickInterval="128"
+          step="512"
           color="primary"
           [value]="ram"
           style="pointer-events: none;"
@@ -34,7 +34,7 @@
         <mat-slider
           thumbLabel
           [displayWith]="diskLabel"
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="disk"
           style="pointer-events: none;"
@@ -44,7 +44,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="active"
           style="pointer-events: none;"
@@ -54,7 +54,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="vmNumber"
           style="pointer-events: none;"
