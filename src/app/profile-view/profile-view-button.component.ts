@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ProfileViewComponent} from './profile-view.component';
 import {AuthService} from '../services/auth.service';
-import {ProfileService} from "../services/profile.service";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ProfileService} from '../services/profile.service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-profile-view-button',
@@ -11,14 +12,23 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
     '<img class="image-cropper-small" [src]="photoPath" alt="Profile"/></div>',
   styleUrls: ['./profile-view.component.css']
 })
-export class ProfileViewButtonComponent{
+export class ProfileViewButtonComponent implements OnDestroy{
   photoPath: SafeUrl;
+  dialogSub: Subscription;
 
   constructor(private dialog: MatDialog,
               private sanitizer: DomSanitizer,
               private profileService: ProfileService,
               public authService: AuthService) {
-    this.profileService.getPhoto(authService.getRole(), authService.getId())
+    this.getImage();
+  }
+
+  ngOnDestroy(): void {
+    this.dialogSub.unsubscribe();
+  }
+
+  public getImage(){
+    this.profileService.getPhoto(this.authService.getRole(), this.authService.getId())
       .subscribe(
         data => {
           const objectURL = URL.createObjectURL(data);
@@ -32,6 +42,7 @@ export class ProfileViewButtonComponent{
   }
 
   openProfile(){
-    this.dialog.open(ProfileViewComponent);
+    this.dialogSub = this.dialog.open(ProfileViewComponent)
+      .afterClosed().subscribe(() => this.getImage());
   }
 }
