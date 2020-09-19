@@ -12,7 +12,7 @@
         <mat-slider
           [(ngModel)]="vm.cpu"
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           min="0"
           max="{{vmConfig.maxCpu}}"></mat-slider>
@@ -20,20 +20,22 @@
       <td>
         <mat-slider
           [(ngModel)]="vm.ramSize"
+          [displayWith]="formatLabel"
           thumbLabel
-          tickInterval="128"
+          step="512"
           color="primary"
           min="0"
-          max="{{formatLabel(vmConfig.maxRam)}}"></mat-slider>
+          max="{{vmConfig.maxRam}}"></mat-slider>
       </td>
       <td>
         <mat-slider
           [(ngModel)]="vm.diskSize"
+          [displayWith]="diskLabel"
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           min="0"
-          max="{{vmConfig.maxDisk}}GB"></mat-slider>
+          max="{{vmConfig.maxDisk}}"></mat-slider>
       </td>
     </tr>
   </table>
