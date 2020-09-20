@@ -1,37 +1,31 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {Student} from '../../models/student.model';
-import {TeamService} from '../../services/team.service';
 import {MatDialog} from '@angular/material/dialog';
-import {CourseService} from '../../services/course.service';
+import {CourseService} from '../services/course.service';
 import {ShareDialogComponent} from './share-dialog.component';
-import {Vm} from '../../models/vm.model';
-import {Team} from '../../models/team.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '../services/auth.service';
+import {ProfessorService} from '../services/professor.service';
+import {Professor} from '../models/professor.model';
 
 @Component({
-  selector: 'app-share-vm-button',
-  template: '<button (click)="getOwners()" [disabled]="disabled" mat-stroked-button><mat-icon>share</mat-icon></button>',
+  selector: 'app-share-course-button',
+  template: '<button (click)="getProfessors()" mat-button><mat-icon>share</mat-icon></button>',
   styleUrls: []
 })
-export class ShareVmButtonComponent implements OnInit, OnDestroy {
+export class ShareCourseButtonComponent implements OnInit, OnDestroy {
   @Input()
   courseName: string;
-  @Input()
-  team: Team;
-  @Input()
-  vm: Vm;
-  @Input()
-  disabled = false;
 
   @Output()
   update = new EventEmitter();
 
   dialogRef: Subscription;
-  options: Student[];
+  options: Professor[];
 
   constructor(
-    private teamService: TeamService,
+    private professorsService: ProfessorService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private courseService: CourseService
@@ -39,12 +33,12 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
     this.options = [];
   }
 
-  getOwners(){
-    this.courseService.getOwners(this.courseName, this.team.id, this.vm.id)
+  getProfessors(){
+    this.courseService.getProfessors(this.courseName)
       .subscribe(
         data => {
           const owners = data.map(e => e.id);
-          this.shareVm(owners);
+          this.shareCourse(owners);
         },
         error => {
           console.log(error);
@@ -53,10 +47,10 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
       );
   }
 
-  shareVm(owners: string[]){
+  shareCourse(owners: string[]){
     const d = {
-      text: `Condividi VM  ${this.vm.id}`,
-      creatorId: this.vm.student.id,
+      text: `Condividi corso  ${this.courseName}`,
+      creatorId: this.authService.getId(),
       options: this.options,
       owners
     };
@@ -69,11 +63,13 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(){
-    this.dialogRef.unsubscribe();
+    if (this.dialogRef !== undefined){
+      this.dialogRef.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
-    this.teamService.getTeamMembers(this.courseName, this.team.id)
+    this.professorsService.getAll()
       .subscribe(
         data => {
           this.options = data;
@@ -86,7 +82,7 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
   }
 
   submit(values: string[]) {
-    this.courseService.shareVm(this.courseName, this.team.id, this.vm.id, values)
+    this.professorsService.shareCourse(this.courseName, this.authService.getId(), values)
       .subscribe(
         data => data,
         error => console.log(error)

@@ -51,12 +51,13 @@ import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog
 import { AssignmentComponent } from './assignment/assignment.component';
 import { AssignmentsContComponent } from './assignment/assignments-cont.component';
 import { DraftComponent } from './assignment/draft/draft.component';
-import { ShareDialogComponent } from './vms/share-dialog/share-dialog.component';
+import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { TeamResourcesComponent } from './vms/team-resources/team-resources.component';
 import { VmViewComponent } from './vms/vm-view/vm-view.component';
 import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resources.component';
 import { TokenComponent } from './token/token.component';
-import {ShareVmButtonComponent} from "./vms/share-dialog/share-vm-button";
+import {ShareVmButtonComponent} from "./share-dialog/share-vm-button";
+import {ShareCourseButtonComponent} from "./share-dialog/share-course-button";
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import {ShareVmButtonComponent} from "./vms/share-dialog/share-vm-button";
     VmViewComponent,
     VmEditResourcesComponent,
     TokenComponent,
-    ShareVmButtonComponent
+    ShareVmButtonComponent,
+    ShareCourseButtonComponent
   ],
   imports: [
     BrowserModule,

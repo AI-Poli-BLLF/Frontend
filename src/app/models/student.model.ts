@@ -1,25 +1,15 @@
-import {SafeUrl} from '@angular/platform-browser';
+import {User} from './user.model';
 
-export class Student {
-  id: string;
-  name: string;
-  firstName: string;
-  photoUrl: SafeUrl;
+export class Student extends User{
   selected: boolean;
   groupName: string;
   email: string;
 
   constructor(id: string, name: string, firstName: string, email: string) {
+    super(id, name, firstName);
     this.selected = false;
-    this.id = id;
-    this.name = name;
-    this.firstName = firstName;
-    this.photoUrl = 'assets/img/default.png';
     this.email = email;
     this.groupName = '- -';
   }
 
-  toString(){
-    return this.firstName + ' ' + this.name + ' (' + this.id + ')';
-  }
 }

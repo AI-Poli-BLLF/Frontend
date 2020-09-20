@@ -10,6 +10,7 @@ import {Vm} from '../models/vm.model';
 import {VmModel} from '../models/vm.model.model';
 import {consoleTestResultHandler} from 'tslint/lib/test';
 import {VmModelsList} from "../models/vm.models.list.model";
+import {Professor} from "../models/professor.model";
 
 @Injectable({
   providedIn: 'root'
@@ -255,6 +256,18 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);
+        })
+      );
+  }
+
+  // todo
+  getProfessors(courseName: string): Observable<Array<Professor>>{
+    return this.httpClient.get<Array<Professor>>(this.url + '/' + courseName + '/professors')
+      .pipe(
+        map(s => s.map(s2 => new Professor(s2.id, s2.name, s2.firstName))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getProfessors error: ${err.message}`);
         })
       );
   }

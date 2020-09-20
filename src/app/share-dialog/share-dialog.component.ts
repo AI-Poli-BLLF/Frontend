@@ -1,10 +1,11 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Student} from '../../models/student.model';
+import {Student} from '../models/student.model';
 import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {map, startWith} from 'rxjs/operators';
 import {MatSelectChange} from '@angular/material/select';
+import {User} from '../models/user.model';
 
 @Component({
   selector: 'app-share-vm-dialog',
@@ -12,10 +13,10 @@ import {MatSelectChange} from '@angular/material/select';
   styleUrls: ['./share-dialog.component.css']
 })
 export class ShareDialogComponent implements OnInit {
-  filteredOptions: Observable<Student[]>;
+  filteredOptions: Observable<User[]>;
   filterControl = new FormControl();
   membersControl = new FormControl('', [Validators.required, Validators.min(1)]);
-  options: Student[];
+  options: User[];
   owners: string[];
 
   members: string[];
@@ -52,7 +53,7 @@ export class ShareDialogComponent implements OnInit {
     this.membersControl.setValue(this.owners);
   }
 
-  private filterFn(name: string): Student[] {
+  private filterFn(name: string): User[] {
     const filterValue = name.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue)
       || option.firstName.toLowerCase().includes(filterValue)

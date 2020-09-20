@@ -9,7 +9,7 @@ import {CourseService} from '../../services/course.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateVmDialogComponent} from '../create-vm-dialog/create-vm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ShareDialogComponent} from '../share-dialog/share-dialog.component';
+import {ShareDialogComponent} from '../../share-dialog/share-dialog.component';
 import {Student} from '../../models/student.model';
 import {AuthService} from '../../services/auth.service';
 
