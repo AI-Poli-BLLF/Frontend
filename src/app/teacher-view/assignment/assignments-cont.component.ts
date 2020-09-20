@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AssignmentComponent} from './assignment.component';
-import {AssignmentService} from '../services/assignment.service';
+import {AssignmentService} from '../../services/assignment.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '../services/auth.service';
-import {Assignment} from '../models/assignment.model';
+import {AuthService} from '../../services/auth.service';
+import {Assignment} from '../../models/assignment.model';
 import {AddAssignmentDialogComponent} from './add-assignment-dialog/add-assignment-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 

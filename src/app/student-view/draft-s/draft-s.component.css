@@ -9,11 +9,7 @@ button {
 }
 
 table {
-  width: 100%;
-}
-
-app-vm-sub-table {
-  width: 100%;
+  width: 140%;
 }
 
 tr.detail-row {

@@ -18,7 +18,8 @@ export class TabComponentComponent {
   sub: Subscription;
   linksStudent: Array<NavModel> = [
     new NavModel('./vms', 'VMs'),
-    new NavModel('./teams', 'Teams')
+    new NavModel('./teams', 'Teams'),
+    new NavModel('./assignment', 'Assignments')
   ];
   linksTeacher: Array<NavModel> = [
     new NavModel('./students', 'Students'),

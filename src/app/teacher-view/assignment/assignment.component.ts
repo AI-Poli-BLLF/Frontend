@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {AssignmentService} from '../services/assignment.service';
-import {Assignment} from '../models/assignment.model';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AssignmentService} from '../../services/assignment.service';
+import {Assignment} from '../../models/assignment.model';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Draft} from '../models/draft.model';
+import {Draft} from '../../models/draft.model';
 import {now} from 'moment';
 import {Timestamp} from 'rxjs/internal-compatibility';
 import {any} from 'codelyzer/util/function';
@@ -27,7 +27,7 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
 
   assignments: Array<Assignment> = [];
 
-  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate'];
+  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'link'];
   expandedElement: Draft | null;
 
   dataSource: MatTableDataSource<Assignment>;
@@ -35,9 +35,12 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  assignment: Assignment = null;
+  assignment: Assignment;
 
-  constructor(private assignmentService: AssignmentService) {
+  constructor(
+    private assignmentService: AssignmentService,
+
+    ) {
   }
 
   @Input()
@@ -58,6 +61,9 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
 
   }
 
+  onClick(column: Assignment) {
+    this.assignment = column;
+  }
 }
 // const ELEMENT_DATA: Assignment[] = [
 //   new Assignment('ass1', new Timestamp(any, now()), new Timestamp(any, now())),

@@ -1,5 +1,4 @@
 import {Timestamp} from 'rxjs';
-import {Time} from '@angular/common';
 
 export class Assignment {
   id: number;
@@ -7,7 +6,8 @@ export class Assignment {
   releaseDate: Timestamp<any>;
   expiryDate: Timestamp<any>;
 
-  constructor(name: string, releaseDate: Timestamp<any>, expiryDate: Timestamp<any>){
+  constructor(id: number, name: string, releaseDate: Timestamp<any>, expiryDate: Timestamp<any>){
+    this.id = id;
     this.name = name;
     this.releaseDate = releaseDate;
     this.expiryDate = expiryDate;
@@ -16,5 +16,6 @@ export class Assignment {
   toString() {
     return this.id + ' name: ' + this.name + ' releaseDate: ' + this.releaseDate + ' expiryDate: ' + this.expiryDate;
   }
+
 }
 

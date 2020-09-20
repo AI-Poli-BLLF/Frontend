@@ -12,9 +12,12 @@ import {StudentViewComponent} from './student-view/student-view.component';
 import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
 import { TeamComponent } from './teams/team.component';
-import {VmsStudentsComponent} from "./vms/vms-students/vms-students.component";
-import {AssignmentComponent} from './assignment/assignment.component';
-import {AssignmentsContComponent} from './assignment/assignments-cont.component';
+import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
+import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
+import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
+import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
+import {VmViewComponent} from './vms/vm-view/vm-view.component';
+import {AssignmentViewComponent} from './teacher-view/assignment/assignment-view/assignment-view.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -45,7 +48,9 @@ const routes: Routes = [
           {path: '', component: HomeComponent },
           {path: 'vms', component: VmsStudentsComponent },
           {path: 'vms/:id', component: VmViewComponent },
-          {path: 'teams', component: TeamComponent}
+          {path: 'teams', component: TeamComponent},
+          {path: 'assignment', component: AssignmentSComponent},
+          {path: 'assignment/:id', component: AssignmentViewComponent}
         ]},
     ]},
   {path: '**', component: PageNotFoundComponent },

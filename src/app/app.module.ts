@@ -48,13 +48,19 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { VmsStudentsComponent } from './vms/vms-students/vms-students.component';
 import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog.component';
-import { AssignmentComponent } from './assignment/assignment.component';
-import { AssignmentsContComponent } from './assignment/assignments-cont.component';
-import { DraftComponent } from './assignment/draft/draft.component';
-import { AddAssignmentDialogComponent } from './assignment/add-assignment-dialog/add-assignment-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.component';
+import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
+import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
+import {DraftComponent} from './teacher-view/assignment/draft/draft.component';
+import { AssignmentSComponent } from './student-view/assignment-s/assignment-s.component';
+import { DraftSComponent } from './student-view/draft-s/draft-s.component';
+import { TeamResourcesComponent} from './vms/team-resources/team-resources.component';
+import {VmEditResourcesComponent} from './vms/vm-edit-resources/vm-edit-resources.component';
+import {AddAssignmentDialogComponent} from './teacher-view/assignment/add-assignment-dialog/add-assignment-dialog.component';
+import { AssignmentViewComponent } from './teacher-view/assignment/assignment-view/assignment-view.component';
+import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
 
 
 @NgModule({
@@ -83,11 +89,17 @@ import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.co
     CreateTeamDialogComponent,
     VmsStudentsComponent,
     CreateVmDialogComponent,
+    ShareVmDialogComponent,
     AssignmentComponent,
     AssignmentsContComponent,
     DraftComponent,
-    ShareVmDialogComponent,
-    AddAssignmentDialogComponent
+    AssignmentSComponent,
+    DraftSComponent,
+    TeamResourcesComponent,
+    VmEditResourcesComponent,
+    AddAssignmentDialogComponent,
+    AssignmentViewComponent,
+    AddDraftDialogComponent
   ],
   imports: [
     BrowserModule,
