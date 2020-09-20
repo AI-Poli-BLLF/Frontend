@@ -1,5 +1,5 @@
 <div>
-  <h1>Condividi VM {{data.vm.id}}</h1>
+  <h1>{{data.text}}</h1>
   <mat-dialog-content>
     <mat-form-field>
       <mat-label>Proprietari</mat-label>
@@ -13,14 +13,14 @@
                    id="filter-options"
                    placeholder="Cerca studente">
           </mat-form-field>
-          <mat-option [disabled]="option.id === data.vm.student.id" *ngFor="let option of filteredOptions | async" [value]="option.id">
+          <mat-option [disabled]="option.id === data.creatorId" *ngFor="let option of filteredOptions | async" [value]="option.id">
             {{option.firstName}} {{option.name}} ({{option.id}})
           </mat-option>
         </div>
       </mat-select>
     </mat-form-field>
     <div class="buttons">
-      <button mat-button (click)="submit()">Aggiungi</button>
+      <button mat-button (click)="submit()">Salva</button>
       <button (click)="onNoClick()" class="right" mat-button>Annulla</button>
     </div>
   </mat-dialog-content>

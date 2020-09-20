@@ -270,7 +270,7 @@ export class CourseService {
       );
   }
 
-  shareVm(courseName: string, teamId: number, vmId: string, memberIds: string[]): Observable<any>{
+  shareVm(courseName: string, teamId: number, vmId: number, memberIds: string[]): Observable<any>{
     console.log('SHARE VMs');
     return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
       .pipe(

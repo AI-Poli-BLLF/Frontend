@@ -40,7 +40,7 @@
     </ng-container>
     <ng-container matColumnDef="share">
       <th mat-header-cell *matHeaderCellDef>Condividi</th>
-      <td mat-cell *matCellDef="let element"><button (click)="shareVm(element)" [disabled]="!isOwner(element)" mat-stroked-button><mat-icon>share</mat-icon></button></td>
+      <td mat-cell *matCellDef="let element"><app-share-vm-button (update)="getVmsInstances(courseName, team.id)" [vm]="element" [courseName]="courseName" [team]="team" [disabled]="!isOwner(element)"></app-share-vm-button></td>
     </ng-container>
     <ng-container matColumnDef="elimina">
       <th mat-header-cell *matHeaderCellDef>Elimina</th>

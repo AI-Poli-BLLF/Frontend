@@ -1,34 +1,33 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Student} from '../../models/student.model';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {TeamService} from '../../services/team.service';
+import {FormControl, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {map, startWith} from 'rxjs/operators';
 import {MatSelectChange} from '@angular/material/select';
-import {CourseService} from "../../services/course.service";
 
 @Component({
   selector: 'app-share-vm-dialog',
-  templateUrl: './share-vm-dialog.component.html',
-  styleUrls: ['./share-vm-dialog.component.css']
+  templateUrl: './share-dialog.component.html',
+  styleUrls: ['./share-dialog.component.css']
 })
-export class ShareVmDialogComponent implements OnInit {
+export class ShareDialogComponent implements OnInit {
   filteredOptions: Observable<Student[]>;
   filterControl = new FormControl();
   membersControl = new FormControl('', [Validators.required, Validators.min(1)]);
   options: Student[];
+  owners: string[];
+
   members: string[];
   courseName: string;
 
   constructor(
-    private teamService: TeamService,
-    private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data,
-    private dialogRef: MatDialogRef<ShareVmDialogComponent>
+    private dialogRef: MatDialogRef<ShareDialogComponent>
   ) {
     this.members = [];
-    this.options = [];
+    this.options = data.options;
+    this.owners = data.owners;
   }
 
   refreshFilteredOptions(){
@@ -48,28 +47,9 @@ export class ShareVmDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teamService.getTeamMembers(this.data.courseName, this.data.teamId)
-      .subscribe(
-        data => {
-          console.log('Members');
-          console.log(data);
-          this.options = data;
-          this.refreshFilteredOptions();
-        },
-        error => {
-          console.log(error);
-          this.members = [];
-        }
-      );
-
-    this.courseService.getOwners(this.data.courseName, this.data.teamId, this.data.vm.id)
-      .subscribe(
-        data => this.membersControl.setValue(data.map(e => e.id)),
-        error => {
-          console.log(error);
-          this.membersControl.setValue([]);
-        }
-      );
+    console.log('OnInit', this.owners);
+    this.refreshFilteredOptions();
+    this.membersControl.setValue(this.owners);
   }
 
   private filterFn(name: string): Student[] {
@@ -81,20 +61,14 @@ export class ShareVmDialogComponent implements OnInit {
 
   submit() {
     if (this.membersControl.valid) {
-      this.courseService.shareVm(this.data.courseName, this.data.teamId, this.data.vm.id, this.membersControl.value)
-        .subscribe(
-          data => data,
-          error => console.log(error)
-          );
-      console.log(this.membersControl.value);
-      this.dialogRef.close();
+      this.dialogRef.close({ok: true, data: this.membersControl.value});
     } else {
       console.log('Form not valid');
     }
   }
 
   onNoClick() {
-    this.dialogRef.close();
+    this.dialogRef.close({ok: false});
   }
 
 
