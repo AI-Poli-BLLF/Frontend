@@ -17,8 +17,7 @@ import {VmViewComponent} from './vms/vm-view/vm-view.component';
 import {TokenComponent} from './token/token.component';
 import {AdminAuthGuard} from './auth/admin-auth.guard';
 import {AdminViewComponent} from './admin-view/admin-view.component';
-import {VmAdminComponent} from './vm-admin/vm-admin.component';
-import {VmModelsComponent} from "./vms/vm-models/vm-models.component";
+import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
