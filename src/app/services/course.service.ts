@@ -304,4 +304,15 @@ export class CourseService {
         })
       );
   }
+
+  getAllVmModels(): Observable<Array<VmModelsList>>{
+    return this.httpClient.get<Array<VmModelsList>>(this.urlModels + '/all')
+      .pipe(
+        map(s => s.map(s2 => new VmModelsList(s2.id, s2.osName, s2.versions))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getVmModels error: ${err.message}`);
+        })
+      );
+  }
 }

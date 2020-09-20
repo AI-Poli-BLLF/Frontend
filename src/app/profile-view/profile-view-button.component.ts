@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-profile-view-button',
-  template: '<div *ngIf="authService.isLogged()" class="open-button" (click)="openProfile()">' +
+  template: '<div *ngIf="isVisible()" class="open-button" (click)="openProfile()">' +
     '<img class="image-cropper-small" [src]="photoPath" alt="Profile"/></div>',
   styleUrls: ['./profile-view.component.css']
 })
@@ -20,7 +20,11 @@ export class ProfileViewButtonComponent implements OnDestroy{
               private sanitizer: DomSanitizer,
               private profileService: ProfileService,
               public authService: AuthService) {
-    this.getImage();
+    // this.getImage();
+  }
+
+  isVisible(){
+    return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
   }
 
   ngOnDestroy(): void {

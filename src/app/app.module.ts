@@ -58,6 +58,10 @@ import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resour
 import { TokenComponent } from './token/token.component';
 import {ShareVmButtonComponent} from "./share-dialog/share-vm-button";
 import {ShareCourseButtonComponent} from "./share-dialog/share-course-button";
+import { AdminViewComponent } from './admin-view/admin-view.component';
+import { VmAdminComponent } from './vm-admin/vm-admin.component';
+import { VmModelsTableComponent } from './vms/vm-models-table/vm-models-table.component';
+import { VmModelsComponent } from './vms/vm-models/vm-models.component';
 
 
 @NgModule({
@@ -95,7 +99,11 @@ import {ShareCourseButtonComponent} from "./share-dialog/share-course-button";
     VmEditResourcesComponent,
     TokenComponent,
     ShareVmButtonComponent,
-    ShareCourseButtonComponent
+    ShareCourseButtonComponent,
+    AdminViewComponent,
+    VmAdminComponent,
+    VmModelsTableComponent,
+    VmModelsComponent
   ],
   imports: [
     BrowserModule,
