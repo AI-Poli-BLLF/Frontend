@@ -3,8 +3,8 @@
   <table>
     <tr>
       <th>CPU (max: {{vmConfig.maxCpu}})</th>
-      <th>RAM (max: {{formatLabel(vmConfig.maxRam)}})</th>
-      <th>Disk (max: {{vmConfig.maxDisk}}GB)</th>
+      <th>Ram (max: {{formatLabel(vmConfig.maxRam)}})</th>
+      <th>Storage (max: {{vmConfig.maxDisk}} GB)</th>
       <th>Attive (max: {{vmConfig.maxActive}})</th>
       <th>Create (max: {{vmConfig.maxVm}})</th>
     </tr>
@@ -12,7 +12,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="cpu"
           style="pointer-events: none;"
@@ -23,7 +23,7 @@
         <mat-slider
           thumbLabel
           [displayWith]="formatLabel"
-          tickInterval="128"
+          step="512"
           color="primary"
           [value]="ram"
           style="pointer-events: none;"
@@ -33,7 +33,8 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          [displayWith]="diskLabel"
+          step="1"
           color="primary"
           [value]="disk"
           style="pointer-events: none;"
@@ -43,7 +44,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="active"
           style="pointer-events: none;"
@@ -53,7 +54,7 @@
       <td>
         <mat-slider
           thumbLabel
-          tickInterval="1"
+          step="1"
           color="primary"
           [value]="vmNumber"
           style="pointer-events: none;"

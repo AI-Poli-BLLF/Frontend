@@ -18,11 +18,13 @@ import {AssignmentsContComponent} from './teacher-view/assignment/assignments-co
 import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
 import {VmViewComponent} from './vms/vm-view/vm-view.component';
 import {AssignmentViewComponent} from './teacher-view/assignment/assignment-view/assignment-view.component';
+import {TokenComponent} from './token/token.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
   {path: 'home', component: WelcomeComponent },
+  {path: 'confirm-registration/:token', component: TokenComponent },
   {path: 'teacher',
     canActivate: [TeacherAuthGuard],
     component: TeacherViewComponent,

@@ -45,10 +45,7 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
 
   @Input()
   set Assignments(assignments: Array<Assignment>){
-    // console.log('input');
-    // console.log(assignments);
     this.assignments = assignments;
-    // console.log('dopo');
     this.dataSource.data = this.assignments;
   }
 

@@ -19,8 +19,7 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   enrolledStudents: Array<Student> = [];
   allStudents: Array<Student> = [];
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'firstName', 'group'];
-
+  displayedColumns: string[] = ['select', 'photo', 'id', 'name', 'firstName', 'group'];
   dataSource: MatTableDataSource<Student>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,8 +38,12 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   set EnrolledStudents(students: Array<Student>){
     console.log('Enrolled setter');
     this.enrolledStudents = students;
-
+    console.log(students);
     this.refreshEnrolledStudents();
+  }
+
+  constructor() {
+    this.dataSource = new MatTableDataSource(this.enrolledStudents);
   }
 
   deleteTableStudents(students: Array<Student>){
@@ -64,7 +67,6 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.enrolledStudents);
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -100,7 +102,6 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   listChange() {
     this.isChecked();
     this.isIntermediate();
-
   }
 
   selectChange($event: MatCheckboxChange, s: Student) {
@@ -156,5 +157,9 @@ export class StudentsComponent implements OnInit, AfterViewInit {
     //       'Chiudi');
     //   }
     // );
+  }
+
+  triggerDeleteButton(){
+    return this.enrolledStudents.filter(s => s.selected).length === 0;
   }
 }

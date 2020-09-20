@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {LoginDialogComponent} from './login-dialog/login-dialog.component';
 import {Subscription} from 'rxjs';
 import {AuthService} from './services/auth.service';
+import {ProfileViewButtonComponent} from './profile-view/profile-view-button.component';
 
 
 
@@ -11,12 +12,15 @@ import {AuthService} from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy, OnInit{
+export class AppComponent implements OnDestroy{
   title = 'ai20-lab04';
   doLogin: Subscription;
 
   @ViewChild(LoginDialogComponent)
   loginDialog: LoginDialogComponent;
+
+  @ViewChild(ProfileViewButtonComponent)
+  profileView: ProfileViewButtonComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +37,10 @@ export class AppComponent implements OnDestroy, OnInit{
       });
   }
 
-  ngOnInit(): void {
+  logInOut(event){
+    if (event === 'login'){
+      this.profileView.getImage();
+    }
   }
 
   ngOnDestroy(): void {

@@ -14,7 +14,7 @@ export class Vm {
     this.cpu = cpu;
     this.ramSize = ramSize;
     this.diskSize = diskSize;
-    this.student = new Student('', '', '', undefined, '');
+    this.student = new Student('', '', '', '');
   }
 
   toString(){

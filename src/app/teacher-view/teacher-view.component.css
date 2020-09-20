@@ -1,7 +1,7 @@
 mat-sidenav-container{ height: 100%; }
 
 #hamburger {
-  padding-right: 1em;
+  margin-right: 1em;
 }
 
 .fill_space{

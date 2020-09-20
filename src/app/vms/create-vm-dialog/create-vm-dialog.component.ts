@@ -57,5 +57,15 @@ export class CreateVmDialogComponent {
       }
     );
   }
+  formatLabel(value: number) {
+    console.log(value);
+    if (value >= 1024) {
+      return Math.round(value / 102.4) / 10 + 'GB';
+    } else{ return value + 'MB'; }
+  }
+
+  diskLabel(value: number){
+    return value + 'GB';
+  }
 
 }

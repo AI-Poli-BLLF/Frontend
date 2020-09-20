@@ -5,6 +5,7 @@ import {CourseService} from "../services/course.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Course} from "../models/course.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-tab-component',
@@ -22,12 +23,13 @@ export class TabComponentComponent {
     new NavModel('./assignment', 'Assignments')
   ];
   linksTeacher: Array<NavModel> = [
-    new NavModel('./students', 'Students'),
+    new NavModel('./students', 'Studenti'),
     new NavModel('./vms', 'VMs'),
-    new NavModel('./assignments', 'Assignments'),
+    new NavModel('./assignments', 'Consegne'),
   ];
   constructor(private authService: AuthService,
               private courseService: CourseService,
+              private snackbar: MatSnackBar,
               private route: ActivatedRoute) {
     this.sub = this.route.params.subscribe(params => {
       this.getCourse(params.name);
@@ -42,8 +44,10 @@ export class TabComponentComponent {
           this.course = data;
           this.loadLinks();
         },
-        // todo: magari usare la snackbar
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.snackbar.open('Impossibile caricare le informazioni sul corso', 'Chiudi');
+        }
       );
   }
 

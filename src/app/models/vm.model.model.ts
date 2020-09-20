@@ -1,4 +1,3 @@
-import {Student} from "./student.model";
 export class VmModel {
   id: string;
   os: string;

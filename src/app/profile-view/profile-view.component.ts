@@ -4,7 +4,6 @@ import {Profile} from '../models/profile.model';
 import {MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-profile-view',
@@ -20,7 +19,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<ProfileViewComponent>,
     private snackBar: MatSnackBar,
     private sanitizer: DomSanitizer) {
-    this.photoPath = 'assets/img/blank-profile-picture-973460.svg';
+    this.photoPath = 'assets/img/default.png';
   }
 
   ngOnInit(): void {
@@ -46,7 +45,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
         this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       },
       error => {
-        this.photoPath = 'assets/img/blank-profile-picture-973460.svg';
+        this.photoPath = 'assets/img/default.png';
         // console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamento della foto profilo.', 'Chiudi');
       }

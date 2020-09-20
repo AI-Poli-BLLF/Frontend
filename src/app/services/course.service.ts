@@ -4,11 +4,12 @@ import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Course} from '../models/course.model';
-import {Team} from "../models/team.model";
-import {VmConfig} from "../models/vm.config.model";
-import {Vm} from "../models/vm.model";
-import {VmModel} from "../models/vm.model.model";
-import {consoleTestResultHandler} from "tslint/lib/test";
+import {Team} from '../models/team.model';
+import {VmConfig} from '../models/vm.config.model';
+import {Vm} from '../models/vm.model';
+import {VmModel} from '../models/vm.model.model';
+import {consoleTestResultHandler} from 'tslint/lib/test';
+import {VmModelsList} from "../models/vm.models.list.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ import {consoleTestResultHandler} from "tslint/lib/test";
 export class CourseService {
 
   private url = 'https://localhost:4200/API/courses';
+  private urlModels = 'https://localhost:4200/API/vm-os';
   private urlProfessors = 'https://localhost:4200/API/professors';
   private urlStudents = 'https://localhost:4200/API/students';
 
@@ -47,9 +49,20 @@ export class CourseService {
         })
       );
   }
+  // edit a course
+  editCourse(oldCourseName: string, course: Course, vmModel: VmModel, professorId: string): Observable<Course>{
+    const v = {course, vmModel, professorId};
+    return this.httpClient.put<Course>(this.url + '/' + oldCourseName, v)
+      .pipe(
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        catchError( err => {
+          console.error(err);
+          return throwError(err);
+        })
+      );
+  }
 
   deleteOne(name: string): Observable<any>{
-    // todo: gestire eccezioni
     return this.httpClient.delete(this.url + '/' + name);
   }
 
@@ -142,7 +155,7 @@ export class CourseService {
   getEnrolled(): Observable<Array<Student>>{
     return this.httpClient.get<Array<Student>>(this.url + '/' + name + '/enrolled')
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getEnrolled error: ${err.message}');
@@ -205,17 +218,6 @@ export class CourseService {
       );
   }
 
-  // editVmInstance(courseName: string, teamId: number, vm: any): Observable<Vm>{
-    // return this.httpClient.post<Vm>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/', vm)
-    //   .pipe(
-    //     map(s2 => new Vm(s2.id, s2.active, s2.cpu, s2.ramSize, s2.diskSize)),
-    //     catchError( err => {
-    //       console.error(err);
-    //       return throwError('CourseService createVmInstance error:' + err.message);
-    //     })
-    //   );
-  // }
-
   deleteVmInstance(courseName: string, teamId: number, vm: any): Observable<any>{
     return this.httpClient.delete<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vm.id)
       .pipe(
@@ -249,7 +251,7 @@ export class CourseService {
   getOwners(courseName: string, teamId: number, vmId: number): Observable<Array<Student>>{
     return this.httpClient.get<Array<Student>>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners')
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);
@@ -260,7 +262,7 @@ export class CourseService {
   getVmCreator(courseName: string, teamId: number, vmId: number): Observable<Student>{
     return this.httpClient.get<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/creator')
       .pipe(
-        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email)),
+        map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email)),
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getOwners error: ${err.message}`);
@@ -275,6 +277,17 @@ export class CourseService {
         catchError( err => {
           console.error(err);
           return throwError(`CourseService shareVm error: ${err.message}`);
+        })
+      );
+  }
+
+  getVmModels(): Observable<Array<VmModelsList>>{
+    return this.httpClient.get<Array<VmModelsList>>(this.urlModels)
+      .pipe(
+        map(s => s.map(s2 => new VmModelsList(s2.id, s2.osName, s2.versions))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getVmModels error: ${err.message}`);
         })
       );
   }

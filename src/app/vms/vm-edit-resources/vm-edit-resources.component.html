@@ -1,5 +1,5 @@
-<div class="edit_res">
-  <h2>Modifica risorse</h2>
+<div class="resources">
+<h2>Modifica risorse</h2>
   <table>
     <tr>
       <th>CPU</th>
@@ -14,9 +14,9 @@
         <mat-slider
           [(ngModel)]="vmConfigNew.maxCpu"
           thumbLabel
-          tickInterval="1"
+          step="1"
           min="1"
-          max="8">
+          max="16">
         </mat-slider>
       </td>
       <td>
@@ -24,17 +24,18 @@
           [(ngModel)]="vmConfigNew.maxRam"
           [displayWith]="formatLabel"
           thumbLabel
-          tickInterval="128"
-          min="128"
+          step="512"
+          min="1024"
           max="10240">
         </mat-slider>
       </td>
       <td>
         <mat-slider
           [(ngModel)]="vmConfigNew.maxDisk"
+          [displayWith]="diskLabel"
           thumbLabel
-          tickInterval="1"
-          min="1"
+          step="1"
+          min="16"
           max="512">
         </mat-slider>
       </td>
@@ -42,7 +43,7 @@
         <mat-slider
           [(ngModel)]="vmConfigNew.maxVm"
           thumbLabel
-          tickInterval="1"
+          step="1"
           min="1"
           max="10">
         </mat-slider>
@@ -51,12 +52,12 @@
         <mat-slider
           [(ngModel)]="vmConfigNew.maxActive"
           thumbLabel
-          tickInterval="1"
+          step="1"
           min="1"
           max="{{vmConfigNew.maxVm}}">
         </mat-slider>
       </td>
-      <td>
+      <td class="button_td">
         <button mat-flat-button (click)="save()" color="primary">Salva</button>
       </td>
     </tr>

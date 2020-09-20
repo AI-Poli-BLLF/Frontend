@@ -1,5 +1,8 @@
 <mat-toolbar>
-  <mat-icon  id="hamburger" (click)="toggleForMenuClick()">menu</mat-icon>
+  <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
+    <mat-icon >menu</mat-icon>
+  </button>
+
   <div>
     <span>{{selectedItem}}</span>
   </div>

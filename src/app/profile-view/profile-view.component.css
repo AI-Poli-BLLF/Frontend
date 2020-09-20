@@ -43,7 +43,31 @@ input[type="text"][disabled] {
   /*overflow: hidden;*/
   border-radius: 50%;
 }
+.image-cropper-small {
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  /*position: relative;*/
+  /*overflow: hidden;*/
+  margin-top: auto;
+  filter: grayscale(1);
 
+  margin-bottom: auto;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+.open-button {
+  cursor: pointer;
+  text-align: center;
+  height: 100%;
+}
+.open-button:hover .image-cropper-small {
+  filter: grayscale(0);
+  -webkit-transition: all .5s ease-in-out;
+}
 /*.image-cropper img {*/
 /*  !*height: 200px;*!*/
 /*  background-position: center;*/

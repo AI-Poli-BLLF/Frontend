@@ -20,7 +20,7 @@ export class StudentService {
     console.log('UPDATE');
     return this.httpClient.post<Student>(this.url, student)
       .pipe(
-        map(s =>  new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
+        map(s =>  new Student(s.id, s.name, s.firstName, s.email)),
         catchError( err => {
           console.error(err);
           return throwError('StudentService add error: ' + err.message);
@@ -33,7 +33,7 @@ export class StudentService {
     console.log('FIND');
     return this.httpClient.get<Student>(this.url + '/' + id)
       .pipe(
-        map(s =>  new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
+        map(s =>  new Student(s.id, s.name, s.firstName, s.email)),
         catchError( err => {
           console.error(err);
           return throwError('StudentService getOne error: ' + err.message);
@@ -45,7 +45,7 @@ export class StudentService {
     console.log('QUERY');
     return this.httpClient.get<Array<Student>>(this.url)
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError('StudentService getAll error: ' + err.message);
@@ -57,7 +57,7 @@ export class StudentService {
   getEnrolled(courseName: string): Observable<Array<Student>>{
     return this.httpClient.get<Array<Student>>(this.urlCourses + '/' + courseName + '/enrolled')
       .pipe(
-        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.photoName, s2.email))),
+        map(s => s.map(s2 => new Student(s2.id, s2.name, s2.firstName, s2.email))),
         catchError( err => {
           console.error(err);
           return throwError('StudentService getEnrolled error: ' + err.message);
@@ -74,14 +74,17 @@ export class StudentService {
         })
       );
   }
-
-  getTeam(courseName: string, studentId: string): Observable<Team>{
-    return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
+  removeStudentFromCourse(courseName: string, studentId: string): Observable<any>{
+    return this.httpClient.delete<any>(this.urlCourses + '/' + courseName + '/enrolled/' + studentId)
       .pipe(
         catchError( err => {
           console.error(err);
-          return throwError('StudentService getAll error: ' + err.message);
+          return throwError('StudentService removeStudentFromCourse error: ' + err.message);
         })
       );
+  }
+
+  getPhoto(studentId: string): Observable<any>{
+    return this.httpClient.get(this.url + '/' + studentId + '/photo',  { responseType: 'blob' });
   }
 }
