@@ -67,6 +67,7 @@ import { ProfessorTeamsComponent } from './professor-teams/professor-teams.compo
 import { TeamCardComponent } from './team-card/team-card.component';
 import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
 import { UsersTableComponent } from './users-table/users-table.component';
+import { AdminResourcesComponent } from './admin-resources/admin-resources.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { UsersTableComponent } from './users-table/users-table.component';
     ProfessorTeamsComponent,
     TeamCardComponent,
     ProfessorsContComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    AdminResourcesComponent
   ],
   imports: [
     BrowserModule,

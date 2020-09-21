@@ -20,6 +20,7 @@ import {AdminViewComponent} from './admin-view/admin-view.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 import {ProfessorTeamsComponent} from './professor-teams/professor-teams.component';
 import {ProfessorsContComponent} from "./professors-cont/professors-cont.component";
+import {AdminResourcesComponent} from "./admin-resources/admin-resources.component";
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -67,7 +68,8 @@ const routes: Routes = [
         children: [
           {path: '', component: HomeComponent },
           {path: 'vmModels', component: VmModelsComponent },
-          {path: 'professors', component: ProfessorsContComponent }]
+          {path: 'professors', component: ProfessorsContComponent },
+          {path: 'resources', component: AdminResourcesComponent }]
       },
       {path: 'course/:name',
         component: TabComponentComponent,

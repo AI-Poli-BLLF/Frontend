@@ -23,12 +23,19 @@ export class TeamResourcesComponent {
   constructor() { }
 
   formatLabel(value: number) {
-    if (value >= 1024) {
+    if (value >= 1024 * 1024) {
+      return Math.round(value / (1024 * 102.4)) / 10 + 'TB';
+    }
+    else if (value >= 1024) {
       return Math.round(value / 102.4) / 10 + 'GB';
     } else{ return value + 'MB'; }
   }
 
   diskLabel(value: number){
-    return value + 'GB';
+    if (value >= 1024) {
+      return Math.round(value / 102.4) / 10 + 'TB';
+    } else {
+      return value + 'GB';
+    }
   }
 }

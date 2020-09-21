@@ -33,8 +33,9 @@ export class TabComponentComponent {
     new NavModel('./teams', 'Teams')
   ];
   linksAdminTools: Array<NavModel> = [
-    new NavModel('./vmModels', 'VM Models'),
-    new NavModel('./professors', 'Professors')
+    new NavModel('./vmModels', 'Modelli Vm'),
+    new NavModel('./professors', 'Professori'),
+    new NavModel('./resources', 'Risorse usate')
   ];
   constructor(private authService: AuthService,
               private courseService: CourseService,

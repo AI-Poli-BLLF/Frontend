@@ -1,10 +1,9 @@
 <div class="resources">
-  <h2>Risorse usate</h2>
   <table>
     <tr>
       <th>CPU (max: {{vmConfig.maxCpu}})</th>
       <th>Ram (max: {{formatLabel(vmConfig.maxRam)}})</th>
-      <th>Storage (max: {{vmConfig.maxDisk}} GB)</th>
+      <th>Storage (max: {{diskLabel(vmConfig.maxDisk)}})</th>
       <th>Attive (max: {{vmConfig.maxActive}})</th>
       <th>Create (max: {{vmConfig.maxVm}})</th>
     </tr>
