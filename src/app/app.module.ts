@@ -69,6 +69,8 @@ import { DraftSComponent } from './student-view/draft-s/draft-s.component';
 import {AddAssignmentDialogComponent} from './teacher-view/assignment/add-assignment-dialog/add-assignment-dialog.component';
 import { AssignmentViewComponent } from './teacher-view/assignment/assignment-view/assignment-view.component';
 import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
+import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
+import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
 
 
 @NgModule({
@@ -117,7 +119,9 @@ import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog
     ShareCourseButtonComponent,
     AdminViewComponent,
     VmModelsTableComponent,
-    VmModelsComponent
+    VmModelsComponent,
+    AddVmModelComponent,
+    AddVmModelVersionsComponent
   ],
   imports: [
     BrowserModule,

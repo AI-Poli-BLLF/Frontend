@@ -15,6 +15,7 @@
   <mat-sidenav #sidenav mode="side" position="start">
     <div class="container">
       <mat-nav-list>
+        <mat-list-item *ngIf="courses.length < 1" disabled>Nessun corso</mat-list-item>
         <mat-list-item *ngFor="let course of courses"
                        (click)="handleClick(course)"
                        [routerLink]="['/teacher/course', course.name]">

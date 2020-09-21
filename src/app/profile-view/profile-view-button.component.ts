@@ -20,7 +20,9 @@ export class ProfileViewButtonComponent implements OnDestroy{
               private sanitizer: DomSanitizer,
               private profileService: ProfileService,
               public authService: AuthService) {
-    // this.getImage();
+    if (this.isVisible()){
+      this.getImage();
+    }
   }
 
   isVisible(){
