@@ -36,12 +36,12 @@ export class CreateVmDialogComponent {
     let request;
     let mex: string;
     if (this.data.edit){
-      console.log('edit vm');
+      // console.log('edit vm');
       request = this.courseService.editVmInstance(this.courseName, this.vmConfig.teamId, vmData, this.vm.id);
       mex = 'Modifica VM riuscita.';
     }
     else {
-      console.log('crete vm');
+      // console.log('crete vm');
       request = this.courseService.createVmInstance(this.courseName, this.vmConfig.teamId, vmData);
       mex = 'Creazione VM riuscita.';
     }
@@ -58,7 +58,7 @@ export class CreateVmDialogComponent {
     );
   }
   formatLabel(value: number) {
-    console.log(value);
+    // console.log(value);
     if (value >= 1024) {
       return Math.round(value / 102.4) / 10 + 'GB';
     } else{ return value + 'MB'; }

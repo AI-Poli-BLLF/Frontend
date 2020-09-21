@@ -41,7 +41,7 @@ export class VmModelsComponent implements OnInit {
       data => {
         if (data !== undefined && data.os !== undefined) {
           const vmModelsList = new VmModelsList(undefined, data.os, data.versions);
-          console.log(vmModelsList);
+          // console.log(vmModelsList);
           alert('Da implementare il service');
           // todo: implementare service
         }
@@ -51,7 +51,7 @@ export class VmModelsComponent implements OnInit {
   }
 
   addVersion(event: VmModelsList){
-    console.log(event);
+    // console.log(event);
     const v = {data: {os: event.osName, versions: event.versions}};
     const dialogRef = this.dialog.open(AddVmModelVersionsComponent, v);
     dialogRef.afterClosed().subscribe(

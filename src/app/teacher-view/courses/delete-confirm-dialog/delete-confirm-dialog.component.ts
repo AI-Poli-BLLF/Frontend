@@ -25,7 +25,7 @@ export class DeleteConfirmDialogComponent implements OnInit {
   deleteCourse() {
     this.service.deleteOne(this.courseName).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.dialogRef.close();
       },
       error =>   error.status === 400 ?

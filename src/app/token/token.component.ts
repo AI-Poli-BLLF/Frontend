@@ -23,7 +23,7 @@ export class TokenComponent implements OnDestroy{
   }
 
   doPost(token: string){
-    console.log('TOKEN: ', token);
+    // console.log('TOKEN: ', token);
     this.tokenService.verify(token)
       .subscribe(
         () => {

@@ -37,7 +37,7 @@ export class VmViewComponent {
   }
 
   chooseImg(vmModel: VmModel){
-    console.log(vmModel);
+    // console.log(vmModel);
     switch (vmModel.os) {
       case 'Ubuntu':
         this.vmImgPath = 'ubuntu2004.png';

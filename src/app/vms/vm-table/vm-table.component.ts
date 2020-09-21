@@ -39,7 +39,7 @@ export class VmTableComponent implements AfterViewInit{
 
   @Input()
   set Teams(t: Array<Team>){
-    console.log('Enrolled setter');
+    // console.log('Enrolled setter');
     this.teams = t === undefined ? [] : t;
     this.dataSource.data = [];
     this.teams.forEach(team => this.loadConfig(team));

@@ -50,7 +50,7 @@ export class ShareDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('OnInit', this.owners);
+    // console.log('OnInit', this.owners);
     this.refreshFilteredOptions();
     this.membersControl.setValue(this.owners);
   }

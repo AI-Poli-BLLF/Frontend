@@ -81,7 +81,7 @@ export class StudentsComponent implements OnInit {
   }
 
   studentSelected($event: MatAutocompleteSelectedEvent) {
-    console.log($event.option.value);
+    // console.log($event.option.value);
     if (this.enrolledStudents.find(s => s.toString() === $event.option.value) != null) {
       this.student = null;
       return;
@@ -100,9 +100,9 @@ export class StudentsComponent implements OnInit {
   }
 
   uploadCsv($event) {
-    console.log($event);
+    // console.log($event);
     const selectedFile: File = $event.target.files[0];
-    console.log(selectedFile);
+    // console.log(selectedFile);
     if (selectedFile === undefined){
       return;
     }

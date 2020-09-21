@@ -29,10 +29,11 @@ export class HomeComponent implements OnDestroy {
           console.log(error);
         }
       );
+    } else {
+      this.profile.firstName = 'Admin';
     }
     this.sub = this.route.params.subscribe(
       data => {
-        console.log(data.name);
         const name = data.name === undefined ? 'Seleziona un corso' : data.name;
         this.courseName = this.router.url.includes('/admin/tools') ? 'Admin Tools' : name;
       }
