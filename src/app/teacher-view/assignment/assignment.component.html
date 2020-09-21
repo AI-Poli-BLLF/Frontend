@@ -18,11 +18,11 @@
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
-      <mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
+      <td mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
         <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <app-draft [Assignment]="element"></app-draft>
         </div>
-      </mat-cell>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

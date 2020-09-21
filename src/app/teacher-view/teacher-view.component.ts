@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Course} from '../models/course.model';
-import {AddCourseDialogComponent} from './add-course-dialog/add-course-dialog.component';
+import {AddCourseDialogComponent} from './courses/add-course-dialog/add-course-dialog.component';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {CourseService} from '../services/course.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSidenav} from '@angular/material/sidenav';
-import {DeleteConfirmDialogComponent} from './delete-confirm-dialog/delete-confirm-dialog.component';
+import {DeleteConfirmDialogComponent} from './courses/delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {EditCourseDialogComponent} from './edit-course-dialog/edit-course-dialog.component';
+import {EditCourseDialogComponent} from './courses/edit-course-dialog/edit-course-dialog.component';
 import {AuthService} from '../services/auth.service';
 
 @Component({

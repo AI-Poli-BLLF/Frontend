@@ -27,7 +27,7 @@ import {AssignmentComponent} from '../assignment.component';
     ]),
   ]
 })
-export class DraftComponent implements OnInit, AfterViewInit {
+export class DraftComponent implements OnInit {
   professorId = '';
   courseName = '';
   assignment: Assignment;
@@ -49,6 +49,7 @@ export class DraftComponent implements OnInit, AfterViewInit {
     private authServ: AuthService,
     private dialog: MatDialog,
   ) {
+    this.dataSource = new MatTableDataSource(this.drafts);
     this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
     });
@@ -73,45 +74,42 @@ export class DraftComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.drafts);
-    // console.log(this.assignment);
+    this.update();
   }
 
-  ngAfterViewInit(){
+  update(){
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.dSort;
   }
 
+
   private getDrafts(){
     this.service.getDrafts(this.professorId, this.courseName, this.assignment.id).subscribe(
-      d => {
+      drafts => {
         // const draftsArray: Draft[] = d;
-        console.log(d);
-        const v = [...this.drafts];
-        d.forEach(d1 => v.push(d1));
-        console.log(v);
-        this.drafts = v;
-        for (const i of this.drafts){
-          this.getDraftInfo(i);
-        }
+        // console.log(d);
+        // const v = [...this.drafts];
+        // d.forEach(d1 => v.push(d1));
+        // console.log(v);
+        this.drafts = drafts;
+        drafts.forEach(d => this.getDraftInfo(d));
         this.dataSource.data = this.drafts;
+        this.update();
       },
       err => {
+        console.log(err);
         this.snackBar.open('Errore nel caricamente degli elaborati', 'Chiudi');
       }
     );
-    this.ngAfterViewInit();
   }
 
   private getDraftInfo(draft: Draft){
-    console.log('draftInfo');
-    if (draft.student === undefined){
+    if (draft.student.id === ''){
       // console.log(draft);
       this.service.getStudentForDraft(draft.id).subscribe(
-        s => {
-          draft.student = s;
-        },
+        s => draft.student = s,
         err => {
+          console.log(err);
           this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
         }
       );

@@ -1,15 +1,15 @@
 import {Component, Inject, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CourseService} from '../../services/course.service';
+import {CourseService} from '../../../services/course.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {LoginDialogComponent} from '../../login-dialog/login-dialog.component';
-import {Course} from '../../models/course.model';
+import {LoginDialogComponent} from '../../../login-dialog/login-dialog.component';
+import {Course} from '../../../models/course.model';
 import {Subscription} from 'rxjs';
-import {VmModelsList} from '../../models/vm.models.list.model';
+import {VmModelsList} from '../../../models/vm.models.list.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {VmModel} from '../../models/vm.model.model';
-import {AuthService} from "../../services/auth.service";
-import {Vm} from "../../models/vm.model";
+import {VmModel} from '../../../models/vm.model.model';
+import {AuthService} from "../../../services/auth.service";
+import {Vm} from "../../../models/vm.model";
 
 @Component({
   selector: 'app-edit-course-dialog',
