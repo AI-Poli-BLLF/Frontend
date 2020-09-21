@@ -1,0 +1,15 @@
+<mat-card class="team_card">
+  <mat-card-header>
+    <mat-card-title>{{team.name}}</mat-card-title>
+    <mat-card-subtitle>Team {{team.id}}  {{getStatus()}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <ul>
+      <li *ngFor="let s of members">{{s.toString()}}</li>
+    </ul>
+  </mat-card-content>
+  <mat-card-actions>
+<!--    todo: da implementare-->
+    <button mat-stroked-button (click)="remove()" color="warn">Elimina Corso</button>
+  </mat-card-actions>
+</mat-card>

@@ -18,6 +18,7 @@ import {TokenComponent} from './token/token.component';
 import {AdminAuthGuard} from './auth/admin-auth.guard';
 import {AdminViewComponent} from './admin-view/admin-view.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
+import {ProfessorTeamsComponent} from './professor-teams/professor-teams.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -37,7 +38,7 @@ const routes: Routes = [
           {path: 'vms', component: VmsComponent },
           {path: 'vms/:id', component: VmViewComponent },
           // todo: il prof deve vedere tutti i team del corso
-          {path: 'teams', component: TeamComponent},
+          {path: 'teams', component: ProfessorTeamsComponent},
           {path: 'assignments', component: AssignmentsContComponent}
         ]},
     ]},
@@ -74,7 +75,7 @@ const routes: Routes = [
           {path: 'vms', component: VmsComponent },
           {path: 'vms/:id', component: VmViewComponent },
           // todo: l'admin deve vedere tutti i team del corso
-          {path: 'teams', component: TeamComponent}
+          {path: 'teams', component: ProfessorTeamsComponent}
         ]},
     ]},
   {path: '**', component: PageNotFoundComponent },
