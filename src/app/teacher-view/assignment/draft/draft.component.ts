@@ -34,7 +34,7 @@ export class DraftComponent implements OnInit, AfterViewInit {
 
   drafts: Array<Draft> = [];
 
-  columnsToDisplayDraft: string[] = ['firstName', 'name', 'id', 'state', 'timestamp'/*, 'link', 'review'*/];
+  columnsToDisplayDraft: string[] = ['firstName', 'name', 'id', 'state', 'timestamp', 'link'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -116,5 +116,9 @@ export class DraftComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+
+  openReviewDraft(draft: Draft) {
+
   }
 }

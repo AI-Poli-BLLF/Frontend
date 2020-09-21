@@ -27,11 +27,12 @@ import {AddDraftDialogComponent} from './add-draft-dialog/add-draft-dialog.compo
 })
 export class DraftSComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Draft>;
-  columnsToDisplayDraft: string[] = ['id', 'state', 'timestamp'];
+  columnsToDisplayDraft: string[] = ['id', 'state', 'timestamp', 'link', 'modifica'];
   drafts: Array<Draft>;
   studentId: string;
   assignment: Assignment;
   sub: Subscription;
+  states: Array<string> = ['NULL', 'READ', 'SUBMITTED'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -98,4 +99,40 @@ export class DraftSComponent implements OnInit, AfterViewInit {
     //   );
     // });
   }
+
+  editDraft(draft: Draft) {
+    this.service.lockDraft(draft, this.assignment.id).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+    let draft1: Draft;
+    draft1 = draft;
+    draft1.id = undefined;
+    draft1.state = 'SUBMITTED';
+    this.service.addDraft(draft1, this.assignment, this.studentId).subscribe(
+      data => {
+        console.log(data);
+        this.snackBar.open('L\'elaborato è stato sottomesso!', 'Chiudi');
+        this.ngAfterViewInit();
+      },
+      error => {
+        console.log(error);
+        this.snackBar.open('Qualcosa è andato storto nella sottomissione dell\'elaborato', 'Chiudi');
+      }
+    );
+    this.ngAfterViewInit();
+  }
+
+  getStates() {
+    return this.states;
+  }
+
+  checkError(draft: Draft): boolean{
+    return !(draft.locker === true || draft.state === 'SUBMITTED' || draft.state === 'REVIEWED');
+  }
+
 }

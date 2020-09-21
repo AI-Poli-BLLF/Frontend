@@ -20,7 +20,7 @@ export class AssignmentService {
 
   getAllAssignments(professorId: string, courseName: string): Observable<Array<Assignment>> {
     return this.httpClient
-      .get<Array<Assignment>>(this.url + '/professors/' + professorId + '/' + courseName + '/assignments')
+      .get<Array<Assignment>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments')
       .pipe(
         map(arr => arr.map(
           a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate),
@@ -35,7 +35,7 @@ export class AssignmentService {
 
   createAssignment(professorId: string, courseName: string, assignment: Assignment): Observable<Assignment> {
     return this.httpClient
-      .post<Assignment>(this.url + '/professors/' + professorId + '/' + courseName + '/createAssignment', assignment)
+      .post<Assignment>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/createAssignment', assignment)
       .pipe(
         map(a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate)),
         catchError(err => {
@@ -45,12 +45,12 @@ export class AssignmentService {
       );
   }
 
-    getDrafts(professorId: string, courseName: string, assignmentId: number) {
+  getDrafts(professorId: string, courseName: string, assignmentId: number) {
     return this.httpClient
-      .get<Array<Draft>>(this.url + '/professors/' + professorId + '/' + courseName + '/' + assignmentId + '/drafts')
+      .get<Array<Draft>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
-          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.lock, a.student),
+          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student),
         )),
         catchError(err => {
           console.error(err);
@@ -61,9 +61,9 @@ export class AssignmentService {
 
   getStudentForDraft(draftId: number) {
     return this.httpClient
-      .get<Student>(this.url + '/professors/' + draftId + '/getStudent')
+      .get<Student>(this.url + '/professors/drafts/' + draftId + '/getStudent')
       .pipe(
-        map( s => new Student(s.id, s.name, s.firstName, s.photoName, s.email)),
+        map( s => new Student(s.id, s.name, s.firstName, s.email)),
         catchError(err => {
           console.error(err);
           return throwError('AssignmentService getStudentForDraft error: ${err.message}', err);
@@ -90,7 +90,7 @@ export class AssignmentService {
       .get<Array<Draft>>(this.url + /students/ + studentId + '/drafts')
       .pipe(
         map(arr => arr.map(
-          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.lock, a.student)
+          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student)
         )),
         catchError(err => {
           console.error(err);
@@ -100,9 +100,25 @@ export class AssignmentService {
   }
 
   addDraft(draft: Draft, assignment: Assignment, studentId: string){
-    // this.httpClient
-    //   .post<Draft>('')
+    return this.httpClient
+      .post<Draft>(this.url + '/students/' + studentId + '/assignments/' + assignment.id + '/createDraft/', draft)
+        .pipe(
+          map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker, d.student)),
+          catchError(err => {
+            console.log(err);
+            return throwError('AssignmentService addDraft error: ', err.message);
+          })
+        );
   }
 
-
+  lockDraft(draft: Draft, assignmentId: number) {
+    return this.httpClient
+      .put<Draft>(this.url + '/professors/assignments/' + assignmentId + '/drafts/' + draft.id + '/lock', draft)
+      .pipe(
+        catchError(err => {
+          console.error(err);
+          return throwError('AssignmentService lockDraft error:', err.message);
+        })
+      );
+  }
 }

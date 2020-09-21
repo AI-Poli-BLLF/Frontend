@@ -46,9 +46,6 @@ import {TeamComponent} from './teams/team.component';
 import {CreateTeamDialogComponent} from './teams/create-team-dialog/create-team-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
-import {AssignmentComponent} from './assignment/assignment.component';
-import {AssignmentsContComponent} from './assignment/assignments-cont.component';
-import {DraftComponent} from './assignment/draft/draft.component';
 import {ShareDialogComponent} from './share-dialog/share-dialog.component';
 import {ShareVmButtonComponent} from './share-dialog/share-vm-button';
 import {ShareCourseButtonComponent} from './share-dialog/share-course-button';
@@ -59,7 +56,6 @@ import { VmsStudentsComponent } from './vms/vms-students/vms-students.component'
 import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { ShareVmDialogComponent } from './vms/share-vm-dialog/share-vm-dialog.component';
 import { TeamResourcesComponent } from './vms/team-resources/team-resources.component';
 import { VmViewComponent } from './vms/vm-view/vm-view.component';
 import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resources.component';
@@ -71,6 +67,9 @@ import { AssignmentViewComponent } from './teacher-view/assignment/assignment-vi
 import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
 import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
 import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
+import {DraftComponent} from './teacher-view/assignment/draft/draft.component';
+import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
+import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
 import { ProfessorTeamsComponent } from './professor-teams/professor-teams.component';
 import { TeamCardComponent } from './team-card/team-card.component';
 import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
@@ -104,7 +103,7 @@ import { AdminResourcesComponent } from './admin-resources/admin-resources.compo
     CreateTeamDialogComponent,
     VmsStudentsComponent,
     CreateVmDialogComponent,
-    ShareVmDialogComponent,
+    ShareDialogComponent,
     AssignmentComponent,
     AssignmentsContComponent,
     DraftComponent,

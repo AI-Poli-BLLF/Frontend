@@ -6,15 +6,15 @@ export class Draft {
   grade: number;
   state: string;
   timestamp: Timestamp<any>;
-  lock: boolean;
+  locker: boolean;
   student: Student;
 
-  constructor(id: number, timestamp: Timestamp<any>, grade: number, state: string, lock: boolean, student: Student) {
+  constructor(id: number, timestamp: Timestamp<any>, grade: number, state: string, locker: boolean, student: Student) {
     this.id = id;
     this.grade = grade;
     this.state = state;
     this.timestamp = timestamp;
-    this.lock = lock;
+    this.locker = locker;
     this.student = student;
   }
   toString(){
