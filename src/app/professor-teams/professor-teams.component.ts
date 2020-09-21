@@ -10,7 +10,7 @@ import {Student} from '../models/student.model';
   styleUrls: ['./professor-teams.component.css']
 })
 export class ProfessorTeamsComponent implements OnInit {
-  teams: Team[];
+  teams: Team[] = [];
   teamsMembers: Array<Array<Student>> = [];
 
   constructor(private teamService: TeamService, private route: ActivatedRoute) {
