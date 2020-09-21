@@ -50,10 +50,7 @@ export class AssignmentService {
       .get<Array<Draft>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
-          a => {
-            console.log(a);
-            return new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student);
-          },
+          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker)
         )),
         catchError(err => {
           console.error(err);
@@ -93,7 +90,7 @@ export class AssignmentService {
       .get<Array<Draft>>(this.url + /students/ + studentId + '/drafts')
       .pipe(
         map(arr => arr.map(
-          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student)
+          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker)
         )),
         catchError(err => {
           console.error(err);
@@ -106,7 +103,7 @@ export class AssignmentService {
     return this.httpClient
       .post<Draft>(this.url + '/students/' + studentId + '/assignments/' + assignment.id + '/createDraft/', draft)
         .pipe(
-          map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker, d.student)),
+          map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker)),
           catchError(err => {
             console.log(err);
             return throwError('AssignmentService addDraft error: ', err.message);

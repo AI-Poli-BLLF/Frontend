@@ -9,13 +9,13 @@ export class Draft {
   locker: boolean;
   student: Student;
 
-  constructor(id: number, timestamp: string, grade: number, state: string, locker: boolean, student: Student) {
+  constructor(id: number, timestamp: string, grade: number, state: string, locker: boolean) {
     this.id = id;
     this.grade = grade;
     this.state = state;
     this.timestampT = new Date(timestamp);
     this.locker = locker;
-    this.student = student;
+    this.student = new Student('', '', '', '');
   }
   toString(){
     return this.id + ' state: ' + this.state + ' grade: ' + this.grade + ' timestamp: ' + this.timestamp + '(' + this.student.toString() + ')';

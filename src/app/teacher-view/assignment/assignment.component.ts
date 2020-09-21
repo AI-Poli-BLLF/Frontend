@@ -23,7 +23,7 @@ import {startWith} from 'rxjs/operators';
     ]),
   ]
 })
-export class AssignmentComponent implements OnInit, AfterViewInit {
+export class AssignmentComponent implements OnInit {
 
   assignments: Array<Assignment> = [];
 
@@ -38,9 +38,8 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
   assignment: Assignment;
 
   constructor(
-    private assignmentService: AssignmentService,
-
-    ) {
+    private assignmentService: AssignmentService) {
+    this.dataSource = new MatTableDataSource(this.assignments);
   }
 
   @Input()
@@ -50,12 +49,8 @@ export class AssignmentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.assignments);
-  }
-  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
   }
 
   onClick(column: Assignment) {

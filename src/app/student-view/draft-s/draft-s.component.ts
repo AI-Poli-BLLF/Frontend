@@ -25,7 +25,7 @@ import {AddDraftDialogComponent} from './add-draft-dialog/add-draft-dialog.compo
     ]),
   ]
 })
-export class DraftSComponent implements OnInit, AfterViewInit {
+export class DraftSComponent implements OnInit {
   dataSource: MatTableDataSource<Draft>;
   columnsToDisplayDraft: string[] = ['id', 'state', 'timestamp', 'link', 'modifica'];
   drafts: Array<Draft>;
@@ -44,6 +44,7 @@ export class DraftSComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute
   ) {
     this.studentId = auth.getId();
+    this.dataSource = new MatTableDataSource<Draft>(this.drafts);
   }
 
   @Input()
@@ -52,27 +53,11 @@ export class DraftSComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<Draft>(this.drafts);
-  }
 
-  ngAfterViewInit() {
-    this.service.getDraftForStudent(this.studentId).subscribe(
-      d => {
-        d.forEach(draft => this.getDraftInfo(draft));
-        this.dataSource.data = d;
-        console.log(d);
-      },
-      err => {
-        this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
-      }
-    );
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   private getDraftInfo(draft: Draft) {
-    console.log('draftInfo');
-    if (draft.student === undefined) {
+    if (draft.student.id === '') {
       // console.log(draft);
       this.service.getStudentForDraft(draft.id).subscribe(
         s => {
@@ -83,6 +68,20 @@ export class DraftSComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+
+  update(){
+    this.service.getDraftForStudent(this.studentId).subscribe(
+      d => {
+        d.forEach(draft => this.getDraftInfo(draft));
+        this.dataSource.data = d;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+      err => {
+        this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
+      }
+    );
   }
 
   openCreateDraft() {
@@ -116,15 +115,15 @@ export class DraftSComponent implements OnInit, AfterViewInit {
     this.service.addDraft(draft1, this.assignment, this.studentId).subscribe(
       data => {
         console.log(data);
-        this.snackBar.open('L\'elaborato è stato sottomesso!', 'Chiudi');
-        this.ngAfterViewInit();
+        this.snackBar.open('L\'elaborato è stato sottomesso.', 'Chiudi');
+        this.update();
       },
       error => {
         console.log(error);
-        this.snackBar.open('Qualcosa è andato storto nella sottomissione dell\'elaborato', 'Chiudi');
+        this.snackBar.open('Qualcosa è andato storto nella sottomissione dell\'elaborato.', 'Chiudi');
       }
     );
-    this.ngAfterViewInit();
+    this.update();
   }
 
   getStates() {

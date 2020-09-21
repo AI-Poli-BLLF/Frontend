@@ -4,7 +4,7 @@ import {Student} from "../models/student.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatCheckboxChange} from "@angular/material/checkbox";
-import {User} from "../models/user.model";
+import {User} from '../models/user.model';
 
 @Component({
   selector: 'app-users-table',
