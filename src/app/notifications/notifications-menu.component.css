@@ -7,10 +7,12 @@
 
 ::ng-deep .mat-menu-panel{
   padding: 0 10px!important;
+  max-width: 100%!important;
 }
 
+
 div.container{
-  padding: 2%;
+  padding: 5%;
   text-align: center;
 }
 #no-notification{
