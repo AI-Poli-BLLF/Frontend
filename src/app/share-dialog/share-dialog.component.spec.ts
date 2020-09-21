@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShareVmDialogComponent } from './share-vm-dialog.component';
+import { ShareDialogComponent } from './share-dialog.component';
 
 describe('ShareVmDialogComponent', () => {
-  let component: ShareVmDialogComponent;
-  let fixture: ComponentFixture<ShareVmDialogComponent>;
+  let component: ShareDialogComponent;
+  let fixture: ComponentFixture<ShareDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareVmDialogComponent ]
+      declarations: [ ShareDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShareVmDialogComponent);
+    fixture = TestBed.createComponent(ShareDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

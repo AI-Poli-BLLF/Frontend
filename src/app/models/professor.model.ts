@@ -1,19 +1,11 @@
-export class Professor {
-  id: string;
-  name: string;
-  firstName: string;
-  photoName: string;
+import {User} from './user.model';
+
+export class Professor extends User{
   courseNames: string[];
 
-  constructor(id: string, name: string, firstName: string, photoName: string, courseNames: string[]) {
-    this.id = id;
-    this.name = name;
-    this.firstName = firstName;
-    this.photoName = photoName;
+  constructor(id: string, name: string, firstName: string, courseNames: string[] = []) {
+    super(id, name, firstName);
     this.courseNames = courseNames;
   }
 
-  toString(){
-    return this.firstName + ' ' + this.name + ' (' + this.id + ')';
-  }
 }

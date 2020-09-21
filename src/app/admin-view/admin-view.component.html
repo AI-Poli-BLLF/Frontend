@@ -5,7 +5,6 @@
   <span>{{selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="editCourseOptions">
-    <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
     <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="startToEditCourse()">edit</mat-icon></button>
     <app-share-course-button *ngIf="selectedItem!='Seleziona un corso'" [courseName]="selectedItem"></app-share-course-button>
     <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="deleteCourseDialog()">delete</mat-icon></button>
@@ -15,11 +14,11 @@
   <mat-sidenav #sidenav mode="side" position="start">
     <div class="container">
       <mat-nav-list>
+        <mat-list-item class="admin-tools" (click)="adminToolsClick()"
+                       [routerLink]="['/admin/tools']"><mat-icon>supervisor_account</mat-icon>Admin Tools</mat-list-item>
         <mat-list-item *ngFor="let course of courses"
                        (click)="handleClick(course)"
-                       [routerLink]="['/teacher/course', course.name]">
-          {{course.name}}
-        </mat-list-item>
+                       [routerLink]="['/admin/course', course.name]">{{course.name}}</mat-list-item>
       </mat-nav-list>
     </div>
   </mat-sidenav>

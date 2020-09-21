@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NavModel} from '../nav.model';
 import {AuthService} from '../services/auth.service';
 import {CourseService} from "../services/course.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Course} from "../models/course.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -25,15 +25,29 @@ export class TabComponentComponent {
   linksTeacher: Array<NavModel> = [
     new NavModel('./students', 'Studenti'),
     new NavModel('./vms', 'VMs'),
+    new NavModel('./teams', 'Teams'),
     new NavModel('./assignments', 'Consegne'),
+  ];
+  linksAdmin: Array<NavModel> = [
+    new NavModel('./students', 'Studenti'),
+    new NavModel('./vms', 'VMs'),
+    new NavModel('./teams', 'Teams')
+  ];
+  linksAdminTools: Array<NavModel> = [
+    new NavModel('./vmModels', 'VM Models'),
   ];
   constructor(private authService: AuthService,
               private courseService: CourseService,
               private snackbar: MatSnackBar,
+              private router: Router,
               private route: ActivatedRoute) {
-    this.sub = this.route.params.subscribe(params => {
-      this.getCourse(params.name);
-    });
+    if (this.router.url.includes('/admin/tools')){
+      this.links = this.linksAdminTools;
+    } else {
+      this.sub = this.route.params.subscribe(params => {
+        this.getCourse(params.name);
+      });
+    }
   }
 
   getCourse(courseName: string){
@@ -47,6 +61,7 @@ export class TabComponentComponent {
         error => {
           console.log(error);
           this.snackbar.open('Impossibile caricare le informazioni sul corso', 'Chiudi');
+          this.loadLinks();
         }
       );
   }
@@ -58,6 +73,11 @@ export class TabComponentComponent {
         break;
       case 'ROLE_PROFESSOR':
         this.links = this.course.enabled ? this.linksTeacher : [];
+        break;
+      case 'ROLE_ADMIN':
+        // todo : riattivare
+        // this.links = this.course.enabled ? this.linksAdmin : [];
+        this.links = this.linksAdmin;
         break;
     }
   }

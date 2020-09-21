@@ -16,6 +16,9 @@ import {MatSort} from '@angular/material/sort';
 })
 export class StudentsComponent implements OnInit, AfterViewInit {
 
+  // todo: bug del primo elemento
+  // todo: mettere selezione stile gmail
+
   enrolledStudents: Array<Student> = [];
   allStudents: Array<Student> = [];
 

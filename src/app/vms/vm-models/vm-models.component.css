@@ -1,0 +1,12 @@
+h2 {
+  margin: 1em;
+}
+
+button {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+app-vm-models-table {
+  margin-top: 1em;
+}

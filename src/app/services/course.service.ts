@@ -10,6 +10,7 @@ import {Vm} from '../models/vm.model';
 import {VmModel} from '../models/vm.model.model';
 import {consoleTestResultHandler} from 'tslint/lib/test';
 import {VmModelsList} from "../models/vm.models.list.model";
+import {Professor} from "../models/professor.model";
 
 @Injectable({
   providedIn: 'root'
@@ -259,6 +260,18 @@ export class CourseService {
       );
   }
 
+  // todo
+  getProfessors(courseName: string): Observable<Array<Professor>>{
+    return this.httpClient.get<Array<Professor>>(this.url + '/' + courseName + '/professors')
+      .pipe(
+        map(s => s.map(s2 => new Professor(s2.id, s2.name, s2.firstName))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getProfessors error: ${err.message}`);
+        })
+      );
+  }
+
   getVmCreator(courseName: string, teamId: number, vmId: number): Observable<Student>{
     return this.httpClient.get<Student>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/creator')
       .pipe(
@@ -270,7 +283,7 @@ export class CourseService {
       );
   }
 
-  shareVm(courseName: string, teamId: number, vmId: string, memberIds: string[]): Observable<any>{
+  shareVm(courseName: string, teamId: number, vmId: number, memberIds: string[]): Observable<any>{
     console.log('SHARE VMs');
     return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
       .pipe(
@@ -283,6 +296,17 @@ export class CourseService {
 
   getVmModels(): Observable<Array<VmModelsList>>{
     return this.httpClient.get<Array<VmModelsList>>(this.urlModels)
+      .pipe(
+        map(s => s.map(s2 => new VmModelsList(s2.id, s2.osName, s2.versions))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getVmModels error: ${err.message}`);
+        })
+      );
+  }
+
+  getAllVmModels(): Observable<Array<VmModelsList>>{
+    return this.httpClient.get<Array<VmModelsList>>(this.urlModels + '/all')
       .pipe(
         map(s => s.map(s2 => new VmModelsList(s2.id, s2.osName, s2.versions))),
         catchError( err => {

@@ -9,7 +9,7 @@ import {CourseService} from '../../services/course.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateVmDialogComponent} from '../create-vm-dialog/create-vm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ShareVmDialogComponent} from '../share-vm-dialog/share-vm-dialog.component';
+import {ShareDialogComponent} from '../../share-dialog/share-dialog.component';
 import {Student} from '../../models/student.model';
 import {AuthService} from '../../services/auth.service';
 
@@ -167,7 +167,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
 
   shareVm(vm: Vm){
     const d = {teamId: this.team.id, courseName: this.courseName, vm};
-    this.dialog.open(ShareVmDialogComponent, {data: d});
+    this.dialog.open(ShareDialogComponent, {data: d});
     // dialogRef.afterClosed().subscribe(() => {
     //   this.getVmsInstances(this.courseName, this.team.id);
     // });

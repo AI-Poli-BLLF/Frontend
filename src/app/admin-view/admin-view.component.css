@@ -1,0 +1,17 @@
+mat-sidenav-container{ height: 100%; }
+
+#hamburger {
+  margin-right: 1em;
+}
+
+.fill_space{
+  flex: 1 1 auto;
+}
+.container mat-icon {
+  margin-right: 0.3em;
+}
+
+.admin-tools {
+  background-color: #ffd740;
+  color: #000000;
+}

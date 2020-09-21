@@ -4,21 +4,24 @@ import {StudentsContComponent} from './teacher-view/students/students-cont.compo
 import {HomeComponent} from './home.component';
 import {PageNotFoundComponent} from './page-not-found.component';
 import {VmsComponent} from './vms/vms.component';
-import {AuthGuard} from './auth/auth.guard';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
 import {StudentViewComponent} from './student-view/student-view.component';
 import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
-import { TeamComponent } from './teams/team.component';
+import {TeamComponent} from './teams/team.component';
 import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
 import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
 import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
 import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
+import {AssignmentsContComponent} from './assignment/assignments-cont.component';
 import {VmViewComponent} from './vms/vm-view/vm-view.component';
 import {AssignmentViewComponent} from './teacher-view/assignment/assignment-view/assignment-view.component';
 import {TokenComponent} from './token/token.component';
+import {AdminAuthGuard} from './auth/admin-auth.guard';
+import {AdminViewComponent} from './admin-view/admin-view.component';
+import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -36,6 +39,9 @@ const routes: Routes = [
           {path: '', component: HomeComponent },
           {path: 'students', component: StudentsContComponent},
           {path: 'vms', component: VmsComponent },
+          {path: 'vms/:id', component: VmViewComponent },
+          // todo: il prof deve vedere tutti i team del corso
+          {path: 'teams', component: TeamComponent},
           {path: 'assignments', component: AssignmentsContComponent}
         ]},
     ]},
@@ -53,6 +59,29 @@ const routes: Routes = [
           {path: 'teams', component: TeamComponent},
           {path: 'assignment', component: AssignmentSComponent},
           {path: 'assignment/:id', component: AssignmentViewComponent}
+          {path: 'teams', component: TeamComponent},
+        ]},
+    ]},
+  {path: 'admin',
+    canActivate: [AdminAuthGuard],
+    component: AdminViewComponent,
+    children: [
+      {path: '', component: HomeComponent },
+      {path: 'tools',
+        component: TabComponentComponent,
+        children: [
+          {path: '', component: HomeComponent },
+          {path: 'vmModels', component: VmModelsComponent }]
+      },
+      {path: 'course/:name',
+        component: TabComponentComponent,
+        children: [
+          {path: '', component: HomeComponent },
+          {path: 'students', component: StudentsContComponent},
+          {path: 'vms', component: VmsComponent },
+          {path: 'vms/:id', component: VmViewComponent },
+          // todo: l'admin deve vedere tutti i team del corso
+          {path: 'teams', component: TeamComponent}
         ]},
     ]},
   {path: '**', component: PageNotFoundComponent },
