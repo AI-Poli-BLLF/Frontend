@@ -75,6 +75,9 @@ import { TeamCardComponent } from './team-card/team-card.component';
 import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
 import { UsersTableComponent } from './users-table/users-table.component';
 import { AdminResourcesComponent } from './admin-resources/admin-resources.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { NotificationsMenuComponent } from './notifications/notifications-menu.component';
+import { NotificationCardComponent } from './notifications/content/notification-card.component';
 
 
 @NgModule({
@@ -130,38 +133,41 @@ import { AdminResourcesComponent } from './admin-resources/admin-resources.compo
     TeamCardComponent,
     ProfessorsContComponent,
     UsersTableComponent,
-    AdminResourcesComponent
+    AdminResourcesComponent,
+    NotificationsMenuComponent,
+    NotificationCardComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    MatTabsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTableModule,
-    MatCheckboxModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatSortModule,
-    MatPaginatorModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatTableModule,
+        MatCheckboxModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatSortModule,
+        MatPaginatorModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatCardModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule
+    ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {
