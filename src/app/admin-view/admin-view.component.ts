@@ -7,7 +7,6 @@ import {CourseService} from '../services/course.service';
 import {AuthService} from '../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AddCourseDialogComponent} from '../teacher-view/add-course-dialog/add-course-dialog.component';
 import {DeleteConfirmDialogComponent} from '../teacher-view/delete-confirm-dialog/delete-confirm-dialog.component';
 import {EditCourseDialogComponent} from '../teacher-view/edit-course-dialog/edit-course-dialog.component';
 
@@ -19,7 +18,6 @@ import {EditCourseDialogComponent} from '../teacher-view/edit-course-dialog/edit
 export class AdminViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
-  editCourseOptions = true;
   courses: Array<Course> = [];
 
   @ViewChild(MatSidenav)

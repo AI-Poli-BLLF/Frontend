@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VmModelsList} from '../../models/vm.models.list.model';
 
 @Component({
@@ -9,7 +9,10 @@ import {VmModelsList} from '../../models/vm.models.list.model';
 export class VmModelsTableComponent {
   @Input()
   vmModelsList: VmModelsList[] = [];
-  displayedColumns: string[] = ['id', 'os', 'version'];
+  displayedColumns: string[] = ['id', 'os', 'version', 'addVersion'];
+
+  @Output()
+  addV = new EventEmitter();
 
   constructor() {
   }
@@ -18,6 +21,10 @@ export class VmModelsTableComponent {
     return vml.versions
       .reduce((previousValue, currentValue, currentIndex) =>
         previousValue + (currentIndex !== 0 ? ' / ' : '') + currentValue, '');
+  }
+
+  addVersion(element: VmModelsList){
+    this.addV.emit(element);
   }
 
 }

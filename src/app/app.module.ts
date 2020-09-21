@@ -61,6 +61,8 @@ import {ShareCourseButtonComponent} from './share-dialog/share-course-button';
 import {AdminViewComponent} from './admin-view/admin-view.component';
 import {VmModelsTableComponent} from './vms/vm-models-table/vm-models-table.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
+import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
+import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
 
 
 @NgModule({
@@ -101,7 +103,9 @@ import {VmModelsComponent} from './vms/vm-models/vm-models.component';
     ShareCourseButtonComponent,
     AdminViewComponent,
     VmModelsTableComponent,
-    VmModelsComponent
+    VmModelsComponent,
+    AddVmModelComponent,
+    AddVmModelVersionsComponent
   ],
   imports: [
     BrowserModule,
