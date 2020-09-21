@@ -34,7 +34,7 @@ export class VmsComponent implements OnInit {
 
   loadTeams(courseName: string){
     // console.log('load teams');
-    this.courseService.getTeamsForCourse(courseName).subscribe(teams => this.teams = teams);
+    this.courseService.getTeamsForCourse(courseName).subscribe(teams => this.teams = teams.filter(t => t.status === 'ACTIVE'));
   }
 
   loadModels(courseName: string){
