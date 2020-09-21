@@ -76,9 +76,8 @@ export class TabComponentComponent {
         this.links = this.course.enabled ? this.linksTeacher : [];
         break;
       case 'ROLE_ADMIN':
-        // todo : riattivare
-        // this.links = this.course.enabled ? this.linksAdmin : [];
-        this.links = this.linksAdmin;
+        this.links = this.course.enabled ? this.linksAdmin : [];
+        // this.links = this.linksAdmin;
         break;
     }
   }
