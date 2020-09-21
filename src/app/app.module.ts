@@ -29,10 +29,10 @@ import {LoginDialogComponent, LoginDialogContentComponent} from './login-dialog/
 import {JwtInterceptor} from './auth/JwtInterceptor';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {RegistrationDialogComponent} from './registration-dialog/registration-dialog.component';
-import {AddCourseDialogComponent} from './teacher-view/add-course-dialog/add-course-dialog.component';
+import {AddCourseDialogComponent} from './teacher-view/courses/add-course-dialog/add-course-dialog.component';
 import {TeacherViewComponent} from './teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
-import {DeleteConfirmDialogComponent} from './teacher-view/delete-confirm-dialog/delete-confirm-dialog.component';
+import {DeleteConfirmDialogComponent} from './teacher-view/courses/delete-confirm-dialog/delete-confirm-dialog.component';
 import {StudentViewComponent} from './student-view/student-view.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 import {ProfileViewComponent} from './profile-view/profile-view.component';
@@ -41,7 +41,7 @@ import {VmTableComponent} from './vms/vm-table/vm-table.component';
 import {VmSubTableComponent} from './vms/vm-sub-table/vm-sub-table.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {EditCourseDialogComponent} from './teacher-view/edit-course-dialog/edit-course-dialog.component';
+import {EditCourseDialogComponent} from './teacher-view/courses/edit-course-dialog/edit-course-dialog.component';
 import {TeamComponent} from './teams/team.component';
 import {CreateTeamDialogComponent} from './teams/create-team-dialog/create-team-dialog.component';
 import {MatCardModule} from '@angular/material/card';
@@ -75,6 +75,9 @@ import { TeamCardComponent } from './team-card/team-card.component';
 import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
 import { UsersTableComponent } from './users-table/users-table.component';
 import { AdminResourcesComponent } from './admin-resources/admin-resources.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { NotificationsMenuComponent } from './notifications/notifications-menu.component';
+import { NotificationCardComponent } from './notifications/content/notification-card.component';
 
 
 @NgModule({
@@ -130,38 +133,41 @@ import { AdminResourcesComponent } from './admin-resources/admin-resources.compo
     TeamCardComponent,
     ProfessorsContComponent,
     UsersTableComponent,
-    AdminResourcesComponent
+    AdminResourcesComponent,
+    NotificationsMenuComponent,
+    NotificationCardComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    MatTabsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTableModule,
-    MatCheckboxModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatSortModule,
-    MatPaginatorModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatTableModule,
+        MatCheckboxModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatSortModule,
+        MatPaginatorModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatCardModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule
+    ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {
