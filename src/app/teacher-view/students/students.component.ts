@@ -49,7 +49,9 @@ export class StudentsComponent implements OnInit {
   }
 
   addTableStudents(student: Student){
-    this.enrolledStudents.push(student);
+    const v = [...this.enrolledStudents];
+    v.unshift(student);
+    this.enrolledStudents = v;
   }
 
   @Input()
