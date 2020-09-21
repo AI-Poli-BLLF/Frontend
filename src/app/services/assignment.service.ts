@@ -50,7 +50,10 @@ export class AssignmentService {
       .get<Array<Draft>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
-          a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student),
+          a => {
+            console.log(a);
+            return new Draft(a.id, a.timestamp, a.grade, a.state, a.locker, a.student);
+          },
         )),
         catchError(err => {
           console.error(err);

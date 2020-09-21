@@ -7,8 +7,8 @@ import {CourseService} from '../services/course.service';
 import {AuthService} from '../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DeleteConfirmDialogComponent} from '../teacher-view/delete-confirm-dialog/delete-confirm-dialog.component';
-import {EditCourseDialogComponent} from '../teacher-view/edit-course-dialog/edit-course-dialog.component';
+import {DeleteConfirmDialogComponent} from '../teacher-view/courses/delete-confirm-dialog/delete-confirm-dialog.component';
+import {EditCourseDialogComponent} from '../teacher-view/courses/edit-course-dialog/edit-course-dialog.component';
 
 @Component({
   selector: 'app-admin-view',

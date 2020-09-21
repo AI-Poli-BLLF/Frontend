@@ -1,8 +1,8 @@
-/*.innerTable{*/
-/*  width: 150%;*/
-/*}*/
+.innerTable{
+  width: 100%;
+}
 table {
-  width: 130%;
+  width: 100%;
 }
 
 tr.detail-row {

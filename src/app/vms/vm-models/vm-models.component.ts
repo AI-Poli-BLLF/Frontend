@@ -4,7 +4,7 @@ import {CourseService} from '../../services/course.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VmModelsList} from '../../models/vm.models.list.model';
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteConfirmDialogComponent} from "../../teacher-view/delete-confirm-dialog/delete-confirm-dialog.component";
+import {DeleteConfirmDialogComponent} from "../../teacher-view/courses/delete-confirm-dialog/delete-confirm-dialog.component";
 import {Course} from "../../models/course.model";
 import {AddVmModelComponent} from "../../add-vm-model/add-vm-model.component";
 import {Vm} from "../../models/vm.model";
