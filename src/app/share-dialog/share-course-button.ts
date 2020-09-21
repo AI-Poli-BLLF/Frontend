@@ -83,7 +83,7 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
 
   submit(values: string[], owners: string[]) {
     values = values.filter(e => owners.findIndex(o => o === e) === -1);
-    console.log('NEW:', values);
+    // console.log('NEW:', values);
     this.professorsService.shareCourse(this.courseName, this.authService.getId(), values)
       .subscribe(
         () => this.snackBar.open('Invito inviato.', 'Chiudi'),

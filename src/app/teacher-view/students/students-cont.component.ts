@@ -32,7 +32,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     private sanitizer: DomSanitizer) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
-      console.log(params);
+      // console.log(params);
     });
   }
 

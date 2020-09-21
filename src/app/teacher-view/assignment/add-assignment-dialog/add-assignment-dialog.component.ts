@@ -52,7 +52,7 @@ export class AddAssignmentDialogComponent implements OnInit {
       return;
     }
     const professorId = this.auth.getId();
-    console.log(this.route);
+    // console.log(this.route);
     // this.route.params.subscribe(params => {
     //   this.courseName = params.name;
     // });
@@ -61,7 +61,7 @@ export class AddAssignmentDialogComponent implements OnInit {
     const assignment = new Assignment(undefined, this.nameValidator.value, releaseDate, expiryDate);
     this.service.createAssignment(professorId, this.courseName, assignment).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.assignment = data;
       },
       error => {

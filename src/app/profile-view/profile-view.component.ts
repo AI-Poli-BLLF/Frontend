@@ -40,7 +40,6 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   getPhoto(role: string, id: string): void {
     this.service.getPhoto(role, id).subscribe(
       data => {
-        // console.log(data);
         const objectURL = URL.createObjectURL(data);
         this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       },
@@ -56,15 +55,15 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   }
 
   changePhoto($event) {
-    console.log($event);
+    // console.log($event);
     const selectedFile: File = $event.target.files[0];
-    console.log(selectedFile);
+    // console.log(selectedFile);
     if (selectedFile === undefined){
       return;
     }
     this.service.uploadPhoto(this.profileData.roles[0], this.profileData.id, selectedFile).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.getPhoto(this.profileData.roles[0], this.profileData.id);
       },
       error => {

@@ -63,7 +63,7 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
 
 
   save(event: VmConfig){
-    console.log(event);
+    // console.log(event);
     this.courseService.editCourseVmConfig(this.courseName, event.teamId, event.groupName, event)
       .subscribe(
         data => {
@@ -78,7 +78,7 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
   }
 
   getVMs(){
-    console.log('Get vms');
+    // console.log('Get vms');
     this.courseService.getTeamVMs(this.courseName, this.vmConfig.teamId)
       .subscribe(vms => {
         this.dataSource = vms;
@@ -91,7 +91,7 @@ export class VmSubTableComponent implements OnInit, OnDestroy{
       .subscribe(
         data => {
           vm.student = data;
-          console.log(this.dataSource);
+          // console.log(this.dataSource);
         },
         error => console.log(error)
       );

@@ -10,7 +10,7 @@ import {Student} from '../models/student.model';
   styleUrls: ['./professor-teams.component.css']
 })
 export class ProfessorTeamsComponent implements OnInit {
-  teams: Team[];
+  teams: Team[] = [];
   teamsMembers: Array<Array<Student>> = [];
 
   constructor(private teamService: TeamService, private route: ActivatedRoute) {
@@ -20,7 +20,7 @@ export class ProfessorTeamsComponent implements OnInit {
         data => {
           this.teams = data;
           this.teams.forEach(t => this.getMembers(courseName, t.id));
-          console.log(data);
+          // console.log(data);
         },
         error => console.log(error)
       );

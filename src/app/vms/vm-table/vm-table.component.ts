@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {VmConfig} from '../../models/vm.config.model';
 import {Team} from '../../models/team.model';
 import {CourseService} from '../../services/course.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-vm-table',
@@ -16,24 +18,30 @@ import {CourseService} from '../../services/course.service';
     ]),
   ]
 })
-export class VmTableComponent{
+export class VmTableComponent implements AfterViewInit{
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   teams: Team[];
   @Input()
   courseName: string;
-  vmConfig: VmConfig[];
+  dataSource: MatTableDataSource<VmConfig>;
   columnsToDisplay: string[] = ['id', 'groupName', 'maxCpu', 'maxRam', 'maxDisk', 'maxVm', 'maxActive'];
   columnsNames = {id: 'Id', groupName: 'Team', maxCpu: 'CPU', maxRam: 'Ram (MB)', maxDisk: 'Storage (GB)', maxVm: 'Vm creabili', maxActive: '# Vm attive'};
   expandedElement: VmConfig | null;
 
   constructor(private courseService: CourseService) {
-    // console.log(this.courseName);
+    this.dataSource = new MatTableDataSource([]);
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   @Input()
   set Teams(t: Array<Team>){
-    console.log('Enrolled setter');
+    // console.log('Enrolled setter');
     this.teams = t === undefined ? [] : t;
-    this.vmConfig = [];
+    this.dataSource.data = [];
     this.teams.forEach(team => this.loadConfig(team));
   }
 
@@ -43,15 +51,17 @@ export class VmTableComponent{
       .subscribe(t => {
         // console.log(t);
         // todo: trovare un migliore modo per aggiornare
-        const v = [...this.vmConfig];
+        const v = [...this.dataSource.data];
         v.push(t);
-        this.vmConfig = v;
+        this.dataSource.data = v;
+        this.dataSource.paginator = this.paginator;
       });
   }
 
   updateElement(vmC: VmConfig) {
     const v: VmConfig[] = [];
-    this.vmConfig.forEach(e => e.id === vmC.id ? v.push(vmC) : v.push(e));
-    this.vmConfig = v;
+    this.dataSource.data.forEach(e => e.id === vmC.id ? v.push(vmC) : v.push(e));
+    this.dataSource.data = v;
+    this.dataSource.paginator = this.paginator;
   }
 }

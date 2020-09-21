@@ -89,7 +89,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
           const d = {course, vmModel};
           const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: d});
           dialogRef.afterClosed().subscribe(data => {
-            console.log(course.enabled, '!=', data);
+            // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
             if (!course.enabled == data) {
@@ -116,7 +116,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   loadCourses(){
     this.courseService.getAllByProfessor(this.authService.getId()).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.courses = data;
       },
       error => {

@@ -36,7 +36,7 @@ export class TeamService {
   // otherwise all inactive teams the student is part of will be returned
   getTeamsByStudent(courseName: string): Observable<Array<Team>>{
     const userId = this.authService.getId();
-    console.log('userId: ' + userId);
+    // console.log('userId: ' + userId);
     return this.httpClient
       .get<Array<Team>>(this.url + '/students/' + userId + '/teams/' + courseName)
       .pipe(
@@ -89,7 +89,7 @@ export class TeamService {
   }
 
   getAvailableStudents(courseName: string): Observable<Student[]> {
-    console.log('AVAILABLE STUDENTS');
+    // console.log('AVAILABLE STUDENTS');
     return this.httpClient
       .get<Student[]>(this.url + '/courses/' + courseName + '/availableStudents')
       .pipe(
@@ -105,7 +105,7 @@ export class TeamService {
   }
 
   proposeTeam(courseName: string, teamName: string, memberIds: string[], timeout: number) {
-    console.log('PROPOSE TEAM');
+    // console.log('PROPOSE TEAM');
     const proposerId = this.authService.getId();
     memberIds.push(proposerId);
     const body = { teamName, memberIds, timeout, proposerId };
@@ -121,7 +121,7 @@ export class TeamService {
 
   getTeamConfirmationToken(courseName: string, teamId: number): Observable<Token> {
     const userId = this.authService.getId();
-    console.log('CONFIRMATION TOKEN');
+    // console.log('CONFIRMATION TOKEN');
     return this.httpClient
       .get<Token>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/pendingMembers/' + userId + '/token')
       .pipe(
@@ -133,7 +133,7 @@ export class TeamService {
   }
 
   respondToProposal(token: Token, accept: boolean) {
-    console.log('RESPOND TO PROPOSAL');
+    // console.log('RESPOND TO PROPOSAL');
     const action: string = accept ? 'confirm/' : 'reject/';
     return this.httpClient
       .post<any>(this.host + '/notification/' + action, token.id)

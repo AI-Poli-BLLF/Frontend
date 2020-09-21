@@ -26,7 +26,7 @@ export class CourseService {
 
   // add a course
   update(course: Course): Observable<Course>{
-    console.log('UPDATE');
+    // console.log('UPDATE');
     return this.httpClient.put<Course>(this.url + '/' + course.name, course)
       .pipe(
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
@@ -39,7 +39,7 @@ export class CourseService {
 
   // add a course
   addCourse(course: Course, vmModel: VmModel, professorId: string): Observable<Course>{
-    console.log('ADD');
+    // console.log('ADD');
     const v = {course, vmModel, professorId};
     return this.httpClient.post<Course>(this.url, v)
       .pipe(
@@ -69,7 +69,7 @@ export class CourseService {
 
   // get a course
   getOne(name: string): Observable<Course>{
-    console.log('FIND');
+    // console.log('FIND');
     return this.httpClient.get<Course>(this.url + '/' + name)
       .pipe(
         map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
@@ -142,7 +142,7 @@ export class CourseService {
     return this.httpClient.get<Array<Vm>>(this.url + '/' + courseName + '/teams/' + teamId + '/vms')
       .pipe(
         map(c => {
-          console.log(c);
+          // console.log(c);
           return c.map(c2 => new Vm(c2.id, c2.active, c2.cpu, c2.ramSize, c2.diskSize));
         }),
         catchError( err => {
@@ -284,7 +284,7 @@ export class CourseService {
   }
 
   shareVm(courseName: string, teamId: number, vmId: number, memberIds: string[]): Observable<any>{
-    console.log('SHARE VMs');
+    // console.log('SHARE VMs');
     return this.httpClient.put<any>(this.url + '/' + courseName + '/teams/' + teamId + '/vms/' + vmId + '/owners', memberIds)
       .pipe(
         catchError( err => {

@@ -75,7 +75,7 @@ export class TeamComponent implements OnInit {
   }
 
   private getTeamInfos(courseName: string, team: Team) {
-    console.log('Requesting members of team ' + team.id);
+    // console.log('Requesting members of team ' + team.id);
     let activeMembers$;
     let pendingMembers$;
     let proposer$: Observable<Student>;
@@ -111,7 +111,7 @@ export class TeamComponent implements OnInit {
         this.teamService.proposeTeam(this.course.name, result.value.teamName, result.value.members, result.value.timeout)
           .subscribe(
             res => {
-              console.log('propose team data');
+              // console.log('propose team data');
               this.teams.clear();
               this.getStudentTeams(this.course.name);
             },

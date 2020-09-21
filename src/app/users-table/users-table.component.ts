@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild
 import {MatTableDataSource} from "@angular/material/table";
 import {Student} from "../models/student.model";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort} from '@angular/material/sort';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {User} from '../models/user.model';
 
@@ -26,6 +26,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
 
   @Input()
   set elements(value: User[]) {
+    // console.log(value);
     this._elements = value;
     this.refreshEnrolledStudents();
   }

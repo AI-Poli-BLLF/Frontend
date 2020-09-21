@@ -56,7 +56,7 @@ export class TabComponentComponent {
     this.courseService.getOne(courseName)
       .subscribe(
         data => {
-          console.log(data);
+          // console.log(data);
           this.course = data;
           this.loadLinks();
         },

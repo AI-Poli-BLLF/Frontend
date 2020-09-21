@@ -19,7 +19,7 @@ export class AuthService {
 
   register(userId: string, firstName: string, name: string, password: string, email: string): Observable<any>{
     const v = { userId, firstName, name, email, password};
-    console.log(v);
+    // console.log(v);
     return this.httpClient.post(this.urlRegister, v);
   }
 

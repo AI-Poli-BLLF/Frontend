@@ -87,7 +87,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
           const d = {course, vmModel};
           const dialogRef = this.dialog.open(EditCourseDialogComponent, {data: d});
           dialogRef.afterClosed().subscribe(data => {
-            console.log(course.enabled, '!=', data);
+            // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
             if (!course.enabled == data) {
@@ -118,7 +118,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
   loadCourses(){
     this.courseService.getAll().subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
       },
       error => {

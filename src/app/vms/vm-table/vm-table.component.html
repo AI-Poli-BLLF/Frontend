@@ -1,5 +1,6 @@
+<!--todo: aggiungere mat sort-->
 <table mat-table
-       [dataSource]="vmConfig" multiTemplateDataRows>
+       [dataSource]="dataSource" multiTemplateDataRows>
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-header-cell *matHeaderCellDef> {{columnsNames[column]}} </th>
     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
@@ -24,3 +25,4 @@
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
