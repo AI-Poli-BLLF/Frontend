@@ -8,13 +8,14 @@ import {Observable} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {UsersTableComponent} from "../../users-table/users-table.component";
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.css']
 })
-export class StudentsComponent implements OnInit, AfterViewInit {
+export class StudentsComponent implements OnInit {
 
   // todo: bug del primo elemento
   // todo: mettere selezione stile gmail
@@ -22,10 +23,8 @@ export class StudentsComponent implements OnInit, AfterViewInit {
   enrolledStudents: Array<Student> = [];
   allStudents: Array<Student> = [];
 
-  displayedColumns: string[] = ['select', 'photo', 'id', 'name', 'firstName', 'group'];
-  dataSource: MatTableDataSource<Student>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(UsersTableComponent)
+  table: UsersTableComponent;
 
   student: Student = null;
 
@@ -39,34 +38,23 @@ export class StudentsComponent implements OnInit, AfterViewInit {
 
   @Input()
   set EnrolledStudents(students: Array<Student>){
-    console.log('Enrolled setter');
     this.enrolledStudents = students;
-    console.log(students);
-    this.refreshEnrolledStudents();
   }
 
   constructor() {
-    this.dataSource = new MatTableDataSource(this.enrolledStudents);
   }
 
   deleteTableStudents(students: Array<Student>){
     this.enrolledStudents = this.enrolledStudents.filter(s => students.findIndex(s1 => s1.id === s.id) === -1);
-    this.dataSource.data = this.enrolledStudents;
   }
 
   addTableStudents(student: Student){
     this.enrolledStudents.push(student);
-    this.dataSource.data = this.enrolledStudents;
   }
 
   @Input()
   set AllStudents(students: Array<Student>){
     this.allStudents = students;
-  }
-
-  refreshEnrolledStudents(){
-    this.dataSource.data = this.enrolledStudents;
-    this.listChange();
   }
 
   ngOnInit() {
@@ -77,22 +65,6 @@ export class StudentsComponent implements OnInit, AfterViewInit {
       );
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
-  }
-
-  isChecked(){
-    const length = this.enrolledStudents.filter((a) => a.selected === true).length;
-    return length !== 0;
-  }
-
-  isIntermediate(){
-    const length = this.enrolledStudents.filter((a) => a.selected === true).length;
-    return length !== 0 && length !== this.enrolledStudents.length;
-    }
-
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.allStudents
@@ -100,21 +72,6 @@ export class StudentsComponent implements OnInit, AfterViewInit {
       .map(s => s.toString())
       .filter(a => a.toLowerCase().includes(filterValue))
       .sort();
-  }
-
-  listChange() {
-    this.isChecked();
-    this.isIntermediate();
-  }
-
-  selectChange($event: MatCheckboxChange, s: Student) {
-    s.selected = $event.checked;
-    this.listChange();
-  }
-
-  selectHeaderChange($event: MatCheckboxChange) {
-    this.enrolledStudents.forEach(s => s.selected = $event.checked);
-    return;
   }
 
   deleteStudents() {

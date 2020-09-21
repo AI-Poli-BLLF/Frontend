@@ -29,7 +29,7 @@ export class ProfessorService {
 
 
   shareCourse(courseName: string, professorId: string, memberIds: string[]): Observable<any>{
-    return this.httpClient.put<any>(this.url + '/' + professorId + '/courses/' + courseName + '/cooperate' , memberIds)
+    return this.httpClient.post<any>(this.url + '/' + professorId + '/courses/' + courseName + '/cooperate' , memberIds)
       .pipe(
         catchError( err => {
           console.error(err);

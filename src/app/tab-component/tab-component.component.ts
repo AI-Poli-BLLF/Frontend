@@ -34,7 +34,9 @@ export class TabComponentComponent {
     new NavModel('./teams', 'Teams')
   ];
   linksAdminTools: Array<NavModel> = [
-    new NavModel('./vmModels', 'VM Models'),
+    new NavModel('./vmModels', 'Modelli Vm'),
+    new NavModel('./professors', 'Professori'),
+    new NavModel('./resources', 'Risorse usate')
   ];
   constructor(private authService: AuthService,
               private courseService: CourseService,
@@ -75,9 +77,8 @@ export class TabComponentComponent {
         this.links = this.course.enabled ? this.linksTeacher : [];
         break;
       case 'ROLE_ADMIN':
-        // todo : riattivare
-        // this.links = this.course.enabled ? this.linksAdmin : [];
-        this.links = this.linksAdmin;
+        this.links = this.course.enabled ? this.linksAdmin : [];
+        // this.links = this.linksAdmin;
         break;
     }
   }

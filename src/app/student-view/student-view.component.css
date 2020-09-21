@@ -1,4 +1,6 @@
-mat-sidenav-container{ height: 100%; }
+mat-sidenav-container{
+  height: calc(100vh - 130px);
+}
 
 #hamburger {
   margin-right: 1em;

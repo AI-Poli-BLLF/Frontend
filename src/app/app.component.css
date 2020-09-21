@@ -7,6 +7,13 @@
   flex: 1 1 auto;
 }
 
+router-outlet {
+  position: relative;
+  height: 1000px;
+}
+.toolbar {
+}
+
 .course_edit {
   /*margin-left: 0.5em;*/
   /*padding-top: 0.5em;*/

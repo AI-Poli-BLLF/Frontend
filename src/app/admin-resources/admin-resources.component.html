@@ -1,0 +1,12 @@
+<div class="resources">
+  <h2>Risorse allocate</h2>
+  <h3>Risorse usate</h3>
+  <p>Risorse attualmente usate dagli studenti</p>
+  <app-team-resources [vmConfig]="allocated" [active]="used.maxActive" [disk]="used.maxDisk" [ram]="used.maxRam" [cpu]="used.maxCpu" [vmNumber]="used.maxVm"></app-team-resources>
+  <h3>Risorse allocate</h3>
+  <p>Risorse allocate dagli studenti durante la creazione della vm</p>
+  <app-team-resources [vmConfig]="reserved" [active]="allocated.maxActive" [disk]="allocated.maxDisk" [ram]="allocated.maxRam" [cpu]="allocated.maxCpu" [vmNumber]="allocated.maxVm"></app-team-resources>
+  <h3>Risorse riservate</h3>
+  <p>Risorse riservate agli studenti da parte dei professori</p>
+  <app-team-resources [vmConfig]="total" [active]="reserved.maxActive" [disk]="reserved.maxDisk" [ram]="reserved.maxRam" [cpu]="reserved.maxCpu" [vmNumber]="reserved.maxVm"></app-team-resources>
+</div>

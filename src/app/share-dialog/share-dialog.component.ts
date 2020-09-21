@@ -18,6 +18,7 @@ export class ShareDialogComponent implements OnInit {
   membersControl = new FormControl('', [Validators.required, Validators.min(1)]);
   options: User[];
   owners: string[];
+  disabled: string[];
 
   members: string[];
   courseName: string;
@@ -27,6 +28,7 @@ export class ShareDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<ShareDialogComponent>
   ) {
     this.members = [];
+    this.disabled = data.disabled;
     this.options = data.options;
     this.owners = data.owners;
   }
@@ -75,5 +77,9 @@ export class ShareDialogComponent implements OnInit {
 
   onSelectionChange($event: MatSelectChange) {
     this.members = $event.value;
+  }
+
+  isDisabled(option: User) {
+    return !(this.disabled.findIndex(e => e === option.id) === -1);
   }
 }

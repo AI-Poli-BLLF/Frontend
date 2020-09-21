@@ -1,0 +1,3 @@
+<div class="teams_div">
+  <app-team-card [members]="teamsMembers[team.id]" (deleteTeam)="deleteTeam(team)" [team]="team" *ngFor="let team of teams"></app-team-card>
+</div>

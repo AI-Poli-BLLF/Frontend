@@ -71,6 +71,11 @@ import { AssignmentViewComponent } from './teacher-view/assignment/assignment-vi
 import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
 import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
 import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
+import { ProfessorTeamsComponent } from './professor-teams/professor-teams.component';
+import { TeamCardComponent } from './team-card/team-card.component';
+import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
+import { UsersTableComponent } from './users-table/users-table.component';
+import { AdminResourcesComponent } from './admin-resources/admin-resources.component';
 
 
 @NgModule({
@@ -121,7 +126,12 @@ import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-mode
     VmModelsTableComponent,
     VmModelsComponent,
     AddVmModelComponent,
-    AddVmModelVersionsComponent
+    AddVmModelVersionsComponent,
+    ProfessorTeamsComponent,
+    TeamCardComponent,
+    ProfessorsContComponent,
+    UsersTableComponent,
+    AdminResourcesComponent
   ],
   imports: [
     BrowserModule,
