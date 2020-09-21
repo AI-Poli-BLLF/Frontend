@@ -3,13 +3,13 @@
   <mat-menu #menu="matMenu" class="my-menu">
     <div class="container">
       <p id="no-notification">Non hai ricevuto alcuna notifica</p>
-      <mat-tab-group (click)="$event.stopPropagation()">
+      <mat-tab-group dynamicHeight (click)="$event.stopPropagation()">
         <mat-tab label="Cooperazioni">
           <app-notification-card></app-notification-card>
           <app-notification-card></app-notification-card>
           <app-notification-card></app-notification-card>
         </mat-tab>
-        <mat-tab label="Richieste d'iscrizione"> Content 2 </mat-tab>
+        <mat-tab label="Iscrizioni"> Content 2 </mat-tab>
       </mat-tab-group>
     </div>
   </mat-menu>
