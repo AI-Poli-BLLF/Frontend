@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  template: '<h2>Home component works!!</h2><p>Qui si potrebbe spiegare all\'utente cosa può fare.</p>',
-  styleUrls: []
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  constructor() {
+export class HomeComponent implements OnDestroy {
+  firstName: string;
+  lastName: string;
+  sub: Subscription;
+  courseName = '';
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.firstName = 'Pippo';
+    this.lastName = 'Pippo';
+    this.sub = this.route.params.subscribe(
+      data => {
+        this.courseName = this.router.url.includes('/admin/tools') ? 'Admin Tools' : data.name;
+      }
+    );
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

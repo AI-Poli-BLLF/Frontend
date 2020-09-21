@@ -1,0 +1,15 @@
+.div {
+  font-size: 130%;
+  width: 100%;
+  text-align: center;
+  height: calc(100vh - 130px);
+}
+.div_in {
+  text-align: center;
+  position: relative;
+  top: 35%;
+  -ms-transform: translateY(-35%);
+  -webkit-transform: translateY(-35%);
+  transform: translateY(-35%);
+}
+

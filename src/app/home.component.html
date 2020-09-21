@@ -1,0 +1,14 @@
+<div class="div" >
+  <div class="div_in" *ngIf="courseName === 'Seleziona un corso'">
+    <h2>Benvenuto {{firstName}} {{lastName}}</h2>
+    <p>Per usare l'applicazione devi selezionare un corso dal menù laterale.</p>
+  </div>
+  <div class="div_in" *ngIf="courseName !== 'Seleziona un corso' && courseName !== 'Admin Tools'">
+    <h2>Hai selezionato il corso {{courseName}}</h2>
+    <p>Seleziona la tab della risorsa che vuoi visualizzare.</p>
+  </div>
+  <div class="div_in" *ngIf="courseName === 'Admin Tools'">
+    <h2>Admin Tools</h2>
+    <p>Pagina riservata agli admin. Seleziona la tab della risorsa che vuoi visualizzare.</p>
+  </div>
+</div>
