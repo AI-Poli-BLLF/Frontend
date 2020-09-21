@@ -65,6 +65,8 @@ import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
 import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
 import { ProfessorTeamsComponent } from './professor-teams/professor-teams.component';
 import { TeamCardComponent } from './team-card/team-card.component';
+import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
+import { UsersTableComponent } from './users-table/users-table.component';
 
 
 @NgModule({
@@ -109,7 +111,9 @@ import { TeamCardComponent } from './team-card/team-card.component';
     AddVmModelComponent,
     AddVmModelVersionsComponent,
     ProfessorTeamsComponent,
-    TeamCardComponent
+    TeamCardComponent,
+    ProfessorsContComponent,
+    UsersTableComponent
   ],
   imports: [
     BrowserModule,

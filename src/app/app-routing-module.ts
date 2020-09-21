@@ -19,6 +19,7 @@ import {AdminAuthGuard} from './auth/admin-auth.guard';
 import {AdminViewComponent} from './admin-view/admin-view.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 import {ProfessorTeamsComponent} from './professor-teams/professor-teams.component';
+import {ProfessorsContComponent} from "./professors-cont/professors-cont.component";
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -65,7 +66,8 @@ const routes: Routes = [
         component: TabComponentComponent,
         children: [
           {path: '', component: HomeComponent },
-          {path: 'vmModels', component: VmModelsComponent }]
+          {path: 'vmModels', component: VmModelsComponent },
+          {path: 'professors', component: ProfessorsContComponent }]
       },
       {path: 'course/:name',
         component: TabComponentComponent,

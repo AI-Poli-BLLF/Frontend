@@ -50,14 +50,14 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
   shareCourse(owners: string[]){
     const d = {
       text: `Condividi corso  ${this.courseName}`,
-      creatorId: this.authService.getId(),
+      disabled: owners,
       options: this.options,
       owners
     };
     this.dialogRef = this.dialog.open(ShareDialogComponent, {data: d})
       .afterClosed().subscribe(v => {
         if (v.ok){
-          this.submit(v.data);
+          this.submit(v.data, owners);
         }
         this.dialogRef.unsubscribe();
       });
@@ -81,11 +81,16 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
       );
   }
 
-  submit(values: string[]) {
+  submit(values: string[], owners: string[]) {
+    values = values.filter(e => owners.findIndex(o => o === e) === -1);
+    console.log('NEW:', values);
     this.professorsService.shareCourse(this.courseName, this.authService.getId(), values)
       .subscribe(
-        data => data,
-        error => console.log(error)
+        () => this.snackBar.open('Invito inviato.', 'Chiudi'),
+        error => {
+          this.snackBar.open('Si è verificato un errore.', 'Chiudi')
+          console.log(error);
+        }
       );
   }
 }

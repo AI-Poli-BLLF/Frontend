@@ -56,7 +56,7 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
   shareVm(owners: string[]){
     const d = {
       text: `Condividi VM  ${this.vm.id}`,
-      creatorId: this.vm.student.id,
+      disabled: [this.vm.student.id],
       options: this.options,
       owners
     };
