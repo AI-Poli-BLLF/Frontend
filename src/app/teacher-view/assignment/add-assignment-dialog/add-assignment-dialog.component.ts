@@ -58,6 +58,7 @@ export class AddAssignmentDialogComponent implements OnInit {
     // });
     const releaseDate = this.dataR.value;
     const expiryDate = this.dataE.value;
+    console.log(expiryDate);
     const assignment = new Assignment(undefined, this.nameValidator.value, releaseDate, expiryDate);
     this.service.createAssignment(professorId, this.courseName, assignment).subscribe(
       data => {

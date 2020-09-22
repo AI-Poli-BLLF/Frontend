@@ -78,6 +78,7 @@ import { AdminResourcesComponent } from './admin-resources/admin-resources.compo
 import {MatMenuModule} from '@angular/material/menu';
 import { NotificationsMenuComponent } from './notifications/notifications-menu.component';
 import { NotificationCardComponent } from './notifications/content/notification-card.component';
+import { EvaluateDraftDialogComponent } from './teacher-view/assignment/draft/evaluate-draft-dialog/evaluate-draft-dialog.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DeleteVersionComponent } from './delete-version/delete-version.component';
@@ -139,6 +140,7 @@ import { DeleteVersionComponent } from './delete-version/delete-version.componen
     AdminResourcesComponent,
     NotificationsMenuComponent,
     NotificationCardComponent,
+    EvaluateDraftDialogComponent,
     DeleteVersionComponent,
   ],
   imports: [

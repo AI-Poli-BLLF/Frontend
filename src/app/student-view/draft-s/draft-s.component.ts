@@ -53,7 +53,7 @@ export class DraftSComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.update();
   }
 
   private getDraftInfo(draft: Draft) {
@@ -109,9 +109,10 @@ export class DraftSComponent implements OnInit {
       }
     );
     let draft1: Draft;
-    draft1 = draft;
-    draft1.id = undefined;
-    draft1.state = 'SUBMITTED';
+    draft1 = new Draft(undefined, undefined, draft.grade, 'SUBMITTED', draft.locker);
+    // draft1 = draft;
+    // draft1.id = undefined;
+    // draft1.state = 'SUBMITTED';
     this.service.addDraft(draft1, this.assignment, this.studentId).subscribe(
       data => {
         console.log(data);
