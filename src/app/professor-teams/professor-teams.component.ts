@@ -24,7 +24,6 @@ export class ProfessorTeamsComponent implements OnInit {
         data => {
           this.teams = data;
           this.teams.forEach(t => this.getMembers(courseName, t.id));
-          // console.log(data);
         },
         error => console.log(error)
       );

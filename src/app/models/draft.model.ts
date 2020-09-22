@@ -6,6 +6,7 @@ export class Draft {
   grade: number;
   state: string;
   timestampT: Date;
+  timestamp: string;
   locker: boolean;
   student: Student;
 
@@ -14,6 +15,7 @@ export class Draft {
     this.grade = grade;
     this.state = state;
     this.timestampT = new Date(timestamp);
+    this.timestamp = timestamp;
     this.locker = locker;
     this.student = new Student('', '', '', '');
   }
@@ -33,7 +35,7 @@ export class Draft {
     return `${this.timestampT.getDate()}/${this.timestampT.getMonth()}/${this.timestampT.getFullYear()}`;
   }
 
-  get timestamp(){
+  get timestampD(){
     return `${this.time} ${this.date}`;
   }
 }
