@@ -2,9 +2,7 @@
   <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>notifications</mat-icon></button>
   <mat-menu #menu="matMenu" class="my-menu">
     <div class="container">
-      <!--
-      <p id="no-notification">Non hai ricevuto alcuna notifica</p>
-      -->
+      <p id="no-notification" *ngIf="notifications.length == 0">Non hai ricevuto alcuna notifica</p>
       <mat-divider></mat-divider>
       <span *ngFor="let n of notifications">
         <app-notification-card [notification]="n"></app-notification-card>
