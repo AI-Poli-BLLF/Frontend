@@ -3,6 +3,7 @@ import {Team} from '../models/team.model';
 import {TeamService} from '../services/team.service';
 import {ActivatedRoute} from '@angular/router';
 import {Student} from '../models/student.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-professor-teams',
@@ -13,7 +14,7 @@ export class ProfessorTeamsComponent implements OnInit {
   teams: Team[] = [];
   teamsMembers: Array<Array<Student>> = [];
 
-  constructor(private teamService: TeamService, private route: ActivatedRoute) {
+  constructor(private teamService: TeamService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -30,8 +31,18 @@ export class ProfessorTeamsComponent implements OnInit {
   }
 
   deleteTeam(team: Team) {
-    // todo: da implementare
-    alert('Da implementare');
+    const courseName = this.route.parent.snapshot.params.name;
+    this.teamService.deleteTeam(courseName, team.id)
+      .subscribe(
+        () => {
+          this.snackBar.open(`Team ${team.name} eliminato con successo.`, 'Chiudi');
+          this.teams = this.teams.filter(t => t.id !== team.id);
+        },
+        error => {
+          console.log(error);
+          this.snackBar.open(`Si è verificato un errore durante l'eliminazione del team.`, 'Chiudi');
+        }
+      );
   }
 
   getMembers(courseName: string, teamId: number){

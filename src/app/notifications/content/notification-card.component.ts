@@ -24,7 +24,8 @@ export class NotificationCardComponent implements OnInit {
   }
 
   public getImage(){
-    this.profileService.getPhoto(this.authService.getRole(), this.notification.senderId)
+    // todo: con getRole del auth service ottieni il ruolo di chi lo sta usando e se è admin crasha tutto
+    this.profileService.getPhoto(this.getRole(this.notification.senderId), this.notification.senderId)
       .subscribe(
         data => {
           const objectURL = URL.createObjectURL(data);
@@ -35,6 +36,15 @@ export class NotificationCardComponent implements OnInit {
           this.notification.photoPath = 'assets/img/default.png';
         }
       );
+  }
+
+  getRole(sender: string){
+    switch (sender[0]) {
+      case 'd':
+        return 'ROLE_PROFESSOR';
+      case 's':
+        return 'ROLE_STUDENT';
+    }
   }
 
   areButtonsVisible() {

@@ -144,4 +144,15 @@ export class TeamService {
         })
       );
   }
+
+  deleteTeam(courseName: string, teamId: number): Observable<any> {
+    return this.httpClient
+      .delete<any>(this.url + '/courses/' + courseName + '/teams/' + teamId)
+      .pipe(
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService deleteTeam error: ' + err.message);
+        })
+      );
+  }
 }

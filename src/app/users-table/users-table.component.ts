@@ -27,6 +27,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @Input()
   set elements(value: User[]) {
     // console.log(value);
+    console.log(value);
     this._elements = value;
     this.refreshEnrolledStudents();
   }
@@ -46,6 +47,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
       this.displayedColumns.push('group');
       this.displayedColumns.unshift('select');
     }
+    this.update();
   }
 
   isChecked(){
@@ -79,10 +81,13 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     this.listChange();
   }
 
-  ngAfterViewInit() {
+  update(){
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
 
+  ngAfterViewInit() {
+    this.update();
   }
 
 }

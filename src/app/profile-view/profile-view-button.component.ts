@@ -34,6 +34,10 @@ export class ProfileViewButtonComponent implements OnDestroy{
   }
 
   public getImage(){
+    if (!(this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN')){
+      this.photoPath = 'assets/img/default.png';
+      return;
+    }
     this.profileService.getPhoto(this.authService.getRole(), this.authService.getId())
       .subscribe(
         data => {
