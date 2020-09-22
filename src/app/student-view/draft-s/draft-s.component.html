@@ -1,42 +1,35 @@
-<h2>Elenco elaborati</h2>
-<!--<button mat-raised-button (click)="openCreateDraft()" class="add" color="primary">Crea elaborato</button>-->
-<div class="innerTable">
-  <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+<div class="external_div">
+  <h2>Elenco elaborati</h2>
+  <!--<button mat-raised-button (click)="openCreateDraft()" class="add" color="primary">Crea elaborato</button>-->
+  <div class="innerTable">
+    <table mat-table class="ts" [dataSource]="dataSource" matSort multiTemplateDataRows>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>IdStudente</th>
+        <td mat-cell *matCellDef="let element">{{element.student.id}}</td>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stato</th>
+        <td mat-cell *matCellDef="let element">{{element.state}}</td>
+      </ng-container>
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>timestamp</th>
+        <td mat-cell *matCellDef="let element">{{element.timestampD}}</td>
+      </ng-container>
 
-<!--    <ng-container matColumnDef="firstName">-->
-<!--      <th mat-header-cell *matHeaderCellDef>firstName</th>-->
-<!--      <td mat-cell *matCellDef="let element">{{element.student.firstName}}</td>-->
-<!--    </ng-container>-->
-<!--    <ng-container matColumnDef="name">-->
-<!--      <th mat-header-cell *matHeaderCellDef>name</th>-->
-<!--      <td mat-cell *matCellDef="let element">{{element.student.name}}</td>-->
-<!--    </ng-container>-->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>IdStudente</th>
-      <td mat-cell *matCellDef="let element">{{element.student.id}}</td>
-    </ng-container>
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stato</th>
-      <td mat-cell *matCellDef="let element">{{element.state}}</td>
-    </ng-container>
-    <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>timestamp</th>
-      <td mat-cell *matCellDef="let element">{{element.timestampD}}</td>
-    </ng-container>
+      <ng-container matColumnDef="link">
+        <th mat-header-cell *matHeaderCellDef>Apri</th>
+        <td mat-cell *matCellDef="let element"> <button mat-stroked-button [disabled]="element" [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button></td>
+      </ng-container>
 
-    <ng-container matColumnDef="link">
-      <th mat-header-cell *matHeaderCellDef>Apri</th>
-      <td mat-cell *matCellDef="let element"> <button mat-stroked-button [disabled]="element" [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button></td>
-    </ng-container>
+      <ng-container matColumnDef="modifica">
+        <th mat-header-cell *matHeaderCellDef>Modifica</th>
+        <td mat-cell *matCellDef="let element"><button (click)="editDraft(element)" [disabled]="element.locker" mat-stroked-button><mat-icon>edit</mat-icon></button></td>
+      </ng-container>
 
-    <ng-container matColumnDef="modifica">
-      <th mat-header-cell *matHeaderCellDef>Modifica</th>
-      <td mat-cell *matCellDef="let element"><button (click)="editDraft(element)" [disabled]="element.locker" mat-stroked-button><mat-icon>edit</mat-icon></button></td>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="columnsToDisplayDraft"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columnsToDisplayDraft;" matRipple
-             class="element-row"></mat-row>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplayDraft"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplayDraft;" matRipple
+          class="element-row"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>

@@ -5,7 +5,9 @@ mat-sidenav-container{
 #hamburger {
   margin-right: 1em;
 }
-
+table {
+  width: 100%;
+}
 .fill_space{
   flex: 1 1 auto;
 }

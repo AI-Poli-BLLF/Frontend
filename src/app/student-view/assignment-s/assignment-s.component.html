@@ -7,11 +7,11 @@
     </ng-container>
     <ng-container matColumnDef="releaseDate">
       <th mat-header-cell *matHeaderCellDef> Data inizio </th>
-      <td mat-cell *matCellDef="let element"> {{element.releaseDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.releaseDateD}} </td>
     </ng-container>
     <ng-container matColumnDef="expiryDate">
       <th mat-header-cell *matHeaderCellDef> Data fine </th>
-      <td mat-cell *matCellDef="let element"> {{element.expiryDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.expiryDateD}} </td>
     </ng-container>
     <ng-container matColumnDef="link">
       <th mat-header-cell *matHeaderCellDef>Apri</th>
@@ -19,12 +19,12 @@
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
-      <mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
+      <td mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
         <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 <!--          <app-draft-s [Assignment]="assignment" ></app-draft-s>-->
               <app-draft-s [Assignment]="element"></app-draft-s>
         </div>
-      </mat-cell>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
