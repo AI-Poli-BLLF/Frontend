@@ -5,12 +5,16 @@ export class Assignment {
   name: string;
   releaseDateT: Date;
   expiryDateT: Date;
+  releaseDate: string;
+  expiryDate: string;
 
   constructor(id: number, name: string, releaseDate: string, expiryDate: string){
     this.id = id;
     this.name = name;
     this.releaseDateT = new Date(releaseDate);
     this.expiryDateT = new Date(expiryDate);
+    this.releaseDate = releaseDate;
+    this.expiryDate = expiryDate;
   }
 
   toString() {
@@ -29,11 +33,11 @@ export class Assignment {
     return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
   }
 
-  get releaseDate(){
+  get releaseDateD(){
     return `${this.getTime(this.releaseDateT)} ${this.getDate(this.releaseDateT)}`;
   }
 
-  get expiryDate(){
+  get expiryDateD(){
     return `${this.getTime(this.expiryDateT)} ${this.getDate(this.expiryDateT)}`;
   }
 
