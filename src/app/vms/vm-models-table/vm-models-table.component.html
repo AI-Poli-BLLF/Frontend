@@ -12,8 +12,15 @@
     <td mat-cell *matCellDef="let element"> {{getVersions(element)}} </td>
   </ng-container>
   <ng-container matColumnDef="addVersion">
-    <th mat-header-cell *matHeaderCellDef> Aggiungi Versione </th>
+    <th mat-header-cell *matHeaderCellDef> Aggiungi Versioni </th>
     <td mat-cell *matCellDef="let element"><button mat-stroked-button (click)="addVersion(element)"><mat-icon>library_add</mat-icon></button></td>
+  </ng-container>
+  <ng-container matColumnDef="deleteVersion">
+    <th mat-header-cell *matHeaderCellDef> Elimina versione </th>
+    <td mat-cell *matCellDef="let element"><button mat-stroked-button (click)="deleteVersions(element)"><mat-icon>delete</mat-icon></button></td>
+  </ng-container>  <ng-container matColumnDef="deleteOs">
+    <th mat-header-cell *matHeaderCellDef> Elimina os </th>
+    <td mat-cell *matCellDef="let element"><button mat-stroked-button (click)="deleteOS(element)"><mat-icon>delete_forever</mat-icon></button></td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

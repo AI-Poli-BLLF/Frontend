@@ -1,3 +1,3 @@
 <h2>Modelli VM</h2>
 <button mat-raised-button (click)="addModel()" color="primary"><mat-icon>add</mat-icon> Aggiungi Modello VM</button>
-<app-vm-models-table (addV)="addVersion($event)" [vmModelsList]="vmModelsList"></app-vm-models-table>
+<app-vm-models-table (delV)="deleteVersions($event)" (delOs)="deleteOs($event)" (addV)="addVersion($event)" [vmModelsList]="vmModelsList"></app-vm-models-table>

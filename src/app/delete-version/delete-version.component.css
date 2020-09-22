@@ -1,0 +1,28 @@
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+h1 {
+  text-align: center;
+}
+mat-form-field {
+  display: block;
+  width: 20em;
+}
+
+.right{
+  float: right;
+}
+
+label {
+  display: block;
+  color: red;
+  text-align: center;
+  margin: 1.5em;
+}
+
+span {
+  padding-left: 1em;
+}
+

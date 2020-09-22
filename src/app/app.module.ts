@@ -80,6 +80,7 @@ import { NotificationsMenuComponent } from './notifications/notifications-menu.c
 import { NotificationCardComponent } from './notifications/content/notification-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { DeleteVersionComponent } from './delete-version/delete-version.component';
 
 
 @NgModule({
@@ -138,6 +139,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AdminResourcesComponent,
     NotificationsMenuComponent,
     NotificationCardComponent,
+    DeleteVersionComponent,
   ],
   imports: [
     BrowserModule,

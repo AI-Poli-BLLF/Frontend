@@ -9,6 +9,10 @@ import {Course} from "../../models/course.model";
 import {AddVmModelComponent} from "../../add-vm-model/add-vm-model.component";
 import {Vm} from "../../models/vm.model";
 import {AddVmModelVersionsComponent} from "../../add-vm-model-versions/add-vm-model-versions.component";
+import {AdminService} from '../../services/admin.service';
+import {Student} from '../../models/student.model';
+import {forkJoin, Observable} from 'rxjs';
+import {DeleteVersionComponent} from '../../delete-version/delete-version.component';
 
 @Component({
   selector: 'app-vm-models',
@@ -19,9 +23,13 @@ export class VmModelsComponent implements OnInit {
  vmModelsList: VmModelsList[] = [];
   constructor(
     private courseService: CourseService,
+    private adminService: AdminService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar) {
-    courseService.getAllVmModels()
+  }
+
+  getModels(){
+    this.courseService.getAllVmModels()
       .subscribe(
         data => this.vmModelsList = data,
         error => {
@@ -33,6 +41,7 @@ export class VmModelsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getModels();
   }
 
   addModel(){
@@ -41,9 +50,19 @@ export class VmModelsComponent implements OnInit {
       data => {
         if (data !== undefined && data.os !== undefined) {
           const vmModelsList = new VmModelsList(undefined, data.os, data.versions);
-          // console.log(vmModelsList);
-          alert('Da implementare il service');
-          // todo: implementare service
+          this.adminService.addOs(vmModelsList)
+            .subscribe(
+              res => {
+                const v = [...this.vmModelsList];
+                v.push(res);
+                this.vmModelsList = v;
+              },
+              error => {
+                console.log(error);
+                this.snackBar.open('Si è verificato un errore', 'Chiudi');
+                this.getModels();
+              }
+            );
         }
       },
         error => console.log(error)
@@ -51,19 +70,71 @@ export class VmModelsComponent implements OnInit {
   }
 
   addVersion(event: VmModelsList){
-    // console.log(event);
-    const v = {data: {os: event.osName, versions: event.versions}};
+    const v = {data: {os: event.osName, versions: []}};
     const dialogRef = this.dialog.open(AddVmModelVersionsComponent, v);
     dialogRef.afterClosed().subscribe(
       data => {
-        if (data !== undefined && data.os !== undefined) {
-          const vmModelsList = new VmModelsList(event.id, event.osName, data.versions);
-          console.log(vmModelsList);
-          alert('Da implementare il service');
-          // todo: implementare service
+        if (data !== undefined && data.versions !== undefined) {
+          console.log('QUA');
+          const addObs: Array<Observable<VmModelsList>> = [];
+          console.log(data.versions);
+          data.versions.forEach(version => addObs.push(this.adminService.addVersion(event.osName, version)));
+          forkJoin(addObs).subscribe(
+            () => {
+              const versions = this.vmModelsList.find(os => os.osName === event.osName).versions;
+              data.versions.forEach(version => versions.push(version));
+            },
+            error => {
+              console.log(error);
+              this.snackBar.open('Si è verificato un errore', 'Chiudi');
+              this.getModels();
+            }
+          );
         }
       },
         error => console.log(error)
     );
+  }
+
+  deleteVersions(event: VmModelsList){
+    const v = {data: {os: event.osName, versions: event.versions}};
+    const dialogRef = this.dialog.open(DeleteVersionComponent, v);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data !== undefined && data.versions !== undefined) {
+          const delObs: Array<Observable<any>> = [];
+          console.log(data.versions);
+          data.versions.forEach(version => delObs.push(this.adminService.deleteVersion(event.osName, version)));
+          forkJoin(delObs).subscribe(
+            () => {
+              this.vmModelsList.find(e => e.osName === event.osName).versions =
+                this.vmModelsList.find(e => e.osName === event.osName).versions
+                  .filter(version => data.versions.findIndex(e => e === version) === -1);
+            },
+            error => {
+              console.log(error);
+              this.snackBar.open('Si è verificato un errore', 'Chiudi');
+              this.getModels();
+            }
+          );
+        }
+      },
+        error => console.log(error)
+    );
+  }
+
+
+  deleteOs(event: VmModelsList) {
+    this.adminService.deleteOs(event.osName)
+      .subscribe(
+        () => {
+          this.vmModelsList = this.vmModelsList.filter(e => e.osName !== event.osName);
+        },
+        error => {
+          console.log(error);
+          this.snackBar.open('Si è verificato un errore', 'Chiudi');
+          this.getModels();
+        }
+      );
   }
 }

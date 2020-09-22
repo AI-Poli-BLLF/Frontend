@@ -260,7 +260,6 @@ export class CourseService {
       );
   }
 
-  // todo
   getProfessors(courseName: string): Observable<Array<Professor>>{
     return this.httpClient.get<Array<Professor>>(this.url + '/' + courseName + '/professors')
       .pipe(

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Team} from '../models/team.model';
-import {TeamService} from "../services/team.service";
+import {TeamService} from '../services/team.service';
 import {ActivatedRoute} from '@angular/router';
 import {Student} from '../models/student.model';
 
@@ -14,8 +14,11 @@ export class ProfessorTeamsComponent implements OnInit {
   teamsMembers: Array<Array<Student>> = [];
 
   constructor(private teamService: TeamService, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
     const courseName = this.route.parent.snapshot.params.name;
-    teamService.getAllTeams(courseName)
+    this.teamService.getAllTeams(courseName)
       .subscribe(
         data => {
           this.teams = data;
@@ -24,9 +27,6 @@ export class ProfessorTeamsComponent implements OnInit {
         },
         error => console.log(error)
       );
-  }
-
-  ngOnInit(): void {
   }
 
   deleteTeam(team: Team) {
