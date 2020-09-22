@@ -3,8 +3,8 @@ import {Timestamp} from 'rxjs';
 export class Assignment {
   id: number;
   name: string;
-  releaseDateT: Date;
-  expiryDateT: Date;
+  private releaseDateT: Date;
+  private expiryDateT: Date;
   releaseDate: string;
   expiryDate: string;
 
@@ -37,8 +37,16 @@ export class Assignment {
     return `${this.getTime(this.releaseDateT)} ${this.getDate(this.releaseDateT)}`;
   }
 
+  set releaseDateD(value: string) {
+    this.releaseDateT = new Date(value);
+  }
+
   get expiryDateD(){
     return `${this.getTime(this.expiryDateT)} ${this.getDate(this.expiryDateT)}`;
+  }
+
+  set expiryDateD(value: string) {
+    this.expiryDateT = new Date(value);
   }
 
 }
