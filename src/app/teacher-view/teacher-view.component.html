@@ -5,10 +5,10 @@
   <span>{{selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="editCourseOptions">
-    <button mat-button class="course_edit"><mat-icon (click)="openAddCourseDialog()">add</mat-icon></button>
-    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="startToEditCourse()">edit</mat-icon></button>
+    <button mat-button class="course_edit" (click)="openAddCourseDialog()"><mat-icon>add</mat-icon></button>
+    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit" (click)="startToEditCourse()"><mat-icon>edit</mat-icon></button>
     <app-share-course-button *ngIf="selectedItem!='Seleziona un corso'" [courseName]="selectedItem"></app-share-course-button>
-    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit"><mat-icon (click)="deleteCourseDialog()">delete</mat-icon></button>
+    <button *ngIf="selectedItem!='Seleziona un corso'" mat-button class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
