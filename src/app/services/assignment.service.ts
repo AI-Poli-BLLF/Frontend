@@ -45,7 +45,7 @@ export class AssignmentService {
       );
   }
 
-  getDrafts(professorId: string, courseName: string, assignmentId: number) {
+  getProfessorDrafts(professorId: string, courseName: string, assignmentId: number) {
     return this.httpClient
       .get<Array<Draft>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
@@ -54,7 +54,7 @@ export class AssignmentService {
         )),
         catchError(err => {
           console.error(err);
-          return throwError('AssignmentService getDrafts error:', err);
+          return throwError('AssignmentService getProfessorDrafts error:', err);
         })
       );
   }
@@ -85,16 +85,16 @@ export class AssignmentService {
       );
   }
 
-  getDraftForStudent(studentId: string){
+  getDraftForStudent(studentId: string, courseName: string, assignmentId: number): Observable<Draft[]>{
     return this.httpClient
-      .get<Array<Draft>>(this.url + /students/ + studentId + '/drafts')
+      .get<Array<Draft>>(this.url + '/student/' + studentId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
           a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker)
         )),
         catchError(err => {
           console.error(err);
-          return throwError('AssignmentService getDraftForStudent error: ', err);
+          return throwError('AssignmentService getDraftForStudent error: ' +  err.message);
         })
       );
   }
@@ -102,13 +102,13 @@ export class AssignmentService {
   addDraft(draft: Draft, assignment: Assignment, studentId: string){
     return this.httpClient
       .post<Draft>(this.url + '/students/' + studentId + '/assignments/' + assignment.id + '/createDraft/', draft)
-        .pipe(
-          map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker)),
-          catchError(err => {
-            console.log(err);
-            return throwError('AssignmentService addDraft error: ', err.message);
-          })
-        );
+      .pipe(
+        map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker)),
+        catchError(err => {
+          console.log(err);
+          return throwError('AssignmentService addDraft error: ' + err.message);
+        })
+      );
   }
 
   lockDraft(draft: Draft, assignmentId: number) {
@@ -122,5 +122,65 @@ export class AssignmentService {
       );
   }
 
-  // evaluateDraft
+
+  uploadCorrection(professorId: string, courseName: string, assignmentId: number, draftId: number, file: File): Observable<any>{
+    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/correction`;
+    const body = new FormData();
+    body.append('image', file);
+    return this.httpClient.post(path, body);
+  }
+
+  uploadDraft(studentId: string, courseName: string, assignmentId: number, draftId: number, file: File): Observable<Draft>{
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/drafts`;
+    const body = new FormData();
+    body.append('image', file);
+    return this.httpClient.post<Draft>(path, body)
+      .pipe(
+        map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker)),
+        catchError(err => {
+          console.log(err);
+          return throwError('AssignmentService addDraft error: ' + err.message);
+        })
+      );
+  }
+
+  uploadAssignment(professorId: string, courseName: string, file: File, assignment: Assignment): Observable<Assignment>{
+    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments`;
+    const body = new FormData();
+    body.append('image', file);
+    body.append('json', JSON.stringify(assignment));
+    return this.httpClient.post<Assignment>(path, body)
+      .pipe(
+      map(a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate)),
+      catchError(err => {
+        console.error(err);
+        return throwError('AssignmentService getAssignmentForCourse error: ' + err.message);
+      })
+    );
+  }
+
+  uploadGradeAndCorrection(professorId: string, courseName: string, assignmentId: number,
+                           draftId: number, file: File, grade: Draft): Observable<any>{
+    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/evaluate`;
+    const body = new FormData();
+    body.append('image', file);
+    body.append('json', JSON.stringify(grade));
+    return this.httpClient.post(path, body);
+  }
+
+  getAssigment(studentId: string, courseName: string, assignmentId: number): Observable<any> {
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/image`;
+    return this.httpClient.get(path,  { responseType: 'blob' });
+  }
+
+  getDraft(studentId: string, courseName: string, assignmentId: number, draftId: number): Observable<any> {
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/image`;
+    return this.httpClient.get(path,  { responseType: 'blob' });
+  }
+
+  getCorrection(studentId: string, courseName: string, assignmentId: number, draftId: number): Observable<any> {
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/correction-image;`;
+    return this.httpClient.get(path,  { responseType: 'blob' });
+  }
+
 }

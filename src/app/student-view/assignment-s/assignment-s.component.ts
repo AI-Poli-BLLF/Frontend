@@ -27,7 +27,7 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
 
   dataSource: MatTableDataSource<Assignment>;
 
-  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'link'];
+  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'grade', 'link', 'upload'];
   expandedElement: Draft | null;
 
   assignments: Array<Assignment>;

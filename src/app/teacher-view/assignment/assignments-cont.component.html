@@ -1,6 +1,5 @@
 <div class="container">
   <h2>Elenco consegne</h2>
   <button mat-raised-button (click)="openCreateAssignment()" class="add" color="primary">Crea consegna</button>
-<!--  <app-assignment #assignmentComponent (add)="add($event)" (del)="del($event)"></app-assignment>-->
-  <app-assignment #assignmentComponent ></app-assignment>
+  <app-assignment #assignmentComponent [courseName]="courseName"></app-assignment>
 </div>

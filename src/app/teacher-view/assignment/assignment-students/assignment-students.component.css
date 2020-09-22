@@ -5,9 +5,9 @@ table {
   width: 100%;
 }
 
-tr.detail-row {
-  height: 0;
-}
+/*tr.detail-row {*/
+/*  height: 0;*/
+/*}*/
 
 /*tr.element-row:not(.-expanded-row):hover {*/
 /*  background: whitesmoke;*/
@@ -17,9 +17,9 @@ tr.detail-row {
 /*  background: #efefef;*/
 /*}*/
 
-.element-row td {
-  border-bottom-width: 0;
-}
+/*.element-row td {*/
+/*  border-bottom-width: 0;*/
+/*}*/
 
 .element-detail {
   overflow: hidden;
@@ -27,5 +27,5 @@ tr.detail-row {
 }
 
 h2 {
-  margin: 1em;
+  margin-top: 1em;
 }

@@ -20,7 +20,8 @@
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
         <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <app-draft [Assignment]="element"></app-draft>
+<!--          <app-draft-sub-table [Assignment]="element"></app-draft-sub-table>-->
+          <app-assignment-students [courseName]="courseName" [assignmentId]="element.id"></app-assignment-students>
         </div>
       </td>
     </ng-container>

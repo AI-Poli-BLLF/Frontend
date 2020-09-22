@@ -1,0 +1,18 @@
+<div>
+  <h1>Valuta elaborato</h1>
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>Voto elaborato</mat-label>
+      <input matInput type="number" min="0" max="33" formControlName="grade" required/>
+      <mat-error *ngIf="checkError('grade')">{{getGradeErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <ngx-mat-file-input formControlName="requiredFile" placeholder="Immagine correzione" valuePlaceholder="Seleziona un file" required></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="checkError('requiredFile')">Nessun file selezionato.</mat-error>
+    </mat-form-field>
+    <label>{{labelValue}}</label>
+    <button mat-button (click)="save()">Salva</button>
+    <button class="right" mat-button mat-dialog-close="true">Annulla</button>
+  </form>
+</div>

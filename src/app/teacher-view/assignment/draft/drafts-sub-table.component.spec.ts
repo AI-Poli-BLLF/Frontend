@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DraftComponent } from './draft.component';
+import { DraftsSubTableComponent } from './drafts-sub-table.component';
 
 describe('DraftComponent', () => {
-  let component: DraftComponent;
-  let fixture: ComponentFixture<DraftComponent>;
+  let component: DraftsSubTableComponent;
+  let fixture: ComponentFixture<DraftsSubTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DraftComponent ]
+      declarations: [ DraftsSubTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DraftComponent);
+    fixture = TestBed.createComponent(DraftsSubTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
 <h2>Elenco elaborati</h2>
 <div class="innerTable">
-  <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+  <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef>Nome</th>
       <td mat-cell *matCellDef="let element">{{element.student.firstName}}</td>

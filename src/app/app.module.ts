@@ -67,7 +67,7 @@ import { AssignmentViewComponent } from './teacher-view/assignment/assignment-vi
 import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
 import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
 import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
-import {DraftComponent} from './teacher-view/assignment/draft/draft.component';
+import {DraftsSubTableComponent} from './teacher-view/assignment/draft/drafts-sub-table.component';
 import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
 import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
 import { ProfessorTeamsComponent } from './professor-teams/professor-teams.component';
@@ -82,7 +82,10 @@ import { EvaluateDraftDialogComponent } from './teacher-view/assignment/draft/ev
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DeleteVersionComponent } from './delete-version/delete-version.component';
-
+import { AssignmentStudentsComponent } from './teacher-view/assignment/assignment-students/assignment-students.component';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
+import { DraftEvaluateComponent } from './teacher-view/assignment/draft-evaluate/draft-evaluate.component';
+import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/draft-history.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +116,7 @@ import { DeleteVersionComponent } from './delete-version/delete-version.componen
     ShareDialogComponent,
     AssignmentComponent,
     AssignmentsContComponent,
-    DraftComponent,
+    DraftsSubTableComponent,
     ShareDialogComponent,
     AssignmentSComponent,
     DraftSComponent,
@@ -142,6 +145,9 @@ import { DeleteVersionComponent } from './delete-version/delete-version.componen
     NotificationCardComponent,
     EvaluateDraftDialogComponent,
     DeleteVersionComponent,
+    AssignmentStudentsComponent,
+    DraftEvaluateComponent,
+    DraftHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -174,7 +180,8 @@ import { DeleteVersionComponent } from './delete-version/delete-version.componen
     MatNativeDateModule,
     MatMenuModule,
     MatGridListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MaterialFileInputModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [

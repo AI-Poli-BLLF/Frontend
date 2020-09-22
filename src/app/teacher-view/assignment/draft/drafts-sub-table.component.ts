@@ -16,9 +16,9 @@ import {MAT_TAB_GROUP} from '@angular/material/tabs';
 import {AssignmentComponent} from '../assignment.component';
 
 @Component({
-  selector: 'app-draft',
-  templateUrl: './draft.component.html',
-  styleUrls: ['./draft.component.css'],
+  selector: 'app-draft-sub-table',
+  templateUrl: './drafts-sub-table.component.html',
+  styleUrls: ['./drafts-sub-table.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -27,7 +27,7 @@ import {AssignmentComponent} from '../assignment.component';
     ]),
   ]
 })
-export class DraftComponent implements OnInit {
+export class DraftsSubTableComponent implements OnInit {
   professorId = '';
   courseName = '';
   assignment: Assignment;
@@ -84,13 +84,8 @@ export class DraftComponent implements OnInit {
 
 
   private getDrafts(){
-    this.service.getDrafts(this.professorId, this.courseName, this.assignment.id).subscribe(
+    this.service.getProfessorDrafts(this.professorId, this.courseName, this.assignment.id).subscribe(
       drafts => {
-        // const draftsArray: Draft[] = d;
-        // console.log(d);
-        // const v = [...this.drafts];
-        // d.forEach(d1 => v.push(d1));
-        // console.log(v);
         this.drafts = drafts;
         drafts.forEach(d => this.getDraftInfo(d));
         this.dataSource.data = this.drafts;
@@ -116,7 +111,4 @@ export class DraftComponent implements OnInit {
     }
   }
 
-  openReviewDraft(draft: Draft) {
-
-  }
 }

@@ -26,9 +26,11 @@ import {startWith} from 'rxjs/operators';
 export class AssignmentComponent implements AfterViewInit {
 
   assignments: Array<Assignment> = [];
-
   columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'link'];
   expandedElement: Draft | null;
+
+  @Input()
+  courseName: string;
 
   dataSource: MatTableDataSource<Assignment>;
   // dataSource = ELEMENT_DATA;

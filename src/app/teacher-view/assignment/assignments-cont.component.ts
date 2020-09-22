@@ -21,18 +21,19 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(AssignmentComponent)
   assignmentsComponent: AssignmentComponent;
+  assignments: Assignment[] = [];
 
   constructor(
     private service: AssignmentService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private authServ: AuthService,
+    private authService: AuthService,
     private dialog: MatDialog
   ) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
     });
-    this.professorId = authServ.getId();
+    this.professorId = authService.getId();
   }
 
   add(assignment: Assignment){
@@ -42,7 +43,10 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     // console.log('ciao');
     this.service.getAllAssignments(this.professorId, this.courseName).subscribe(
-      s => this.assignmentsComponent.Assignments = s,
+      s => {
+        this.assignments = s;
+        this.assignmentsComponent.Assignments = this.assignments;
+      },
       // s => console.log(s),
       error => {
         console.log(error);
@@ -51,22 +55,21 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.sub.unsubscribe();
+    if (this.sub !== undefined){
+      this.sub.unsubscribe();
+    }
   }
 
   openCreateAssignment() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = this.route;
-    const dialogRef = this.dialog.open(AddAssignmentDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe( () => {
-      // this.loadAssignments();
-      this.sub = this.service.getAllAssignments(this.professorId, this.courseName).subscribe(
-        s => this.assignmentsComponent.Assignments = s,
-        error => {
-          console.log(error);
-          this.snackBar.open('Si è verificato un errore nel caricamente delle consegne.', 'Chiudi');
-        }
-      );
+    const c = { data: {courseName: this.courseName}};
+    const dialogRef = this.dialog.open(AddAssignmentDialogComponent, c);
+    this.sub = dialogRef.afterClosed().subscribe( data => {
+      if (data !== undefined){
+        const v = [...this.assignments];
+        v.unshift(data);
+        this.assignments = v;
+        this.assignmentsComponent.Assignments = this.assignments;
+      }
     });
   }
 }

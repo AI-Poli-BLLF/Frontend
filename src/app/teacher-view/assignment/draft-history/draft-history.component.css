@@ -1,0 +1,22 @@
+.innerTable{
+  width: 100%;
+}
+table {
+  width: 100%;
+}
+h1 {
+  text-align: center;
+}
+
+.right{
+  float: right;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+h2 {
+  margin-top: 1em;
+}

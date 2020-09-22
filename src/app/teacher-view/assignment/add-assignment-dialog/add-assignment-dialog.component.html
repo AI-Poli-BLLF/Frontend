@@ -1,10 +1,10 @@
 <div>
   <h1>Aggiungi consegna</h1>
-  <form>
+  <form [formGroup]="formGroup">
     <mat-form-field>
       <mat-label>Nome consegna</mat-label>
-      <input matInput type="text" [formControl]="nameValidator" required/>
-      <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
+      <input matInput type="text" formControlName="name" required/>
+      <mat-error *ngIf="checkError('name')">{{getNameErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -19,6 +19,12 @@
       <input matInput [min]="dataR.value" [matDatepicker]="picker2" placeholder="Scegli una data" [formControl]="dataE" required>
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <ngx-mat-file-input formControlName="requiredFile" placeholder="Immagine consegna" valuePlaceholder="Seleziona un file" required></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="checkError('requiredFile')">Nessun file selezionato.</mat-error>
     </mat-form-field>
 
     <label>{{labelValue}}</label>

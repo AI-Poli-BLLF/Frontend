@@ -2,7 +2,10 @@ table {
   width: 100%;
 }
 
-app-draft {
+app-draft-sub-table {
+  width: 100%;
+}
+app-assignment-students {
   width: 100%;
 }
 
