@@ -1,20 +1,20 @@
 <div>
-  <h1>Aggiungi Team</h1>
+  <h1>Aggiungi gruppo</h1>
   <mat-dialog-content [formGroup]="form">
     <mat-form-field>
-      <mat-label>Nome team</mat-label>
+      <mat-label>Nome gruppo</mat-label>
       <input matInput type="text" formControlName="teamName" value={{teamName}} required/>
-      <mat-error *ngIf="checkError('teamName')">Team name invalid</mat-error>
+      <mat-error *ngIf="checkError('teamName')">Nome gruppo non valido</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Timeout (ore)</mat-label>
       <input matInput type="number" formControlName="timeout" value={{timeout}} required/>
-      <mat-error *ngIf="checkError('timeout')">Invalid timeout</mat-error>
+      <mat-error *ngIf="checkError('timeout')">Timeout non valido</mat-error>
     </mat-form-field>
 
     <mat-form-field [style.width.px]=350>
-      <mat-label>Add student</mat-label>
+      <mat-label>Aggiungi studente</mat-label>
       <mat-select formControlName="members" (selectionChange)="onSelectionChange($event)" multiple>
         <div class="content">
         <mat-form-field>
@@ -31,7 +31,7 @@
         </div>
       </mat-select>
       <mat-error *ngIf="checkError('members')">
-        You must select between {{course.min-1}} and {{course.max-1}} other students
+        Devi selezionare fra {{course.min-1}} e {{course.max-1}} altri studenti
       </mat-error>
     </mat-form-field>
 
