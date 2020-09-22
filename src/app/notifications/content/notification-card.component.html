@@ -5,8 +5,8 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="notification-body">
-        <img class="image-cropper-small" [src]="photoPath" alt="Sender Image">
-        <p>Lo studente Lorenzo Limoli (s267541) ha richiesto di iscriversi al corso PDS</p>
+        <img class="image-cropper-small" [src]="notification.photoPath" alt="Sender Image">
+        <p>{{notification.message}}</p>
       </div>
     </mat-panel-title>
   </mat-expansion-panel-header>

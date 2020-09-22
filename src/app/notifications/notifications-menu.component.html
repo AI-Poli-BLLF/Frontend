@@ -6,12 +6,10 @@
       <p id="no-notification">Non hai ricevuto alcuna notifica</p>
       -->
       <mat-divider></mat-divider>
-      <app-notification-card type="0"></app-notification-card>
-      <mat-divider></mat-divider>
-      <app-notification-card type="2"></app-notification-card>
-      <mat-divider></mat-divider>
-      <app-notification-card type="1"></app-notification-card>
-      <mat-divider></mat-divider>
+      <span *ngFor="let n of notifications">
+        <app-notification-card [notification]="n"></app-notification-card>
+        <mat-divider></mat-divider>
+      </span>
     </div>
   </mat-menu>
 </div>
