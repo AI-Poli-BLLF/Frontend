@@ -9,10 +9,16 @@ import {VmModelsList} from '../../models/vm.models.list.model';
 export class VmModelsTableComponent {
   @Input()
   vmModelsList: VmModelsList[] = [];
-  displayedColumns: string[] = ['id', 'os', 'version', 'addVersion'];
+  displayedColumns: string[] = ['os', 'version', 'addVersion', 'deleteVersion', 'deleteOs'];
 
   @Output()
   addV = new EventEmitter();
+
+  @Output()
+  delOs = new EventEmitter();
+
+  @Output()
+  delV = new EventEmitter();
 
   constructor() {
   }
@@ -25,6 +31,13 @@ export class VmModelsTableComponent {
 
   addVersion(element: VmModelsList){
     this.addV.emit(element);
+  }
+
+  deleteOS(element: VmModelsList){
+    this.delOs.emit(element);
+  }
+  deleteVersions(element: VmModelsList){
+    this.delV.emit(element);
   }
 
 }
