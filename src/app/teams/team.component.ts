@@ -116,7 +116,11 @@ export class TeamComponent implements OnInit {
               this.getStudentTeams(this.course.name);
             },
             err => {
-              this.snackBar.open('Non è stato possibile creare il team.', 'Chiudi');
+              if (err.status === 409) {
+                this.snackBar.open('Impossibile creare il gruppo: nome duplicato', 'Chiudi');
+              } else {
+                this.snackBar.open('Non è stato possibile creare il team.', 'Chiudi');
+              }
             }
           );
       }
