@@ -28,7 +28,7 @@ import {AddDraftDialogComponent} from './add-draft-dialog/add-draft-dialog.compo
 export class DraftSComponent implements OnInit {
   dataSource: MatTableDataSource<Draft>;
   columnsToDisplayDraft: string[] = ['id', 'state', 'timestamp', 'link', 'modifica'];
-  drafts: Array<Draft>;
+  drafts: Array<Draft> = [];
   studentId: string;
   assignment: Assignment;
   sub: Subscription;

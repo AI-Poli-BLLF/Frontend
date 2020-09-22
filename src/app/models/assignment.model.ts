@@ -11,10 +11,10 @@ export class Assignment {
   constructor(id: number, name: string, releaseDate: string, expiryDate: string){
     this.id = id;
     this.name = name;
-    this.releaseDateT = new Date(releaseDate);
-    this.expiryDateT = new Date(expiryDate);
-    this._releaseDate = releaseDate;
-    this._expiryDate = expiryDate;
+    // this.releaseDateT = new Date(releaseDate);
+    // this.expiryDateT = new Date(expiryDate);
+    this.releaseDate = releaseDate;
+    this.expiryDate = expiryDate;
   }
 
   toString() {
@@ -63,6 +63,7 @@ export class Assignment {
   }
 
   set expiryDate(value: string) {
+    console.log(value);
     this._expiryDate = value;
     this.expiryDateD = value;
   }

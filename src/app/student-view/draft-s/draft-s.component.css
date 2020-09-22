@@ -1,27 +1,17 @@
-h2 {
-  margin: 1em;
-}
-mat-sidenav-container{ height: 100%; }
-
-button {
-  margin-left: 1em;
-  margin-bottom: 1em;
+.innerTable{
+  width: 100%;
 }
 
 table {
-  width: 140%;
+  width: 100%;
 }
 
 tr.detail-row {
   height: 0;
 }
 
-tr.element-row:not(.-expanded-row):hover {
-  background: whitesmoke;
-}
-
-tr.element-row:not(.-expanded-row):active {
-  background: #efefef;
+.ts {
+  width: 100%;
 }
 
 .element-row td {
