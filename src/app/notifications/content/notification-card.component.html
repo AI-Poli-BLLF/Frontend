@@ -1,1 +1,18 @@
-<p>notification-card works!</p>
+<mat-expansion-panel [hideToggle]="!areButtonsVisible()"
+                     (click)="$event.stopPropagation()"
+                     class="notification-card mat-elevation-z0"
+                     [disabled]="!areButtonsVisible()">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="notification-body">
+        <img class="image-cropper-small" [src]="photoPath" alt="Sender Image">
+        <p>Lo studente Lorenzo Limoli (s267541) ha richiesto di iscriversi al corso PDS</p>
+      </div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="notification-buttons" *ngIf="areButtonsVisible()">
+    <button mat-raised-button color="primary">Accetta</button>
+    <span class="separator"></span>
+    <button mat-raised-button color="warn">Rifiuta</button>
+  </div>
+</mat-expansion-panel>

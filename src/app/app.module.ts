@@ -78,6 +78,8 @@ import { AdminResourcesComponent } from './admin-resources/admin-resources.compo
 import {MatMenuModule} from '@angular/material/menu';
 import { NotificationsMenuComponent } from './notifications/notifications-menu.component';
 import { NotificationCardComponent } from './notifications/content/notification-card.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -137,37 +139,39 @@ import { NotificationCardComponent } from './notifications/content/notification-
     NotificationsMenuComponent,
     NotificationCardComponent,
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatTabsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatTableModule,
-        MatCheckboxModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatAutocompleteModule,
-        MatSortModule,
-        MatPaginatorModule,
-        AppRoutingModule,
-        HttpClientModule,
-        MatDialogModule,
-        MatIconModule,
-        MatSnackBarModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatCardModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatMenuModule
-    ],
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTableModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatSortModule,
+    MatPaginatorModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    MatGridListModule,
+    MatExpansionModule
+  ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {

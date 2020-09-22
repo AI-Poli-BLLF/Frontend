@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {Student} from "../models/student.model";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from '@angular/material/table';
+import {Student} from '../models/student.model';
+import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatCheckboxChange} from '@angular/material/checkbox';
 import {User} from '../models/user.model';
 
 @Component({

@@ -1,0 +1,37 @@
+.notification-card{
+  margin: 15px 0;
+}
+
+div.notification-body{
+  text-align: left;
+  padding-top: 10px;
+}
+
+div.notification-body img{
+  float: left;
+  margin-right: 10px;
+}
+
+.notification-card p{
+  color: black;
+}
+
+.image-cropper-small {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  /*position: relative;*/
+  /*overflow: hidden;*/
+  margin-top: auto;
+
+  margin-bottom: auto;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+span.separator{
+  display: inline-block;
+  margin: 0 20px;
+}

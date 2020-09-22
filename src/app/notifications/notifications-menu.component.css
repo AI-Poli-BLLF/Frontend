@@ -10,9 +10,8 @@
   max-width: 100%!important;
 }
 
-
 div.container{
-  padding: 5%;
+  padding: 20px 0;
   text-align: center;
 }
 #no-notification{
