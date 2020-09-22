@@ -12,7 +12,7 @@ import {AuthService} from '../services/auth.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -136,8 +136,8 @@ export class RegistrationDialogComponent implements OnDestroy {
     }
     this.service.register(
       this.formGroup.controls.id.value,
-      this.formGroup.controls.lastName.value,
       this.formGroup.controls.firstName.value,
+      this.formGroup.controls.lastName.value,
       this.formGroup.controls.password.value,
       this.emailValue)
       .subscribe(

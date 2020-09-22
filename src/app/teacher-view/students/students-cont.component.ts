@@ -92,7 +92,11 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   getMembers(courseName: string, team: Team){
     this.teamService.getTeamMembers(courseName, team.id)
       .subscribe(
-        members => members.forEach(m => this.students.find(s => s.id === m.id).groupName = team.name),
+        members => {
+          const v = [...this.students];
+          members.forEach(m => v.find(s => s.id === m.id).groupName = team.name);
+          this.students = v;
+        },
         error => {
           console.log(error);
           this.snackBar.open('Si è verificato un errore nel recupero dei team.', 'Chiudi');
