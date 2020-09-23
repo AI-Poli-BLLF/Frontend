@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import {NotificationToken, NotificationType} from '../models/notification-token.model';
+import {NotificationToken} from '../models/notification-token.model';
+import {NotificationService} from '../services/notification.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-notifications-menu',
@@ -9,24 +11,22 @@ import {NotificationToken, NotificationType} from '../models/notification-token.
 })
 export class NotificationsMenuComponent implements OnInit {
   notifications: Array<NotificationToken>;
-  constructor(private authService: AuthService) {
-    this.notifications = [
-      new NotificationToken(
-        '', 's267541', 'PDS', 'Lo studente Lorenzo Limoli (s267541) ha richiesto di essere iscritto al corso PDS',
-        false, NotificationType.STUDENT_ENROLLING, '24 Set'
-      ),
-      new NotificationToken(
-        '', 'd123456', 'AI', 'Il professor Gianpiero Cabodi (d123456) ha richiesto la tua cooperazione per il corso AI',
-        false, NotificationType.PROFESSOR_COOPERATION, '23 Set'
-      ),
-      new NotificationToken(
-        '', 'd123456', 'PDS', 'Il professor Gianpiero Cabodi (d123456) ha accettato di cooperare per il corso PDS',
-        true, NotificationType.RESPONSE, '22 Set'
-      )
-    ];
+  constructor(private authService: AuthService,
+              private notificationService: NotificationService,
+              private snackBar: MatSnackBar) {
+    this.notifications = [];
   }
 
   ngOnInit(): void {
+    this.notificationService.getNotification().subscribe(
+      tokens => {
+      this.notifications = tokens;
+      console.log(this.notifications);
+      },
+      error => {
+        console.log(error);
+        this.snackBar.open('Si è verificato un errore nel recuperare le notifiche', 'Chiudi');
+      });
   }
 
   isVisible() {
@@ -35,5 +35,43 @@ export class NotificationsMenuComponent implements OnInit {
 
   getReadCount() {
     return this.notifications.filter(value => !value.notificationRead).length;
+  }
+
+  acceptRequest(notificationToken: NotificationToken) {
+    this.notificationService.acceptRequest(notificationToken).subscribe(
+      () => {
+        this.notifications = this.notifications.filter(value => value.id !== notificationToken.id);
+        this.snackBar.open(`Hai accettato di collaborare al corso ${notificationToken.courseName}`, 'Chiudi');
+      },
+      err => {
+        console.log(err);
+        this.snackBar.open('Si è verificato un errore durante l\'accettazione della richiesta', 'Chiudi');
+      }
+    );
+  }
+
+  readNotification(notificationToken: NotificationToken) {
+    this.notificationService.readNotification(notificationToken).subscribe(
+      () => {
+        notificationToken.notificationRead = true;
+        this.notifications = this.notifications.map(value => value);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  rejectRequest(notificationToken: NotificationToken) {
+    this.notificationService.rejectRequest(notificationToken).subscribe(
+      () => {
+        this.notifications = this.notifications.filter(value => value.id !== notificationToken.id);
+        this.snackBar.open(`Hai rifiutato di collaborare al corso ${notificationToken.courseName}`, 'Chiudi');
+      },
+      err => {
+        console.log(err);
+        this.snackBar.open('Si è verificato un errore durante il rifiuto della richiesta', 'Chiudi');
+      }
+    );
   }
 }

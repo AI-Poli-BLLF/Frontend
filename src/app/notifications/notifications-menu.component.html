@@ -1,13 +1,21 @@
 <div *ngIf="isVisible()" id="notifications-menu">
-  <button mat-icon-button [mat-menu-trigger-for]="menu" [matBadge]="getReadCount().toString()" matBadgeColor="warn" matBadgePosition="before" matBadgeSize="small">
+  <button mat-icon-button [mat-menu-trigger-for]="menu"
+          [matBadge]="getReadCount().toString()"
+          matBadgeColor="warn" matBadgePosition="before"
+          matBadgeSize="small"
+          [matBadgeHidden]="getReadCount()==0">
     <mat-icon>{{getReadCount() === 0 ? 'notifications' : 'notifications_active'}}</mat-icon>
   </button>
-  <mat-menu #menu="matMenu" class="my-menu">
+  <mat-menu #menu="matMenu">
     <div class="container">
       <p id="no-notification" *ngIf="notifications.length == 0">Non hai ricevuto alcuna notifica</p>
-      <mat-divider></mat-divider>
+      <mat-divider *ngIf="notifications.length > 0"></mat-divider>
       <span *ngFor="let n of notifications">
-        <app-notification-card [notification]="n"></app-notification-card>
+        <app-notification-card
+          [notification]="n"
+          (acceptRequestEvent)="acceptRequest($event)"
+          (rejectRequestEvent)="rejectRequest($event)"
+          (readNotificationEvent)="readNotification($event)"></app-notification-card>
         <mat-divider></mat-divider>
       </span>
     </div>

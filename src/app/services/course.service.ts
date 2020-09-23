@@ -9,8 +9,8 @@ import {VmConfig} from '../models/vm.config.model';
 import {Vm} from '../models/vm.model';
 import {VmModel} from '../models/vm.model.model';
 import {consoleTestResultHandler} from 'tslint/lib/test';
-import {VmModelsList} from "../models/vm.models.list.model";
-import {Professor} from "../models/professor.model";
+import {VmModelsList} from '../models/vm.models.list.model';
+import {Professor} from '../models/professor.model';
 
 @Injectable({
   providedIn: 'root'
