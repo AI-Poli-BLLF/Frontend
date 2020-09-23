@@ -21,7 +21,7 @@ import {DraftHistoryComponent} from '../draft-history/draft-history.component';
   styleUrls: ['./assignment-students.component.css']
 })
 export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDestroy {
-  columnsToDisplay: string[] = ['id', 'firstName', 'lastName', 'state', 'timestampD', 'link', 'correction', 'grade', 'history'];
+  columnsToDisplay: string[] = ['id', 'firstName', 'lastName', 'state', 'grade', 'timestampD', 'link', 'correction', 'evaluate', 'history'];
   dataSource: MatTableDataSource<Draft>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -151,4 +151,9 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     const filterValue = event.value;
     this.dataSource.filter = filterValue === 'all' ? '' : filterValue;
   }
+
+  getGrade(element: Draft) {
+    return element.grade > 0 ? element.grade : 'Non valutato';
+  }
+
 }

@@ -1,5 +1,6 @@
 .innerTable{
   width: 100%;
+  text-align: left;
 }
 table {
   width: 100%;
@@ -24,4 +25,5 @@ tr.detail-row {
 
 h2 {
   margin: 1em;
+  text-align: left;
 }

@@ -99,30 +99,6 @@ export class AssignmentService {
       );
   }
 
-  addDraft(draft: Draft, assignment: Assignment, studentId: string){
-    return this.httpClient
-      .post<Draft>(this.url + '/students/' + studentId + '/assignments/' + assignment.id + '/createDraft/', draft)
-      .pipe(
-        map(d => new Draft(d.id, d.timestamp, d.grade, d.state, d.locker)),
-        catchError(err => {
-          console.log(err);
-          return throwError('AssignmentService addDraft error: ' + err.message);
-        })
-      );
-  }
-
-  lockDraft(draft: Draft, assignmentId: number) {
-    return this.httpClient
-      .put<Draft>(this.url + '/professors/assignments/' + assignmentId + '/drafts/' + draft.id + '/lock', draft)
-      .pipe(
-        catchError(err => {
-          console.error(err);
-          return throwError('AssignmentService lockDraft error:', err.message);
-        })
-      );
-  }
-
-
   uploadCorrection(professorId: string, courseName: string, assignmentId: number, draftId: number, file: File): Observable<any>{
     const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/correction`;
     const body = new FormData();
@@ -160,11 +136,11 @@ export class AssignmentService {
   }
 
   uploadGradeAndCorrection(professorId: string, courseName: string, assignmentId: number,
-                           draftId: number, file: File, grade: Draft): Observable<any>{
+                           draftId: number, file: File, grade: number): Observable<any>{
     const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/evaluate`;
     const body = new FormData();
     body.append('image', file);
-    body.append('json', JSON.stringify(grade));
+    body.append('grade', '' + grade);
     return this.httpClient.post(path, body);
   }
 

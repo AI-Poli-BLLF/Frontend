@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AssignmentComponent} from './assignment.component';
 import {AssignmentService} from '../../services/assignment.service';
@@ -7,7 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {Assignment} from '../../models/assignment.model';
 import {AddAssignmentDialogComponent} from './add-assignment-dialog/add-assignment-dialog.component';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-assignments-cont',
@@ -36,18 +36,12 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     this.professorId = authService.getId();
   }
 
-  add(assignment: Assignment){
-    console.log('add');
-  }
-
   ngAfterViewInit(): void {
-    // console.log('ciao');
     this.service.getAllAssignments(this.professorId, this.courseName).subscribe(
       s => {
         this.assignments = s;
         this.assignmentsComponent.Assignments = this.assignments;
       },
-      // s => console.log(s),
       error => {
         console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamente delle consegne.', 'Chiudi');
