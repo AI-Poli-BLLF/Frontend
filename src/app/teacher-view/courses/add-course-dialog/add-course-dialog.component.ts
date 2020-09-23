@@ -133,7 +133,7 @@ export class AddCourseDialogComponent implements OnDestroy{
       this.authService.getId()
     ).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.dialogRef.close();
       },
       error => {

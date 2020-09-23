@@ -67,7 +67,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
     dialogRef.afterClosed().subscribe(() => {
-      this.service.getAll().subscribe(
+      this.service.getAllByProfessor(this.authService.getId()).subscribe(
         (data) => {
           this.courses = data;
           this.snackBarDelete();
@@ -92,7 +92,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
             // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
-            if (!course.enabled == data) {
+            if (course.enabled != data) {
               this.selectedItem = 'Seleziona un corso';
               this.router.navigate(['/teacher']);
             }

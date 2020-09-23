@@ -22,13 +22,13 @@
     </mat-form-field>
 
     <mat-form-field>
-      <ngx-mat-file-input formControlName="requiredFile" placeholder="Immagine consegna" valuePlaceholder="Seleziona un file" required></ngx-mat-file-input>
+      <ngx-mat-file-input formControlName="requiredFile" [accept]="'.jpg,.jpeg,.png,.svg'" placeholder="Immagine consegna" valuePlaceholder="Seleziona un file" required></ngx-mat-file-input>
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="checkError('requiredFile')">Nessun file selezionato.</mat-error>
     </mat-form-field>
 
     <label>{{labelValue}}</label>
     <button mat-button (click)="add()">Aggiungi</button>
-    <button class="right" mat-button mat-dialog-close="true">Annulla</button>
+    <button class="right" mat-button mat-dialog-close="">Annulla</button>
   </form>
 </div>

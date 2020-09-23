@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AssignmentService} from '../services/assignment.service';
 import {AuthService} from '../services/auth.service';
 import {Observable} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -19,6 +19,7 @@ export class AssignmentViewComponent implements OnInit {
   constructor(
     private assignmentService: AssignmentService,
     private authService: AuthService,
+    private router: Router,
     private snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute) {
@@ -66,5 +67,9 @@ export class AssignmentViewComponent implements OnInit {
         this.snackBar.open('Si è verificato un errore nel caricamento della foto della consegna.', 'Chiudi');
       }
     );
+  }
+
+  back() {
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
 }

@@ -1,3 +1,7 @@
 img {
   width: 100%;
 }
+button {
+  float: right;
+  margin: 1em;
+}

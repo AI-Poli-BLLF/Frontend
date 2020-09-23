@@ -150,7 +150,7 @@ export class AssignmentService {
   }
 
   getAssigmentProf(professorId: string, courseName: string, assignmentId: number): Observable<any> {
-    const path = `${this.url}/professor/${professorId}/courses/${courseName}/assignments/${assignmentId}/image`;
+    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/image`;
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 

@@ -26,7 +26,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.profileData = new Profile('', '', '', '', '');
     this.service.get().subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.profileData = data;
         this.getPhoto(this.profileData.roles[0], this.profileData.id);
       },
@@ -57,7 +57,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   changePhoto($event) {
     // console.log($event);
     const selectedFile: File = $event.target.files[0];
-    console.log(selectedFile);
+    // console.log(selectedFile);
     if (selectedFile === undefined){
       return;
     }

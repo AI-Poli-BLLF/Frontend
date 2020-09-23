@@ -7,7 +7,7 @@
       <mat-error *ngIf="checkError('grade')">{{getGradeErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <ngx-mat-file-input formControlName="requiredFile" placeholder="Immagine correzione" valuePlaceholder="Seleziona un file" required></ngx-mat-file-input>
+      <ngx-mat-file-input formControlName="requiredFile" [accept]="'.jpg,.jpeg,.png,.svg'" placeholder="Immagine correzione" valuePlaceholder="Seleziona immagine" required></ngx-mat-file-input>
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="checkError('requiredFile')">Nessun file selezionato.</mat-error>
     </mat-form-field>

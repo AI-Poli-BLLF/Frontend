@@ -3,7 +3,7 @@ import {AssignmentService} from '../services/assignment.service';
 import {AuthService} from '../services/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Student} from '../models/student.model';
 import {subscribeOn} from 'rxjs/operators';
@@ -22,6 +22,7 @@ export class DraftViewComponent implements OnInit {
   constructor(
     private assignmentService: AssignmentService,
     private authService: AuthService,
+    private router: Router,
     private snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute) {
@@ -71,5 +72,8 @@ export class DraftViewComponent implements OnInit {
         this.snackBar.open('Si è verificato un errore nel caricamento della foto dell\'elaborato.', 'Chiudi');
       }
     );
+  }
+  back() {
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
 }

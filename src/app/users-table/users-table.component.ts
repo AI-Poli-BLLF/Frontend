@@ -27,7 +27,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   @Input()
   set elements(value: User[]) {
     // console.log(value);
-    console.log(value);
+    // console.log(value);
     this._elements = value;
     this.refreshEnrolledStudents();
   }

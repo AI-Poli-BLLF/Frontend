@@ -58,7 +58,8 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     const c = { data: {courseName: this.courseName}};
     const dialogRef = this.dialog.open(AddAssignmentDialogComponent, c);
     this.sub = dialogRef.afterClosed().subscribe( data => {
-      if (data !== undefined){
+      // console.log(data);
+      if (data !== undefined && data !== ''){
         const v = [...this.assignments];
         v.unshift(data);
         this.assignments = v;

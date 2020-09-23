@@ -9,7 +9,6 @@ import {VmModelsList} from '../../../models/vm.models.list.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VmModel} from '../../../models/vm.model.model';
 import {AuthService} from "../../../services/auth.service";
-import {Vm} from "../../../models/vm.model";
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -44,7 +43,7 @@ export class EditCourseDialogComponent implements OnDestroy {
           this.snackBar.open('Si è verificato un errore nel recuperare i modelli di VM', 'Chiudi');
         });
     this.formGroup = fb.group({
-      name: [this.course.name, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      name: [this.course.name, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       min: ['' + this.course.min, [Validators.required, Validators.min(1), Validators.max(50)]],
       max: ['' + this.course.max, [Validators.required, Validators.min(1), Validators.max(50)]],
       os: [vmModel.os, [Validators.required]],
@@ -140,8 +139,8 @@ export class EditCourseDialogComponent implements OnDestroy {
     this.service.editCourse(this.course.name, newCourse, vmModel, this.authService.getId())
       .subscribe(
         data => {
-          console.log(data);
-          this.dialogRef.close(this.course.enabled);
+          // console.log(data);
+          this.dialogRef.close(this.checked);
         },
         error => {
           console.log(error);
