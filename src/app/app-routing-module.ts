@@ -24,6 +24,7 @@ import {ProfessorsContComponent} from './professors-cont/professors-cont.compone
 import {AdminResourcesComponent} from './admin-resources/admin-resources.component';
 import {DraftViewComponent} from './draft-view/draft-view.component';
 import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
+import {CorrectionViewComponent} from './correction-view/correction-view.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -50,7 +51,7 @@ const routes: Routes = [
               {path: ':assignmentId',
                 children: [
                   {path: '', component: AssignmentViewComponent},
-                  {path: 'draft/:draftId', component: DraftViewComponent}
+                  {path: 'drafts/:draftId', component: DraftViewComponent}
                 ]}
             ]}
         ]},
@@ -67,8 +68,16 @@ const routes: Routes = [
           {path: 'vms', component: VmsStudentsComponent },
           {path: 'vms/:id', component: VmViewComponent },
           {path: 'teams', component: TeamComponent},
-          {path: 'assignment', component: AssignmentSComponent},
-          {path: 'assignment/:id', component: AssignmentViewComponent},
+          {path: 'assignments',
+            children: [
+              {path: '', component: AssignmentSComponent},
+              {path: ':assignmentId',
+                children: [
+                  {path: '', component: AssignmentViewComponent},
+                  {path: 'drafts/:draftId', component: DraftViewComponent},
+                  {path: 'drafts/:draftId/correction', component: CorrectionViewComponent}
+                ]}
+            ]},
           {path: 'teams', component: TeamComponent},
         ]},
     ]},

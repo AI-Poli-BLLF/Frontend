@@ -42,15 +42,21 @@ export class DraftViewComponent implements OnInit {
   }
 
   private getDraftInfo() {
-    // todo: l'api sarà da cambiare
-    this.assignmentService.getStudentForDraft(this.draftId)
-      .subscribe(
-        data => this.getPhoto(data.id),
-        error => {
-          console.log(error);
-          this.snackBar.open('Si è verificato un errore nel caricamento delle informazioni dell\'elaborato.', 'Chiudi');
-        }
-      );
+    if (this.authService.getRole() === 'ROLE_STUDENT') {
+      this.getPhoto(this.authService.getId());
+      return;
+    }
+    if (this.authService.getRole() === 'ROLE_PROFESSOR'){
+      this.assignmentService.getStudentForDraft(this.authService.getId(), this.courseName, this.assignmentId, this.draftId)
+        .subscribe(
+          data => this.getPhoto(data.id),
+          error => {
+            console.log(error);
+            this.snackBar.open('Si è verificato un errore nel caricamento delle informazioni dell\'elaborato.', 'Chiudi');
+          }
+        );
+      return;
+    }
   }
 
   getPhoto(studentId): void {
