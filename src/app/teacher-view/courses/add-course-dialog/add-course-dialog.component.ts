@@ -8,7 +8,7 @@ import {VmModel} from '../../../models/vm.model.model';
 import {AuthService} from '../../../services/auth.service';
 import {VmModelsList} from '../../../models/vm.models.list.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-course-dialog',
@@ -38,7 +38,7 @@ export class AddCourseDialogComponent implements OnDestroy{
           this.snackBar.open('Si è verificato un errore nel recuperare i modelli di VM', 'Chiudi');
         });
     this.formGroup = fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       min: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
       max: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
       os: ['', [Validators.required]],

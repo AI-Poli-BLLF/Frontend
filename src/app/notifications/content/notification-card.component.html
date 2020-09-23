@@ -1,5 +1,6 @@
 <mat-expansion-panel [hideToggle]="!areButtonsVisible()"
-                     (click)="$event.stopPropagation()"
+                     (click)="readRequest($event)"
+                     (mouseleave)="readResponse()"
                      class="notification-card mat-elevation-z0"
                      [ngClass]="{'notification-unread': !notification.notificationRead}"
                      [disabled]="!areButtonsVisible()">
@@ -15,8 +16,8 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="notification-buttons" *ngIf="areButtonsVisible()">
-    <button mat-raised-button color="primary">Accetta</button>
+    <button mat-raised-button color="primary" (click)="acceptRequest()">Accetta</button>
     <span class="separator"></span>
-    <button mat-raised-button color="warn">Rifiuta</button>
+    <button mat-raised-button color="warn" (click)="rejectRequest()">Rifiuta</button>
   </div>
 </mat-expansion-panel>

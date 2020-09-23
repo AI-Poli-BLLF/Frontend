@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProfileService} from '../../services/profile.service';
 import {AuthService} from '../../services/auth.service';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -13,10 +13,19 @@ export class NotificationCardComponent implements OnInit {
 
   @Input()
   notification: NotificationToken;
+  @Output()
+  private acceptRequestEvent: EventEmitter<NotificationToken>;
+  @Output()
+  private rejectRequestEvent: EventEmitter<NotificationToken>;
+  @Output()
+  private readNotificationEvent: EventEmitter<NotificationToken>;
 
   constructor(private profileService: ProfileService,
               private sanitizer: DomSanitizer,
               public authService: AuthService) {
+    this.acceptRequestEvent = new EventEmitter<NotificationToken>();
+    this.rejectRequestEvent = new EventEmitter<NotificationToken>();
+    this.readNotificationEvent = new EventEmitter<NotificationToken>();
   }
 
   ngOnInit(): void {
@@ -50,5 +59,30 @@ export class NotificationCardComponent implements OnInit {
   areButtonsVisible() {
     return this.notification.type === NotificationType.STUDENT_ENROLLING ||
       this.notification.type === NotificationType.PROFESSOR_COOPERATION;
+  }
+
+  acceptRequest() {
+    if (this.notification.type !== NotificationType.RESPONSE){
+      this.acceptRequestEvent.emit(this.notification);
+    }
+  }
+
+  rejectRequest() {
+    if (this.notification.type !== NotificationType.RESPONSE){
+      this.rejectRequestEvent.emit(this.notification);
+    }
+  }
+
+  readRequest($event){
+    if (this.notification.type !== NotificationType.RESPONSE && !this.notification.notificationRead){
+      this.readNotificationEvent.emit(this.notification);
+    }
+    $event.stopPropagation();
+  }
+
+  readResponse(){
+    if (this.notification.type === NotificationType.RESPONSE && !this.notification.notificationRead){
+      this.readNotificationEvent.emit(this.notification);
+    }
   }
 }

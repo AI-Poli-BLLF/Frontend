@@ -1,6 +1,7 @@
 .notification-card{
   margin: 10px 0;
   padding: 10px;
+  transition: 300ms;
 }
 
 div.notification-body{
@@ -23,6 +24,7 @@ div.notification-body .img-date{
 
 .notification-card p{
   color: black;
+  cursor: pointer;
 }
 
 .notification-unread{
