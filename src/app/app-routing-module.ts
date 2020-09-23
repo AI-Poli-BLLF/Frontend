@@ -43,7 +43,6 @@ const routes: Routes = [
           {path: 'students', component: StudentsContComponent},
           {path: 'vms', component: VmsComponent },
           {path: 'vms/:id', component: VmViewComponent },
-          // todo: il prof deve vedere tutti i team del corso
           {path: 'teams', component: ProfessorTeamsComponent},
           {path: 'assignments',
             children: [
@@ -101,7 +100,6 @@ const routes: Routes = [
           {path: 'students', component: StudentsContComponent},
           {path: 'vms', component: VmsComponent },
           {path: 'vms/:id', component: VmViewComponent },
-          // todo: l'admin deve vedere tutti i team del corso
           {path: 'teams', component: ProfessorTeamsComponent}
         ]},
     ]},

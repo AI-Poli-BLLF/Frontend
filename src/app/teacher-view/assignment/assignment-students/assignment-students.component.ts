@@ -63,8 +63,6 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
 
   getDraftInfo(draft: Draft){
     if (draft.student.id === ''){
-      // todo: ottenere info sugli studenti
-      // magari usando i link allegati
       this.assignmentService.getStudentForDraft(this.courseName, this.assignmentId, draft.id).subscribe(
         s => draft.student = s,
         error => {
