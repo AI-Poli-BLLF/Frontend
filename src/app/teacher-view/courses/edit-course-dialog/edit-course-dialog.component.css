@@ -2,6 +2,7 @@ h1 {
   text-align: center;
 }
 mat-form-field {
+
   display: block;
   width: 20em;
 }
@@ -10,21 +11,38 @@ mat-form-field {
   float: right;
 }
 
+
 label {
   display: block;
   color: red;
   text-align: center;
-  padding: 1.5em;
+  padding: 1em;
 }
 
 span {
   padding-left: 1em;
 }
 
-input {
-  width: 100%;
-}
+/*input {*/
+/*  width: 100%;*/
+/*}*/
 /*todo: allungare input text fino a riempire tutta la dialog*/
-form {
-  width: 100%;
+/*.form_div {*/
+/*  position: absolute;*/
+/*  left: 50%;*/
+/*  -ms-transform: translateX(-50%);*/
+/*  -webkit-transform: translateX(-50%);*/
+/*  transform: translateX(-50%);*/
+/*  !*width: 100%;*!*/
+/*}*/
+
+.form_div {
+  display: block;
+  position: relative;
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  margin-top: 1.5em;
+  width: 20em;
 }

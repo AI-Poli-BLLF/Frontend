@@ -92,7 +92,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
             // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
-            if (course.enabled != data) {
+            if (('' + course.enabled) != data) {
               this.selectedItem = 'Seleziona un corso';
               this.router.navigate(['/teacher']);
             }

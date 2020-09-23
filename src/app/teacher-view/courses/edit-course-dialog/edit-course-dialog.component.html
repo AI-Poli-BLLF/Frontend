@@ -1,37 +1,39 @@
-<div>
+<div class="external_div">
   <h1>Modifica corso "{{course.name}}"</h1>
   <form [formGroup]="formGroup">
-    <mat-form-field>
-      <mat-label>Nuovo Nome corso</mat-label>
-      <input matInput type="text" formControlName="name" required/>
-      <mat-error *ngIf="checkError('name')">{{getNameErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Minimo numero studenti</mat-label>
-      <input matInput type="number" formControlName="min" required/>
-      <mat-error *ngIf="checkError('min')">{{getMinErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Massimo numero studenti</mat-label>
-      <input matInput type="number" formControlName="max" required/>
-      <mat-error *ngIf="checkError('max')">{{getMaxErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Sistema operativo</mat-label>
-      <mat-select formControlName="os">
-        <mat-option value="{{element}}" *ngFor="let element of getOs()">{{element}}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="checkError('os')">Devi inserire un valore.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Versione sistema operativo</mat-label>
-      <mat-select formControlName="version">
-        <mat-option value="{{element}}" *ngFor="let element of getVersions()">{{element}}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="checkError('version')">Devi inserire un valore.</mat-error>
-    </mat-form-field>
-    <mat-slide-toggle class="example-margin" [checked]="checked" (change)="changed($event)" color="primary">Abilitato</mat-slide-toggle>
-    <label>{{labelValue}}</label>
+    <div class="form_div">
+      <mat-form-field>
+        <mat-label>Nuovo Nome corso</mat-label>
+        <input class="edit_input" matInput type="text" formControlName="name" required/>
+        <mat-error *ngIf="checkError('name')">{{getNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Minimo numero studenti</mat-label>
+        <input matInput type="number" formControlName="min" required/>
+        <mat-error *ngIf="checkError('min')">{{getMinErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Massimo numero studenti</mat-label>
+        <input matInput type="number" formControlName="max" required/>
+        <mat-error *ngIf="checkError('max')">{{getMaxErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sistema operativo</mat-label>
+        <mat-select formControlName="os">
+          <mat-option value="{{element}}" *ngFor="let element of getOs()">{{element}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkError('os')">Devi inserire un valore.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Versione sistema operativo</mat-label>
+        <mat-select formControlName="version">
+          <mat-option value="{{element}}" *ngFor="let element of getVersions()">{{element}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="checkError('version')">Devi inserire un valore.</mat-error>
+      </mat-form-field>
+      <mat-slide-toggle [checked]="checked" (change)="changed($event)" color="primary">Abilitato</mat-slide-toggle>
+    </div>
+    <label *ngIf="labelValue!==''">{{labelValue}}</label>
     <button mat-button (click)="edit()">Salva</button>
     <button class="right" mat-button mat-dialog-close="{{course.enabled}}">Annulla</button>
   </form>

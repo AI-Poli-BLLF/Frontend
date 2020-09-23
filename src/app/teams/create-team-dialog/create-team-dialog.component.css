@@ -26,6 +26,7 @@ input {
 }
 /*todo: allungare input text fino a riempire tutta la dialog*/
 form {
+  max-width: 100%;
   width: 100%;
 }
 
