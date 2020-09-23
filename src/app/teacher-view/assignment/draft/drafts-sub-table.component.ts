@@ -84,7 +84,7 @@ export class DraftsSubTableComponent implements OnInit {
 
 
   private getDrafts(){
-    this.service.getProfessorDrafts(this.professorId, this.courseName, this.assignment.id).subscribe(
+    this.service.getProfessorDrafts(this.courseName, this.assignment.id).subscribe(
       drafts => {
         this.drafts = drafts;
         drafts.forEach(d => this.getDraftInfo(d));

@@ -3,7 +3,7 @@ import {AssignmentService} from '../services/assignment.service';
 import {AuthService} from '../services/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-correction-view',
@@ -19,6 +19,7 @@ export class CorrectionViewComponent implements OnInit {
   constructor(
     private assignmentService: AssignmentService,
     private authService: AuthService,
+    private router: Router,
     private snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute) {
@@ -43,7 +44,7 @@ export class CorrectionViewComponent implements OnInit {
       return;
     }
     if (this.authService.getRole() === 'ROLE_PROFESSOR'){
-      this.assignmentService.getStudentForDraft(this.authService.getId(), this.courseName, this.assignmentId, this.draftId)
+      this.assignmentService.getStudentForDraft(this.courseName, this.assignmentId, this.draftId)
         .subscribe(
           data => this.getPhoto(data.id),
           error => {
@@ -67,5 +68,9 @@ export class CorrectionViewComponent implements OnInit {
           this.snackBar.open('Si è verificato un errore nel caricamento della foto della correzione.', 'Chiudi');
         }
       );
+  }
+
+  back() {
+    this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
 }

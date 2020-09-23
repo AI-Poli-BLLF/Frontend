@@ -48,7 +48,7 @@ export class AssignmentViewComponent implements OnInit {
     let obs: Observable<any>;
     switch (this.authService.getRole()) {
       case 'ROLE_PROFESSOR':
-        obs = this.assignmentService.getAssigmentProf(this.authService.getId(), this.courseName, this.assignmentId);
+        obs = this.assignmentService.getAssigmentProf(this.courseName, this.assignmentId);
         break;
       case 'ROLE_STUDENT':
         obs = this.assignmentService.getAssigment(this.authService.getId(), this.courseName, this.assignmentId);

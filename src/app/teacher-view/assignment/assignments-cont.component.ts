@@ -37,7 +37,7 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.service.getAllAssignments(this.professorId, this.courseName).subscribe(
+    this.service.getAssignmentForCourse(this.courseName).subscribe(
       s => {
         this.assignments = s;
         this.assignmentsComponent.Assignments = this.assignments;

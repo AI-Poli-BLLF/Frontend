@@ -65,7 +65,7 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     if (draft.student.id === ''){
       // todo: ottenere info sugli studenti
       // magari usando i link allegati
-      this.assignmentService.getStudentForDraft(this.authService.getId(), this.courseName, this.assignmentId, draft.id).subscribe(
+      this.assignmentService.getStudentForDraft(this.courseName, this.assignmentId, draft.id).subscribe(
         s => draft.student = s,
         error => {
           console.log(error);
@@ -81,7 +81,7 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     if (selectedFile === undefined){
       return;
     }
-    this.assignmentService.uploadCorrection(this.authService.getId(), this.courseName, this.assignmentId, element.id, selectedFile)
+    this.assignmentService.uploadCorrection(this.courseName, this.assignmentId, element.id, selectedFile)
       .subscribe(
         () => {
           this.snackBar.open(
@@ -102,10 +102,11 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     const c = { data: {courseName: this.courseName, draftId: element.id, assignmentId: this.assignmentId}};
     const dialogRef = this.dialog.open(DraftEvaluateComponent, c);
     this.sub = dialogRef.afterClosed().subscribe( data => {
-      if (data !== undefined && data.data !== undefined){
+      if (data !== undefined && data.grade !== undefined){
         const i = this.dataSource.data.findIndex(e => e.id === element.id);
         this.dataSource.data[i].locker = true;
         this.dataSource.data[i].state = 'REVIEWED';
+        this.dataSource.data[i].grade = data.grade;
       }
     });
   }
@@ -133,7 +134,7 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private loadData() {
-    this.assignmentService.getProfessorDrafts(this.authService.getId(), this.courseName, this.assignmentId)
+    this.assignmentService.getProfessorDrafts(this.courseName, this.assignmentId)
       .subscribe(
         drafts => {
           drafts.forEach(d => this.getDraftInfo(d));

@@ -56,9 +56,9 @@ export class DraftEvaluateComponent implements OnInit {
     const professorId = this.auth.getId();
     const file = this.formGroup.controls.requiredFile.value.files[0];
     const grade = this.formGroup.controls.grade.value;
-    this.service.uploadGradeAndCorrection(professorId, this.courseName, this.assignmentId, this.draftId, file, grade).subscribe(
+    this.service.uploadGradeAndCorrection(this.courseName, this.assignmentId, this.draftId, file, grade).subscribe(
       data => {
-        this.dialogRef.close({data});
+        this.dialogRef.close({grade});
       },
       error => {
         console.log(error);

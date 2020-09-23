@@ -18,36 +18,36 @@ export class AssignmentService {
   constructor(private httpClient: HttpClient, private authService: AuthService) {
   }
 
-  getAllAssignments(professorId: string, courseName: string): Observable<Array<Assignment>> {
-    return this.httpClient
-      .get<Array<Assignment>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments')
-      .pipe(
-        map(arr => arr.map(
-          a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate),
-          // a => console.log('helo' + a)
-        )),
-        catchError(err => {
-          console.error(err);
-          return throwError('AssignmentService getAllAssignments error: ' + err.message);
-        })
-      );
-  }
+  // getAllAssignments(courseName: string): Observable<Array<Assignment>> {
+  //   return this.httpClient
+  //     .get<Array<Assignment>>(this.url + '/courses/' + courseName + '/assignments')
+  //     .pipe(
+  //       map(arr => arr.map(
+  //         a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate),
+  //         // a => console.log('helo' + a)
+  //       )),
+  //       catchError(err => {
+  //         console.error(err);
+  //         return throwError('AssignmentService getAllAssignments error: ' + err.message);
+  //       })
+  //     );
+  // }
 
-  createAssignment(professorId: string, courseName: string, assignment: Assignment): Observable<Assignment> {
-    return this.httpClient
-      .post<Assignment>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/createAssignment', assignment)
-      .pipe(
-        map(a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate)),
-        catchError(err => {
-          console.error(err);
-          return throwError('AssignmentService addAssignment error: ' + err.message);
-        })
-      );
-  }
+  // createAssignment(professorId: string, courseName: string, assignment: Assignment): Observable<Assignment> {
+  //   return this.httpClient
+  //     .post<Assignment>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/createAssignment', assignment)
+  //     .pipe(
+  //       map(a => new Assignment(a.id, a.name, a.releaseDate, a.expiryDate)),
+  //       catchError(err => {
+  //         console.error(err);
+  //         return throwError('AssignmentService addAssignment error: ' + err.message);
+  //       })
+  //     );
+  // }
 
-  getProfessorDrafts(professorId: string, courseName: string, assignmentId: number) {
+  getProfessorDrafts(courseName: string, assignmentId: number) {
     return this.httpClient
-      .get<Array<Draft>>(this.url + '/professors/' + professorId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
+      .get<Array<Draft>>(this.url + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
           a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker)
@@ -59,9 +59,9 @@ export class AssignmentService {
       );
   }
 
-  getStudentForDraft(professorId: string, courseName: string, assignmentId: number, draftId: number) {
+  getStudentForDraft(courseName: string, assignmentId: number, draftId: number) {
     return this.httpClient
-      .get<Student>(`${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/student`)
+      .get<Student>(`${this.url}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/student`)
       .pipe(
         map( s => new Student(s.id, s.name, s.firstName, s.email)),
         catchError(err => {
@@ -99,8 +99,8 @@ export class AssignmentService {
       );
   }
 
-  uploadCorrection(professorId: string, courseName: string, assignmentId: number, draftId: number, file: File): Observable<any>{
-    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/correction`;
+  uploadCorrection(courseName: string, assignmentId: number, draftId: number, file: File): Observable<any>{
+    const path = `${this.url}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/correction`;
     const body = new FormData();
     body.append('image', file);
     return this.httpClient.post(path, body);
@@ -120,8 +120,8 @@ export class AssignmentService {
       );
   }
 
-  uploadAssignment(professorId: string, courseName: string, file: File, assignment: Assignment): Observable<Assignment>{
-    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments`;
+  uploadAssignment(courseName: string, file: File, assignment: Assignment): Observable<Assignment>{
+    const path = `${this.url}/courses/${courseName}/assignments`;
     const body = new FormData();
     body.append('image', file);
     body.append('json', JSON.stringify(assignment));
@@ -135,9 +135,9 @@ export class AssignmentService {
     );
   }
 
-  uploadGradeAndCorrection(professorId: string, courseName: string, assignmentId: number,
-                           draftId: number, file: File, grade: number): Observable<any>{
-    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/evaluate`;
+  uploadGradeAndCorrection(courseName: string, assignmentId: number, draftId: number,
+                           file: File, grade: number): Observable<any>{
+    const path = `${this.url}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/evaluate`;
     const body = new FormData();
     body.append('image', file);
     body.append('grade', '' + grade);
@@ -149,13 +149,18 @@ export class AssignmentService {
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 
-  getAssigmentProf(professorId: string, courseName: string, assignmentId: number): Observable<any> {
-    const path = `${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/image`;
+  getAssigmentProf(courseName: string, assignmentId: number): Observable<any> {
+    const path = `${this.url}/courses/${courseName}/assignments/${assignmentId}/image`;
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 
   getDraft(studentId: string, courseName: string, assignmentId: number, draftId: number): Observable<any> {
     const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/image`;
+    return this.httpClient.get(path,  { responseType: 'blob' });
+  }
+
+  getDraftProf(courseName: string, assignmentId: number, draftId: number): Observable<any> {
+    const path = `${this.url}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/image`;
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 

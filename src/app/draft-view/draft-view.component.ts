@@ -33,7 +33,7 @@ export class DraftViewComponent implements OnInit {
     this.route.params.subscribe(
       data => {
         this.draftId = data.draftId;
-        this.getDraftInfo();
+        this.getDraft();
       }
     );
   }
@@ -42,27 +42,17 @@ export class DraftViewComponent implements OnInit {
     // this.getPhoto();
   }
 
-  private getDraftInfo() {
-    if (this.authService.getRole() === 'ROLE_STUDENT') {
-      this.getPhoto(this.authService.getId());
-      return;
+  private getDraft() {
+    let obs: Observable<any>;
+    switch (this.authService.getRole()) {
+      case 'ROLE_STUDENT':
+        obs = this.assignmentService.getDraft(this.authService.getId(), this.courseName, this.assignmentId, this.draftId);
+        break;
+      default:
+        obs = this.assignmentService.getDraftProf(this.courseName, this.assignmentId, this.draftId);
+        break;
     }
-    if (this.authService.getRole() === 'ROLE_PROFESSOR'){
-      this.assignmentService.getStudentForDraft(this.authService.getId(), this.courseName, this.assignmentId, this.draftId)
-        .subscribe(
-          data => this.getPhoto(data.id),
-          error => {
-            console.log(error);
-            this.snackBar.open('Si è verificato un errore nel caricamento delle informazioni dell\'elaborato.', 'Chiudi');
-          }
-        );
-      return;
-    }
-  }
-
-  getPhoto(studentId): void {
-    this.assignmentService.getDraft(studentId, this.courseName, this.assignmentId, this.draftId)
-       .subscribe(
+    obs.subscribe(
       data => {
         const objectURL = URL.createObjectURL(data);
         this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
@@ -73,6 +63,7 @@ export class DraftViewComponent implements OnInit {
       }
     );
   }
+
   back() {
     this.router.navigate(['../'], {relativeTo: this.route.parent});
   }
