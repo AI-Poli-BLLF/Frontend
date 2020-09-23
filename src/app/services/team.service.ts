@@ -114,7 +114,7 @@ export class TeamService {
       .pipe(
         catchError(err => {
           console.error(err);
-          return throwError('TeamService proposeTeam error: ' + err.message);
+          return throwError(err);
         })
       );
   }
@@ -140,7 +140,7 @@ export class TeamService {
       .pipe(
         catchError( err => {
           console.error(err);
-          return throwError('TeamService respondToProposal error: ' + err.message);
+          return throwError(err);
         })
       );
   }

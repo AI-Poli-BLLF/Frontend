@@ -116,7 +116,12 @@ export class TeamComponent implements OnInit {
               this.getStudentTeams(this.course.name);
             },
             err => {
-              this.snackBar.open('Non è stato possibile creare il team.', 'Chiudi');
+              if (err.status === 409) {
+                this.snackBar.open(err.error.message, 'Chiudi');
+              } else {
+                this.snackBar.open('Impossibile creare il gruppo', 'Chiudi');
+              }
+              this.getStudentTeams(this.course.name);
             }
           );
       }
@@ -127,11 +132,15 @@ export class TeamComponent implements OnInit {
     this.teamService.respondToProposal(token, accepted)
       .subscribe(
         res => {
-        this.teams.clear();
-        this.getStudentTeams(this.course.name);
+          this.teams.clear();
+          this.getStudentTeams(this.course.name);
         },
         err => {
-          this.snackBar.open('Il team indicato non è più valido', 'Chiudi');
+          if (err.status === 409) {
+            this.snackBar.open('Il team indicato non è più valido', 'Chiudi');
+          } else {
+            this.snackBar.open('Impossibile prendere in carico la richiesta. Riprova', 'Chiudi');
+          }
           this.teams.clear();
           this.getStudentTeams(this.course.name);
         }

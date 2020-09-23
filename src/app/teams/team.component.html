@@ -1,45 +1,49 @@
 <div class="container">
-  <h2>Elenco Gruppi</h2>
-
-  <div *ngIf="!activeTeam">
+  <div *ngIf="activeTeam; else elseBlock">
+    <div *ngFor="let team of getTeams(teams)">
+      <h2>{{team.team.name}}</h2>
+      <p style="margin: 1em">Membri:</p>
+      <ul>
+        <p *ngFor="let member of team.activeMembers | async">
+          {{member}}
+        </p>
+      </ul>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <br>
     <button style="margin-left:15px" mat-raised-button (click)="openCreateTeamDialog()">
-      <span>Crea gruppo</span>
+    <span>Crea gruppo</span>
     </button>
     <br><br>
-  </div>
-    
-  <li *ngFor="let team of getTeams(teams)">
-    <mat-card [style.borderColor]="activeTeam ? '#3f51b5' : '#ffe066'">
-      <mat-card-header>
-        <mat-card-title>{{team.team.name}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="!activeTeam">
+    <mat-card [style.borderColor]="'#3f51b5'" *ngFor="let team of getTeams(teams)">
+        <mat-card-header>
+          <mat-card-title>{{team.team.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
           <p>Proponente: {{team.proposer | async}}</p>
-          Membri in attesa:
+          <p>Membri in attesa:</p>
           <ul>
             <p *ngFor="let member of  team.pendingMembers | async">
               {{member}}
             </p>
           </ul>
-        </div>
-        <p *ngIf="activeTeam; else elseBlock">Membri:</p>
-          <ng-template #elseBlock>Membri confermati:</ng-template>
-        <ul>
-          <p *ngFor="let member of team.activeMembers | async">
-            {{member}}
-          </p>
-        </ul>
-        <div *ngIf="team.token | async as token">
-          <button mat-raised-button (click)="respondToProposal(token, true)">
-            <span>Accetta</span>
-          </button>
-          <button mat-raised-button (click)="respondToProposal(token, false)">
-            <span>Rifiuta</span>
-          </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </li>
+          <p>Membri</p>
+          <ul>
+            <p *ngFor="let member of team.activeMembers | async">
+              {{member}}
+            </p>
+          </ul>
+          <div *ngIf="team.token | async as token">
+            <button mat-raised-button (click)="respondToProposal(token, true)">
+              <span>Accetta</span>
+            </button>
+            <button mat-raised-button (click)="respondToProposal(token, false)">
+              <span>Rifiuta</span>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  </ng-template>
 </div>
 
