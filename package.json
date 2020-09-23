@@ -23,7 +23,6 @@
     "@angular/platform-browser": "~9.1.7",
     "@angular/platform-browser-dynamic": "~9.1.7",
     "@angular/router": "~9.1.7",
-    "angular-material-fileupload": "^3.0.1",
     "json-server": "^0.16.1",
     "json-server-auth": "^2.0.2",
     "moment": "^2.26.0",

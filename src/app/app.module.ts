@@ -63,7 +63,6 @@ import { TokenComponent } from './token/token.component';
 import { AssignmentSComponent } from './student-view/assignment-s/assignment-s.component';
 import { DraftSComponent } from './student-view/draft-s/draft-s.component';
 import {AddAssignmentDialogComponent} from './teacher-view/assignment/add-assignment-dialog/add-assignment-dialog.component';
-import { AssignmentViewComponent } from './teacher-view/assignment/assignment-view/assignment-view.component';
 import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
 import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
 import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
@@ -86,6 +85,8 @@ import { AssignmentStudentsComponent } from './teacher-view/assignment/assignmen
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import { DraftEvaluateComponent } from './teacher-view/assignment/draft-evaluate/draft-evaluate.component';
 import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/draft-history.component';
+import { DraftViewComponent } from './draft-view/draft-view.component';
+import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/d
     AssignmentStudentsComponent,
     DraftEvaluateComponent,
     DraftHistoryComponent,
+    DraftViewComponent
   ],
   imports: [
     BrowserModule,

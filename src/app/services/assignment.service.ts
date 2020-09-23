@@ -54,7 +54,7 @@ export class AssignmentService {
         )),
         catchError(err => {
           console.error(err);
-          return throwError('AssignmentService getProfessorDrafts error:', err);
+          return throwError('AssignmentService getProfessorDrafts error:' + err.message);
         })
       );
   }
@@ -66,7 +66,7 @@ export class AssignmentService {
         map( s => new Student(s.id, s.name, s.firstName, s.email)),
         catchError(err => {
           console.error(err);
-          return throwError('AssignmentService getStudentForDraft error: ${err.message}', err);
+          return throwError(`AssignmentService getStudentForDraft error: ${err.message}`);
         })
       );
   }
@@ -80,7 +80,7 @@ export class AssignmentService {
         )),
         catchError(err => {
           console.error(err);
-          return throwError('AssignmentService getAssignmentForCourse error: ', err);
+          return throwError('AssignmentService getAssignmentForCourse error: ' + err.message);
         })
       );
   }
@@ -170,6 +170,11 @@ export class AssignmentService {
 
   getAssigment(studentId: string, courseName: string, assignmentId: number): Observable<any> {
     const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/image`;
+    return this.httpClient.get(path,  { responseType: 'blob' });
+  }
+
+  getAssigmentProf(professorId: string, courseName: string, assignmentId: number): Observable<any> {
+    const path = `${this.url}/professor/${professorId}/courses/${courseName}/assignments/${assignmentId}/image`;
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 

@@ -71,17 +71,17 @@ export class DraftSComponent implements OnInit {
   }
 
   update(){
-    this.service.getDraftForStudent(this.studentId).subscribe(
-      d => {
-        d.forEach(draft => this.getDraftInfo(draft));
-        this.dataSource.data = d;
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      err => {
-        this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
-      }
-    );
+    // this.service.getDraftForStudent(this.studentId).subscribe(
+    //   d => {
+    //     d.forEach(draft => this.getDraftInfo(draft));
+    //     this.dataSource.data = d;
+    //     this.dataSource.sort = this.sort;
+    //     this.dataSource.paginator = this.paginator;
+    //   },
+    //   err => {
+    //     this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
+    //   }
+    // );
   }
 
   openCreateDraft() {

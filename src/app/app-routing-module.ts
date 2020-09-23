@@ -13,7 +13,6 @@ import {StudentAuthGuard} from './auth/student-auth.guard';
 import {TeamComponent} from './teams/team.component';
 import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
 import {VmViewComponent} from './vms/vm-view/vm-view.component';
-import {AssignmentViewComponent} from './teacher-view/assignment/assignment-view/assignment-view.component';
 import {TokenComponent} from './token/token.component';
 import {AdminAuthGuard} from './auth/admin-auth.guard';
 import {AdminViewComponent} from './admin-view/admin-view.component';
@@ -21,8 +20,10 @@ import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
 import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
 import {ProfessorTeamsComponent} from './professor-teams/professor-teams.component';
-import {ProfessorsContComponent} from "./professors-cont/professors-cont.component";
-import {AdminResourcesComponent} from "./admin-resources/admin-resources.component";
+import {ProfessorsContComponent} from './professors-cont/professors-cont.component';
+import {AdminResourcesComponent} from './admin-resources/admin-resources.component';
+import {DraftViewComponent} from './draft-view/draft-view.component';
+import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -43,7 +44,15 @@ const routes: Routes = [
           {path: 'vms/:id', component: VmViewComponent },
           // todo: il prof deve vedere tutti i team del corso
           {path: 'teams', component: ProfessorTeamsComponent},
-          {path: 'assignments', component: AssignmentsContComponent}
+          {path: 'assignments',
+            children: [
+              {path: '', component: AssignmentsContComponent},
+              {path: ':assignmentId',
+                children: [
+                  {path: '', component: AssignmentViewComponent},
+                  {path: 'draft/:draftId', component: DraftViewComponent}
+                ]}
+            ]}
         ]},
     ]},
   {path: 'student',

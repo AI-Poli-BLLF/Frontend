@@ -30,7 +30,7 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     private authService: AuthService,
     private dialog: MatDialog
   ) {
-    this.sub = this.route.parent.params.subscribe(params => {
+    this.sub = this.route.parent.parent.params.subscribe(params => {
       this.courseName = params.name;
     });
     this.professorId = authService.getId();
