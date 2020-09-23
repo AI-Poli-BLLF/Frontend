@@ -1,13 +1,15 @@
 import {Timestamp} from 'rxjs';
+import {Draft} from './draft.model';
 
 export class Assignment {
   id: number;
   name: string;
   grade: number;
-  private releaseDateT: Date;
-  private expiryDateT: Date;
+  releaseDateT: Date;
+  expiryDateT: Date;
   releaseDate: string;
   expiryDate: string;
+  lastDraft: Draft;
 
   constructor(id: number, name: string, releaseDate: string, expiryDate: string){
     this.id = id;

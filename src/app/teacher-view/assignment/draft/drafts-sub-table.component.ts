@@ -99,16 +99,16 @@ export class DraftsSubTableComponent implements OnInit {
   }
 
   private getDraftInfo(draft: Draft){
-    if (draft.student.id === ''){
-      // console.log(draft);
-      this.service.getStudentForDraft(draft.id).subscribe(
-        s => draft.student = s,
-        err => {
-          console.log(err);
-          this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
-        }
-      );
-    }
+    // if (draft.student.id === ''){
+    //   // console.log(draft);
+    //   this.service.getStudentForDraft(draft.id).subscribe(
+    //     s => draft.student = s,
+    //     err => {
+    //       console.log(err);
+    //       this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
+    //     }
+    //   );
+    // }
   }
 
 }

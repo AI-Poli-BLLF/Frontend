@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Draft} from '../../models/draft.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -36,7 +36,10 @@ export class DraftSComponent implements OnInit {
   @Input()
   assignmentId: number;
 
-  states: Array<string> = ['NULL', 'READ', 'SUBMITTED'];
+  @Output()
+  lastDraft: EventEmitter<Draft>;
+
+  // states: Array<string> = ['NULL', 'READ', 'SUBMITTED'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -45,6 +48,7 @@ export class DraftSComponent implements OnInit {
     private authService: AuthService,
     private snackBar: MatSnackBar,
   ) {
+    this.lastDraft = new EventEmitter<Draft>();
     this.studentId = authService.getId();
     this.dataSource = new MatTableDataSource<Draft>(this.drafts);
   }
@@ -57,7 +61,9 @@ export class DraftSComponent implements OnInit {
   update(){
     this.service.getDraftForStudent(this.studentId, this.courseName, this.assignmentId).subscribe(
       d => {
-        this.dataSource.data = d.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
+        const v = d.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
+        this.dataSource.data = v;
+        this.lastDraft.emit(v.length > 0 ? v[0] : new Draft(0, undefined, 0, 'NULL', true));
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       },
@@ -78,5 +84,14 @@ export class DraftSComponent implements OnInit {
 
   canOpenCorrection(element: Draft) {
     return element.state === 'REVIEWED';
+  }
+
+  add(element: Draft) {
+    const v = [...this.dataSource.data];
+    v.unshift(element);
+    this.dataSource.data = v;
+    this.lastDraft.emit(element);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

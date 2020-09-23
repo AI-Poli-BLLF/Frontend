@@ -184,7 +184,7 @@ export class AssignmentService {
   }
 
   getCorrection(studentId: string, courseName: string, assignmentId: number, draftId: number): Observable<any> {
-    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/correction-image;`;
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/draft/${draftId}/correction-image`;
     return this.httpClient.get(path,  { responseType: 'blob' });
   }
 

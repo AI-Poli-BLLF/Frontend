@@ -42,7 +42,6 @@ export class DraftHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // todo: riabilitare
     this.loadData();
   }
 

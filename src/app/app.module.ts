@@ -52,43 +52,42 @@ import {ShareCourseButtonComponent} from './share-dialog/share-course-button';
 import {AdminViewComponent} from './admin-view/admin-view.component';
 import {VmModelsTableComponent} from './vms/vm-models-table/vm-models-table.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
-import { VmsStudentsComponent } from './vms/vms-students/vms-students.component';
-import { CreateVmDialogComponent } from './vms/create-vm-dialog/create-vm-dialog.component';
+import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
+import {CreateVmDialogComponent} from './vms/create-vm-dialog/create-vm-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { TeamResourcesComponent } from './vms/team-resources/team-resources.component';
-import { VmViewComponent } from './vms/vm-view/vm-view.component';
-import { VmEditResourcesComponent } from './vms/vm-edit-resources/vm-edit-resources.component';
-import { TokenComponent } from './token/token.component';
-import { AssignmentSComponent } from './student-view/assignment-s/assignment-s.component';
-import { DraftSComponent } from './student-view/draft-s/draft-s.component';
+import {TeamResourcesComponent} from './vms/team-resources/team-resources.component';
+import {VmViewComponent} from './vms/vm-view/vm-view.component';
+import {VmEditResourcesComponent} from './vms/vm-edit-resources/vm-edit-resources.component';
+import {TokenComponent} from './token/token.component';
+import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
+import {DraftSComponent} from './student-view/draft-s/draft-s.component';
 import {AddAssignmentDialogComponent} from './teacher-view/assignment/add-assignment-dialog/add-assignment-dialog.component';
-import { AddDraftDialogComponent } from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
-import { AddVmModelComponent } from './add-vm-model/add-vm-model.component';
-import { AddVmModelVersionsComponent } from './add-vm-model-versions/add-vm-model-versions.component';
+import {AddDraftDialogComponent} from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
+import {AddVmModelComponent} from './add-vm-model/add-vm-model.component';
+import {AddVmModelVersionsComponent} from './add-vm-model-versions/add-vm-model-versions.component';
 import {DraftsSubTableComponent} from './teacher-view/assignment/draft/drafts-sub-table.component';
 import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
 import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
-import { ProfessorTeamsComponent } from './professor-teams/professor-teams.component';
-import { TeamCardComponent } from './team-card/team-card.component';
-import { ProfessorsContComponent } from './professors-cont/professors-cont.component';
-import { UsersTableComponent } from './users-table/users-table.component';
-import { AdminResourcesComponent } from './admin-resources/admin-resources.component';
+import {ProfessorTeamsComponent} from './professor-teams/professor-teams.component';
+import {TeamCardComponent} from './team-card/team-card.component';
+import {ProfessorsContComponent} from './professors-cont/professors-cont.component';
+import {UsersTableComponent} from './users-table/users-table.component';
+import {AdminResourcesComponent} from './admin-resources/admin-resources.component';
 import {MatMenuModule} from '@angular/material/menu';
-import { NotificationsMenuComponent } from './notifications/notifications-menu.component';
-import { NotificationCardComponent } from './notifications/content/notification-card.component';
-import { EvaluateDraftDialogComponent } from './teacher-view/assignment/draft/evaluate-draft-dialog/evaluate-draft-dialog.component';
+import {NotificationsMenuComponent} from './notifications/notifications-menu.component';
+import {NotificationCardComponent} from './notifications/content/notification-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { DeleteVersionComponent } from './delete-version/delete-version.component';
-import { AssignmentStudentsComponent } from './teacher-view/assignment/assignment-students/assignment-students.component';
+import {DeleteVersionComponent} from './delete-version/delete-version.component';
+import {AssignmentStudentsComponent} from './teacher-view/assignment/assignment-students/assignment-students.component';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
-import { DraftEvaluateComponent } from './teacher-view/assignment/draft-evaluate/draft-evaluate.component';
-import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/draft-history.component';
-import { DraftViewComponent } from './draft-view/draft-view.component';
+import {DraftEvaluateComponent} from './teacher-view/assignment/draft-evaluate/draft-evaluate.component';
+import {DraftHistoryComponent} from './teacher-view/assignment/draft-history/draft-history.component';
+import {DraftViewComponent} from './draft-view/draft-view.component';
 import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
 import {MatBadgeModule} from '@angular/material/badge';
-import { CorrectionViewComponent } from './correction-view/correction-view.component';
+import {CorrectionViewComponent} from './correction-view/correction-view.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +145,6 @@ import { CorrectionViewComponent } from './correction-view/correction-view.compo
     AdminResourcesComponent,
     NotificationsMenuComponent,
     NotificationCardComponent,
-    EvaluateDraftDialogComponent,
     DeleteVersionComponent,
     AssignmentStudentsComponent,
     DraftEvaluateComponent,

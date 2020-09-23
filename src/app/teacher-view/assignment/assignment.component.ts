@@ -10,6 +10,7 @@ import {Timestamp} from 'rxjs/internal-compatibility';
 import {any} from 'codelyzer/util/function';
 import {MatTableDataSource} from '@angular/material/table';
 import {startWith} from 'rxjs/operators';
+import {AssignmentStudentsComponent} from './assignment-students/assignment-students.component';
 
 @Component({
   selector: 'app-assignment',
@@ -46,7 +47,7 @@ export class AssignmentComponent implements AfterViewInit {
 
   @Input()
   set Assignments(assignments: Array<Assignment>){
-    this.assignments = assignments;
+    this.assignments = assignments.sort((e1, e2) => e2.releaseDateT.getTime() - e1.releaseDateT.getTime());;
     this.dataSource.data = this.assignments;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

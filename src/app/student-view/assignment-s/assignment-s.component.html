@@ -2,27 +2,31 @@
   <h2>Elenco consegne</h2>
   <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
     <ng-container matColumnDef="releaseDate">
-      <th mat-header-cell *matHeaderCellDef> Data inizio </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data inizio </th>
       <td mat-cell *matCellDef="let element"> {{element.releaseDateD}} </td>
     </ng-container>
     <ng-container matColumnDef="expiryDate">
-      <th mat-header-cell *matHeaderCellDef> Data fine </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data fine </th>
       <td mat-cell *matCellDef="let element"> {{element.expiryDateD}} </td>
     </ng-container>
     <ng-container matColumnDef="grade">
-      <th mat-header-cell *matHeaderCellDef> Voto </th>
-      <td mat-cell *matCellDef="let element"> Non valutato </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Voto </th>
+      <td mat-cell *matCellDef="let element"> {{getGrade(element.lastDraft)}} </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastDraft.state}} </td>
     </ng-container>
     <ng-container matColumnDef="link">
-      <th mat-header-cell *matHeaderCellDef>Apri consegna</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apri consegna</th>
       <td mat-cell *matCellDef="let element"> <button mat-stroked-button [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button> </td>
     </ng-container>
     <ng-container matColumnDef="upload">
-      <th mat-header-cell *matHeaderCellDef>Carica elaborato</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Carica elaborato</th>
       <td mat-cell *matCellDef="let element">
         <input #fileInput type="file" [hidden]="true" accept="image/*" (change)="uploadDraft(element, $event)"/>
         <button mat-stroked-button [disabled]="!canUpload(element)" (click)="fileInput.click()">
@@ -30,15 +34,10 @@
       </button>
       </td>
     </ng-container>
-    <ng-container matColumnDef="correction">
-      <th mat-header-cell *matHeaderCellDef> Leggi correzione</th>
-      <td mat-cell *matCellDef="let element"> <button mat-stroked-button [routerLink]="element.id"><mat-icon>cloud_upload</mat-icon></button> </td>
-    </ng-container>
-
-    <ng-container matColumnDef="expandedDetail">
+    <ng-container matColumnDef="expandedDetailE">
       <td mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
         <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <app-draft-s [assignmentId]="element.id" [courseName]="courseName"></app-draft-s>
+          <app-draft-s #drafts (lastDraft)="addLast($event, element)" [assignmentId]="element.id" [courseName]="courseName"></app-draft-s>
         </div>
       </td>
     </ng-container>
@@ -49,7 +48,7 @@
         [class.example-expanded-row]="expandedElement === element"
         (click)="expandedElement = expandedElement === element ? null : element">
     </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetailE']" class="detail-row"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

@@ -10,6 +10,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
+import {AssignmentStudentsComponent} from '../../teacher-view/assignment/assignment-students/assignment-students.component';
+import {DraftSComponent} from '../draft-s/draft-s.component';
 
 @Component({
   selector: 'app-assignment-s',
@@ -27,8 +29,9 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
 
   dataSource: MatTableDataSource<Assignment>;
 
-  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'grade', 'link', 'upload'];
+  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'grade', 'state', 'link', 'upload'];
   expandedElement: Draft | null;
+  @ViewChild(DraftSComponent) drafts: DraftSComponent;
 
   assignments: Array<Assignment>;
 
@@ -57,7 +60,10 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.service.getAssignmentForCourse(this.courseName).subscribe(
-      a => this.dataSource.data = a,
+      a => {
+        a.forEach(as => as.lastDraft = new Draft(0, undefined, 0, 'NULL', true));
+        this.dataSource.data = a.sort((e1, e2) => e2.releaseDateT.getTime() - e1.releaseDateT.getTime());
+      },
       error => {
         console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamente delle consegne.', 'Chiudi');
@@ -77,11 +83,10 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
       'Correzione caricata correttamente.', 'Chiudi');
     this.service.uploadDraft(this.authService.getId(), this.courseName, element.id, selectedFile)
       .subscribe(
-        () => {
+        data => {
           this.snackBar.open(
             'Elaborato caricato correttamente.', 'Chiudi');
-          // element.state = 'REVIEWED';
-          // element.timestampT = new Date(Date.now());
+          this.drafts.add(data);
         },
         error => {
           console.log(error);
@@ -91,8 +96,16 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
       );
   }
 
-  canUpload(element: Element) {
-    // todo: da implementare
-    return true;
+  canUpload(element: Assignment) {
+    return element.lastDraft.state !== 'SUBMITTED' &&
+      !element.lastDraft.locker;
+  }
+
+  addLast(event: Draft, element: Assignment) {
+    element.lastDraft = event;
+  }
+
+  getGrade(element: Draft) {
+    return element.grade > 0 ? element.grade : 'Non valutato';
   }
 }

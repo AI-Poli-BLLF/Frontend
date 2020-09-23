@@ -10,7 +10,6 @@ import {AssignmentService} from '../../../services/assignment.service';
 import {AuthService} from '../../../services/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AddAssignmentDialogComponent} from '../add-assignment-dialog/add-assignment-dialog.component';
-import {EvaluateDraftDialogComponent} from '../draft/evaluate-draft-dialog/evaluate-draft-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DraftEvaluateComponent} from '../draft-evaluate/draft-evaluate.component';
 import {Subscription} from 'rxjs';
@@ -39,15 +38,6 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private assignmentService: AssignmentService) {
-    // const testData = [
-    //   new Draft(1, '2020-09-25T22:00:00.000+0000', 0, 'READ', false),
-    //   new Draft(2, '2020-09-25T22:00:00.000+0000', 30, 'REVIEWED', true),
-    //   new Draft(3, '2020-09-25T22:00:00.000+0000', 0, 'SUBMITTED', false)
-    // ];
-    // testData[0].student = new Student('s123456', 'Stefano', 'Loscalzo', undefined);
-    // testData[1].student = new Student('s123457', 'Lorenzo', 'Limoli', undefined);
-    // testData[2].student = new Student('s123458', 'Angelo', 'Floridia', undefined);
-
     this.dataSource = new MatTableDataSource<Draft>([]);
   }
 
@@ -91,10 +81,6 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     if (selectedFile === undefined){
       return;
     }
-    // this.snackBar.open(
-    //   'Correzione caricata correttamente.', 'Chiudi');
-    // element.state = 'REVIEWED';
-    // element.timestampT = new Date(Date.now());
     this.assignmentService.uploadCorrection(this.authService.getId(), this.courseName, this.assignmentId, element.id, selectedFile)
       .subscribe(
         () => {
@@ -120,9 +106,6 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
         const i = this.dataSource.data.findIndex(e => e.id === element.id);
         this.dataSource.data[i].locker = true;
         this.dataSource.data[i].state = 'REVIEWED';
-
-        // todo: valutare se si riesce a fare senza ricaricare tutto, penso di si
-        // this.loadData();
       }
     });
   }
@@ -162,5 +145,10 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
           this.snackBar.open('Errore nel caricamente degli elaborati', 'Chiudi');
         }
       );
+  }
+
+  applyFilter(event) {
+    const filterValue = event.value;
+    this.dataSource.filter = filterValue === 'all' ? '' : filterValue;
   }
 }

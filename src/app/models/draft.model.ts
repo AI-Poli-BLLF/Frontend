@@ -14,8 +14,10 @@ export class Draft {
     this.id = id;
     this.grade = grade;
     this.state = state;
-    this.timestampT = new Date(timestamp);
-    this.timestamp = timestamp;
+    if (timestamp !== undefined) {
+      this.timestampT = new Date(timestamp);
+      this.timestamp = timestamp;
+    }
     this.locker = locker;
     this.student = new Student('', '', '', '');
   }
