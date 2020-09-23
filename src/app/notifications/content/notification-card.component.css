@@ -1,5 +1,6 @@
 .notification-card{
-  margin: 15px 0;
+  margin: 10px 0;
+  padding: 10px;
 }
 
 div.notification-body{
@@ -7,18 +8,31 @@ div.notification-body{
   padding-top: 10px;
 }
 
-div.notification-body img{
+div.notification-body .img-date{
   float: left;
   margin-right: 10px;
+  line-height: .8em;
+}
+
+.img-date p{
+  padding: 0;
+  margin: 0;
+  font-size: .7em;
+  color: gray!important;
 }
 
 .notification-card p{
   color: black;
 }
 
+.notification-unread{
+  background: #e8e8e8;
+  border-left: 3px solid #1A237E;
+}
+
 .image-cropper-small {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   padding: 0;
   object-fit: cover; /* Do not scale the image */
   object-position: center; /* Center the image within the element */

@@ -87,6 +87,7 @@ import { DraftEvaluateComponent } from './teacher-view/assignment/draft-evaluate
 import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/draft-history.component';
 import { DraftViewComponent } from './draft-view/draft-view.component';
 import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -151,40 +152,41 @@ import {AssignmentViewComponent} from './assignment-view/assignment-view.compone
     DraftHistoryComponent,
     DraftViewComponent
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    MatTabsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTableModule,
-    MatCheckboxModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatSortModule,
-    MatPaginatorModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMenuModule,
-    MatGridListModule,
-    MatExpansionModule,
-    MaterialFileInputModule
-  ],
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatTableModule,
+        MatCheckboxModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatSortModule,
+        MatPaginatorModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatCardModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule,
+        MatGridListModule,
+        MatExpansionModule,
+        MaterialFileInputModule,
+        MatBadgeModule
+    ],
   entryComponents: [LoginDialogComponent],
   providers: [
     {

@@ -1,11 +1,15 @@
 <mat-expansion-panel [hideToggle]="!areButtonsVisible()"
                      (click)="$event.stopPropagation()"
                      class="notification-card mat-elevation-z0"
+                     [ngClass]="{'notification-unread': !notification.notificationRead}"
                      [disabled]="!areButtonsVisible()">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="notification-body">
-        <img class="image-cropper-small" [src]="notification.photoPath" alt="Sender Image">
+        <div class="img-date">
+          <img class="image-cropper-small" [src]="notification.photoPath" alt="Sender Image">
+          <p>{{notification.creation}}</p>
+        </div>
         <p>{{notification.message}}</p>
       </div>
     </mat-panel-title>

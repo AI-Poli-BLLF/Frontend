@@ -1,5 +1,7 @@
 <div *ngIf="isVisible()" id="notifications-menu">
-  <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>notifications</mat-icon></button>
+  <button mat-icon-button [mat-menu-trigger-for]="menu" [matBadge]="getReadCount().toString()" matBadgeColor="warn" matBadgePosition="before" matBadgeSize="small">
+    <mat-icon>{{getReadCount() === 0 ? 'notifications' : 'notifications_active'}}</mat-icon>
+  </button>
   <mat-menu #menu="matMenu" class="my-menu">
     <div class="container">
       <p id="no-notification" *ngIf="notifications.length == 0">Non hai ricevuto alcuna notifica</p>
