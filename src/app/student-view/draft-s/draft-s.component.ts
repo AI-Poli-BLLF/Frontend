@@ -30,109 +30,53 @@ export class DraftSComponent implements OnInit {
   columnsToDisplayDraft: string[] = ['state', 'timestamp', 'link', 'correction'];
   drafts: Array<Draft> = [];
   studentId: string;
-  assignment: Assignment;
   sub: Subscription;
+  @Input()
+  courseName: string;
+  @Input()
+  assignmentId: number;
+
   states: Array<string> = ['NULL', 'READ', 'SUBMITTED'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private service: AssignmentService,
-    private auth: AuthService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private route: ActivatedRoute
   ) {
-    this.studentId = auth.getId();
+    this.studentId = authService.getId();
     this.dataSource = new MatTableDataSource<Draft>(this.drafts);
-  }
-
-  @Input()
-  set Assignment(assignment: Assignment){
-    this.assignment = assignment;
   }
 
   ngOnInit(): void {
     this.update();
   }
 
-  private getDraftInfo(draft: Draft) {
-    if (draft.student.id === '') {
-      // console.log(draft);
-      this.service.getStudentForDraft(draft.id).subscribe(
-        s => {
-          draft.student = s;
-        },
-        err => {
-          this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
-        }
-      );
-    }
-  }
 
   update(){
-    // this.service.getDraftForStudent(this.studentId).subscribe(
-    //   d => {
-    //     d.forEach(draft => this.getDraftInfo(draft));
-    //     this.dataSource.data = d;
-    //     this.dataSource.sort = this.sort;
-    //     this.dataSource.paginator = this.paginator;
-    //   },
-    //   err => {
-    //     this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
-    //   }
-    // );
-  }
-
-  openCreateDraft() {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.data = this.route;
-    // const dialogRef = this.dialog.open(AddDraftDialogComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe( () => {
-    //   this.sub = this.service.getDraftForStudent(this.studentId).subscribe(
-    //     d => this.drafts = d,
-    //     error => {
-    //       console.log(error);
-    //       this.snackBar.open('Si è verificato un errore aggiungendo un elaborato', 'Chiudi');
-    //     }
-    //   );
-    // });
-  }
-
-  editDraft(draft: Draft) {
-    this.service.lockDraft(draft, this.assignment.id).subscribe(
-      data => {
-        console.log(data);
+    this.service.getDraftForStudent(this.studentId, this.courseName, this.assignmentId).subscribe(
+      d => {
+        this.dataSource.data = d.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
-      error => {
-        console.error(error);
+      err => {
+        console.log(err);
+        this.snackBar.open('Errore nel caricamento degli elaborati', 'Chiudi');
       }
     );
-    let draft1: Draft;
-    draft1 = new Draft(undefined, undefined, draft.grade, 'SUBMITTED', draft.locker);
-    // draft1 = draft;
-    // draft1.id = undefined;
-    // draft1.state = 'SUBMITTED';
-    this.service.addDraft(draft1, this.assignment, this.studentId).subscribe(
-      data => {
-        console.log(data);
-        this.snackBar.open('L\'elaborato è stato sottomesso.', 'Chiudi');
-        this.update();
-      },
-      error => {
-        console.log(error);
-        this.snackBar.open('Qualcosa è andato storto nella sottomissione dell\'elaborato.', 'Chiudi');
-      }
-    );
-    this.update();
-  }
-
-  getStates() {
-    return this.states;
   }
 
   checkError(draft: Draft): boolean{
     return !(draft.locker === true || draft.state === 'SUBMITTED' || draft.state === 'REVIEWED');
   }
 
+  canOpen(element: Draft) {
+    return element.state === 'SUBMITTED' || element.state === 'REVIEWED';
+  }
+
+  canOpenCorrection(element: Draft) {
+    return element.state === 'REVIEWED';
+  }
 }

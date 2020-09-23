@@ -23,7 +23,12 @@
     </ng-container>
     <ng-container matColumnDef="upload">
       <th mat-header-cell *matHeaderCellDef>Carica elaborato</th>
-      <td mat-cell *matCellDef="let element"> <button mat-stroked-button [routerLink]="element.id"><mat-icon>cloud_upload</mat-icon></button> </td>
+      <td mat-cell *matCellDef="let element">
+        <input #fileInput type="file" [hidden]="true" accept="image/*" (change)="uploadDraft(element, $event)"/>
+        <button mat-stroked-button [disabled]="!canUpload(element)" (click)="fileInput.click()">
+          <mat-icon>cloud_upload</mat-icon>
+      </button>
+      </td>
     </ng-container>
     <ng-container matColumnDef="correction">
       <th mat-header-cell *matHeaderCellDef> Leggi correzione</th>
@@ -33,8 +38,7 @@
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell [attr.colspan]="columnsToDisplay.length" *matCellDef="let element">
         <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-<!--          <app-draft-s [Assignment]="assignment" ></app-draft-s>-->
-              <app-draft-s [Assignment]="element"></app-draft-s>
+          <app-draft-s [assignmentId]="element.id" [courseName]="courseName"></app-draft-s>
         </div>
       </td>
     </ng-container>

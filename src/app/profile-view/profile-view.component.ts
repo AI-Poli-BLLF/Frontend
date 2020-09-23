@@ -57,7 +57,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   changePhoto($event) {
     // console.log($event);
     const selectedFile: File = $event.target.files[0];
-    // console.log(selectedFile);
+    console.log(selectedFile);
     if (selectedFile === undefined){
       return;
     }

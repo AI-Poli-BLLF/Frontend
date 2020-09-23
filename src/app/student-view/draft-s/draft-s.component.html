@@ -18,12 +18,12 @@
 
       <ng-container matColumnDef="link">
         <th mat-header-cell *matHeaderCellDef>Apri elaborato</th>
-        <td mat-cell *matCellDef="let element"> <button mat-stroked-button [disabled]="element" [routerLink]="element.id"><mat-icon>open_in_new</mat-icon></button></td>
+        <td mat-cell *matCellDef="let element"> <button mat-stroked-button [disabled]="!canOpen(element)" [routerLink]="assignmentId + '/drafts/' + element.id"><mat-icon>open_in_new</mat-icon></button></td>
       </ng-container>
 
       <ng-container matColumnDef="correction">
         <th mat-header-cell *matHeaderCellDef>Leggi correzione</th>
-        <td mat-cell *matCellDef="let element"><button (click)="editDraft(element)" [disabled]="element.locker" mat-stroked-button><mat-icon>check</mat-icon></button></td>
+        <td mat-cell *matCellDef="let element"><button [routerLink]="assignmentId + '/drafts/' + element.id + '/correction'" [disabled]="!canOpenCorrection(element)" mat-stroked-button><mat-icon>check</mat-icon></button></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnsToDisplayDraft"></tr>

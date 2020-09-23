@@ -43,12 +43,12 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
     private service: AssignmentService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private authServ: AuthService
+    private authService: AuthService
   ) {
-    this.sub = this.route.parent.params.subscribe(params => {
+    this.sub = this.route.parent.parent.params.subscribe(params => {
       this.courseName = params.name;
     });
-    this.studentId = authServ.getId();
+    this.studentId = authService.getId();
   }
 
   ngOnInit(): void {
@@ -65,5 +65,34 @@ export class AssignmentSComponent implements OnInit, AfterViewInit {
     );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  uploadDraft(element: Assignment, event){
+    const selectedFile: File = event.target.files[0];
+    // console.log(selectedFile);
+    if (selectedFile === undefined){
+      return;
+    }
+    this.snackBar.open(
+      'Correzione caricata correttamente.', 'Chiudi');
+    this.service.uploadDraft(this.authService.getId(), this.courseName, element.id, selectedFile)
+      .subscribe(
+        () => {
+          this.snackBar.open(
+            'Elaborato caricato correttamente.', 'Chiudi');
+          // element.state = 'REVIEWED';
+          // element.timestampT = new Date(Date.now());
+        },
+        error => {
+          console.log(error);
+          this.snackBar.open(
+            'Si è verificato un errore nell\'upload dell\'elaborato. La massima dimensione consentita dei file è 3 MB.', 'Chiudi');
+        }
+      );
+  }
+
+  canUpload(element: Element) {
+    // todo: da implementare
+    return true;
   }
 }

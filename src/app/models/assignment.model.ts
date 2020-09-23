@@ -3,22 +3,23 @@ import {Timestamp} from 'rxjs';
 export class Assignment {
   id: number;
   name: string;
+  grade: number;
   private releaseDateT: Date;
   private expiryDateT: Date;
-  private _releaseDate: string;
-  private _expiryDate: string;
+  releaseDate: string;
+  expiryDate: string;
 
   constructor(id: number, name: string, releaseDate: string, expiryDate: string){
     this.id = id;
     this.name = name;
-    // this.releaseDateT = new Date(releaseDate);
-    // this.expiryDateT = new Date(expiryDate);
+    this.releaseDateD = releaseDate;
+    this.expiryDateD = expiryDate;
     this.releaseDate = releaseDate;
     this.expiryDate = expiryDate;
   }
 
   toString() {
-    return this.id + ' name: ' + this.name + ' releaseDate: ' + this._releaseDate + ' expiryDate: ' + this._expiryDate;
+    return this.id + ' name: ' + this.name + ' releaseDate: ' + this.releaseDateD + ' expiryDate: ' + this.expiryDateD;
   }
 
   checkTime(i) {
@@ -49,23 +50,5 @@ export class Assignment {
     this.expiryDateT = new Date(value);
   }
 
-  get releaseDate(): string {
-    return this._releaseDate;
-  }
-
-  set releaseDate(value: string) {
-    this._releaseDate = value;
-    this.releaseDateD = value;
-  }
-
-  get expiryDate(): string {
-    return this._expiryDate;
-  }
-
-  set expiryDate(value: string) {
-    console.log(value);
-    this._expiryDate = value;
-    this.expiryDateD = value;
-  }
 }
 

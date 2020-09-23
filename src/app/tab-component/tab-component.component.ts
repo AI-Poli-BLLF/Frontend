@@ -20,7 +20,7 @@ export class TabComponentComponent {
   linksStudent: Array<NavModel> = [
     new NavModel('./vms', 'VMs'),
     new NavModel('./teams', 'Teams'),
-    new NavModel('./assignment', 'Assignments')
+    new NavModel('./assignments', 'Consegne')
   ];
   linksTeacher: Array<NavModel> = [
     new NavModel('./students', 'Studenti'),

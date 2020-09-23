@@ -33,17 +33,17 @@ export class DraftHistoryComponent implements OnInit, AfterViewInit {
     this.courseName = data.courseName;
     this.assignmentId = data.assignmentId;
     this.studentId = data.studentId;
-    const testData = [
-      new Draft(1, '2020-09-25T22:00:00.000+0000', 0, 'READ', false),
-      new Draft(2, '2020-09-25T22:00:00.000+0000', 30, 'REVIEWED', true),
-      new Draft(3, '2020-09-25T22:00:00.000+0000', 0, 'SUBMITTED', false)
-    ];
-    this.dataSource = new MatTableDataSource<Draft>(testData);
+    // const testData = [
+    //   new Draft(1, '2020-09-25T22:00:00.000+0000', 0, 'READ', false),
+    //   new Draft(2, '2020-09-25T22:00:00.000+0000', 30, 'REVIEWED', true),
+    //   new Draft(3, '2020-09-25T22:00:00.000+0000', 0, 'SUBMITTED', false)
+    // ];
+    this.dataSource = new MatTableDataSource<Draft>([]);
   }
 
   ngOnInit(): void {
     // todo: riabilitare
-    // this.loadData();
+    this.loadData();
   }
 
   ngAfterViewInit(): void {

@@ -39,16 +39,16 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private assignmentService: AssignmentService) {
-    const testData = [
-      new Draft(1, '2020-09-25T22:00:00.000+0000', 0, 'READ', false),
-      new Draft(2, '2020-09-25T22:00:00.000+0000', 30, 'REVIEWED', true),
-      new Draft(3, '2020-09-25T22:00:00.000+0000', 0, 'SUBMITTED', false)
-    ];
-    testData[0].student = new Student('s123456', 'Stefano', 'Loscalzo', undefined);
-    testData[1].student = new Student('s123457', 'Lorenzo', 'Limoli', undefined);
-    testData[2].student = new Student('s123458', 'Angelo', 'Floridia', undefined);
+    // const testData = [
+    //   new Draft(1, '2020-09-25T22:00:00.000+0000', 0, 'READ', false),
+    //   new Draft(2, '2020-09-25T22:00:00.000+0000', 30, 'REVIEWED', true),
+    //   new Draft(3, '2020-09-25T22:00:00.000+0000', 0, 'SUBMITTED', false)
+    // ];
+    // testData[0].student = new Student('s123456', 'Stefano', 'Loscalzo', undefined);
+    // testData[1].student = new Student('s123457', 'Lorenzo', 'Limoli', undefined);
+    // testData[2].student = new Student('s123458', 'Angelo', 'Floridia', undefined);
 
-    this.dataSource = new MatTableDataSource<Draft>(testData);
+    this.dataSource = new MatTableDataSource<Draft>([]);
   }
 
   ngOnDestroy(): void {
@@ -63,8 +63,7 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
-    // todo: riabilitare
-    // this.loadData();
+    this.loadData();
   }
 
   ngAfterViewInit(): void {
@@ -76,14 +75,13 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     if (draft.student.id === ''){
       // todo: ottenere info sugli studenti
       // magari usando i link allegati
-
-      // this.assignmentService.getStudentForDraft(draft.id).subscribe(
-      //   s => draft.student = s,
-      //   error => {
-      //     console.log(error);
-      //     this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
-      //   }
-      // );
+      this.assignmentService.getStudentForDraft(this.authService.getId(), this.courseName, this.assignmentId, draft.id).subscribe(
+        s => draft.student = s,
+        error => {
+          console.log(error);
+          this.snackBar.open('Errore nel caricamente dello studente per la consegna', 'Chiudi');
+        }
+      );
     }
   }
 
@@ -93,25 +91,25 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     if (selectedFile === undefined){
       return;
     }
-    this.snackBar.open(
-      'Correzione caricata correttamente.', 'Chiudi');
-    element.state = 'REVIEWED';
-    element.timestampT = new Date(Date.now());
-    // this.assignmentService.uploadCorrection(this.authService.getId(), this.courseName, this.assignmentId, element.id, selectedFile)
-    //   .subscribe(
-    //     () => {
-    //       this.snackBar.open(
-    //         'Correzione caricata correttamente.', 'Chiudi');
-    //       element.state = 'REVIEWED';
-    //       element.timestampT = new Date(Date.now());
-    //       },
-    //     error => {
-    //       console.log(error);
-    //       this.snackBar.open(
-    //         'Si è verificato un errore nell\'upload della correzione. La massima dimensione consentita dei file è 3 MB.',
-    //         'Chiudi');
-    //     }
-    //   );
+    // this.snackBar.open(
+    //   'Correzione caricata correttamente.', 'Chiudi');
+    // element.state = 'REVIEWED';
+    // element.timestampT = new Date(Date.now());
+    this.assignmentService.uploadCorrection(this.authService.getId(), this.courseName, this.assignmentId, element.id, selectedFile)
+      .subscribe(
+        () => {
+          this.snackBar.open(
+            'Correzione caricata correttamente.', 'Chiudi');
+          element.state = 'REVIEWED';
+          element.timestampT = new Date(Date.now());
+          },
+        error => {
+          console.log(error);
+          this.snackBar.open(
+            'Si è verificato un errore nell\'upload della correzione. La massima dimensione consentita dei file è 3 MB.',
+            'Chiudi');
+        }
+      );
   }
 
   evaluateDraft(element: Draft){

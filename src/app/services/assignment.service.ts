@@ -59,9 +59,9 @@ export class AssignmentService {
       );
   }
 
-  getStudentForDraft(draftId: number) {
+  getStudentForDraft(professorId: string, courseName: string, assignmentId: number, draftId: number) {
     return this.httpClient
-      .get<Student>(this.url + '/professors/drafts/' + draftId + '/getStudent')
+      .get<Student>(`${this.url}/professors/${professorId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/student`)
       .pipe(
         map( s => new Student(s.id, s.name, s.firstName, s.email)),
         catchError(err => {
@@ -87,7 +87,7 @@ export class AssignmentService {
 
   getDraftForStudent(studentId: string, courseName: string, assignmentId: number): Observable<Draft[]>{
     return this.httpClient
-      .get<Array<Draft>>(this.url + '/student/' + studentId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
+      .get<Array<Draft>>(this.url + '/students/' + studentId + '/courses/' + courseName + '/assignments/' + assignmentId + '/drafts')
       .pipe(
         map(arr => arr.map(
           a => new Draft(a.id, a.timestamp, a.grade, a.state, a.locker)
@@ -130,8 +130,8 @@ export class AssignmentService {
     return this.httpClient.post(path, body);
   }
 
-  uploadDraft(studentId: string, courseName: string, assignmentId: number, draftId: number, file: File): Observable<Draft>{
-    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/drafts/${draftId}/drafts`;
+  uploadDraft(studentId: string, courseName: string, assignmentId: number, file: File): Observable<Draft>{
+    const path = `${this.url}/students/${studentId}/courses/${courseName}/assignments/${assignmentId}/drafts/`;
     const body = new FormData();
     body.append('image', file);
     return this.httpClient.post<Draft>(path, body)

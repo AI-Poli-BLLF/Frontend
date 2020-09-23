@@ -88,6 +88,7 @@ import { DraftHistoryComponent } from './teacher-view/assignment/draft-history/d
 import { DraftViewComponent } from './draft-view/draft-view.component';
 import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
 import {MatBadgeModule} from '@angular/material/badge';
+import { CorrectionViewComponent } from './correction-view/correction-view.component';
 
 @NgModule({
   declarations: [
@@ -150,7 +151,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     AssignmentStudentsComponent,
     DraftEvaluateComponent,
     DraftHistoryComponent,
-    DraftViewComponent
+    DraftViewComponent,
+    CorrectionViewComponent
   ],
     imports: [
         BrowserModule,
