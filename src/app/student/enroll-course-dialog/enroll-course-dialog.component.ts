@@ -15,6 +15,8 @@ import {StudentService} from '../../services/student.service';
   templateUrl: './enroll-course-dialog.component.html',
   styleUrls: ['./enroll-course-dialog.component.css']
 })
+// componente che permette l'invio di una notifica al prof p
+// er chiedere di essere iscritti al corso
 export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -40,7 +42,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.filteredCourses.paginator = this.paginator;
     this.filteredCourses.sort = this.sort;
-
+    // carico i corsi a cui non sono iscritto e che sono attivi a cui potrei iscrivermi
     this.studentService.getAvailableCourse().subscribe(
       data => {
         this.courses = data;
@@ -63,6 +65,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
     this.filteredCourses.data = this._courses.map(value => value);
   }
 
+  // invio la richiesta e notifico l'utente con una snackbar
   sendEnrollRequest(course: Course) {
     this.courseService.sendEnrollRequest(course).subscribe(
       () => {

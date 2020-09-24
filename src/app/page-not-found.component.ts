@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-page-not-found',
-  template: '<p>PageNotFoundComponent works!</p>',
+  template: '<h2 style="margin: 1em">Pagina non trovata.</h2>',
   styleUrls: []
 })
 export class PageNotFoundComponent implements OnInit {

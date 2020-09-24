@@ -47,10 +47,6 @@ export class AppComponent implements OnDestroy{
     this.doLogin.unsubscribe();
   }
 
-  // toggleForMenuClick() {
-  //
-  // }
-
   isVisible() {
     return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
   }

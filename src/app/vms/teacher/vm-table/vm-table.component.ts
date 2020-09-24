@@ -19,6 +19,11 @@ import {MatSort} from '@angular/material/sort';
     ]),
   ]
 })
+// componente contenente una tabella estendibile
+// il livello estenrno elenca tutte le configurazioni,
+// una per ogni team e faccendo click sulla riga l'elemento viene esteso
+// mostrando le singole vm di quel corso, permettendo di editare le vm config
+// e mostrando l'uso delle risorse
 export class VmTableComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -48,6 +53,7 @@ export class VmTableComponent implements AfterViewInit{
     this.teams.forEach(team => this.loadConfig(team));
   }
 
+  // caric la configurazione chiedendola al server
   loadConfig(team: Team){
     // console.log(this.courseName);
     this.courseService.getTeamVMConfig(this.courseName, team.id, team.name)
@@ -62,6 +68,8 @@ export class VmTableComponent implements AfterViewInit{
       });
   }
 
+  // se un elemento viene modificato nel componente figlio emette un evento
+  // che permetterà di modificare il padre senza riscaricaare i dati dal server
   updateElement(vmC: VmConfig) {
     const v: VmConfig[] = [];
     this.dataSource.data.forEach(e => e.id === vmC.id ? v.push(vmC) : v.push(e));

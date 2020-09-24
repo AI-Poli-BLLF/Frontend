@@ -20,21 +20,28 @@ export class LoginDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // in base al fatto che sia loggato o meno mostro la scritta sul tasto per effettuare il login o il logout
     this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
   }
 
+  // se sono già loggato non mostro il tasto di registrazione
   regIsVisible(){
     return !this.authService.isLogged();
   }
 
+  // in base al fatto che sia loggato o meno cambio i parametri nell'indirizzo
   getQueryParams(){
     return this.authService.isLogged() ? { doLogin: 'false' } : { doLogin: 'true' };
   }
 
+  // imposto il parametro per fare la registrazione
   getQueryParamsReg(){
     return { doReg: 'true' };
   }
 
+  // alla pressione del tasto di login se sono loggato effettuo il logout o vicevera
+  // nel caso di login apro un dialog e alla sua chiusura se è andato a buon fine aggiorno la pagina
+  // questo mi permetterà di caricare il welcome component ed essere indirizzato alla pagina con il ruolo corretto
   openDialog() {
     if (!this.authService.isLogged()){
       const dialogRef = this.dialog.open(LoginDialogContentComponent);
@@ -51,13 +58,10 @@ export class LoginDialogComponent implements OnInit {
     }
   }
 
+  // apre il dialog per la registrazione, non compio azioni perchè dovrò attendere che l'utente confermi la mail
   openDialogReg() {
     if (!this.authService.isLogged()){
-      const dialogRef = this.dialog.open(RegistrationDialogComponent);
-      dialogRef.afterClosed().subscribe(() => {
-        this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
-        this.router.navigate(['/home']);
-      });
+      this.dialog.open(RegistrationDialogComponent);
     }
   }
 }
@@ -97,6 +101,10 @@ export class LoginDialogContentComponent {
       this.labelValue = 'Completa correttamente tutti i campi.';
       return;
     }
+    // se il form è corretto e il backend mi torna un jwt lo salvo ne local storage tramite l'auth service,
+    // così da rimanere loggato e allegarlo tramite il proxy di angular ad ogni richiesta
+    // mostro un messaggio di errore se username o password non sono validi
+    // o il server ha mandato un altro mesaggio di errore
     this.service.login(this.usernameValidator.value, this.passwordValidator.value)
       .subscribe(
         data => {
@@ -104,7 +112,7 @@ export class LoginDialogContentComponent {
           this.dialogRef.close();
         },
         error => error.status === 401 ?
-          this.labelValue = 'Username or password not valid' : this.labelValue = 'An error has occurred'
+          this.labelValue = 'Username o password non validi' : this.labelValue = 'Si è verificato un errore'
       );
   }
 

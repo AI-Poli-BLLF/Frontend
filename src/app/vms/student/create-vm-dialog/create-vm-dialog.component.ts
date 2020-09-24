@@ -11,6 +11,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './create-vm-dialog.component.html',
   styleUrls: ['./create-vm-dialog.component.css']
 })
+// dialog usato dallo studente per creare una vm
+// riceve in ingresso le risorse ancora disponibili così
+// da impostare i limiti massimi dei mat sliders
+// una volta verificato che le risorse che si tenta di
+// assegnare non siano nulle, viene effettuata la post dal service
 export class CreateVmDialogComponent {
   vm: Vm;
   vmConfig: VmConfig;
@@ -57,6 +62,8 @@ export class CreateVmDialogComponent {
       }
     );
   }
+
+  // permette di aggiungere l'eticchetta GB/MB alla label/ mat slider
   formatLabel(value: number) {
     // console.log(value);
     if (value >= 1024) {
@@ -64,6 +71,7 @@ export class CreateVmDialogComponent {
     } else{ return value + 'MB'; }
   }
 
+  // permette di aggiungere l'eticchetta GB/MB alla label/ mat slider
   diskLabel(value: number){
     return value + 'GB';
   }

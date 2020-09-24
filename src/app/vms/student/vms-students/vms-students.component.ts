@@ -18,6 +18,9 @@ import {AuthService} from '../../../services/auth.service';
   templateUrl: './vms-students.component.html',
   styleUrls: ['./vms-students.component.css']
 })
+// componente che si occupa di mostrare le vm disponibili per uno studente
+// e le risorse occupate dalle vm del gruppo
+// inoltre permette di creare vm
 export class VmsStudentsComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[] = [
     'id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'accensione', 'modifica', 'share', 'elimina', 'link'
@@ -50,31 +53,35 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  // questi metodi servono per calcolare le risorse auttualmente usate
   cpu(){
     let sum = 0;
     this.dataSource.forEach(vm => sum += vm.cpu);
     return sum;
   }
+  // questi metodi servono per calcolare le risorse auttualmente usate
   ram(){
     let sum = 0;
     this.dataSource.forEach(vm => sum += vm.ramSize);
     return sum;
   }
-
+  // questi metodi servono per calcolare le risorse auttualmente usate
   disk(){
     let sum = 0;
     this.dataSource.forEach(vm => sum += vm.diskSize);
     return sum;
   }
-
+  // questi metodi servono per calcolare le risorse auttualmente usate
   active(){
     return this.dataSource.filter(vm => vm.active).length;
   }
-
+  // questi metodi servono per calcolare le risorse auttualmente usate
   vmNumber(){
     return this.dataSource.length;
   }
 
+  // metodo per eliminare una vm, effettua la richiesta tramite il service,
+  // se va a buon fine filtra i risultati per escluderla senza richiedere i dati al service
   deleteVm(vm: Vm){
     this.courseService.deleteVmInstance(this.courseName, this.team.id, vm)
       .subscribe(
@@ -86,7 +93,11 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
         }
       );
   }
-
+  // per modificare una vm vengono passate le risorse disponibili
+  // a cui vengono sottratte le risorse usate attualmente dalla vm che
+  // si vuole modificare, alla dialog viene passato anche il parametro
+  // edit=true per selezionare il service corretto
+  // il component è lo stesso della create vm
   editVm(vm: Vm){
     const vmConfigLeft = new VmConfig(
       undefined,
@@ -105,20 +116,25 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // funzione che cambia lo stato visualizzato
   switchState(vm: Vm){
     const i = this.dataSource.findIndex(e => e.id === vm.id);
     this.dataSource[i].active = !vm.active;
-    console.log(this.dataSource);
+    // console.log(this.dataSource);
   }
 
+  // metodo che permette di avviare o fermare una vm,
+  // in base allo stato della vm viene accesa o spenta
+  // e aggiorna il valore visualizzato senza richiedere i dati
+  // mostra una snackbar di errore in caso di errore
   startOrStopVm(vm: Vm){
     let request;
     if (vm.active) {
-      console.log('Stop vm ' + vm.id);
+      // console.log('Stop vm ' + vm.id);
       request = this.courseService.powerOff(this.courseName, this.team.id, vm);
     }
     else {
-      console.log('Start vm ' + vm.id);
+      // console.log('Start vm ' + vm.id);
       if (this.vmConfig.maxActive - this.active() < 1){
         this.snackBar.open('Numero masimo di VM attive raggiunto.', 'Chiudi');
         return;
@@ -136,6 +152,10 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
 
   }
 
+  // per creare una vm vengono passate le risorse disponibili
+  // alla dialog viene passato anche il parametro
+  // edit=false per selezionare il service corretto
+  // il component è lo stesso della edit vm
   openCreateVm(){
     if (this.team.id === -1){
       this.snackBar.open('Si sono verificati problemi nel recuperare il team.', 'Chiudi');
@@ -165,14 +185,17 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     });
   }
 
-  shareVm(vm: Vm){
-    const d = {teamId: this.team.id, courseName: this.courseName, vm};
-    this.dialog.open(ShareDialogComponent, {data: d});
-    // dialogRef.afterClosed().subscribe(() => {
-    //   this.getVmsInstances(this.courseName, this.team.id);
-    // });
-  }
+  // shareVm(vm: Vm){
+  //   const d = {teamId: this.team.id, courseName: this.courseName, vm};
+  //   this.dialog.open(ShareDialogComponent, {data: d});
+  //   // dialogRef.afterClosed().subscribe(() => {
+  //   //   this.getVmsInstances(this.courseName, this.team.id);
+  //   // });
+  // }
 
+  // metodo usato per capire se lo studente appartiene ad almeno un team
+  // se lo studente non appartiene ad un team non viene mostrata la tabella delle vm
+  // e non potrà crearne
   getTeamId(courseName: string){
     this.teamService.getTeamsByStudent(courseName)
       .subscribe(data => {
@@ -199,6 +222,7 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       );
   }
 
+  // permette di ottenere il creatore della vm
   getCreator(courseName: string, teamId: number, vmId: number, vm: Vm) {
     this.courseService.getVmCreator(courseName, teamId, vmId)
       .subscribe(
@@ -233,6 +257,8 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       );
   }
 
+  // metodo che permette di abilitare o disabilitare i tasti della vm,
+  // se uno studente non è un owner non potrà accenderla o spegnerla
   isOwner(vm: Vm){
     const id = this.authService.getId();
     return this.owners[vm.id].findIndex(e => e.id === id) !== -1;

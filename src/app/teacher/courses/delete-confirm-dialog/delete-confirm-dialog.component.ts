@@ -9,28 +9,16 @@ import {LoginDialogComponent} from '../../../login/login-dialog/login-dialog.com
   templateUrl: './delete-confirm-dialog.component.html',
   styleUrls: ['./delete-confirm-dialog.component.css']
 })
+// comportamento descritto nel padre
 export class DeleteConfirmDialogComponent implements OnInit {
   courseName: string;
   labelValue = '';
 
-  constructor(private dialogRef: MatDialogRef<LoginDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string,
-              private service: CourseService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {
     this.courseName = data;
   }
 
   ngOnInit(): void {
   }
 
-  // deleteCourse() {
-  //   this.service.deleteOne(this.courseName).subscribe(
-  //     data => {
-  //       // console.log(data);
-  //       this.dialogRef.close();
-  //     },
-  //     error =>   error.status === 400 ?
-  //       this.labelValue = 'Corso non trovato' : this.labelValue = 'Si è verificato un errore'
-  // );
-
-  // }
 }

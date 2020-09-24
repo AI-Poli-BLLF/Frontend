@@ -9,13 +9,19 @@ import {VmModel} from '../../models/vm.model.model';
   templateUrl: './vm-view.component.html',
   styleUrls: ['./vm-view.component.css']
 })
+// componente che permette la visione dello screen della vm
+// con in sovraimpressione il nome del corso, il modello e la versione
+// view in comune tra studenti, professori e admin
+// poichè secondo le specifiche non si ritiene attuabile l’avvio
+// e il collegamento ad una VM reale, abbiamo utilizzato degli screenshots
+// placeholder per i sistemi operativi più diffusi e un'immagine di default per gli altri
 export class VmViewComponent {
   sub: Subscription;
   sub2: Subscription;
   vmModel: VmModel = new VmModel('', '', '');
   courseName: string;
   vmId: number;
-  vmImgPath = 'red.svg';
+  vmImgPath = 'defaultOs.jpg';
 
   constructor(private route: ActivatedRoute, private courseService: CourseService) {
     this.sub = this.route.parent.params.subscribe(params => {
@@ -51,6 +57,8 @@ export class VmViewComponent {
       case 'MacOS':
         this.vmImgPath = 'macOS.jpg';
         break;
+      default:
+        this.vmImgPath = 'defaultOs.jpg';
     }
   }
 

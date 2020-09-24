@@ -58,6 +58,8 @@ export class AddCourseDialogComponent implements OnDestroy{
     this.checked = event.checked;
   }
 
+  // uso questo metodo che viene chiamato ogni volta che avviene una modifica sul campo min per
+  // verificare che il campo max sia ancora valido
   changeMin(){
     this.formGroup.controls.max.setValidators([
       Validators.required,
@@ -69,6 +71,8 @@ export class AddCourseDialogComponent implements OnDestroy{
     this.subMax = this.formGroup.controls.max.valueChanges.subscribe(() => this.changeMax());
   }
 
+  // uso questo metodo che viene chiamato ogni volta che avviene una modifica sul campo max per
+  // verificare che il campo min sia ancora valido
   changeMax(){
     this.formGroup.controls.min.setValidators([
       Validators.required,
@@ -80,6 +84,7 @@ export class AddCourseDialogComponent implements OnDestroy{
     this.subMin = this.formGroup.controls.min.valueChanges.subscribe(() => this.changeMin());
   }
 
+  // una volta selezionato l'os aggiungo le versioni di esso disponibili nella select
   getOs(){
     const os: string[] = [];
     this.osV.forEach(o => os.push(o.osName));
@@ -120,6 +125,7 @@ export class AddCourseDialogComponent implements OnDestroy{
       ? 'Valore non consentito.' : '';
   }
 
+  // comportamento descritto nel padre
   add(){
     // controllo se ci sono errori
     if (this.formGroup.invalid) { return; }
@@ -135,7 +141,7 @@ export class AddCourseDialogComponent implements OnDestroy{
     ).subscribe(
       data => {
         // console.log(data);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       error => {
         console.log(error);

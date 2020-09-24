@@ -39,11 +39,13 @@ export class RegistrationDialogComponent implements OnDestroy {
       confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255),
         RegistrationDialogComponent.matchValues('password')]]
     });
+    // ad ogni modifica della password controllo che anche la password di conferma sia valida
     this.sub = this.formGroup.controls.password.valueChanges.subscribe(() => {
       this.formGroup.controls.confirmPassword.updateValueAndValidity();
     });
   }
 
+  // validator personalizzato per verificare che le due password siano uguali
   public static matchValues(matchTo: string) // name of the control to match to
     : (AbstractControl) => ValidationErrors | null {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -79,6 +81,7 @@ export class RegistrationDialogComponent implements OnDestroy {
       ? 'Lunghezza cognome non valida.' : '';
   }
 
+  // riempio la mail con i pattern usati dal polito basandomi sulla matricola
   fillEmail(){
     const id = this.formGroup.controls.id.value;
 
@@ -129,6 +132,9 @@ export class RegistrationDialogComponent implements OnDestroy {
     return this.formGroup.controls[controlName].invalid;
   }
 
+  // se il form è valido mando la richiesta di registrazione al server
+  // in caso di risposta positiva mostro un messaggio sulla snackbar di verificare la mail
+  // altrimenti segnalo l'errore
   register(){
     if (this.formGroup.invalid) {
       this.labelValue = 'Completa correttamente tutti i campi.';

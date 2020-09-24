@@ -13,6 +13,8 @@ import {Professor} from '../../models/professor.model';
   template: '<button (click)="getProfessors()" mat-mini-fab style="margin: 0 10px"><mat-icon>share</mat-icon></button>',
   styleUrls: []
 })
+// componente che si occupa di mostrare il bottone e interagire con il service
+// per condividere un corso con altri professori
 export class ShareCourseButtonComponent implements OnInit, OnDestroy {
   @Input()
   courseName: string;
@@ -47,6 +49,10 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
       );
   }
 
+  // riempie un vettore con i possessori del corso,
+  // gli elementi da mostrare disabilitati che in questo caso corrispondono ai posessori
+  // e lo manda alla dialog insieme al nome del corso
+  // ottenuto il risultato viene effettuata una post tramite service e notificato il risultato tramite snackbar
   shareCourse(owners: string[]){
     const d = {
       text: `Condividi corso  ${this.courseName}`,

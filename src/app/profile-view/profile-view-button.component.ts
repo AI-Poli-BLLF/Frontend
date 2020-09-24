@@ -12,6 +12,9 @@ import {Subscription} from 'rxjs';
     '<img class="image-cropper-small" [src]="photoPath" alt="Profile"/></div>',
   styleUrls: ['./profile-view.component.css']
 })
+// tasto che mi permette di aprire il dialog del progilo
+// lo nascondo se non sono loggato o se sono un admin (gli admin non hano un profilo)
+// il tasto è l'immagine del profilo dello studente
 export class ProfileViewButtonComponent implements OnDestroy{
   photoPath: SafeUrl;
   dialogSub: Subscription;
@@ -43,6 +46,9 @@ export class ProfileViewButtonComponent implements OnDestroy{
     this.profileService.getPhoto(this.authService.getRole(), this.authService.getId())
       .subscribe(
         data => {
+          // per ottenere l'url dell'immagine faccio come nel dialog del profilo
+          // ottengo l'url dal blob e sanitizzo l'url che
+          // altrimenti il tag [src] dell'immagine non accetterebbe
           const objectURL = URL.createObjectURL(data);
           this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         },

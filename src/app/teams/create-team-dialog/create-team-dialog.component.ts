@@ -13,6 +13,11 @@ import {MatSelectChange} from '@angular/material/select';
   templateUrl: './create-team-dialog.component.html',
   styleUrls: ['./create-team-dialog.component.css']
 })
+// dialog è un dummy component che permette di creare un team
+// impostando nome, timeout e una lista di studenti
+// selezionati tramite una mat select multipla
+// una volta verificate che le condizioni del team siano verificate
+// il team viene passato al padre che effettua l'aggiunta sul server
 export class CreateTeamDialogComponent implements OnInit {
 
   form: FormGroup;

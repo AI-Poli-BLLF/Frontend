@@ -15,14 +15,12 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './students-cont.component.html',
   styleUrls: ['./students-cont.component.css']
 })
+// todo: commenti
 export class StudentsContComponent implements AfterViewInit, OnDestroy{
   courseName = '';
   students: Student[] = [];
   allStudents: Student[] = [];
   private sub: Subscription;
-
-  /*@ViewChild(StudentsComponent)
-  studentsComponent: StudentsComponent;*/
 
   constructor(
     private service: StudentService,

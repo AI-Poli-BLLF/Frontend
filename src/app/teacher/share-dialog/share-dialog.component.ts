@@ -12,10 +12,14 @@ import {User} from '../../models/user.model';
   templateUrl: './share-dialog.component.html',
   styleUrls: ['./share-dialog.component.css']
 })
+// dummy component che si occupa di visualizzare gli studenti/professori possessori di una vm/corso
+// e permette di selezionare studenti/professori da aggiungere
+// tramite una textbox possiamo filtrare i risultati
 export class ShareDialogComponent implements OnInit {
   filteredOptions: Observable<User[]>;
   filterControl = new FormControl();
   membersControl = new FormControl('', [Validators.required, Validators.min(1)]);
+  // la classe user è una classe estesa dal professore e dallo studente
   options: User[];
   owners: string[];
   disabled: string[];

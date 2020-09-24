@@ -7,6 +7,7 @@ import {Student} from '../../models/student.model';
   templateUrl: './team-card.component.html',
   styleUrls: ['./team-card.component.css']
 })
+// dummy component che si occupa di rappresentare un team
 export class TeamCardComponent implements OnInit {
   @Input()
   team: Team;

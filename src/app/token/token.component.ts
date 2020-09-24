@@ -9,6 +9,9 @@ import {TokenService} from "../services/token.service";
   template: '<h1>Verifica Token</h1>',
   styleUrls: []
 })
+// componente accessibile liberamente che si occupa di effetturare una post sul backend
+// del token ricevuto nella route, una volta effettuata la post effettua un reindirizzamento sulla /
+// è utilizzato per la verifica della mail
 export class TokenComponent implements OnDestroy{
   sub: Subscription;
 

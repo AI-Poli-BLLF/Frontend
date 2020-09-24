@@ -11,6 +11,8 @@ import {UsersTableComponent} from '../../users-table/users-table.component';
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.css']
 })
+// dummy component che si occupa di visualizzare i dati degli studenti iscritti al corso
+// ed eliminarli/aggiungerli e aggiungerli tramite file csv
 export class StudentsComponent implements OnInit {
 
   // todo: bug del primo elemento
@@ -43,17 +45,6 @@ export class StudentsComponent implements OnInit {
   constructor() {
     this.enrollByCsvEvent = new EventEmitter<File>();
   }
-
-  /*deleteTableStudents(students: Array<Student>){
-    this.enrolledStudents = this.enrolledStudents.filter(s => students.findIndex(s1 => s1.id === s.id) === -1);
-  }
-
-  addTableStudents(student: Student){
-    const v = [...this.enrolledStudents];
-    v.unshift(student);
-    this.enrolledStudents = v;
-    this.myControl.setValue('');
-  }*/
 
   @Input()
   set AllStudents(students: Array<Student>){
@@ -107,19 +98,6 @@ export class StudentsComponent implements OnInit {
     if (selectedFile === undefined){
       return;
     }
-    // alert('Da implementare lato server');
-    // this.service.uploadPhoto(this.profileData.roles[0], this.profileData.id, selectedFile).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.getPhoto(this.profileData.roles[0], this.profileData.id);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //     this.snackBar.open(
-    //       'Si è verificato un errore nell\'upload della foto. La massima dimensione consentita dei file è 3 MB.',
-    //       'Chiudi');
-    //   }
-    // );
 
     this.enrollByCsvEvent.emit(selectedFile);
   }

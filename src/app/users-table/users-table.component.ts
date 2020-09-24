@@ -11,6 +11,7 @@ import {User} from '../models/user.model';
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
 })
+// tabella per visualizzazione degli user (quindi sia professori che studenti)
 export class UsersTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['photo', 'id', 'name', 'firstName'];
@@ -42,6 +43,8 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(this._elements);
   }
 
+  // in caso si tratti di una tabella per gli studenti aggiungo
+  // i campi del gruppo e l'opzione per selezionare
   ngOnInit() {
     if (this.students) {
       this.displayedColumns.push('groupName');

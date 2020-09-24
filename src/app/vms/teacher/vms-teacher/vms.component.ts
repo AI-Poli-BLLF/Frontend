@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Team} from '../../../models/team.model';
 import {CourseService} from '../../../services/course.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../../services/auth.service';
-import {VmModel} from "../../../models/vm.model.model";
-
+import {VmModel} from '../../../models/vm.model.model';
+// container della tabella per visualizzare le vm nel professore e nell'admin
+// passa il nome del corso e l'elenco dei teams al componente figlio che genera la tabella
 @Component({
   selector: 'app-vms-home',
   templateUrl: './vms.component.html',
@@ -17,7 +17,6 @@ export class VmsComponent implements OnInit {
   vmModels: VmModel[] = [];
   courseName = '';
   private sub: Subscription;
-  // todo: differenziare versione admin
   constructor(
     private courseService: CourseService,
     private authService: AuthService,
@@ -28,25 +27,13 @@ export class VmsComponent implements OnInit {
     });
   }
 
-  isAdmin(){
-    return this.authService.getRole() === 'ROLE_ADMIN';
-  }
-
   loadTeams(courseName: string){
     // console.log('load teams');
     this.courseService.getTeamsForCourse(courseName).subscribe(teams => this.teams = teams.filter(t => t.status === 'ACTIVE'));
   }
 
-  loadModels(courseName: string){
-    // console.log('load teams');
-    this.courseService.getTeamsForCourse(courseName).subscribe(teams => this.teams = teams);
-  }
-
   ngOnInit(): void {
     this.loadTeams(this.courseName);
-    if (this.isAdmin()){
-
-    }
   }
 
 }

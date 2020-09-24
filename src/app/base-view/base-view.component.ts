@@ -17,6 +17,11 @@ import {EnrollCourseDialogComponent} from '../student/enroll-course-dialog/enrol
   templateUrl: './base-view.component.html',
   styleUrls: ['./base-view.component.css']
 })
+// view in comune tra studenti, professori e admin
+// i link sono diversi sono gestiti dal base link
+// che in base alla ruolo dell'utente viene impostato dalla set link
+
+// gli elementi differenti tra i vari ruoli sono gestiti da ngIf
 export class BaseViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
@@ -41,6 +46,9 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     );
   }
 
+  // le route generate a partire dalla tipologia di utente
+  // sono gestite dal base link
+  // che in base alla ruolo dell'utente viene impostato dalla set link
   setBaseLink(){
     switch (this.authService.getRole()) {
       case 'ROLE_ADMIN':
@@ -55,18 +63,22 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  // metodi per capire la tipologia nell'html avendo il service privato
   isStudent(){
     return this.authService.getRole() === 'ROLE_STUDENT';
   }
-
+  // metodi per capire la tipologia nell'html avendo il service privato
   isTeacher(){
     return this.authService.getRole() === 'ROLE_PROFESSOR';
   }
-
+  // metodi per capire la tipologia nell'html avendo il service privato
   isAdmin(){
     return this.authService.getRole() === 'ROLE_ADMIN';
   }
 
+  // all'init del componente carico i corsi e imposto il valore del select item
+  // => variabile visualizzata nella toolbar e che permette
+  // di capire quale corso ho attivo o admin tools nel caso degli admin
   ngOnInit(): void {
     this.loadCourses();
     const courseName = this.route.firstChild.snapshot.params.name;
@@ -77,14 +89,22 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     this.sidenav.toggle();
   }
 
+  // apro una dialog per crere un corso, se l'aggiunta del corso va a buon fine
+  // e la dialog mi torna true aggiorno i corsi
   openAddCourseDialog(){
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(AddCourseDialogComponent);
-    dialogRef.afterClosed().subscribe(() => {
-      this.loadCourses();
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+      if (data === true){
+        this.loadCourses();
+      }
     });
   }
 
+  // se il corso è stato eliminato mostra una snackbar per notificare l'azione
+  // e cambia il corso selezionato in nessun corso selezionato
+  // riportando la route della pagina alla root
   snackBarDelete() {
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1) {
       this.snackBar.open('Corso cancellato', 'Chiudi');
@@ -93,6 +113,10 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  // apre una dialog per chiedere conferma se voglio eliminare il corso
+  // in caso affermativo la dialog ritorna true e viene richiesto al service
+  // l'eliminazione del corso, in caso affermativo cancello il corso senza dovere
+  // ricaricare la lista, in caso di errore mostro una snackbar di errore
   deleteCourseDialog(){
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
@@ -115,6 +139,10 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  // apro una dialog per modificare un corso, passandole il corso che devo modificare
+  // alla chiusura della dialog ricarico i corsi
+  // se viene modificato l'enabled passando da true a false o viceversa
+  // faccio un redirect così da poter alla root
   startToEditCourse(){
     const course: Course = this.courses.find(c => c.name === this.selectedItem);
     this.courseService.getCourseVmModel(course.name)
@@ -139,6 +167,9 @@ export class BaseViewComponent implements OnInit, OnDestroy {
       );
   }
 
+  // se un corso viene cliccato sulla sidebar imposto il suo nome
+  // come elemento seleziona così da poterlo visualizzare sulla toolbar
+  // e permettere l'interazione con la delete/edit/share
   handleClick(selectedItem: Course) {
     this.selectedItem = selectedItem.name;
   }
@@ -171,7 +202,10 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     );
   }
 
-
+  // permette di ottenere l'acronimo del corso più un '-' per formattare
+  // correttamente il titolo nella toolbar del corso selezionato
+  // questo non verrà ritornato nel caso in cui non ci siano corsi selezionati
+  // o sia nel tool di admin del'admin
   getAcronym() {
     const course = this.courses.find(value => value.name === this.selectedItem);
     if (course === undefined) {
@@ -181,14 +215,21 @@ export class BaseViewComponent implements OnInit, OnDestroy {
       `${course.acronym} - ` : '';
   }
 
+  // permette di disabilitare il click sui corsi disabilitati per gli studenti
+  // i docenti comunque potranno continuare a cliccarci sopra per fare la edit
+  // stessa cosa gli admin
   isDisabled(element: Course) {
     return (this.authService.getRole() === 'ROLE_STUDENT' && !element.enabled);
   }
 
+  // quando viene cliccato su admin tools imposto l'elemento selezionato ad admin tools
   adminToolsClick() {
     this.selectedItem = 'Admin Tools';
   }
 
+  // metodo per gli studenti, che permette di fare richiesta di aggiunta ad un corso
+  // il metodo invia solo una notifica, quindi sarebbe inutile aggiornare la lista dei corsi
+  // dato che finchè il prof non la accetta non sarà comunque presente il corso
   openEnrollDialog() {
     this.dialog.open(EnrollCourseDialogComponent);
   }

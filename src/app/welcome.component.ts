@@ -4,9 +4,11 @@ import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-welcome',
-  template: '<h2>Welcome!!</h2><p>Qua qualcuno meno pigro di me dovrebbe fare una home figa da vedere.</p>',
+  template: '<h2>Benvenuto!!</h2>',
   styleUrls: []
 })
+// componente che una volta effettuato il login si occcupa di reindirizzare
+// gli utenti secondo il prorpio ruolo all'url corretto
 export class WelcomeComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {

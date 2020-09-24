@@ -52,7 +52,9 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
         }
       );
   }
-
+  // riempie un vettore con i possessori della vm
+  // gli elementi da mostrare disabilitati che in questo caso corrisponde al creatore
+  // e lo manda alla dialog insieme all'id della vm
   shareVm(owners: string[]){
     const d = {
       text: `Condividi VM  ${this.vm.id}`,
@@ -90,8 +92,11 @@ export class ShareVmButtonComponent implements OnInit, OnDestroy {
   submit(values: string[]) {
     this.courseService.shareVm(this.courseName, this.team.id, this.vm.id, values)
       .subscribe(
-        data => data,
-        error => console.log(error)
+        () => this.snackBar.open('Vm condivisa con gli studenti selezionati.', 'Chiudi'),
+        error => {
+          this.snackBar.open('Si è verificato un errore.', 'Chiudi');
+          console.log(error);
+        }
       );
   }
 }

@@ -22,6 +22,8 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.photoPath = 'assets/img/default.png';
   }
 
+  // nell'on init inizializzo il profilo che dei valori nulli, così da iniziare ad aprire la dialog
+  // poi quando verranno ricevuti i dati la riempirò correttamente
   ngOnInit(): void {
     this.profileData = new Profile('', '', '', '', '');
     this.service.get().subscribe(
@@ -40,10 +42,13 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   getPhoto(role: string, id: string): void {
     this.service.getPhoto(role, id).subscribe(
       data => {
+        // prima creo un url dal blob che ho ricevuto, successivamente
+        // per impostare un'url sul tag [src] di un'immagine devo sanitizzarlo
         const objectURL = URL.createObjectURL(data);
         this.photoPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       },
       error => {
+        // in caso di errore mostro l'immagine di default e mostro un errore sulla snackbar
         this.photoPath = 'assets/img/default.png';
         // console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamento della foto profilo.', 'Chiudi');
@@ -54,6 +59,8 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  // una volta selezionata la foto la passo al service per inviarla al backend in caso di risposta positiva
+  // faccio richiesta al backend per scaricarla
   changePhoto($event) {
     // console.log($event);
     const selectedFile: File = $event.target.files[0];
