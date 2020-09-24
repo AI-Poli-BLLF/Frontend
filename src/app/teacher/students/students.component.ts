@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Student} from '../../models/student.model';
 import {map, startWith} from 'rxjs/operators';
@@ -37,13 +37,14 @@ export class StudentsComponent implements OnInit {
   @Input()
   set EnrolledStudents(students: Array<Student>){
     this.enrolledStudents = students;
+    this.myControl.setValue('');
   }
 
   constructor() {
     this.enrollByCsvEvent = new EventEmitter<File>();
   }
 
-  deleteTableStudents(students: Array<Student>){
+  /*deleteTableStudents(students: Array<Student>){
     this.enrolledStudents = this.enrolledStudents.filter(s => students.findIndex(s1 => s1.id === s.id) === -1);
   }
 
@@ -51,11 +52,13 @@ export class StudentsComponent implements OnInit {
     const v = [...this.enrolledStudents];
     v.unshift(student);
     this.enrolledStudents = v;
-  }
+    this.myControl.setValue('');
+  }*/
 
   @Input()
   set AllStudents(students: Array<Student>){
     this.allStudents = students;
+    this.myControl.setValue('');
   }
 
   ngOnInit() {
@@ -89,7 +92,6 @@ export class StudentsComponent implements OnInit {
   }
 
   addStudent() {
-    this.myControl.setValue('');
     if (this.student == null) {
       return;
     }
