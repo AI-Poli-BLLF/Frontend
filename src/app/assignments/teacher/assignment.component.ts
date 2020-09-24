@@ -27,7 +27,7 @@ import {AssignmentStudentsComponent} from './assignment-students/assignment-stud
 export class AssignmentComponent implements AfterViewInit {
 
   assignments: Array<Assignment> = [];
-  columnsToDisplay: string[] = ['name', 'releaseDate', 'expiryDate', 'link'];
+  columnsToDisplay: string[] = ['name', 'releaseDateNumber', 'expiryDateNumber', 'link'];
   expandedElement: Draft | null;
 
   @Input()
