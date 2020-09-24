@@ -96,7 +96,7 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
     this.notificationService.rejectRequest(notificationToken).subscribe(
       () => {
         this.notifications = this.notifications.filter(value => value.id !== notificationToken.id);
-        this.snackBar.open(`Hai rifiutato di collaborare al corso ${notificationToken.courseName}`, 'Chiudi');
+        this.snackBar.open(rejectMessage, 'Chiudi');
       },
       err => {
         console.log(err);
