@@ -1,9 +1,8 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import {NotificationToken} from '../models/notification-token.model';
+import {NotificationToken, NotificationType} from '../models/notification-token.model';
 import {NotificationService} from '../services/notification.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatMenu} from '@angular/material/menu';
 
 @Component({
   selector: 'app-notifications-menu',
@@ -61,10 +60,14 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
   }
 
   acceptRequest(notificationToken: NotificationToken) {
+    const acceptMessage = notificationToken.type === NotificationType.STUDENT_ENROLLING ?
+      `Lo studente è stato iscritto con successo al corso ${notificationToken.courseName}` :
+      `Hai accettato di collaborare al corso ${notificationToken.courseName}`;
+
     this.notificationService.acceptRequest(notificationToken).subscribe(
       () => {
         this.notifications = this.notifications.filter(value => value.id !== notificationToken.id);
-        this.snackBar.open(`Hai accettato di collaborare al corso ${notificationToken.courseName}`, 'Chiudi');
+        this.snackBar.open(acceptMessage, 'Chiudi');
       },
       err => {
         console.log(err);
@@ -86,6 +89,10 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
   }
 
   rejectRequest(notificationToken: NotificationToken) {
+    const rejectMessage = notificationToken.type === NotificationType.STUDENT_ENROLLING ?
+      `La richiesta dello studente è stata rifiutata` :
+      `Hai rifiutato di collaborare al corso ${notificationToken.courseName}`;
+
     this.notificationService.rejectRequest(notificationToken).subscribe(
       () => {
         this.notifications = this.notifications.filter(value => value.id !== notificationToken.id);
