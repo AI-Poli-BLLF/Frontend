@@ -49,7 +49,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {ShareDialogComponent} from './share-dialog/share-dialog.component';
 import {ShareVmButtonComponent} from './share-dialog/share-vm-button';
 import {ShareCourseButtonComponent} from './share-dialog/share-course-button';
-import {AdminViewComponent} from './admin-view/admin-view.component';
+import {AdminViewComponent} from './admin/admin-view/admin-view.component';
 import {VmModelsTableComponent} from './vms/vm-models-table/vm-models-table.component';
 import {VmModelsComponent} from './vms/vm-models/vm-models.component';
 import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
@@ -64,8 +64,8 @@ import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.com
 import {DraftSComponent} from './student-view/draft-s/draft-s.component';
 import {AddAssignmentDialogComponent} from './teacher-view/assignment/add-assignment-dialog/add-assignment-dialog.component';
 import {AddDraftDialogComponent} from './student-view/draft-s/add-draft-dialog/add-draft-dialog.component';
-import {AddVmModelComponent} from './add-vm-model/add-vm-model.component';
-import {AddVmModelVersionsComponent} from './add-vm-model-versions/add-vm-model-versions.component';
+import {AddVmModelComponent} from './admin/add-vm-model/add-vm-model.component';
+import {AddVmModelVersionsComponent} from './admin/add-vm-model-versions/add-vm-model-versions.component';
 import {DraftsSubTableComponent} from './teacher-view/assignment/draft/drafts-sub-table.component';
 import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
 import {AssignmentComponent} from './teacher-view/assignment/assignment.component';
@@ -73,7 +73,7 @@ import {ProfessorTeamsComponent} from './teams/professor-teams/professor-teams.c
 import {TeamCardComponent} from './teams/team-card/team-card.component';
 import {ProfessorsContComponent} from './professors-cont/professors-cont.component';
 import {UsersTableComponent} from './users-table/users-table.component';
-import {AdminResourcesComponent} from './admin-resources/admin-resources.component';
+import {AdminResourcesComponent} from './admin/admin-resources/admin-resources.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {NotificationsMenuComponent} from './notifications/notifications-menu.component';
 import {NotificationCardComponent} from './notifications/content/notification-card.component';

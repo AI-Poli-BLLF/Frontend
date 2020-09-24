@@ -1,6 +1,8 @@
 <div *ngIf="isVisible()" id="notifications-menu">
   <button mat-icon-button [mat-menu-trigger-for]="menu"
           [matBadge]="getReadCount().toString()"
+          (onMenuOpen)="menuOpened()"
+          (onMenuClose)="menuClosed()"
           matBadgeColor="warn" matBadgePosition="before"
           matBadgeSize="small"
           [matBadgeHidden]="getReadCount()==0">

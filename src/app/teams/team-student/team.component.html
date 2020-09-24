@@ -1,9 +1,9 @@
 <div class="container">
   <div class="create_button">
-    <h2 *ngIf="!activeTeam">Il mio team</h2>
-    <button mat-raised-button color="primary" (click)="openCreateTeamDialog()">Crea gruppo</button>
+    <h2>Il mio team</h2>
+    <button *ngIf="!activeTeam" mat-raised-button color="primary" (click)="openCreateTeamDialog()">Crea gruppo</button>
   </div>
-  <div *ngIf="activeTeam; else elseBlock">
+  <div class="teams_div" *ngIf="activeTeam; else elseBlock">
     <div *ngFor="let team of getTeams(teamsM)">
       <app-team-card [delete]="false" [members]="team.activeMembers | async" [team]="getTeam(team)"></app-team-card>
     </div>
@@ -41,10 +41,11 @@
       </mat-card>
     </div>
   </ng-template>
-  <div>
+  <div class="other_teams">
     <h2>Altri team del corso</h2>
     <div class="teams_div">
       <app-team-card [members]="teamsMembers[team.id]" [delete]="false" [team]="team" *ngFor="let team of teams"></app-team-card>
-      <h3 *ngIf="teams.length<=1">Non esistono altri team per questo corso.</h3>
+      <h3 *ngIf="teams.length<1">Non esistono altri team per questo corso.</h3>
     </div>
   </div>
+</div>

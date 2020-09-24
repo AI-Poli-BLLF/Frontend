@@ -31,6 +31,20 @@ export class TeamService {
       );
   }
 
+  // Get all active teams for course
+  getAllActiveTeams(courseName: string): Observable<Array<Team>>{
+    return this.httpClient
+      .get<Array<Team>>(this.url + '/courses/' + courseName + '/teams/active')
+      .pipe(
+        map(arr => arr.map(
+          t => new Team(t.id, t.name, t.status))),
+        catchError( err => {
+          console.error(err);
+          return throwError('TeamService getAllActiveTeams error: ' + err.message);
+        })
+      );
+  }
+
   // Get team(s) a certain student is member of for a specific course.
   // If a student is part of an active team, only this will be returned,
   // otherwise all inactive teams the student is part of will be returned

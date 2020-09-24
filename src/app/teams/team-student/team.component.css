@@ -1,16 +1,6 @@
-
-h2 {
-  margin: 1em;
-}
-
-/*mat-card{*/
-/*  width: 50%;*/
-/*  margin-left: 15px;*/
-/*  border: 3px solid;*/
-/*}*/
-
 .teams_div {
-  margin: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .team_card {
@@ -24,12 +14,19 @@ h2 {
 }
 
 .create_button {
-  margin: 1em;
+  margin-top: 1em;
+  margin-bottom: 0;
   display: block;
 }
 .create_button h2{
+  margin-left: 1em;
   display: inline-block;
 }
 .create_button button{
   margin-left: 2em;
+}
+
+.other_teams h2{
+  margin-top: 1em;
+  margin-left: 1em;
 }

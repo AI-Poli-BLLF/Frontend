@@ -1,16 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import {NotificationToken} from '../models/notification-token.model';
 import {NotificationService} from '../services/notification.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatMenu} from '@angular/material/menu';
 
 @Component({
   selector: 'app-notifications-menu',
   templateUrl: './notifications-menu.component.html',
   styleUrls: ['./notifications-menu.component.css']
 })
-export class NotificationsMenuComponent implements OnInit {
+export class NotificationsMenuComponent implements OnInit, OnDestroy {
   notifications: Array<NotificationToken>;
+  interval;
+
   constructor(private authService: AuthService,
               private notificationService: NotificationService,
               private snackBar: MatSnackBar) {
@@ -18,10 +21,30 @@ export class NotificationsMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getNotifications();
+    this.interval = setInterval(() => this.getNotifications(), 10000);
+  }
+
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
+  menuOpened(){
+    console.log('Opened');
+    clearInterval(this.interval);
+  }
+
+  menuClosed(){
+    console.log('Closed');
+    this.interval = setInterval(() => this.getNotifications(), 10000);
+  }
+
+  getNotifications(){
     this.notificationService.getNotification().subscribe(
       tokens => {
-      this.notifications = tokens;
-      console.log(this.notifications);
+        this.notifications = tokens;
+        console.log(this.notifications);
       },
       error => {
         console.log(error);
@@ -74,4 +97,5 @@ export class NotificationsMenuComponent implements OnInit {
       }
     );
   }
+
 }

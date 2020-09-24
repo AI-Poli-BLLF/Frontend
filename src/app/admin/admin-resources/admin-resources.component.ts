@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AdminService} from '../services/admin.service';
-import {VmConfig} from '../models/vm.config.model';
+import {AdminService} from '../../services/admin.service';
+import {VmConfig} from '../../models/vm.config.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({

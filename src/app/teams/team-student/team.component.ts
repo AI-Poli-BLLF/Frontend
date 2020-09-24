@@ -154,7 +154,7 @@ export class TeamComponent implements OnInit {
   }
 
   private getAllTeams(courseName: string) {
-    this.teamService.getAllTeams(courseName)
+    this.teamService.getAllActiveTeams(courseName)
       .subscribe(
         data => {
           this.teams = data;
