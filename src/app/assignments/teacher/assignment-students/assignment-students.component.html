@@ -13,6 +13,7 @@
   </div>
   <!--  todo: su alcuni campi non funziona il riordino, perchè?-->
   <!--  todo: forse perchè non appartengo all'oggetto dichiarato nel data source-->
+  <!-- todo: molto probabile, ma tanto non è richiesto l'ordinamento per nome o cognome ma solo stato e timestamp -->
   <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows>
     <ng-container matColumnDef="studentId">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Matricola </th>

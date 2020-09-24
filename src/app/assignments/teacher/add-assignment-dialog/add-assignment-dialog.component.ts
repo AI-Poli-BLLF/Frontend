@@ -6,6 +6,7 @@ import {LoginDialogComponent} from '../../../login/login-dialog/login-dialog.com
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {Assignment} from '../../../models/assignment.model';
+import {isNull} from 'util';
 
 @Component({
   selector: 'app-add-assignment-dialog',
@@ -34,7 +35,9 @@ export class AddAssignmentDialogComponent implements OnInit {
   ) {
     this.formGroup = this.fb.group({
       requiredFile: [undefined, [Validators.required]],
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]]/*,
+      dataR: ['', [Validators.required]],
+      dataE: ['', [Validators.required]]*/
     });
 
     this.courseName = data.courseName;
@@ -49,17 +52,26 @@ export class AddAssignmentDialogComponent implements OnInit {
       ? 'Lunghezza nome non valida.' : '';
   }
 
+  // getDataErrorMessage(){
+  //   if (this.formGroup.controls.dataR.hasError('required')) {
+  //     return 'Devi inserire una data valida';
+  //   }
+  // }
+
   ngOnInit(): void {
   }
 
   add() {
     // todo: validare date cioè controllare che siano rimepite
+    // l'ho fatto di merda ma funziona, l'altro modo commentato non andava
     if (this.formGroup.invalid) {
       return;
     }
     const professorId = this.auth.getId();
     const releaseDate = this.dataR.value;
+    if (releaseDate === null) { return; }
     const expiryDate = this.dataE.value;
+    if (expiryDate === null) { return; }
     const file = this.formGroup.controls.requiredFile.value.files[0];
     const assignment = new Assignment(undefined, this.formGroup.controls.name.value, releaseDate, expiryDate);
     this.service.uploadAssignment(this.courseName, file, assignment).subscribe(
