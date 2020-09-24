@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {Draft} from '../../../models/draft.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -7,11 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {AuthService} from '../../../services/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Assignment} from '../../../models/assignment.model';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {AddDraftDialogComponent} from './add-draft-dialog/add-draft-dialog.component';
 
 @Component({
   selector: 'app-draft-s',
@@ -25,6 +21,7 @@ import {AddDraftDialogComponent} from './add-draft-dialog/add-draft-dialog.compo
     ]),
   ]
 })
+// componente che permette di elencare i draft di uno studente
 export class DraftSComponent implements OnInit {
   dataSource: MatTableDataSource<Draft>;
   columnsToDisplayDraft: string[] = ['state', 'timestamp', 'link', 'correction'];
@@ -39,7 +36,6 @@ export class DraftSComponent implements OnInit {
   @Output()
   lastDraft: EventEmitter<Draft>;
 
-  // states: Array<string> = ['NULL', 'READ', 'SUBMITTED'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -57,7 +53,8 @@ export class DraftSComponent implements OnInit {
     this.update();
   }
 
-
+  // vengono ottenuti i draft relativi allo studente e ordinati per data
+  // il più nuovo viene mandato al component padre che lo visualizzerà
   update(){
     this.service.getDraftForStudent(this.studentId, this.courseName, this.assignmentId).subscribe(
       d => {
@@ -78,14 +75,17 @@ export class DraftSComponent implements OnInit {
     return !(draft.locker === true || draft.state === 'SUBMITTED' || draft.state === 'REVIEWED');
   }
 
+  // metodo per disabilitare il tasto nel caso in cui non ci sia nessun draft caricato da vedere
   canOpen(element: Draft) {
     return element.state === 'SUBMITTED' || element.state === 'REVIEWED';
   }
 
+  // metodo per disabilitare il tasto nel caso in cui non ci sia nessuna correzione caricato da vedere
   canOpenCorrection(element: Draft) {
     return element.state === 'REVIEWED';
   }
 
+  // permette di aggiungere un draft senza ricarica scaricando tutta la lista dal server
   add(element: Draft) {
     const v = [...this.dataSource.data];
     v.unshift(element);

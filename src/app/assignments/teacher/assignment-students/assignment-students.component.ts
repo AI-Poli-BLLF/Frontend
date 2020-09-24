@@ -20,6 +20,7 @@ import {DraftHistoryComponent} from '../draft-history/draft-history.component';
   templateUrl: './assignment-students.component.html',
   styleUrls: ['./assignment-students.component.css']
 })
+// tabella degli studenti che hanno almeno letto l'assignment
 export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDestroy {
   columnsToDisplay: string[] = ['id', 'firstName', 'lastName', 'state', 'grade', 'timestampD', 'link', 'readCorrection', 'correction', 'evaluate', 'history'];
   dataSource: MatTableDataSource<Draft>;
@@ -96,6 +97,9 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
       );
   }
 
+  // apro una dialog per effettuare la valutazione
+  // in caso positivo la dialog alla chiusura mi tornerà il voto
+  // così potrò aggiuegnrlo alla tabella senza riscaricare i dati
   evaluateDraft(element: Draft){
     const c = { data: {courseName: this.courseName, draftId: element.id, assignmentId: this.assignmentId}};
     const dialogRef = this.dialog.open(DraftEvaluateComponent, c);
@@ -109,32 +113,39 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
+  // pulsante per aprire la storia dello studente
+  // il componente non è dummy, così mi risparmio lo scaricamento
+  // dei dati nel caso in cui non sia mai aperto
   historyStudent(element: Draft){
     const c = { data: {courseName: this.courseName, studentId: element.student.id, assignmentId: this.assignmentId}};
     this.dialog.open(DraftHistoryComponent, c);
   }
 
+  // funzioni che permettono di diabilitare i pulsanti in caso ci sia una correzione, un draft caricato o sia stato o meno già valutato
   canOpen(element: Draft) {
     return (element.state !== 'READ' && element.state !== 'NULL');
   }
-
+  // funzioni che permettono di diabilitare i pulsanti in caso ci sia una correzione, un draft caricato o sia stato o meno già valutato
   canCorrection(element: Draft) {
     return (element.state === 'SUBMITTED');
   }
-
+  // funzioni che permettono di diabilitare i pulsanti in caso ci sia una correzione, un draft caricato o sia stato o meno già valutato
   canOpenCorrection(element: Draft) {
     return (element.state === 'REVIEWED');
   }
-
+  // funzioni che permettono di diabilitare i pulsanti in caso ci sia una correzione, un draft caricato o sia stato o meno già valutato
   canEvaluate(element: Draft){
     return (element.locker === false);
 
   }
 
+  // carico l'ultimo draft degli studenti che hanno almeno letto l'assignment
+  // e li ordino per data decrescente
   private loadData() {
     this.assignmentService.getProfessorDrafts(this.courseName, this.assignmentId)
       .subscribe(
         drafts => {
+          drafts = drafts.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
           drafts.forEach(d => this.getDraftInfo(d));
           this.dataSource.data = drafts;
           this.update();
@@ -146,11 +157,13 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
       );
   }
 
+  // filtro la tabella dei draft in base allo stato
   applyFilter(event) {
     const filterValue = event.value;
     this.dataSource.filter = filterValue === 'all' ? '' : filterValue;
   }
 
+  // ritorno un valore testuale nel caso in cui il voto sia = 0 per la visualizzazione
   getGrade(element: Draft) {
     return element.grade > 0 ? element.grade : 'Non valutato';
   }

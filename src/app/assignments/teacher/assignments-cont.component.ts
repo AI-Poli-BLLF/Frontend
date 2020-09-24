@@ -36,6 +36,8 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     this.professorId = authService.getId();
   }
 
+  // ottengo gli assigment da passare al component figlio
+  // e in caso di errori lo notifico con una snackbar
   ngAfterViewInit(): void {
     this.service.getAssignmentForCourse(this.courseName).subscribe(
       s => {
@@ -54,6 +56,9 @@ export class AssignmentsContComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  // apro una dialog per creare un nuovo assignment e quando viene chiusa
+  // e l'inserimento è andato a buon fine aggiungo il nuovo eleento come primo
+  // in lista senza riscaricare i dati
   openCreateAssignment() {
     const c = { data: {courseName: this.courseName}};
     const dialogRef = this.dialog.open(AddAssignmentDialogComponent, c);

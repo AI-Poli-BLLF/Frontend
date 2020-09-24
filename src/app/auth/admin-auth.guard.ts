@@ -9,6 +9,7 @@ import {AuthService} from '../services/auth.service';
 export class AdminAuthGuard implements CanActivate {
   constructor(private authService: AuthService) {
   }
+  // solo chi ha ruolo admin può attivare certi percorsi
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

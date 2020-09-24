@@ -58,6 +58,7 @@ export class DraftHistoryComponent implements OnInit, AfterViewInit {
     return (element.state !== 'READ' && element.state !== 'NULL');
   }
 
+  // carico la storia dei draft di uno studente
   private loadData() {
     this.assignmentService.getDraftForStudent(this.studentId, this.courseName, this.assignmentId)
       .subscribe(

@@ -38,6 +38,10 @@ export class CorrectionViewComponent implements OnInit {
   ngOnInit() {
   }
 
+  // in base al ruolo di chi sta visualizzando scelgo il link corretto
+  // l'admin non è previsto che veda questa pagina
+  // il draft è legato allo studente, quindi devo recuperare la sua
+  // matricola per visualizzare la foto
   getDraftInfo() {
     if (this.authService.getRole() === 'ROLE_STUDENT') {
       this.getPhoto(this.authService.getId());
@@ -70,6 +74,7 @@ export class CorrectionViewComponent implements OnInit {
       );
   }
 
+  // torno alle consegne alla pressione del tasto
   back() {
     this.router.navigate(['../'], {relativeTo: this.route.parent});
   }

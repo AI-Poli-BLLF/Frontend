@@ -10,6 +10,9 @@ import {Profile} from '../models/profile.model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+// pagina di home che viene mostrata quando nessun altro componente è attivo nel router outlet
+// in base a chi è loggato mostriamo il suo nome recuperandolo dal profile service (tranne per l'admin che non ha un profilo)
+// o mostriamo informazioni sulle azioni da compiere
 export class HomeComponent implements OnDestroy {
   profile: Profile;
   sub: Subscription;

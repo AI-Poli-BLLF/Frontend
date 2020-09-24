@@ -11,6 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './assignment-view.component.html',
   styleUrls: ['./assignment-view.component.css']
 })
+// componente che permette di vedere la foto dell'assignment
 export class AssignmentViewComponent implements OnInit {
   photoPath: any;
   courseName: string;
@@ -26,12 +27,6 @@ export class AssignmentViewComponent implements OnInit {
     this.courseName = this.route.parent.parent.parent.snapshot.params.name;
     this.assignmentId = this.route.parent.snapshot.params.assignmentId;
     console.log(this.courseName, this.assignmentId);
-    // this.route.parent.parent.parent.params.subscribe(
-    //   data => {
-    //     this.courseName = data.name;
-    //     // this.getPhoto();
-    //   }
-    // );
     this.route.parent.params.subscribe(
       data => {
         this.assignmentId = data.assignmentId;
@@ -44,6 +39,9 @@ export class AssignmentViewComponent implements OnInit {
     // this.getPhoto();
   }
 
+  // in base al ruolo di chi sta visualizzando scelgo il link corretto
+  // il link dello studente permette di cambiare lo stato da null a read
+  // l'admin non è previsto che veda questa pagina
   getPhoto(): void {
     let obs: Observable<any>;
     switch (this.authService.getRole()) {
@@ -69,6 +67,7 @@ export class AssignmentViewComponent implements OnInit {
     );
   }
 
+  // torno alle consegne alla pressione del tasto
   back() {
     this.router.navigate(['../'], {relativeTo: this.route.parent});
   }

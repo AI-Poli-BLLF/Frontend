@@ -6,6 +6,7 @@ import {VmModelsList} from '../../models/vm.models.list.model';
   templateUrl: './vm-models-table.component.html',
   styleUrls: ['./vm-models-table.component.css']
 })
+// dummy component che si occupa di visualizzare i modelli delle vm
 export class VmModelsTableComponent {
   @Input()
   vmModelsList: VmModelsList[] = [];

@@ -45,6 +45,8 @@ export class AssignmentComponent implements AfterViewInit {
     this.dataSource = new MatTableDataSource(this.assignments);
   }
 
+  // setter degli assigments che aggiorna il paginator e ordina
+  // gli elementi quando vengono aggiunti
   @Input()
   set Assignments(assignments: Array<Assignment>){
     this.assignments = assignments.sort((e1, e2) => e2.releaseDateT.getTime() - e1.releaseDateT.getTime());;
@@ -62,11 +64,3 @@ export class AssignmentComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 }
-// const ELEMENT_DATA: Assignment[] = [
-//   new Assignment('ass1', new Timestamp(any, now()), new Timestamp(any, now())),
-//   new Assignment('ass2', new Timestamp(any, now()), new Timestamp(any, now())),
-//   new Assignment('ass3', new Timestamp(any, now()), new Timestamp(any, now())),
-//   new Assignment('ass4', new Timestamp(any, now()), new Timestamp(any, now())),
-//   new Assignment('ass5', new Timestamp(any, now()), new Timestamp(any, now())),
-//   new Assignment('ass6', new Timestamp(any, now()), new Timestamp(any, now()))
-// ];

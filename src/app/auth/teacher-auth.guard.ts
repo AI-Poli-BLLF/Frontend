@@ -9,6 +9,7 @@ import {AuthService} from '../services/auth.service';
 export class TeacherAuthGuard implements CanActivate {
   constructor(private authService: AuthService) {
   }
+  // solo chi ha ruolo professor può attivare certi percorsi
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
