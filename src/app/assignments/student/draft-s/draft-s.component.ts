@@ -51,8 +51,6 @@ export class DraftSComponent implements OnInit {
 
   ngOnInit(): void {
     this.update();
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   // vengono ottenuti i draft relativi allo studente e ordinati per data
@@ -63,6 +61,8 @@ export class DraftSComponent implements OnInit {
         const v = d.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
         this.dataSource.data = v;
         this.lastDraft.emit(v.length > 0 ? v[0] : new Draft(0, undefined, 0, 'NULL', true));
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
       err => {
         console.log(err);
@@ -91,5 +91,7 @@ export class DraftSComponent implements OnInit {
     v.unshift(element);
     this.dataSource.data = v;
     this.lastDraft.emit(element);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

@@ -48,10 +48,10 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  // update(){
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
+  update(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -148,7 +148,7 @@ export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDes
           drafts = drafts.sort((d1, d2) => d2.timestampT.getTime() - d1.timestampT.getTime());
           drafts.forEach(d => this.getDraftInfo(d));
           this.dataSource.data = drafts;
-          // this.update();
+          this.update();
         },
         err => {
           console.log(err);
