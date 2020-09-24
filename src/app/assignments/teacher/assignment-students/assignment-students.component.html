@@ -14,17 +14,17 @@
   <!--  todo: su alcuni campi non funziona il riordino, perchè?-->
   <!--  todo: forse perchè non appartengo all'oggetto dichiarato nel data source-->
   <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows>
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="studentId">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Matricola </th>
-      <td mat-cell *matCellDef="let element"> {{element.student.id}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
     </ng-container>
     <ng-container matColumnDef="firstName">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Nome </th>
-      <td mat-cell *matCellDef="let element"> {{element.student.firstName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
     </ng-container>
     <ng-container matColumnDef="lastName">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Cognome </th>
-      <td mat-cell *matCellDef="let element"> {{element.student.name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
     </ng-container>
     <ng-container matColumnDef="state">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Stato </th>
@@ -34,7 +34,7 @@
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Voto </th>
       <td mat-cell *matCellDef="let element"> {{getGrade(element)}} </td>
     </ng-container>
-    <ng-container matColumnDef="timestampD">
+    <ng-container matColumnDef="timestampNumber">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Creazione </th>
       <td mat-cell *matCellDef="let element"> {{element.timestampD}} </td>
     </ng-container>
