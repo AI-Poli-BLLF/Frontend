@@ -7,7 +7,6 @@ import {FormControl} from '@angular/forms';
 import {CourseService} from '../../services/course.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {debounceTime, startWith} from 'rxjs/operators';
-import {NotificationService} from '../../services/notification.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {StudentService} from '../../services/student.service';
 
@@ -23,7 +22,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
 
   private _courses: Course[];
   filteredCourses: MatTableDataSource<Course>;
-  displayedColumns: string[] = ['name', 'sendRequest'];
+  displayedColumns: string[] = ['name', 'acronym', 'sendRequest'];
   formControl: FormControl;
 
   constructor(
