@@ -40,6 +40,9 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
   }
 
   getNotifications(){
+    if (!this.authService.isLogged()){
+      return;
+    }
     this.notificationService.getNotification().subscribe(
       tokens => {
         this.notifications = tokens;
