@@ -2,7 +2,7 @@
   <mat-icon>{{loginButtonState.toLowerCase()}}</mat-icon>
   <span>{{loginButtonState}}</span>
 </button>
-<span class="margin20"></span>
+<span *ngIf="regIsVisible()" class="margin20"></span>
 <button *ngIf="regIsVisible()" mat-flat-button color="warn" [queryParams]=getQueryParamsReg() routerLink="/home">
   <mat-icon>person_add</mat-icon>
   <span>Registrazione</span>

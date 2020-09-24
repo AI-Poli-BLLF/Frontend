@@ -73,5 +73,5 @@ mat-card-subtitle{
 
 #card-container{
   background-size: cover;
-  background: url("src/assets/img/server2.jpg") no-repeat;
+  background: url("src/assets/img/server2.jpg") no-repeat center;
 }
