@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {debounceTime, startWith} from 'rxjs/operators';
 import {NotificationService} from '../../services/notification.service';
 import {MatDialogRef} from '@angular/material/dialog';
+import {StudentService} from '../../services/student.service';
 
 @Component({
   selector: 'app-enroll-course-dialog',
@@ -28,6 +29,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
   constructor(
     private dialogRef: MatDialogRef<EnrollCourseDialogComponent>,
     private courseService: CourseService,
+    private studentService: StudentService,
     private snackBar: MatSnackBar) {
 
     this._courses = [];
@@ -40,7 +42,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
     this.filteredCourses.paginator = this.paginator;
     this.filteredCourses.sort = this.sort;
 
-    this.courseService.getAll().subscribe(
+    this.studentService.getAvailableCourse().subscribe(
       data => {
         this.courses = data;
       },
