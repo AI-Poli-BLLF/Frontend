@@ -28,3 +28,6 @@ mat-sidenav-container{
   background-color: #ffd740;
   color: #000000;
 }
+.margin-right-left {
+  margin: 0 10px;
+}
