@@ -1,0 +1,30 @@
+mat-sidenav-container{
+  height: calc(100vh - 130px);
+}
+
+#hamburger {
+  margin-right: 1em;
+}
+
+.fill_space{
+  flex: 1 1 auto;
+}
+
+#add-button{
+  text-align: center;
+  margin: 20px;
+}
+
+#enroll-button{
+  text-align: center;
+  margin: 20px;
+}
+
+#subtitle{
+  font-weight: lighter!important;
+}
+
+.admin-tools {
+  background-color: #ffd740;
+  color: #000000;
+}

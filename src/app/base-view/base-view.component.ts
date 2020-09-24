@@ -1,25 +1,29 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Course} from '../../models/course.model';
-import {AddCourseDialogComponent} from '../courses/add-course-dialog/add-course-dialog.component';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
-import {CourseService} from '../../services/course.service';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {Course} from '../models/course.model';
 import {MatSidenav} from '@angular/material/sidenav';
-import {DeleteConfirmDialogComponent} from '../courses/delete-confirm-dialog/delete-confirm-dialog.component';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {CourseService} from '../services/course.service';
+import {AuthService} from '../services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {EditCourseDialogComponent} from '../courses/edit-course-dialog/edit-course-dialog.component';
-import {AuthService} from '../../services/auth.service';
+import {AddCourseDialogComponent} from '../teacher/courses/add-course-dialog/add-course-dialog.component';
+import {DeleteConfirmDialogComponent} from '../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
+import {EditCourseDialogComponent} from '../teacher/courses/edit-course-dialog/edit-course-dialog.component';
+import {EnrollCourseDialogComponent} from '../student/enroll-course-dialog/enroll-course-dialog.component';
 
 @Component({
-  selector: 'app-teacher-view',
-  templateUrl: './teacher-view.component.html',
-  styleUrls: ['./teacher-view.component.css']
+  selector: 'app-base-view',
+  templateUrl: './base-view.component.html',
+  styleUrls: ['./base-view.component.css']
 })
-export class TeacherViewComponent implements OnInit, OnDestroy {
+export class BaseViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
   editCourseOptions = true;
+
+  baseLink: string;
+
   courses: Array<Course> = [];
 
   @ViewChild(MatSidenav)
@@ -32,9 +36,36 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private service: CourseService) {
+    this.setBaseLink();
     this.homeS = router.events.subscribe(
       e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
+  }
+
+  setBaseLink(){
+    switch (this.authService.getRole()) {
+      case 'ROLE_ADMIN':
+        this.baseLink = '/admin';
+        break;
+      case 'ROLE_PROFESSOR':
+        this.baseLink = '/teacher';
+        break;
+      default:
+        this.baseLink = '/student';
+        break;
+    }
+  }
+
+  isStudent(){
+    return this.authService.getRole() === 'ROLE_STUDENT';
+  }
+
+  isTeacher(){
+    return this.authService.getRole() === 'ROLE_PROFESSOR';
+  }
+
+  isAdmin(){
+    return this.authService.getRole() === 'ROLE_ADMIN';
   }
 
   ngOnInit(): void {
@@ -59,7 +90,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1) {
       this.snackBar.open('Corso cancellato', 'Chiudi');
       this.selectedItem = 'Seleziona un corso';
-      this.router.navigate(['/teacher']);
+      this.router.navigate([this.baseLink]);
     }
   }
 
@@ -98,7 +129,7 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line:triple-equals
             if (('' + course.enabled) != data) {
               this.selectedItem = 'Seleziona un corso';
-              this.router.navigate(['/teacher']);
+              this.router.navigate([this.baseLink]);
             }
           });
         },
@@ -118,7 +149,19 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
   loadCourses(){
-    this.courseService.getAllByProfessor(this.authService.getId()).subscribe(
+    let obs: Observable<Array<Course>>;
+    switch (this.authService.getRole()) {
+      case 'ROLE_ADMIN':
+        obs = this.courseService.getAll();
+        break;
+      case 'ROLE_PROFESSOR':
+        obs = this.courseService.getAllByProfessor(this.authService.getId());
+        break;
+      default:
+        obs = this.courseService.getAllByStudent(this.authService.getId());
+        break;
+    }
+    obs.subscribe(
       data => {
         this.courses = data;
       },
@@ -137,5 +180,17 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
     }
     return this.selectedItem !== 'Seleziona un corso' ?
       `${course.acronym} - ` : '';
+  }
+
+  isDisabled(element: Course) {
+    return (this.authService.getRole() === 'ROLE_STUDENT' && !element.enabled);
+  }
+
+  adminToolsClick() {
+    this.selectedItem = 'Admin Tools';
+  }
+
+  openEnrollDialog() {
+    this.dialog.open(EnrollCourseDialogComponent);
   }
 }
