@@ -10,24 +10,12 @@ import {catchError, map} from 'rxjs/operators';
 })
 export class NotificationService {
 
-  private professorUrl = 'https://localhost:4200/API/professors';
-  private studentUrl = 'https://localhost:4200/API/students';
   private notificationUrl = 'https://localhost:4200/notification';
 
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
   getNotification(): Observable<Array<NotificationToken>>{
-    let url: string;
-    switch (this.auth.getRole()){
-      case 'ROLE_STUDENT':
-        url = `${this.studentUrl}/${this.auth.getId()}/notifications`;
-        break;
-      case 'ROLE_PROFESSOR':
-        url = `${this.professorUrl}/${this.auth.getId()}/notifications`;
-        break;
-      default:
-        return of(new Array<NotificationToken>());
-    }
+    const url = `${this.notificationUrl}/${this.auth.getId()}`;
 
     return this.httpClient.get<Array<NotificationToken>>(url).pipe(
       catchError( err => {

@@ -43,7 +43,6 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
     this.notificationService.getNotification().subscribe(
       tokens => {
         this.notifications = tokens;
-        console.log(this.notifications);
       },
       error => {
         console.log(error);
