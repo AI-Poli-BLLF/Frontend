@@ -3,7 +3,8 @@ import {Student} from '../models/student.model';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
-import {Team} from "../models/team.model";
+import {Course} from '../models/course.model';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class StudentService {
   private url = 'https://localhost:4200/API/students';
   private urlCourses = 'https://localhost:4200/API/courses';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   // add a student
   add(student: Student): Observable<Student>{
@@ -86,5 +87,17 @@ export class StudentService {
 
   getPhoto(studentId: string): Observable<any>{
     return this.httpClient.get(this.url + '/' + studentId + '/photo',  { responseType: 'blob' });
+  }
+
+  getAvailableCourse() {
+    const url = `${this.url}/${this.authService.getId()}/available-courses`;
+    return this.httpClient.get<Array<Course>>(url)
+      .pipe(
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        catchError( err => {
+          console.error(err);
+          return throwError(`CourseService getAvailableCourseForStudent error: ${err.message}`);
+        })
+      );
   }
 }
