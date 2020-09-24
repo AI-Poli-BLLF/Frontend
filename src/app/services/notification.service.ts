@@ -4,6 +4,7 @@ import {AuthService} from './auth.service';
 import {Observable, of, throwError} from 'rxjs';
 import {NotificationToken, NotificationType} from '../models/notification-token.model';
 import {catchError, map} from 'rxjs/operators';
+import {Course} from '../models/course.model';
 
 @Injectable({
   providedIn: 'root'

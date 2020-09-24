@@ -12,7 +12,7 @@
     <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
   </mat-form-field>
   <label>{{labelValue}}</label>
-  <button mat-button (click)="login()">Login</button>
-  <button class="right" mat-button routerLink="/home" mat-dialog-close="true">Annulla</button>
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+  <button class="right" mat-raised-button color="warn" routerLink="/home" mat-dialog-close="true">Annulla</button>
 </form>
 </div>

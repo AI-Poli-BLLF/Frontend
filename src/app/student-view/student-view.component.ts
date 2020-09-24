@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Course} from '../models/course.model';
 import {Subscription} from 'rxjs';
 import {MatSidenav} from '@angular/material/sidenav';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {CourseService} from '../services/course.service';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../services/auth.service';
+import {EnrollCourseDialogComponent} from './enroll-course-dialog/enroll-course-dialog.component';
 
 @Component({
   selector: 'app-student-view',
@@ -23,7 +24,8 @@ export class StudentViewComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private courseService: CourseService,
               private route: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dialog: MatDialog) {
     this.homeS = router.events.subscribe(
       e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
@@ -56,5 +58,10 @@ export class StudentViewComponent implements OnInit, OnDestroy {
       },
       error => console.log(error)
     );
+  }
+
+  openEnrollDialog() {
+    const dialogRef = this.dialog.open(EnrollCourseDialogComponent);
+    const afterOpened = dialogRef.afterOpened();
   }
 }

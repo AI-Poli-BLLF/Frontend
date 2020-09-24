@@ -2,6 +2,6 @@
   <h1>Cancellazione corso</h1>
   <p>Sei sicuro di volere cancellare il corso "{{courseName}}"?</p>
   <label *ngIf="labelValue!=''">{{labelValue}}</label>
-  <button mat-button (click)="deleteCourse()">Conferma</button>
-  <button class="right" mat-button mat-dialog-close="true">Annulla</button>
+  <button mat-raised-button color="primary" (click)="deleteCourse()">Conferma</button>
+  <button class="right" mat-raised-button color="warn" mat-dialog-close="true">Annulla</button>
 </div>

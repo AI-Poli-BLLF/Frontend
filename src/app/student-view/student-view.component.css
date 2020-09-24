@@ -11,3 +11,8 @@ table {
 .fill_space{
   flex: 1 1 auto;
 }
+
+#enroll-button{
+  text-align: center;
+  margin: 20px;
+}

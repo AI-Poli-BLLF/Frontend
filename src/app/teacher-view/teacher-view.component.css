@@ -9,3 +9,8 @@ mat-sidenav-container{
 .fill_space{
   flex: 1 1 auto;
 }
+
+#add-button{
+  text-align: center;
+  margin: 20px;
+}

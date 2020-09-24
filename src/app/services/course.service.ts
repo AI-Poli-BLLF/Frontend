@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Student} from '../models/student.model';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {Course} from '../models/course.model';
@@ -11,6 +11,7 @@ import {VmModel} from '../models/vm.model.model';
 import {consoleTestResultHandler} from 'tslint/lib/test';
 import {VmModelsList} from '../models/vm.models.list.model';
 import {Professor} from '../models/professor.model';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class CourseService {
   private urlProfessors = 'https://localhost:4200/API/professors';
   private urlStudents = 'https://localhost:4200/API/students';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   // add a course
   update(course: Course): Observable<Course>{
@@ -313,5 +314,18 @@ export class CourseService {
           return throwError(`CourseService getVmModels error: ${err.message}`);
         })
       );
+  }
+
+  sendEnrollRequest(course: Course) {
+    if (!this.authService.isLogged()){
+      return of(null);
+    }
+    const url = `${this.url}/${course.name}/enrolling-course-request`;
+    return this.httpClient.post(url, this.authService.getId()).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
   }
 }

@@ -32,7 +32,7 @@
     </mat-form-field>
     <mat-slide-toggle class="example-margin" [checked]="checked" (change)="changed($event)" color="primary">Abilitato</mat-slide-toggle>
     <label>{{labelValue}}</label>
-    <button mat-button type="submit" (click)="add()">Aggiungi</button>
-    <button class="right" mat-button mat-dialog-close="true">Annulla</button>
+    <button mat-raised-button color="primary" type="submit" (click)="add()">Aggiungi</button>
+    <button class="right" mat-raised-button color="warn" mat-dialog-close="true">Annulla</button>
   </form>
 </div>

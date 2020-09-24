@@ -1,0 +1,36 @@
+<!-- todo: controllare perchè non funziona il mat sort -->
+<div class="upper-body">
+  <h2>Richiedi di essere iscritto</h2>
+  <mat-form-field appearance="standard">
+    <mat-label>Cerca un corso</mat-label>
+    <input matInput type="search" placeholder="Nome del corso"
+           [formControl]="formControl">
+  </mat-form-field>
+</div>
+<div class="container">
+  <table mat-table [dataSource]="filteredCourses" matSort class="my-table">
+    <!-- Id Column-->
+    <ng-container matColumnDef="courseName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome Corso </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
+      <td mat-cell *matCellDef="let element"> {{element.enabled ? 'Acceso' : 'Spento'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sendRequest">
+      <th mat-header-cell *matHeaderCellDef> Invia Richiesta </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button (click)="sendEnrollRequest(element)">
+          <mat-icon>send</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 30]" showFirstLastButtons ></mat-paginator>
+</div>
