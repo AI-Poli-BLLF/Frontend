@@ -30,7 +30,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
     private courseService: CourseService,
     private snackBar: MatSnackBar) {
 
-    this._courses = [new Course('applicazioni internet', true, 1, 2)];
+    this._courses = [];
     this.filteredCourses = new MatTableDataSource<Course>();
     this.filteredCourses.data = this._courses.map(value => value);
     this.formControl = new FormControl();
