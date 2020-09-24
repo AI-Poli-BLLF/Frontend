@@ -54,4 +54,8 @@ export class AppComponent implements OnDestroy{
   isVisible() {
     return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
   }
+
+  isLogged(){
+    return this.authService.isLogged();
+  }
 }

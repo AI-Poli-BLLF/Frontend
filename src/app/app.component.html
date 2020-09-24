@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar" color="primary">
+<mat-toolbar class="toolbar" color="primary" *ngIf="isLogged()">
   <mat-toolbar-row class="mat-elevation-z8">
     <a routerLink="home"><img id="logo" src="assets/img/vlablogo.png" ></a>
     <a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
@@ -8,5 +8,29 @@
     <span><app-profile-view-button></app-profile-view-button></span>
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet class="outlet"></router-outlet>
+<router-outlet class="outlet" *ngIf="isVisible()"></router-outlet>
 
+<div class="welcome-container" *ngIf="!isLogged()">
+  <mat-grid-list cols="5" rowHeight="100%">
+    <mat-grid-tile
+      colspan="2"
+      style="background: #222e2e">
+      <div>
+        <img src="assets/img/biglogo.png" alt="">
+        <h1>Virtual Labs</h1>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile id="card-container"
+      colspan="3">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Ciao questo è virtual labs e non so cosa scrivere</mat-card-title>
+          <mat-card-subtitle>Ti permette di fare cose sia da studente che da professore e divertirti con le tue VM</mat-card-subtitle>
+        </mat-card-header>
+        <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
+        <!--<button mat-raised-button color="primary"><mat-icon>login</mat-icon> Login</button>
+        <button mat-raised-button color="warn"><mat-icon>person_add</mat-icon> Registrati</button>-->
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -30,7 +30,9 @@ export class ProfileViewButtonComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.dialogSub.unsubscribe();
+    if (this.dialogSub !== undefined) {
+      this.dialogSub.unsubscribe();
+    }
   }
 
   public getImage(){
