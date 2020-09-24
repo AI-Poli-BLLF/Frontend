@@ -8,7 +8,7 @@
     <span><app-profile-view-button></app-profile-view-button></span>
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet class="outlet" *ngIf="isVisible()"></router-outlet>
+<router-outlet class="outlet" *ngIf="isLogged()"></router-outlet>
 
 <div class="welcome-container" *ngIf="!isLogged()">
   <mat-grid-list cols="5" rowHeight="100%">
