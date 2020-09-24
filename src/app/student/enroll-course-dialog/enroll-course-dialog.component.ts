@@ -39,13 +39,12 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.filteredCourses.paginator = this.paginator;
+    this.filteredCourses.sort = this.sort;
 
     this.studentService.getAvailableCourse().subscribe(
       data => {
         this.courses = data;
-        this.filteredCourses.paginator = this.paginator;
-        this.filteredCourses.sort = this.sort;
       },
       () => this.snackBar.open('Errore nel caricamento dei corsi', 'Chiudi')
     );

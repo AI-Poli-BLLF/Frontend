@@ -25,8 +25,6 @@ export class AppComponent implements OnDestroy{
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService) {
-    // route.paramMap.subscribe(params => console.log(params.get()));
-
 
     this.doLogin = route.queryParams.subscribe(
       q => {

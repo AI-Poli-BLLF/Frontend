@@ -52,5 +52,14 @@ export class Assignment {
     this.expiryDateT = new Date(value);
   }
 
+  get expiryDateNumber(){
+    return this.expiryDateT.getTime();
+  }
+
+  get releaseDateNumber(){
+    return this.releaseDateT.getTime();
+  }
+
+
 }
 

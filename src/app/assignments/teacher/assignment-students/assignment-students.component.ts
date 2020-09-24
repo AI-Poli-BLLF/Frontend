@@ -22,7 +22,7 @@ import {DraftHistoryComponent} from '../draft-history/draft-history.component';
 })
 // tabella degli studenti che hanno almeno letto l'assignment
 export class AssignmentStudentsComponent implements OnInit, AfterViewInit, OnDestroy {
-  columnsToDisplay: string[] = ['id', 'firstName', 'lastName', 'state', 'grade', 'timestampD', 'link', 'readCorrection', 'correction', 'evaluate', 'history'];
+  columnsToDisplay: string[] = ['studentId', 'firstName', 'lastName', 'state', 'grade', 'timestampNumber', 'link', 'readCorrection', 'correction', 'evaluate', 'history'];
   dataSource: MatTableDataSource<Draft>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

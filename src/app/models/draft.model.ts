@@ -44,4 +44,16 @@ export class Draft {
   get timestampNumber(): number{
     return this.timestampT.getTime();
   }
+
+  get lastName(){
+    return this.student.name;
+  }
+
+  get firstName(){
+    return this.student.firstName;
+  }
+
+  get studentId(){
+    return this.student.id;
+  }
 }

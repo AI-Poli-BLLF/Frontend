@@ -18,10 +18,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class StudentsContComponent implements AfterViewInit, OnDestroy{
   courseName = '';
   students: Student[] = [];
+  allStudents: Student[] = [];
   private sub: Subscription;
 
-  @ViewChild(StudentsComponent)
-  studentsComponent: StudentsComponent;
+  /*@ViewChild(StudentsComponent)
+  studentsComponent: StudentsComponent;*/
 
   constructor(
     private service: StudentService,
@@ -41,7 +42,10 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       .subscribe(
         () => {
           this.getPhoto(student);
-          this.studentsComponent.addTableStudents(student);
+          // this.studentsComponent.addTableStudents(student);
+          const v = [...this.students];
+          v.unshift(student);
+          this.students = v;
         },
         () => this.service.getEnrolled(this.courseName).subscribe(s2 => {
           this.students = s2;
@@ -57,7 +61,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     students.forEach(s => delObs.push(this.service.removeStudentFromCourse(this.courseName, s.id)));
     forkJoin(delObs).subscribe(
       () => {
-        this.studentsComponent.deleteTableStudents(students);
+        this.students = this.students.filter(s => students.findIndex(s1 => s1.id === s.id) === -1);
       },
       error => {
         console.log('Delete error: ', error);
@@ -76,7 +80,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     this.getEnrolledStudent();
 
     this.service.getAll().subscribe(
-      s => this.studentsComponent.AllStudents = s,
+      s => this.allStudents = s,
       error => {
         console.log(error);
         this.snackBar.open('Si è verificato un errore nel caricamento degli studenti.', 'Chiudi');
