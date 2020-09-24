@@ -10,12 +10,12 @@
 <div class="container">
   <table mat-table [dataSource]="filteredCourses" matSort class="my-table">
     <!-- Id Column-->
-    <ng-container matColumnDef="courseName">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome Corso </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="active">
+    <ng-container matColumnDef="enabled">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
       <td mat-cell *matCellDef="let element"> {{element.enabled ? 'Acceso' : 'Spento'}} </td>
     </ng-container>

@@ -44,7 +44,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.students) {
-      this.displayedColumns.push('group');
+      this.displayedColumns.push('groupName');
       this.displayedColumns.unshift('select');
     }
     this.update();

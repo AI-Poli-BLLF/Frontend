@@ -16,7 +16,7 @@ import {MatSort} from '@angular/material/sort';
 })
 export class DraftHistoryComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Draft>;
-  columnsToDisplay: string[] = ['id', 'state', 'timestampD', 'link'];
+  columnsToDisplay: string[] = ['id', 'state', 'timestampNumber', 'link'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

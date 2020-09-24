@@ -73,14 +73,13 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
     dialogRef.afterClosed().subscribe(value => {
-      // todo: da testare
       // tslint:disable-next-line:triple-equals
       if (value != 'true'){
         return;
-    }
-      this.service.getAll().subscribe(
-        (data) => {
-          this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
+      }
+      this.service.deleteOne(this.selectedItem).subscribe(
+        () => {
+          this.courses = this.courses.filter(c => c.name !== this.selectedItem);
           this.snackBarDelete();
         },
         error => {

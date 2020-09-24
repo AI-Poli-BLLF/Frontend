@@ -66,10 +66,14 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   deleteCourseDialog(){
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
-    dialogRef.afterClosed().subscribe(() => {
-      this.service.getAllByProfessor(this.authService.getId()).subscribe(
-        (data) => {
-          this.courses = data;
+    dialogRef.afterClosed().subscribe(value => {
+      // tslint:disable-next-line:triple-equals
+      if (value != 'true'){
+        return;
+      }
+      this.service.deleteOne(this.selectedItem).subscribe(
+        () => {
+          this.courses = this.courses.filter(c => c.name !== this.selectedItem);
           this.snackBarDelete();
         },
         error => {

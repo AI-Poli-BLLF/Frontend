@@ -18,4 +18,5 @@ export class User {
   toString(){
     return this.firstName + ' ' + this.name + ' (' + this.id + ')';
   }
+
 }

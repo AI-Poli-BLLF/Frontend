@@ -40,4 +40,8 @@ export class Draft {
   get timestampD(){
     return `${this.time} ${this.date}`;
   }
+
+  get timestampNumber(): number{
+    return this.timestampT.getTime();
+  }
 }
