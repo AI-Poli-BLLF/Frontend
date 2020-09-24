@@ -39,7 +39,6 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     this.homeS = router.events.subscribe(
       e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
-    this.route.firstChild.firstChild.params.subscribe(p => console.log(p));
   }
 
   setBaseLink(){
