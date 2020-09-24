@@ -15,11 +15,6 @@
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="enabled">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stato </th>
-      <td mat-cell *matCellDef="let element"> {{element.enabled ? 'Acceso' : 'Spento'}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="sendRequest">
       <th mat-header-cell *matHeaderCellDef> Invia Richiesta </th>
       <td mat-cell *matCellDef="let element">

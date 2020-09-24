@@ -23,7 +23,7 @@ export class EnrollCourseDialogComponent implements OnInit, AfterViewInit {
 
   private _courses: Course[];
   filteredCourses: MatTableDataSource<Course>;
-  displayedColumns: string[] = ['name', 'enabled', 'sendRequest'];
+  displayedColumns: string[] = ['name', 'sendRequest'];
   formControl: FormControl;
 
   constructor(
