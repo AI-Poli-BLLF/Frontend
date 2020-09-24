@@ -1,30 +1,30 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {StudentsContComponent} from './teacher-view/students/students-cont.component';
-import {HomeComponent} from './home.component';
+import {StudentsContComponent} from './teacher/students/students-cont.component';
+import {HomeComponent} from './home/home.component';
 import {PageNotFoundComponent} from './page-not-found.component';
-import {VmsComponent} from './vms/vms.component';
+import {VmsComponent} from './vms/teacher/vms-teacher/vms.component';
 import {TabComponentComponent} from './tab-component/tab-component.component';
-import {TeacherViewComponent} from './teacher-view/teacher-view.component';
+import {TeacherViewComponent} from './teacher/teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
-import {StudentViewComponent} from './student-view/student-view.component';
+import {StudentViewComponent} from './student/student-view/student-view.component';
 import {TeacherAuthGuard} from './auth/teacher-auth.guard';
 import {StudentAuthGuard} from './auth/student-auth.guard';
 import {TeamComponent} from './teams/team-student/team.component';
-import {VmsStudentsComponent} from './vms/vms-students/vms-students.component';
+import {VmsStudentsComponent} from './vms/student/vms-students/vms-students.component';
 import {VmViewComponent} from './vms/vm-view/vm-view.component';
 import {TokenComponent} from './token/token.component';
 import {AdminAuthGuard} from './auth/admin-auth.guard';
 import {AdminViewComponent} from './admin/admin-view/admin-view.component';
-import {VmModelsComponent} from './vms/vm-models/vm-models.component';
-import {AssignmentSComponent} from './student-view/assignment-s/assignment-s.component';
-import {AssignmentsContComponent} from './teacher-view/assignment/assignments-cont.component';
+import {VmModelsComponent} from './admin/vm-models/vm-models.component';
+import {AssignmentSComponent} from './assignments/student/assignment-s/assignment-s.component';
+import {AssignmentsContComponent} from './assignments/teacher/assignments-cont.component';
 import {ProfessorTeamsComponent} from './teams/professor-teams/professor-teams.component';
-import {ProfessorsContComponent} from './professors-cont/professors-cont.component';
+import {ProfessorsContComponent} from './admin/professors-cont/professors-cont.component';
 import {AdminResourcesComponent} from './admin/admin-resources/admin-resources.component';
-import {DraftViewComponent} from './draft-view/draft-view.component';
-import {AssignmentViewComponent} from './assignment-view/assignment-view.component';
-import {CorrectionViewComponent} from './correction-view/correction-view.component';
+import {DraftViewComponent} from './assignments/draft-view/draft-view.component';
+import {AssignmentViewComponent} from './assignments/assignment-view/assignment-view.component';
+import {CorrectionViewComponent} from './assignments/correction-view/correction-view.component';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -50,7 +50,8 @@ const routes: Routes = [
               {path: ':assignmentId',
                 children: [
                   {path: '', component: AssignmentViewComponent},
-                  {path: 'drafts/:draftId', component: DraftViewComponent}
+                  {path: 'drafts/:draftId', component: DraftViewComponent},
+                  {path: 'drafts/:draftId/correction', component: CorrectionViewComponent}
                 ]}
             ]}
         ]},

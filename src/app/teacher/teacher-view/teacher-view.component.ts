@@ -1,23 +1,25 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
 import {Course} from '../../models/course.model';
-import {MatSidenav} from '@angular/material/sidenav';
+import {AddCourseDialogComponent} from '../courses/add-course-dialog/add-course-dialog.component';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Observable, Subscription} from 'rxjs';
 import {CourseService} from '../../services/course.service';
-import {AuthService} from '../../services/auth.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatSidenav} from '@angular/material/sidenav';
+import {DeleteConfirmDialogComponent} from '../courses/delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DeleteConfirmDialogComponent} from '../../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
-import {EditCourseDialogComponent} from '../../teacher/courses/edit-course-dialog/edit-course-dialog.component';
+import {EditCourseDialogComponent} from '../courses/edit-course-dialog/edit-course-dialog.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
-  selector: 'app-admin-view',
-  templateUrl: './admin-view.component.html',
-  styleUrls: ['./admin-view.component.css']
+  selector: 'app-teacher-view',
+  templateUrl: './teacher-view.component.html',
+  styleUrls: ['./teacher-view.component.css']
 })
-export class AdminViewComponent implements OnInit, OnDestroy {
+export class TeacherViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
+  editCourseOptions = true;
   courses: Array<Course> = [];
 
   @ViewChild(MatSidenav)
@@ -31,12 +33,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
               private snackBar: MatSnackBar,
               private service: CourseService) {
     this.homeS = router.events.subscribe(
-      e => {
-        // tslint:disable-next-line:no-unused-expression
-        (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e;
-        // tslint:disable-next-line:no-unused-expression
-        this.router.url.includes('/admin/tools') ? this.selectedItem = 'Admin Tools' : e;
-      }
+      e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
   }
 
@@ -44,20 +41,25 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     this.loadCourses();
     const courseName = this.route.firstChild.snapshot.params.name;
     this.selectedItem = courseName === undefined ? 'Seleziona un corso' : courseName;
-    // tslint:disable-next-line:no-unused-expression
-    this.router.url.includes('/admin/tools') ? this.selectedItem = 'Admin Tools' : '';
-
   }
 
   toggleForMenuClick() {
     this.sidenav.toggle();
   }
 
+  openAddCourseDialog(){
+    // todo: unsubrscribe?
+    const dialogRef = this.dialog.open(AddCourseDialogComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCourses();
+    });
+  }
+
   snackBarDelete() {
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1) {
       this.snackBar.open('Corso cancellato', 'Chiudi');
       this.selectedItem = 'Seleziona un corso';
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/teacher']);
     }
   }
 
@@ -65,9 +67,9 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
     dialogRef.afterClosed().subscribe(() => {
-      this.service.getAll().subscribe(
+      this.service.getAllByProfessor(this.authService.getId()).subscribe(
         (data) => {
-          this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
+          this.courses = data;
           this.snackBarDelete();
         },
         error => {
@@ -90,9 +92,9 @@ export class AdminViewComponent implements OnInit, OnDestroy {
             // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
-            if (!course.enabled == data) {
+            if (('' + course.enabled) != data) {
               this.selectedItem = 'Seleziona un corso';
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/teacher']);
             }
           });
         },
@@ -107,19 +109,15 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     this.selectedItem = selectedItem.name;
   }
 
-  adminToolsClick() {
-    this.selectedItem = 'Admin Tools';
-  }
-
   ngOnDestroy(): void {
     this.homeS.unsubscribe();
   }
 
   loadCourses(){
-    this.courseService.getAll().subscribe(
+    this.courseService.getAllByProfessor(this.authService.getId()).subscribe(
       data => {
         // console.log(data);
-        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
+        this.courses = data;
       },
       error => {
         console.log(error);
@@ -127,5 +125,6 @@ export class AdminViewComponent implements OnInit, OnDestroy {
       }
     );
   }
+
 
 }
