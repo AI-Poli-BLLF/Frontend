@@ -5,11 +5,14 @@ mat-sidenav-container{
 #hamburger {
   margin-right: 1em;
 }
-table {
-  width: 100%;
-}
+
 .fill_space{
   flex: 1 1 auto;
+}
+
+#add-button{
+  text-align: center;
+  margin: 20px;
 }
 
 #enroll-button{
@@ -19,4 +22,12 @@ table {
 
 #subtitle{
   font-weight: lighter!important;
+}
+
+.admin-tools {
+  background-color: #ffd740;
+  color: #000000;
+}
+.margin-right-left {
+  margin: 0 10px;
 }

@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
+    <mat-icon >menu</mat-icon>
+  </button>
+  <span id="subtitle">{{getAcronym() + selectedItem}}</span>
+  <span class="fill_space"></span>
+  <div *ngIf="!isStudent() && selectedItem!='Seleziona un corso' && selectedItem!='Admin Tools'">
+    <button mat-mini-fab class="course_edit" (click)="startToEditCourse()"><mat-icon>edit</mat-icon></button>
+    <app-share-course-button *ngIf="isTeacher()" [courseName]="selectedItem"></app-share-course-button>
+    <span *ngIf="isAdmin()" class="margin-right-left"></span>
+    <button mat-mini-fab class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" position="start">
+    <div class="container">
+      <mat-nav-list>
+        <mat-list-item *ngIf="isAdmin()" class="admin-tools" (click)="adminToolsClick()"
+                       [routerLink]="['/admin/tools']"><mat-icon>supervisor_account</mat-icon>Admin Tools</mat-list-item>
+        <mat-list-item *ngIf="courses.length < 1" disabled>Nessun corso</mat-list-item>
+        <mat-list-item *ngFor="let course of courses"
+                       [disabled]="isDisabled(course)"
+                       (click)="handleClick(course)"
+                       [routerLink]="[baseLink + '/course', course.name]">
+          {{course.name}}
+        </mat-list-item>
+      </mat-nav-list>
+      <div *ngIf="isTeacher()">
+        <button mat-raised-button color="accent" id="add-button" (click)="openAddCourseDialog()">
+          <mat-icon>add</mat-icon>Nuovo Corso
+        </button>
+      </div>
+      <div *ngIf="isStudent()">
+        <button mat-raised-button color="accent" id="enroll-button" (click)="openEnrollDialog()">
+          <mat-icon>send</mat-icon>
+          Iscriviti
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

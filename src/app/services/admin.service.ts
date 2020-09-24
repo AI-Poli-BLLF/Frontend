@@ -51,7 +51,7 @@ export class AdminService {
       );
   }
 
-  // permette di elinira un os tra i modelli disponibili , è una funzione solo per admin
+  // permette di eliminare un os tra i modelli disponibili , è una funzione solo per admin
   deleteOs(osName: string): Observable<any>{
     return this.httpClient.delete<any>(this.url + '/' + osName)
       .pipe(

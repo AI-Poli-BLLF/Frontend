@@ -30,10 +30,8 @@ import {JwtInterceptor} from './auth/JwtInterceptor';
 import {TabComponentComponent} from './tab-component/tab-component.component';
 import {RegistrationDialogComponent} from './login/registration-dialog/registration-dialog.component';
 import {AddCourseDialogComponent} from './teacher/courses/add-course-dialog/add-course-dialog.component';
-import {TeacherViewComponent} from './teacher/teacher-view/teacher-view.component';
 import {WelcomeComponent} from './welcome.component';
 import {DeleteConfirmDialogComponent} from './teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
-import {StudentViewComponent} from './student/student-view/student-view.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 import {ProfileViewComponent} from './profile-view/profile-view.component';
 import {ProfileViewButtonComponent} from './profile-view/profile-view-button.component';
@@ -49,7 +47,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {ShareDialogComponent} from './teacher/share-dialog/share-dialog.component';
 import {ShareVmButtonComponent} from './teacher/share-dialog/share-vm-button';
 import {ShareCourseButtonComponent} from './teacher/share-dialog/share-course-button';
-import {AdminViewComponent} from './admin/admin-view/admin-view.component';
 import {VmModelsTableComponent} from './admin/vm-models-table/vm-models-table.component';
 import {VmModelsComponent} from './admin/vm-models/vm-models.component';
 import {VmsStudentsComponent} from './vms/student/vms-students/vms-students.component';
@@ -88,6 +85,7 @@ import {AssignmentViewComponent} from './assignments/assignment-view/assignment-
 import {MatBadgeModule} from '@angular/material/badge';
 import {CorrectionViewComponent} from './assignments/correction-view/correction-view.component';
 import {EnrollCourseDialogComponent} from './student/enroll-course-dialog/enroll-course-dialog.component';
+import {BaseViewComponent} from './base-view/base-view.component';
 
 @NgModule({
   declarations: [
@@ -102,11 +100,9 @@ import {EnrollCourseDialogComponent} from './student/enroll-course-dialog/enroll
     TabComponentComponent,
     RegistrationDialogComponent,
     AddCourseDialogComponent,
-    TeacherViewComponent,
     TeamComponent,
     WelcomeComponent,
     DeleteConfirmDialogComponent,
-    StudentViewComponent,
     ProfileViewComponent,
     ProfileViewButtonComponent,
     VmTableComponent,
@@ -132,7 +128,6 @@ import {EnrollCourseDialogComponent} from './student/enroll-course-dialog/enroll
     TokenComponent,
     ShareVmButtonComponent,
     ShareCourseButtonComponent,
-    AdminViewComponent,
     VmModelsTableComponent,
     VmModelsComponent,
     AddVmModelComponent,
@@ -150,7 +145,8 @@ import {EnrollCourseDialogComponent} from './student/enroll-course-dialog/enroll
     DraftHistoryComponent,
     DraftViewComponent,
     CorrectionViewComponent,
-    EnrollCourseDialogComponent
+    EnrollCourseDialogComponent,
+    BaseViewComponent
   ],
     imports: [
         BrowserModule,

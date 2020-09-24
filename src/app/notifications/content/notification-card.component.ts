@@ -33,7 +33,6 @@ export class NotificationCardComponent implements OnInit {
   }
 
   public getImage(){
-    // todo: con getRole del auth service ottieni il ruolo di chi lo sta usando e se è admin crasha tutto
     this.profileService.getPhoto(this.getRole(this.notification.senderId), this.notification.senderId)
       .subscribe(
         data => {

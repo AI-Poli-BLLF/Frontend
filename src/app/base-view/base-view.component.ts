@@ -1,25 +1,28 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {Course} from '../../models/course.model';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
+import {Course} from '../models/course.model';
 import {MatSidenav} from '@angular/material/sidenav';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {CourseService} from '../../services/course.service';
-import {AuthService} from '../../services/auth.service';
+import {CourseService} from '../services/course.service';
+import {AuthService} from '../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DeleteConfirmDialogComponent} from '../../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
-import {EditCourseDialogComponent} from '../../teacher/courses/edit-course-dialog/edit-course-dialog.component';
+import {AddCourseDialogComponent} from '../teacher/courses/add-course-dialog/add-course-dialog.component';
+import {DeleteConfirmDialogComponent} from '../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
+import {EditCourseDialogComponent} from '../teacher/courses/edit-course-dialog/edit-course-dialog.component';
+import {EnrollCourseDialogComponent} from '../student/enroll-course-dialog/enroll-course-dialog.component';
 
 @Component({
-  selector: 'app-admin-view',
-  templateUrl: './admin-view.component.html',
-  styleUrls: ['./admin-view.component.css']
+  selector: 'app-base-view',
+  templateUrl: './base-view.component.html',
+  styleUrls: ['./base-view.component.css']
 })
-// componente simile a quello del teacher, ma non ho potuto riciclarlo perchè diverso
-// in molte configurazioni, indirizzi e funzioni
-export class AdminViewComponent implements OnInit, OnDestroy {
+export class BaseViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
   selectedItem: string;
+
+  baseLink: string;
+
   courses: Array<Course> = [];
 
   @ViewChild(MatSidenav)
@@ -32,43 +35,65 @@ export class AdminViewComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private service: CourseService) {
+    this.setBaseLink();
     this.homeS = router.events.subscribe(
-      // ottengo la route attiva per vedere se sono sulla home così da cambiare i buttons attivi e la scritta del corso nella toolbar
-      e => {
-        // tslint:disable-next-line:no-unused-expression
-        (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e;
-        // se sono sulla tab di admin lo mostro nella toolbar al posto del nome del corso
-        // tslint:disable-next-line:no-unused-expression
-        this.router.url.includes('/admin/tools') ? this.selectedItem = 'Admin Tools' : e;
-      }
+      e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
     );
+    this.route.firstChild.firstChild.params.subscribe(p => console.log(p));
   }
 
-  // all'avvio carico i corsi e in base alla route attiva mostro il nome del corso nella toolbar
-  // o la scritta admin tools se sono nel component di admin
+  setBaseLink(){
+    switch (this.authService.getRole()) {
+      case 'ROLE_ADMIN':
+        this.baseLink = '/admin';
+        break;
+      case 'ROLE_PROFESSOR':
+        this.baseLink = '/teacher';
+        break;
+      default:
+        this.baseLink = '/student';
+        break;
+    }
+  }
+
+  isStudent(){
+    return this.authService.getRole() === 'ROLE_STUDENT';
+  }
+
+  isTeacher(){
+    return this.authService.getRole() === 'ROLE_PROFESSOR';
+  }
+
+  isAdmin(){
+    return this.authService.getRole() === 'ROLE_ADMIN';
+  }
+
   ngOnInit(): void {
     this.loadCourses();
     const courseName = this.route.firstChild.snapshot.params.name;
     this.selectedItem = courseName === undefined ? 'Seleziona un corso' : courseName;
-    // tslint:disable-next-line:no-unused-expression
-    this.router.url.includes('/admin/tools') ? this.selectedItem = 'Admin Tools' : '';
-
   }
 
   toggleForMenuClick() {
     this.sidenav.toggle();
   }
 
+  openAddCourseDialog(){
+    // todo: unsubrscribe?
+    const dialogRef = this.dialog.open(AddCourseDialogComponent);
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadCourses();
+    });
+  }
+
   snackBarDelete() {
     if (this.courses.findIndex(c => c.name === this.selectedItem) === -1) {
       this.snackBar.open('Corso cancellato', 'Chiudi');
       this.selectedItem = 'Seleziona un corso';
-      this.router.navigate(['/admin']);
+      this.router.navigate([this.baseLink]);
     }
   }
 
-  // apro un dialog di conferma sull'eliminazione del corso
-  // se confermata elimino il corso
   deleteCourseDialog(){
     // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
@@ -91,10 +116,6 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  // apro un dialog simile a quello della creazione del corso per modificarlo,
-  // gli passo i parametri del corso attuale, per consentire la modifica
-  // e successivamente dal dialog modifico
-  // se il corso è stato modificato ricarico la pagina perchè si potrebbero verificare incongruenze
   startToEditCourse(){
     const course: Course = this.courses.find(c => c.name === this.selectedItem);
     this.courseService.getCourseVmModel(course.name)
@@ -106,9 +127,9 @@ export class AdminViewComponent implements OnInit, OnDestroy {
             // console.log(course.enabled, '!=', data);
             this.loadCourses();
             // tslint:disable-next-line:triple-equals
-            if (!course.enabled == data) {
+            if (('' + course.enabled) != data) {
               this.selectedItem = 'Seleziona un corso';
-              this.router.navigate(['/admin']);
+              this.router.navigate([this.baseLink]);
             }
           });
         },
@@ -119,26 +140,30 @@ export class AdminViewComponent implements OnInit, OnDestroy {
       );
   }
 
-  // se clicco su un corso nella sidebar cambio il nome del corso nella toolbar
   handleClick(selectedItem: Course) {
     this.selectedItem = selectedItem.name;
-  }
-
-  // se clicco su admin tools nella sidebar cambio il nome nella toolbar
-  adminToolsClick() {
-    this.selectedItem = 'Admin Tools';
   }
 
   ngOnDestroy(): void {
     this.homeS.unsubscribe();
   }
 
-  // carico i corsi da mostrare nella sidenav (per l'admin li carico tutti)
   loadCourses(){
-    this.courseService.getAll().subscribe(
+    let obs: Observable<Array<Course>>;
+    switch (this.authService.getRole()) {
+      case 'ROLE_ADMIN':
+        obs = this.courseService.getAll();
+        break;
+      case 'ROLE_PROFESSOR':
+        obs = this.courseService.getAllByProfessor(this.authService.getId());
+        break;
+      default:
+        obs = this.courseService.getAllByStudent(this.authService.getId());
+        break;
+    }
+    obs.subscribe(
       data => {
-        // console.log(data);
-        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0, '')] ;
+        this.courses = data;
       },
       error => {
         console.log(error);
@@ -147,4 +172,25 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     );
   }
 
+
+  getAcronym() {
+    const course = this.courses.find(value => value.name === this.selectedItem);
+    if (course === undefined) {
+      return '';
+    }
+    return this.selectedItem !== 'Seleziona un corso' ?
+      `${course.acronym} - ` : '';
+  }
+
+  isDisabled(element: Course) {
+    return (this.authService.getRole() === 'ROLE_STUDENT' && !element.enabled);
+  }
+
+  adminToolsClick() {
+    this.selectedItem = 'Admin Tools';
+  }
+
+  openEnrollDialog() {
+    this.dialog.open(EnrollCourseDialogComponent);
+  }
 }
