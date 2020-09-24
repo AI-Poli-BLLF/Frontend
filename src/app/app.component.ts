@@ -1,6 +1,6 @@
 import {Component, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoginDialogComponent} from './login-dialog/login-dialog.component';
+import {LoginDialogComponent} from './login/login-dialog/login-dialog.component';
 import {Subscription} from 'rxjs';
 import {AuthService} from './services/auth.service';
 import {ProfileViewButtonComponent} from './profile-view/profile-view-button.component';
