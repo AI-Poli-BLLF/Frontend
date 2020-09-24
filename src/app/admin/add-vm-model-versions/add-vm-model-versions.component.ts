@@ -14,9 +14,8 @@ export class AddVmModelVersionsComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private fb: FormBuilder,
               private dialogRef: MatDialogRef<AddVmModelVersionsComponent>) {
-    const versions = data.versions.reduce((prev, next, i) => prev + (i !== 0 ? ',' : '') + next, '');
     this.formGroup = fb.group({
-      versions: [versions, [Validators.maxLength(255)]]
+      versions: ['', [Validators.maxLength(255)]]
     });
   }
 
@@ -33,6 +32,7 @@ export class AddVmModelVersionsComponent implements OnInit {
   }
 
   save() {
+    // spezzo gli elementi con una virgola per tornare un vettore al componente sottostante
     const versions = this.formGroup.controls.versions.value.split(',');
     this.dialogRef.close({versions});
   }

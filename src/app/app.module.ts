@@ -66,7 +66,6 @@ import {AddAssignmentDialogComponent} from './assignments/teacher/add-assignment
 import {AddDraftDialogComponent} from './assignments/student/draft-s/add-draft-dialog/add-draft-dialog.component';
 import {AddVmModelComponent} from './admin/add-vm-model/add-vm-model.component';
 import {AddVmModelVersionsComponent} from './admin/add-vm-model-versions/add-vm-model-versions.component';
-import {DraftsSubTableComponent} from './assignments/teacher/draft/drafts-sub-table.component';
 import {AssignmentsContComponent} from './assignments/teacher/assignments-cont.component';
 import {AssignmentComponent} from './assignments/teacher/assignment.component';
 import {ProfessorTeamsComponent} from './teams/professor-teams/professor-teams.component';
@@ -88,7 +87,7 @@ import {DraftViewComponent} from './assignments/draft-view/draft-view.component'
 import {AssignmentViewComponent} from './assignments/assignment-view/assignment-view.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {CorrectionViewComponent} from './assignments/correction-view/correction-view.component';
-import { EnrollCourseDialogComponent } from './student/enroll-course-dialog/enroll-course-dialog.component';
+import {EnrollCourseDialogComponent} from './student/enroll-course-dialog/enroll-course-dialog.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +118,6 @@ import { EnrollCourseDialogComponent } from './student/enroll-course-dialog/enro
     ShareDialogComponent,
     AssignmentComponent,
     AssignmentsContComponent,
-    DraftsSubTableComponent,
     ShareDialogComponent,
     AssignmentSComponent,
     DraftSComponent,

@@ -11,6 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class ProfessorsContComponent implements OnInit {
   professors: Professor[] = [];
 
+  // carico tutti i professori presenti sul database e li mostro nella tabella
   constructor(private professorService: ProfessorService, private snackBar: MatSnackBar) {
     professorService.getAll()
       .subscribe(

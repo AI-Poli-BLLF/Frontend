@@ -51,17 +51,7 @@ export class AdminService {
       );
   }
 
-  //
-  // shareCourse(courseName: string, professorId: string, memberIds: string[]): Observable<any>{
-  //   return this.httpClient.post<any>(this.url + '/' + professorId + '/courses/' + courseName + '/cooperate' , memberIds)
-  //     .pipe(
-  //       catchError( err => {
-  //         console.error(err);
-  //         return throwError(`ProfessorService shareCourse error: ${err.message}`);
-  //       })
-  //     );
-  // }
-
+  // permette di elinira un os tra i modelli disponibili , è una funzione solo per admin
   deleteOs(osName: string): Observable<any>{
     return this.httpClient.delete<any>(this.url + '/' + osName)
       .pipe(
@@ -72,6 +62,7 @@ export class AdminService {
       );
   }
 
+  // permette di aggiungere un os tra i modelli disponibili , è una funzione solo per admin
   addOs(os: VmModelsList): Observable<VmModelsList>{
     return this.httpClient.post<VmModelsList>(this.url, os)
       .pipe(
@@ -83,6 +74,7 @@ export class AdminService {
       );
   }
 
+  // permette di aggiungere una versione per un os tra i modelli disponibili , è una funzione solo per admin
   addVersion(osName: string, version: string): Observable<VmModelsList>{
     return this.httpClient.post<VmModelsList>(this.url + '/' + osName, version)
       .pipe(
@@ -94,6 +86,7 @@ export class AdminService {
       );
   }
 
+  // permette di eliminare una versione per un os tra i modelli disponibili , è una funzione solo per admin
   deleteVersion(osName: string, version: string): Observable<VmModelsList>{
     return this.httpClient.delete<any>(this.url + '/' + osName + '/' + version)
       .pipe(
@@ -104,7 +97,4 @@ export class AdminService {
       );
   }
 
-  getPhoto(professorId: string): Observable<any>{
-    return this.httpClient.get(this.url + '/' + professorId + '/photo',  { responseType: 'blob' });
-  }
 }

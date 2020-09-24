@@ -41,7 +41,8 @@ export class DraftViewComponent implements OnInit {
   ngOnInit() {
     // this.getPhoto();
   }
-
+  // in base al ruolo di chi sta visualizzando scelgo il link corretto
+  // l'admin non è previsto che veda questa pagina
   private getDraft() {
     let obs: Observable<any>;
     switch (this.authService.getRole()) {
@@ -64,6 +65,7 @@ export class DraftViewComponent implements OnInit {
     );
   }
 
+  // torno alle consegne alla pressione del tasto
   back() {
     this.router.navigate(['../'], {relativeTo: this.route.parent});
   }

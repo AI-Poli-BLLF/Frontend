@@ -30,7 +30,7 @@ export class DraftEvaluateComponent implements OnInit {
   ) {
     this.formGroup = this.fb.group({
       requiredFile: [undefined, [Validators.required]],
-      grade: ['', [Validators.required, Validators.min(0), Validators.max(33)]]
+      grade: ['', [Validators.required, Validators.min(1), Validators.max(33)]]
     });
     this.courseName = data.courseName;
     this.draftId = data.draftId;

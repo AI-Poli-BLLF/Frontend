@@ -3,12 +3,12 @@ import {VmModel} from '../../models/vm.model.model';
 import {CourseService} from '../../services/course.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VmModelsList} from '../../models/vm.models.list.model';
-import {MatDialog} from "@angular/material/dialog";
-import {DeleteConfirmDialogComponent} from "../../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component";
-import {Course} from "../../models/course.model";
-import {AddVmModelComponent} from "../add-vm-model/add-vm-model.component";
-import {Vm} from "../../models/vm.model";
-import {AddVmModelVersionsComponent} from "../add-vm-model-versions/add-vm-model-versions.component";
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteConfirmDialogComponent} from '../../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
+import {Course} from '../../models/course.model';
+import {AddVmModelComponent} from '../add-vm-model/add-vm-model.component';
+import {Vm} from '../../models/vm.model';
+import {AddVmModelVersionsComponent} from '../add-vm-model-versions/add-vm-model-versions.component';
 import {AdminService} from '../../services/admin.service';
 import {Student} from '../../models/student.model';
 import {forkJoin, Observable} from 'rxjs';
@@ -28,6 +28,8 @@ export class VmModelsComponent implements OnInit {
     private snackBar: MatSnackBar) {
   }
 
+  // ottengo tutti i modelli di vm disponibili sul backend,
+  // se si verifica un errore apro una snackbar per segnalarlo
   getModels(){
     this.courseService.getAllVmModels()
       .subscribe(
@@ -44,6 +46,11 @@ export class VmModelsComponent implements OnInit {
     this.getModels();
   }
 
+  // la funzione add model apre una dialog per ricevere il nome del modello
+  // e le versioni (possono anche essere un vettore vuoto)
+  // e effettua la post sul backend, se la richiesta va a buon fine
+  // l'elemento viene direttamente aggiunto senza richiedere i nuovamente i dati,
+  // altrimenti vengono richiesti e segnalato l'errore
   addModel(){
     const dialogRef = this.dialog.open(AddVmModelComponent);
     dialogRef.afterClosed().subscribe(
@@ -69,15 +76,17 @@ export class VmModelsComponent implements OnInit {
     );
   }
 
+  // la funzione add version apre una dialog per ricevere le versioni da aggiungere
+  // e effettua la post sul backend, se la richiesta va a buon fine
+  // gli elementi vengono direttamente aggiunto senza richiedere i dati della la tabella,
+  // altrimenti vengono riscaricati e segnalato l'errore
   addVersion(event: VmModelsList){
-    const v = {data: {os: event.osName, versions: []}};
+    const v = {data: {os: event.osName}};
     const dialogRef = this.dialog.open(AddVmModelVersionsComponent, v);
     dialogRef.afterClosed().subscribe(
       data => {
         if (data !== undefined && data.versions !== undefined) {
-          console.log('QUA');
           const addObs: Array<Observable<VmModelsList>> = [];
-          console.log(data.versions);
           data.versions.forEach(version => addObs.push(this.adminService.addVersion(event.osName, version)));
           forkJoin(addObs).subscribe(
             () => {
@@ -96,6 +105,10 @@ export class VmModelsComponent implements OnInit {
     );
   }
 
+  // la funzione delete versions apre una dialog per ricevere le versioni da rimuovere (tramite una multi select)
+  // e effettua la post sul backend, se la richiesta va a buon fine
+  // gli elementi vengono direttamente eliminate filtrando quelle esistenti senza richiedere i dati,
+  // altrimenti vengono ricaricati e segnalato l'errore
   deleteVersions(event: VmModelsList){
     const v = {data: {os: event.osName, versions: event.versions}};
     const dialogRef = this.dialog.open(DeleteVersionComponent, v);
@@ -123,7 +136,9 @@ export class VmModelsComponent implements OnInit {
     );
   }
 
-
+  // la funzione elimina invia una delete dell'elemento da eliminare al server
+  // se la richiesta va a buon fine filtra la lista rimuovendolo
+  // altrimenti richiede la lista dei modelli al server
   deleteOs(event: VmModelsList) {
     this.adminService.deleteOs(event.osName)
       .subscribe(

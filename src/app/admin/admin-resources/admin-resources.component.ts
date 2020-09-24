@@ -9,11 +9,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./admin-resources.component.css']
 })
 export class AdminResourcesComponent implements OnInit {
+  // ipotizzo una configurazione massima disponibile di 100 cpu, 1 TB di ram, 100 TB di HDD, 10000 vm di cui 1000 attive contemporaneamente
   total: VmConfig = new VmConfig(-1, undefined, undefined, 100, 1048576, 100 * 1024, 10000, 1000);
   used: VmConfig = new VmConfig(-1, undefined, undefined, 0, 0, 0, 0, 0);
   reserved: VmConfig = new VmConfig(-1, undefined, undefined, 0, 0, 0, 0, 0);
   allocated: VmConfig = new VmConfig(-1, undefined, undefined, 0, 0, 0, 0, 0);
   constructor(private adminService: AdminService, private snackBar: MatSnackBar) {
+    // alla costruzione dell'elemento vengono richiesti i dati al backend delle risorse
+    // se si verificano errori li notifico con delle snackbar
     adminService.getReservedResources()
       .subscribe(
         data => this.reserved = data,

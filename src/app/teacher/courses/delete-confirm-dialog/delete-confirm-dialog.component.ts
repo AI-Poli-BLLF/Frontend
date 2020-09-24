@@ -22,15 +22,15 @@ export class DeleteConfirmDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteCourse() {
-    this.service.deleteOne(this.courseName).subscribe(
-      data => {
-        // console.log(data);
-        this.dialogRef.close();
-      },
-      error =>   error.status === 400 ?
-        this.labelValue = 'Corso non trovato' : this.labelValue = 'Si è verificato un errore'
-  );
+  // deleteCourse() {
+  //   this.service.deleteOne(this.courseName).subscribe(
+  //     data => {
+  //       // console.log(data);
+  //       this.dialogRef.close();
+  //     },
+  //     error =>   error.status === 400 ?
+  //       this.labelValue = 'Corso non trovato' : this.labelValue = 'Si è verificato un errore'
+  // );
 
-  }
+  // }
 }

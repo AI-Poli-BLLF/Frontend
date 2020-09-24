@@ -38,6 +38,7 @@ export class AddVmModelComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // controllo se i valori sono validi, se sono validi chiudo la dialog riportando i dati al componente che l'ha aperta
   add() {
     if (this.formGroup.invalid) {
       return;
