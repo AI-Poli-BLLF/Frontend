@@ -5,6 +5,7 @@ import {Team} from '../../../models/team.model';
 import {CourseService} from '../../../services/course.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-vm-table',
@@ -20,6 +21,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class VmTableComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   teams: Team[];
   @Input()
@@ -35,6 +37,7 @@ export class VmTableComponent implements AfterViewInit{
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   @Input()
@@ -55,6 +58,7 @@ export class VmTableComponent implements AfterViewInit{
         v.push(t);
         this.dataSource.data = v;
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
   }
 
@@ -63,5 +67,6 @@ export class VmTableComponent implements AfterViewInit{
     this.dataSource.data.forEach(e => e.id === vmC.id ? v.push(vmC) : v.push(e));
     this.dataSource.data = v;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }

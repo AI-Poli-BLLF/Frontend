@@ -72,6 +72,7 @@ export class AddAssignmentDialogComponent implements OnInit {
     if (releaseDate === null) { return; }
     const expiryDate = this.dataE.value;
     if (expiryDate === null) { return; }
+    if (expiryDate < releaseDate) { return; }
     const file = this.formGroup.controls.requiredFile.value.files[0];
     const assignment = new Assignment(undefined, this.formGroup.controls.name.value, releaseDate, expiryDate);
     this.service.uploadAssignment(this.courseName, file, assignment).subscribe(
