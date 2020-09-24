@@ -73,11 +73,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   }
 
   ngAfterViewInit(): void {
-    this.service.getEnrolled(this.courseName).subscribe(s => {
-      this.students = s;
-      this.getTeams(this.courseName);
-      this.getPhotos(this.students);
-    });
+    this.getEnrolledStudent();
+
     this.service.getAll().subscribe(
       s => this.studentsComponent.AllStudents = s,
       error => {
@@ -89,6 +86,15 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+
+  private getEnrolledStudent(){
+    this.service.getEnrolled(this.courseName).subscribe(s => {
+      this.students = s;
+      this.getTeams(this.courseName);
+      this.getPhotos(this.students);
+    });
+  }
+
   getMembers(courseName: string, team: Team){
     this.teamService.getTeamMembers(courseName, team.id)
       .subscribe(
@@ -130,5 +136,15 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
           console.log(error);
         }
       );
+  }
+
+  enrollByCsv(file: File) {
+    this.courseService.enrollByCsv(file, this.courseName).subscribe(
+      () => this.getEnrolledStudent(),
+      err => {
+        console.log(err);
+        this.snackBar.open('Ricontrollare la correttezza dei dati del file e che abbia estensione .csv', 'Chiudi');
+      }
+    );
   }
 }

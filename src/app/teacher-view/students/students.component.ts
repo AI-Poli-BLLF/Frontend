@@ -1,14 +1,10 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Student} from '../../models/student.model';
-import {MatCheckboxChange} from '@angular/material/checkbox';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {UsersTableComponent} from "../../users-table/users-table.component";
+import {UsersTableComponent} from '../../users-table/users-table.component';
 
 @Component({
   selector: 'app-students',
@@ -32,6 +28,8 @@ export class StudentsComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
   @Output()
+  enrollByCsvEvent: EventEmitter<File>;
+  @Output()
   add: EventEmitter<Student> = new EventEmitter();
   @Output()
   del: EventEmitter<Array<Student>> = new EventEmitter();
@@ -42,6 +40,7 @@ export class StudentsComponent implements OnInit {
   }
 
   constructor() {
+    this.enrollByCsvEvent = new EventEmitter<File>();
   }
 
   deleteTableStudents(students: Array<Student>){
@@ -106,7 +105,7 @@ export class StudentsComponent implements OnInit {
     if (selectedFile === undefined){
       return;
     }
-    alert('Da implementare lato server');
+    // alert('Da implementare lato server');
     // this.service.uploadPhoto(this.profileData.roles[0], this.profileData.id, selectedFile).subscribe(
     //   data => {
     //     console.log(data);
@@ -119,6 +118,8 @@ export class StudentsComponent implements OnInit {
     //       'Chiudi');
     //   }
     // );
+
+    this.enrollByCsvEvent.emit(selectedFile);
   }
 
   triggerDeleteButton(){

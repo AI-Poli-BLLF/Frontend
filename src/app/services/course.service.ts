@@ -328,4 +328,20 @@ export class CourseService {
       })
     );
   }
+
+  enrollByCsv(file: File, courseName: string) {
+    if (!this.authService.isLogged() && this.authService.getRole() !== 'ROLE_PROFESSOR'){
+      return of(null);
+    }
+
+    const url = `${this.url}/${courseName}/enroll-many`;
+    const body = new FormData();
+    body.append('file', file);
+    return this.httpClient.post(url, body).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
 }
