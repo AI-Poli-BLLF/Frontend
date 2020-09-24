@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
 import {VmModelsList} from '../../../models/vm.models.list.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {VmModel} from '../../../models/vm.model.model';
-import {AuthService} from "../../../services/auth.service";
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -43,7 +43,7 @@ export class EditCourseDialogComponent implements OnDestroy {
           this.snackBar.open('Si è verificato un errore nel recuperare i modelli di VM', 'Chiudi');
         });
     this.formGroup = fb.group({
-      name: [this.course.name, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
+      // name: [this.course.name, [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       min: ['' + this.course.min, [Validators.required, Validators.min(1), Validators.max(50)]],
       max: ['' + this.course.max, [Validators.required, Validators.min(1), Validators.max(50)]],
       os: [vmModel.os, [Validators.required]],
@@ -100,13 +100,13 @@ export class EditCourseDialogComponent implements OnDestroy {
     return v.sort();
   }
 
-  getNameErrorMessage() {
-    if (this.formGroup.controls.name.hasError('required')) {
-      return 'Devi inserire un valore.';
-    }
-    return this.formGroup.controls.name.hasError('minlength') || this.formGroup.controls.name.hasError('maxlength')
-      ? 'Lunghezza nome non valida.' : '';
-  }
+  // getNameErrorMessage() {
+  //   if (this.formGroup.controls.name.hasError('required')) {
+  //     return 'Devi inserire un valore.';
+  //   }
+  //   return this.formGroup.controls.name.hasError('minlength') || this.formGroup.controls.name.hasError('maxlength')
+  //     ? 'Lunghezza nome non valida.' : '';
+  // }
 
   getMinErrorMessage() {
     if (this.formGroup.controls.min.hasError('required')) {
@@ -125,12 +125,13 @@ export class EditCourseDialogComponent implements OnDestroy {
   }
 
   edit(){
-    if (this.formGroup.invalid) {return;}
+    if (this.formGroup.invalid) { return; }
     const newCourse: Course =  new Course(
-      this.formGroup.controls.name.value,
+      this.course.name,
       this.checked,
       this.formGroup.controls.min.value,
-      this.formGroup.controls.max.value);
+      this.formGroup.controls.max.value,
+      undefined);
     const vmModel: VmModel = new VmModel(
       undefined,
       this.formGroup.controls.os.value,

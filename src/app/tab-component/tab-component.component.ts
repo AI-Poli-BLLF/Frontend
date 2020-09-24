@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {NavModel} from '../nav.model';
 import {AuthService} from '../services/auth.service';
-import {CourseService} from "../services/course.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {Course} from "../models/course.model";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {CourseService} from '../services/course.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {Course} from '../models/course.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tab-component',
@@ -15,7 +15,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 export class TabComponentComponent {
   links: Array<NavModel> = [];
-  course: Course = new Course('', false, 0, 0);
+  course: Course = new Course('', false, 0, 0, '');
   sub: Subscription;
   linksStudent: Array<NavModel> = [
     new NavModel('./vms', 'VMs'),

@@ -138,7 +138,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     this.courseService.getAll().subscribe(
       data => {
         // console.log(data);
-        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
+        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0, '')] ;
       },
       error => {
         console.log(error);

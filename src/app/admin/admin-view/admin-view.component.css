@@ -21,3 +21,7 @@
 #subtitle{
   font-weight: lighter!important;
 }
+
+span.margin-right-left{
+  margin: 0 10px;
+}

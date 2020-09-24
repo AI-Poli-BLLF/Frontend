@@ -2,11 +2,13 @@
   <h1>Modifica corso "{{course.name}}"</h1>
   <form [formGroup]="formGroup">
     <div class="form_div">
+      <!--
       <mat-form-field>
         <mat-label>Nuovo Nome corso</mat-label>
         <input class="edit_input" matInput type="text" formControlName="name" required/>
         <mat-error *ngIf="checkError('name')">{{getNameErrorMessage()}}</mat-error>
       </mat-form-field>
+      -->
       <mat-form-field>
         <mat-label>Minimo numero studenti</mat-label>
         <input matInput type="number" formControlName="min" required/>

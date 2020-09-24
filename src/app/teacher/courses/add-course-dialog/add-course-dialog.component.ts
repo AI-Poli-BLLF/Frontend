@@ -128,7 +128,8 @@ export class AddCourseDialogComponent implements OnDestroy{
         this.formGroup.controls.name.value,
         this.checked,
         this.formGroup.controls.min.value,
-        this.formGroup.controls.max.value),
+        this.formGroup.controls.max.value,
+        undefined),
       new VmModel(undefined, this.formGroup.controls.os.value, this.formGroup.controls.version.value),
       this.authService.getId()
     ).subscribe(

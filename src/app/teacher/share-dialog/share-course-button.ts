@@ -56,7 +56,7 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
     };
     this.dialogRef = this.dialog.open(ShareDialogComponent, {data: d})
       .afterClosed().subscribe(v => {
-        if (v.ok){
+        if (v !== undefined && v.ok){
           this.submit(v.data, owners);
         }
         this.dialogRef.unsubscribe();

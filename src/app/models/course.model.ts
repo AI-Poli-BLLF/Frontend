@@ -3,12 +3,14 @@ export class Course {
   enabled: boolean;
   min: number;
   max: number;
+  acronym: string;
 
-  constructor(name: string, enabled: boolean, min: number, max: number) {
+  constructor(name: string, enabled: boolean, min: number, max: number, acronym: string) {
     this.name = name;
     this.enabled = enabled;
     this.min = min;
     this.max = max;
+    this.acronym = acronym;
   }
 
   toString(){

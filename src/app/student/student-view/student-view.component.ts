@@ -53,7 +53,7 @@ export class StudentViewComponent implements OnInit, OnDestroy {
     this.courseService.getAllByStudent(this.authService.getId()).subscribe(
       data => {
         // console.log(data);
-        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0)] ;
+        this.courses = data.length > 0 ? data : [new Course('Nessun corso', false, 0, 0, '')] ;
         this.selectedItem = this.courses.findIndex(c => c.name === this.selectedItem) === -1 ? 'Seleziona un corso' : this.selectedItem;
       },
       error => console.log(error)

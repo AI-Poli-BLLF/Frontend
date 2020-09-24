@@ -93,7 +93,7 @@ export class StudentService {
     const url = `${this.url}/${this.authService.getId()}/available-courses`;
     return this.httpClient.get<Array<Course>>(url)
       .pipe(
-        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max, c2.acronym))),
         catchError( err => {
           console.error(err);
           return throwError(`CourseService getAvailableCourseForStudent error: ${err.message}`);

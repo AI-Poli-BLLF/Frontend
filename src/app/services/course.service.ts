@@ -30,7 +30,7 @@ export class CourseService {
     // console.log('UPDATE');
     return this.httpClient.put<Course>(this.url + '/' + course.name, course)
       .pipe(
-        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max, c.acronym)),
         catchError( err => {
           console.error(err);
           return throwError(err);
@@ -44,7 +44,7 @@ export class CourseService {
     const v = {course, vmModel, professorId};
     return this.httpClient.post<Course>(this.url, v)
       .pipe(
-        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max, c.acronym)),
         catchError( err => {
           console.error(err);
           return throwError(err);
@@ -56,7 +56,7 @@ export class CourseService {
     const v = {course, vmModel, professorId};
     return this.httpClient.put<Course>(this.url + '/' + oldCourseName, v)
       .pipe(
-        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max, c.acronym)),
         catchError( err => {
           console.error(err);
           return throwError(err);
@@ -73,7 +73,7 @@ export class CourseService {
     // console.log('FIND');
     return this.httpClient.get<Course>(this.url + '/' + name)
       .pipe(
-        map(c =>  new Course(c.name, c.enabled, c.min, c.max)),
+        map(c =>  new Course(c.name, c.enabled, c.min, c.max, c.acronym)),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getOne error: ${err.message}');
@@ -84,7 +84,7 @@ export class CourseService {
   getAll(): Observable<Array<Course>>{
     return this.httpClient.get<Array<Course>>(this.url)
       .pipe(
-        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max, c2.acronym))),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getAll of professor error: ${err.message}');
@@ -96,7 +96,7 @@ export class CourseService {
   getAllByProfessor(professorId: string): Observable<Array<Course>>{
     return this.httpClient.get<Array<Course>>(this.urlProfessors + '/' + professorId + '/courses')
       .pipe(
-        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max, c2.acronym))),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getAll error: ${err.message}');
@@ -108,7 +108,7 @@ export class CourseService {
   getAllByStudent(studentId: string): Observable<Array<Course>>{
     return this.httpClient.get<Array<Course>>(this.urlStudents + '/' + studentId + '/courses')
       .pipe(
-        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max))),
+        map(c => c.map(c2 => new Course(c2.name, c2.enabled, c2.min, c2.max, c2.acronym))),
         catchError( err => {
           console.error(err);
           return throwError('CourseService getAll of student error: ${err.message}');

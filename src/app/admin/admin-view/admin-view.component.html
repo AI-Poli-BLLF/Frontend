@@ -6,7 +6,8 @@
   <span class="fill_space"></span>
   <div *ngIf="selectedItem!='Seleziona un corso' && selectedItem!='Admin Tools'">
     <button  mat-mini-fab class="course_edit" (click)="startToEditCourse()"><mat-icon>edit</mat-icon></button>
-    <app-share-course-button [courseName]="selectedItem"></app-share-course-button>
+    <span class="margin-right-left"></span>
+    <!--<app-share-course-button [courseName]="selectedItem"></app-share-course-button>-->
     <button mat-mini-fab class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
   </div>
 </mat-toolbar>
