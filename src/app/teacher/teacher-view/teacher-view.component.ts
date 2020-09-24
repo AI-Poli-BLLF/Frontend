@@ -131,4 +131,12 @@ export class TeacherViewComponent implements OnInit, OnDestroy {
   }
 
 
+  getAcronym() {
+    const course = this.courses.find(value => value.name === this.selectedItem);
+    if (course === undefined) {
+      return '';
+    }
+    return this.selectedItem !== 'Seleziona un corso' ?
+      `${course.acronym} - ` : '';
+  }
 }

@@ -64,4 +64,13 @@ export class StudentViewComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(EnrollCourseDialogComponent);
     const afterOpened = dialogRef.afterOpened();
   }
+
+  getAcronym() {
+    const course = this.courses.find(value => value.name === this.selectedItem);
+    if (course === undefined) {
+      return '';
+    }
+    return this.selectedItem !== 'Seleziona un corso' ?
+      `${course.acronym} - ` : '';
+  }
 }

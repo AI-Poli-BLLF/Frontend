@@ -2,7 +2,7 @@
   <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
     <mat-icon >menu</mat-icon>
   </button>
-  <span id="subtitle">{{selectedItem}}</span>
+  <span id="subtitle">{{getAcronym() + selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="editCourseOptions">
     <!--<button mat-button class="course_edit" (click)="openAddCourseDialog()"><mat-icon>add</mat-icon></button>-->
