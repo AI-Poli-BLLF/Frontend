@@ -46,13 +46,14 @@ export class DraftHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.update();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
-  update(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // update(){
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   canOpen(element: Draft) {
     return (element.state !== 'READ' && element.state !== 'NULL');
@@ -64,7 +65,7 @@ export class DraftHistoryComponent implements OnInit, AfterViewInit {
       .subscribe(
         drafts => {
           this.dataSource.data = drafts;
-          this.update();
+          // this.update();
         },
         err => {
           console.log(err);

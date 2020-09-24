@@ -47,7 +47,6 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
       this.displayedColumns.push('groupName');
       this.displayedColumns.unshift('select');
     }
-    this.update();
   }
 
   isChecked(){
@@ -81,13 +80,10 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     this.listChange();
   }
 
-  update(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
 
   ngAfterViewInit() {
-    this.update();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
 }

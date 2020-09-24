@@ -40,8 +40,7 @@ export class AssignmentComponent implements AfterViewInit {
 
   assignment: Assignment;
 
-  constructor(
-    private assignmentService: AssignmentService) {
+  constructor() {
     this.dataSource = new MatTableDataSource(this.assignments);
   }
 
@@ -51,8 +50,6 @@ export class AssignmentComponent implements AfterViewInit {
   set Assignments(assignments: Array<Assignment>){
     this.assignments = assignments.sort((e1, e2) => e2.releaseDateT.getTime() - e1.releaseDateT.getTime());;
     this.dataSource.data = this.assignments;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   onClick(column: Assignment) {
