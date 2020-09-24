@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Team} from '../models/team.model';
-import {TeamService} from '../services/team.service';
+import {Team} from '../../models/team.model';
+import {TeamService} from '../../services/team.service';
 import {ActivatedRoute} from '@angular/router';
-import {Student} from '../models/student.model';
+import {Student} from '../../models/student.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({

@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="create_button">
+    <h2 *ngIf="!activeTeam">Il mio team</h2>
+    <button mat-raised-button color="primary" (click)="openCreateTeamDialog()">Crea gruppo</button>
+  </div>
+  <div *ngIf="activeTeam; else elseBlock">
+    <div *ngFor="let team of getTeams(teamsM)">
+      <app-team-card [delete]="false" [members]="team.activeMembers | async" [team]="getTeam(team)"></app-team-card>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="teams_div">
+      <mat-card class="team_card" *ngFor="let team of getTeams(teamsM)">
+        <mat-card-header>
+          <mat-card-title>{{team.team.name}}</mat-card-title>
+          <mat-card-subtitle>Team {{team.team.id}}  {{getStatus(team)}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Proponente: {{team.proposer | async}}</p>
+          <p>Membri in attesa:</p>
+          <ul>
+            <p *ngFor="let member of  team.pendingMembers | async">
+              {{member}}
+            </p>
+          </ul>
+          <p>Membri</p>
+          <ul>
+            <p *ngFor="let member of team.activeMembers | async">
+              {{member}}
+            </p>
+          </ul>
+          <div *ngIf="team.token | async as token">
+            <button mat-stroked-button color="primary" (click)="respondToProposal(token, true)">
+              <span>Accetta</span>
+            </button>
+            <button mat-stroked-button color="warn" (click)="respondToProposal(token, false)">
+              <span>Rifiuta</span>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-template>
+  <div>
+    <h2>Altri team del corso</h2>
+    <div class="teams_div">
+      <app-team-card [members]="teamsMembers[team.id]" [delete]="false" [team]="team" *ngFor="let team of teams"></app-team-card>
+      <h3 *ngIf="teams.length<=1">Non esistono altri team per questo corso.</h3>
+    </div>
+  </div>

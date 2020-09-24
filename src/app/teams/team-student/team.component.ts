@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {TeamService} from '../services/team.service';
-import {Team} from '../models/team.model';
-import {Student} from '../models/student.model';
+import {TeamService} from '../../services/team.service';
+import {Team} from '../../models/team.model';
+import {Student} from '../../models/student.model';
 import {MatDialog} from '@angular/material/dialog';
-import {CreateTeamDialogComponent} from './create-team-dialog/create-team-dialog.component';
+import {CreateTeamDialogComponent} from '../create-team-dialog/create-team-dialog.component';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Course} from '../models/course.model';
-import {CourseService} from '../services/course.service';
-import {AuthService} from '../services/auth.service';
-import {Token} from '../models/token.model';
+import {Course} from '../../models/course.model';
+import {CourseService} from '../../services/course.service';
+import {AuthService} from '../../services/auth.service';
+import {Token} from '../../models/token.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 type TeamData = {
@@ -27,7 +27,9 @@ type TeamData = {
 })
 export class TeamComponent implements OnInit {
 
-  teams: Map<number, TeamData>;
+  teamsM: Map<number, TeamData>;
+  teams: Team[] = [];
+  teamsMembers: Array<Array<Student>> = [];
   activeTeam: boolean;
   course: Course;
   constructor(private teamService: TeamService,
@@ -37,7 +39,7 @@ export class TeamComponent implements OnInit {
               private route: ActivatedRoute,
               private snackBar: MatSnackBar) {
     this.activeTeam = false;
-    this.teams = new Map<number, TeamData>();
+    this.teamsM = new Map<number, TeamData>();
   }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class TeamComponent implements OnInit {
 
       // 2. Get infos about the user's teams in this course
       this.getStudentTeams(courseName);
-
+      this.getAllTeams(courseName);
       // 3. Get infos about the course (e.g. min/max of team members)
       this.courseService.getOne(courseName).subscribe(
         c => this.course = c,
@@ -89,13 +91,13 @@ export class TeamComponent implements OnInit {
     }
     const data: TeamData = {team, activeMembers: activeMembers$, pendingMembers: pendingMembers$,
       proposer: proposer$, token: null};
-    this.teams.set(team.id, data);
+    this.teamsM.set(team.id, data);
 
     if (team.status !== 'ACTIVE') {
       pendingMembers$.subscribe(sArr => {
         if (sArr.map(s => s.id).indexOf(this.authService.getId()) !== -1) {
           const token$ = this.teamService.getTeamConfirmationToken(courseName, team.id);
-          this.teams.get(team.id).token = token$;
+          this.teamsM.get(team.id).token = token$;
         }
       });
     }
@@ -112,7 +114,7 @@ export class TeamComponent implements OnInit {
           .subscribe(
             res => {
               // console.log('propose team data');
-              this.teams.clear();
+              this.teamsM.clear();
               this.getStudentTeams(this.course.name);
             },
             err => {
@@ -132,7 +134,7 @@ export class TeamComponent implements OnInit {
     this.teamService.respondToProposal(token, accepted)
       .subscribe(
         res => {
-          this.teams.clear();
+          this.teamsM.clear();
           this.getStudentTeams(this.course.name);
         },
         err => {
@@ -141,7 +143,7 @@ export class TeamComponent implements OnInit {
           } else {
             this.snackBar.open('Impossibile prendere in carico la richiesta. Riprova', 'Chiudi');
           }
-          this.teams.clear();
+          this.teamsM.clear();
           this.getStudentTeams(this.course.name);
         }
       );
@@ -151,4 +153,46 @@ export class TeamComponent implements OnInit {
     return Array.from(map.values());
   }
 
+  private getAllTeams(courseName: string) {
+    this.teamService.getAllTeams(courseName)
+      .subscribe(
+        data => {
+          this.teams = data;
+          this.teams.forEach(t => this.getMembers(courseName, t.id));
+        },
+        error => console.log(error)
+      );
+  }
+
+  getMembers(courseName: string, teamId: number){
+    this.teamService.getTeamMembers(courseName, teamId)
+      .subscribe(
+        data => {
+          if (data.findIndex(e => e.id === this.authService.getId()) !== -1){
+            this.teams = this.teams.filter(e => e.id !== teamId);
+          } else {
+            this.teamsMembers[teamId] = data;
+          }
+        },
+        error => {
+          this.teamsMembers[teamId] = [];
+          console.log(error);
+        }
+      );
+  }
+
+  getTeam(team: TeamData) {
+    return new Team(team.team.id, team.team.name, team.team.status);
+  }
+
+  getStatus(team: TeamData) {
+    switch (team.team.status) {
+      case 'ACTIVE':
+        return 'ATTIVO';
+      case 'PENDING':
+        return 'IN ATTESA';
+      default:
+        return team.team.status;
+    }
+  }
 }

@@ -1,0 +1,35 @@
+
+h2 {
+  margin: 1em;
+}
+
+/*mat-card{*/
+/*  width: 50%;*/
+/*  margin-left: 15px;*/
+/*  border: 3px solid;*/
+/*}*/
+
+.teams_div {
+  margin: 1em;
+}
+
+.team_card {
+  display: inline-block;
+  width: 20em;
+  margin: 1em;
+}
+
+.team_card button {
+  width: 50%;
+}
+
+.create_button {
+  margin: 1em;
+  display: block;
+}
+.create_button h2{
+  display: inline-block;
+}
+.create_button button{
+  margin-left: 2em;
+}

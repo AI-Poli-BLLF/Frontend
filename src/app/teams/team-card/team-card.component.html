@@ -8,7 +8,7 @@
       <li *ngFor="let s of members">{{s.toString()}}</li>
     </ul>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="delete">
     <button mat-stroked-button (click)="remove()" color="warn">Elimina Team</button>
   </mat-card-actions>
 </mat-card>

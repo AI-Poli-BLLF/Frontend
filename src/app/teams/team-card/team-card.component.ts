@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Team} from '../models/team.model';
-import {Student} from '../models/student.model';
+import {Team} from '../../models/team.model';
+import {Student} from '../../models/student.model';
 
 @Component({
   selector: 'app-team-card',
@@ -12,6 +12,8 @@ export class TeamCardComponent implements OnInit {
   team: Team;
   @Input()
   members: Student[];
+  @Input()
+  delete = true;
 
   @Output()
   deleteTeam = new EventEmitter();
