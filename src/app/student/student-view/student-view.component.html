@@ -1,10 +1,10 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
     <mat-icon >menu</mat-icon>
   </button>
 
   <div>
-    <span>{{selectedItem}}</span>
+    <span id="subtitle">{{selectedItem}}</span>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>

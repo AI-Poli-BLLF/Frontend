@@ -1,4 +1,4 @@
-<div *ngIf="isVisible()" id="notifications-menu">
+<div id="notifications-menu">
   <button mat-icon-button [mat-menu-trigger-for]="menu"
           [matBadge]="getReadCount().toString()"
           (onMenuOpen)="menuOpened()"

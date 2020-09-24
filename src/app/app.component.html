@@ -1,9 +1,12 @@
 <mat-toolbar class="toolbar" color="primary">
-  <a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
-  <span class="fill_space"></span>
-  <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
-  <span><app-notifications-menu></app-notifications-menu></span>
-  <span><app-profile-view-button></app-profile-view-button></span>
+  <mat-toolbar-row class="mat-elevation-z8">
+    <a routerLink="home"><img id="logo" src="assets/img/vlablogo.png" ></a>
+    <a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
+    <span class="fill_space"></span>
+    <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
+    <span *ngIf="isVisible()"><app-notifications-menu></app-notifications-menu></span>
+    <span><app-profile-view-button></app-profile-view-button></span>
+  </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet class="outlet"></router-outlet>
 

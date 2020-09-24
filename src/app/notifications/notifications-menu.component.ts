@@ -40,9 +40,9 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
   }
 
   getNotifications(){
-    if (!this.authService.isLogged()){
-      return;
-    }
+    // if (!this.authService.isLogged()){
+    //   return;
+    // }
     this.notificationService.getNotification().subscribe(
       tokens => {
         this.notifications = tokens;
@@ -53,9 +53,9 @@ export class NotificationsMenuComponent implements OnInit, OnDestroy {
       });
   }
 
-  isVisible() {
-    return this.authService.isLogged();
-  }
+  // isVisible() {
+  //   return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
+  // }
 
   getReadCount() {
     return this.notifications.filter(value => !value.notificationRead).length;

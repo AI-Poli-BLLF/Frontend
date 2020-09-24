@@ -29,8 +29,10 @@ export class AppComponent implements OnDestroy{
     this.doLogin = route.queryParams.subscribe(
       q => {
         (q.doLogin === 'true' && !authService.isLogged()) || (q.doLogin === 'false' && authService.isLogged()) ?
+          // tslint:disable-next-line:no-unused-expression
           this.loginDialog.openDialog() : q;
         (q.doReg === 'true' && !authService.isLogged()) || (q.doReg === 'false' && authService.isLogged()) ?
+          // tslint:disable-next-line:no-unused-expression
           this.loginDialog.openDialogReg() : q;
       });
   }
@@ -45,7 +47,11 @@ export class AppComponent implements OnDestroy{
     this.doLogin.unsubscribe();
   }
 
-  toggleForMenuClick() {
+  // toggleForMenuClick() {
+  //
+  // }
 
+  isVisible() {
+    return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
   }
 }

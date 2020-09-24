@@ -14,3 +14,7 @@ mat-sidenav-container{
   text-align: center;
   margin: 20px;
 }
+
+#subtitle{
+  font-weight: lighter!important;
+}

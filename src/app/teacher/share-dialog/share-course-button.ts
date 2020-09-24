@@ -10,7 +10,7 @@ import {Professor} from '../../models/professor.model';
 
 @Component({
   selector: 'app-share-course-button',
-  template: '<button (click)="getProfessors()" mat-button><mat-icon>share</mat-icon></button>',
+  template: '<button (click)="getProfessors()" mat-mini-fab style="margin: 0 10px"><mat-icon>share</mat-icon></button>',
   styleUrls: []
 })
 export class ShareCourseButtonComponent implements OnInit, OnDestroy {
@@ -88,7 +88,7 @@ export class ShareCourseButtonComponent implements OnInit, OnDestroy {
       .subscribe(
         () => this.snackBar.open('Invito inviato.', 'Chiudi'),
         error => {
-          this.snackBar.open('Si è verificato un errore.', 'Chiudi')
+          this.snackBar.open('Si è verificato un errore.', 'Chiudi');
           console.log(error);
         }
       );

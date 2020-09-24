@@ -1,13 +1,13 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <button mat-icon-button id="hamburger" (click)="toggleForMenuClick()">
-    <mat-icon >menu</mat-icon>
+    <mat-icon>menu</mat-icon>
   </button>
-  <span>{{selectedItem}}</span>
+  <span id="subtitle">{{selectedItem}}</span>
   <span class="fill_space"></span>
   <div *ngIf="selectedItem!='Seleziona un corso' && selectedItem!='Admin Tools'">
-    <button  mat-button class="course_edit" (click)="startToEditCourse()"><mat-icon>edit</mat-icon></button>
+    <button  mat-mini-fab class="course_edit" (click)="startToEditCourse()"><mat-icon>edit</mat-icon></button>
     <app-share-course-button [courseName]="selectedItem"></app-share-course-button>
-    <button mat-button class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
+    <button mat-mini-fab class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
   </div>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav">
