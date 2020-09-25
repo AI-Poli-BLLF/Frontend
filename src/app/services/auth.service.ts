@@ -7,8 +7,9 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
-  private url = 'https://localhost:4200/authenticate';
-  private urlRegister = 'https://localhost:4200/register';
+  private host = 'https://localhost:4200';
+  private url = this.host + '/authenticate';
+  private urlRegister = this.host + '/register';
 
   constructor(private httpClient: HttpClient) { }
 

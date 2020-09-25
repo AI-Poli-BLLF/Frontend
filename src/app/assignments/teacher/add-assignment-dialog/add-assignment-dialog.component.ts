@@ -74,12 +74,6 @@ export class AddAssignmentDialogComponent implements OnInit {
       ? 'Lunghezza nome non valida.' : '';
   }
 
-  // getDataErrorMessage(){
-  //   if (this.formGroup.controls.dataR.hasError('required')) {
-  //     return 'Devi inserire una data valida';
-  //   }
-  // }
-
   ngOnInit(): void {
   }
 
@@ -88,12 +82,20 @@ export class AddAssignmentDialogComponent implements OnInit {
     if (this.formGroup.invalid) {
       return;
     }
-    const professorId = this.auth.getId();
     const releaseDate = this.dataR.value;
-    if (releaseDate === null) { return; }
+    if (releaseDate === null ) {
+      this.labelValue = 'Data di inizio non valida';
+      return;
+    }
     const expiryDate = this.dataE.value;
-    if (expiryDate === null) { return; }
-    if (expiryDate < releaseDate) { return; }
+    if (expiryDate === null) {
+      this.labelValue = 'Data di fine non valida';
+      return;
+    }
+    if (expiryDate < releaseDate) {
+      this.labelValue = 'Data di fine precedente a quella di inizio';
+      return;
+    }
     const file = this.formGroup.controls.requiredFile.value.files[0];
     const assignment = new Assignment(undefined, this.formGroup.controls.name.value, releaseDate, expiryDate);
     this.service.uploadAssignment(this.courseName, file, assignment).subscribe(

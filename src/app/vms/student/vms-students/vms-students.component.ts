@@ -25,6 +25,8 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[] = [
     'id', 'creator', 'state', 'cpu', 'ramSize', 'diskSize', 'accensione', 'modifica', 'share', 'elimina', 'link'
   ];
+  subAdd: Subscription;
+  subEdit: Subscription;
   dataSource: Vm[];
   courseName: string;
   vmConfig: VmConfig = new VmConfig(-1, -1, '', 0, 0, 0, 0, 0);
@@ -48,6 +50,12 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    if (this.subAdd !== undefined){
+      this.subAdd.unsubscribe();
+    }
+    if (this.subEdit !== undefined){
+      this.subEdit.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
@@ -108,10 +116,9 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
       this.vmConfig.maxDisk - this.disk() + vm.diskSize,
       this.vmConfig.maxVm - this.vmNumber() + 1,
       0);
-    // todo: unsubscribe?
     const d = {config: vmConfigLeft, courseName: this.courseName, edit: true, vm};
     const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
-    dialogRef.afterClosed().subscribe(() => {
+    this.subEdit = dialogRef.afterClosed().subscribe(() => {
       this.getVmsInstances(this.courseName, this.team.id);
     });
   }
@@ -177,10 +184,9 @@ export class VmsStudentsComponent implements OnInit, OnDestroy {
     }
     const vm: Vm = new Vm(undefined, false, 0, 0, 0);
     // console.log(vmConfigLeft);
-    // todo: unsubscribe ?
     const d = {config: vmConfigLeft, courseName: this.courseName, edit: false, vm};
     const dialogRef = this.dialog.open(CreateVmDialogComponent, {data: d});
-    dialogRef.afterClosed().subscribe(() => {
+    this.subAdd = dialogRef.afterClosed().subscribe(() => {
       this.getVmsInstances(this.courseName, this.team.id);
     });
   }
