@@ -15,7 +15,6 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './students-cont.component.html',
   styleUrls: ['./students-cont.component.css']
 })
-// todo: commenti
 export class StudentsContComponent implements AfterViewInit, OnDestroy{
   courseName = '';
   students: Student[] = [];
@@ -31,7 +30,6 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     private sanitizer: DomSanitizer) {
     this.sub = this.route.parent.params.subscribe(params => {
       this.courseName = params.name;
-      // console.log(params);
     });
   }
 
@@ -56,6 +54,10 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       );
   }
 
+  // uso la fork join, che mi permette di eseguire la subscribe su tutti gli observable
+  // e ritornarmi un errore se almeno una ha lanciato una eccezione
+  // se l'eliminazione è andata a buon fine cancello gli studenti senza richiedere i dati
+  // altrimenti richiedo gli studenti e le informazioni al server
   del(students: Array<Student>) {
     const delObs: Array<Observable<Student>> = [];
     students.forEach(s => delObs.push(this.service.removeStudentFromCourse(this.courseName, s.id)));
