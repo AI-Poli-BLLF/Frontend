@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ProfileViewComponent} from './profile-view.component';
 import {AuthService} from '../services/auth.service';
@@ -8,8 +8,7 @@ import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-profile-view-button',
-  template: '<div *ngIf="isVisible()" class="open-button" (click)="openProfile()">' +
-    '<img class="image-cropper-small" [src]="photoPath" alt="Profile"/></div>',
+  templateUrl: './profile-view-button.component.html',
   styleUrls: ['./profile-view.component.css']
 })
 // tasto che mi permette di aprire il dialog del progilo
@@ -19,6 +18,9 @@ export class ProfileViewButtonComponent implements OnDestroy{
   photoPath: SafeUrl;
   dialogSub: Subscription;
 
+  @Output()
+  logoutEvent: EventEmitter<unknown>;
+
   constructor(private dialog: MatDialog,
               private sanitizer: DomSanitizer,
               private profileService: ProfileService,
@@ -26,6 +28,7 @@ export class ProfileViewButtonComponent implements OnDestroy{
     if (this.isVisible()){
       this.getImage();
     }
+    this.logoutEvent = new EventEmitter<unknown>();
   }
 
   isVisible(){
@@ -62,5 +65,9 @@ export class ProfileViewButtonComponent implements OnDestroy{
   openProfile(){
     this.dialogSub = this.dialog.open(ProfileViewComponent)
       .afterClosed().subscribe(() => this.getImage());
+  }
+
+  logout(){
+    this.logoutEvent.emit();
   }
 }

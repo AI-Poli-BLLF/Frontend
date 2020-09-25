@@ -204,6 +204,7 @@ export class BaseViewComponent implements OnInit, OnDestroy {
     obs.subscribe(
       data => {
         this.courses = data;
+        this.sidenav.open();
       },
       error => {
         console.log(error);

@@ -87,7 +87,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   }
 
   isEntirePageSelected() {
-    return this.getPageData().every((u) => u.selected);
+    return this.getPageData().every((u) => u.selected) && this.dataSource.data.length !== 0;
   }
   isAtLeastOneSelected() {
     return this.getPageData().findIndex((u) => u.selected === true) !== -1;
