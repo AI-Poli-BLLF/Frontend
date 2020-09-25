@@ -11,3 +11,17 @@ table {
   /*overflow: hidden;*/
   border-radius: 50%;
 }
+
+.full-size{
+  width: 100%;
+}
+
+.disabled{
+  color: #3f48cc!important;
+  margin: 0;
+  padding: 0;
+}
+
+mat-grid-list{
+  margin: 0 15px;
+}

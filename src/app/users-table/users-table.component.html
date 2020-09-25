@@ -1,7 +1,17 @@
 <!--todo: fare tabella stile gmail-->
 <div>
-  <button *ngIf="isEntirePageSelected() && elementNotSelected()" (click)="selectAll()" mat-raised-button color="accent">Seleziona tutti</button>
-  <p *ngIf="notVisibleSelected()">Ci sono {{numberSelected()}} elementi selezionati.</p>
+  <div *ngIf='isAtLeastOneSelected(false)'>
+    <mat-grid-list [cols]="gridColumnNumber()" rowHeight="100px">
+      <mat-grid-tile>
+        <button disabled class="full-size" mat-stroked-button color="primary">
+          <span class="disabled">Hai selezionato {{numberSelected()}} studenti</span>
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile *ngIf="isEntirePageSelected() && elementNotSelected()">
+        <button class="full-size" mat-flat-button color="accent" (click)="selectAll()">Seleziona tutti i {{numberAllStudents()}} studenti della tabella</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
 <table mat-table matSort [dataSource]="dataSource">
   <ng-container *ngIf="students" matColumnDef="select">

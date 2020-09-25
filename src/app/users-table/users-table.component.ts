@@ -89,8 +89,15 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
   isEntirePageSelected() {
     return this.getPageData().every((u) => u.selected) && this.dataSource.data.length !== 0;
   }
-  isAtLeastOneSelected() {
-    return this.getPageData().findIndex((u) => u.selected === true) !== -1;
+  isAtLeastOneSelected(onlyPage: boolean = true) {
+    if (onlyPage) {
+      return this.getPageData().findIndex((u) => u.selected === true) !== -1;
+    }
+    return this.dataSource.data.findIndex((u) => u.selected === true) !== -1;
+  }
+
+  areAllStudentSelected(){
+    return this.dataSource.data.filter(u => u.selected).length === this.dataSource.data.length;
   }
 
   getPageData() {
@@ -118,5 +125,16 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
 
   selectAll() {
     this.dataSource.data.forEach(u => u.selected = true);
+  }
+
+  numberAllStudents() {
+    return this.dataSource.data.length;
+  }
+
+  gridColumnNumber() {
+    if (this.isEntirePageSelected() && !this.areAllStudentSelected()){
+      return 2;
+    }
+    return 1;
   }
 }
