@@ -126,12 +126,12 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       );
   }
 
-  // retrieve photo per ogni studente nell'array
+  // scarica la foto per ogni studente nell'array
   getPhotos(students: Student[]){
     students.forEach(s => this.getPhoto(s));
   }
 
-  // retrieve photo per singolo studente
+  // scarica la foto per singolo studente
   getPhoto(student: Student){
     this.service.getPhoto(student.id)
       .subscribe(

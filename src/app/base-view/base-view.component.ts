@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {Course} from '../models/course.model';
 import {MatSidenav} from '@angular/material/sidenav';
@@ -24,6 +24,9 @@ import {EnrollCourseDialogComponent} from '../student/enroll-course-dialog/enrol
 // gli elementi differenti tra i vari ruoli sono gestiti da ngIf
 export class BaseViewComponent implements OnInit, OnDestroy {
   homeS: Subscription;
+  deleteS: Subscription;
+  addS: Subscription;
+  editS: Subscription;
   selectedItem: string;
 
   baseLink: string;
@@ -92,9 +95,8 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   // apro una dialog per crere un corso, se l'aggiunta del corso va a buon fine
   // e la dialog mi torna true aggiorno i corsi
   openAddCourseDialog(){
-    // todo: unsubrscribe?
     const dialogRef = this.dialog.open(AddCourseDialogComponent);
-    dialogRef.afterClosed().subscribe((data) => {
+    this.addS = dialogRef.afterClosed().subscribe((data) => {
       console.log(data);
       if (data === true){
         this.loadCourses();
@@ -118,9 +120,8 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   // l'eliminazione del corso, in caso affermativo cancello il corso senza dovere
   // ricaricare la lista, in caso di errore mostro una snackbar di errore
   deleteCourseDialog(){
-    // todo: unsubrscribe?
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {data: this.selectedItem});
-    dialogRef.afterClosed().subscribe(value => {
+    this.deleteS = dialogRef.afterClosed().subscribe(value => {
       // tslint:disable-next-line:triple-equals
       if (value != 'true'){
         return;
@@ -145,7 +146,7 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   // faccio un redirect così da poter alla root
   startToEditCourse(){
     const course: Course = this.courses.find(c => c.name === this.selectedItem);
-    this.courseService.getCourseVmModel(course.name)
+    this.editS = this.courseService.getCourseVmModel(course.name)
       .subscribe(
         vmModel => {
           const d = {course, vmModel};
@@ -176,6 +177,15 @@ export class BaseViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.homeS.unsubscribe();
+    if (this.deleteS !== undefined){
+      this.deleteS.unsubscribe();
+    }
+    if (this.addS !== undefined){
+      this.addS.unsubscribe();
+    }
+    if (this.editS !== undefined){
+      this.editS.unsubscribe();
+    }
   }
 
   loadCourses(){

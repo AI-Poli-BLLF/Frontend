@@ -23,19 +23,6 @@ span {
   padding-left: 1em;
 }
 
-/*input {*/
-/*  width: 100%;*/
-/*}*/
-/*todo: allungare input text fino a riempire tutta la dialog*/
-/*.form_div {*/
-/*  position: absolute;*/
-/*  left: 50%;*/
-/*  -ms-transform: translateX(-50%);*/
-/*  -webkit-transform: translateX(-50%);*/
-/*  transform: translateX(-50%);*/
-/*  !*width: 100%;*!*/
-/*}*/
-
 .form_div {
   display: block;
   position: relative;
