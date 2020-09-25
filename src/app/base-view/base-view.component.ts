@@ -11,6 +11,7 @@ import {AddCourseDialogComponent} from '../teacher/courses/add-course-dialog/add
 import {DeleteConfirmDialogComponent} from '../teacher/courses/delete-confirm-dialog/delete-confirm-dialog.component';
 import {EditCourseDialogComponent} from '../teacher/courses/edit-course-dialog/edit-course-dialog.component';
 import {EnrollCourseDialogComponent} from '../student/enroll-course-dialog/enroll-course-dialog.component';
+import {Professor} from '../models/professor.model';
 
 @Component({
   selector: 'app-base-view',
@@ -28,6 +29,7 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   addS: Subscription;
   editS: Subscription;
   selectedItem: string;
+  professors: Professor[];
 
   baseLink: string;
 
@@ -44,8 +46,14 @@ export class BaseViewComponent implements OnInit, OnDestroy {
               private snackBar: MatSnackBar,
               private service: CourseService) {
     this.setBaseLink();
+    this.professors = [];
     this.homeS = router.events.subscribe(
-      e => (e instanceof NavigationEnd && e.url === '/home') ? this.selectedItem = 'Seleziona un corso' : e
+      e => {
+        if (e instanceof NavigationEnd && e.url === '/home') {
+          this.selectedItem = 'Seleziona un corso';
+          this.professors = [];
+        }
+      }
     );
   }
 
@@ -85,7 +93,26 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadCourses();
     const courseName = this.route.firstChild.snapshot.params.name;
-    this.selectedItem = courseName === undefined ? 'Seleziona un corso' : courseName;
+    this.selectItem(courseName);
+  }
+
+  selectItem(value: string){
+    if (value === undefined){
+      this.selectedItem = 'Seleziona un corso';
+      return;
+    }
+    if (this.isStudent()){
+      this.getProfessors(value);
+    }
+    this.selectedItem = value;
+  }
+
+  getProfessors(courseName: string){
+    this.courseService.getProfessors(courseName)
+      .subscribe(
+        data => this.professors = data,
+        () => this.professors = []
+      );
   }
 
   toggleForMenuClick() {
@@ -173,6 +200,9 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   // e permettere l'interazione con la delete/edit/share
   handleClick(selectedItem: Course) {
     this.selectedItem = selectedItem.name;
+    if (this.isStudent()){
+      this.getProfessors(selectedItem.name);
+    }
   }
 
   ngOnDestroy(): void {
@@ -236,6 +266,7 @@ export class BaseViewComponent implements OnInit, OnDestroy {
   // quando viene cliccato su admin tools imposto l'elemento selezionato ad admin tools
   adminToolsClick() {
     this.selectedItem = 'Admin Tools';
+    this.professors = [];
   }
 
   // metodo per gli studenti, che permette di fare richiesta di aggiunta ad un corso

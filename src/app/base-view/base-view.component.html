@@ -10,6 +10,9 @@
     <span *ngIf="isAdmin()" class="margin-right-left"></span>
     <button mat-mini-fab class="course_edit" (click)="deleteCourseDialog()"><mat-icon>delete</mat-icon></button>
   </div>
+  <div *ngIf="isStudent()" class="professors_div">
+    <span class="prof_span" *ngFor="let prof of professors">{{prof.name + ' ' + prof.firstName}}</span>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" position="start">
