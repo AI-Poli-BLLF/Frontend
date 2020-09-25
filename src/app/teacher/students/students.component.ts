@@ -15,9 +15,6 @@ import {UsersTableComponent} from '../../users-table/users-table.component';
 // ed eliminarli/aggiungerli e aggiungerli tramite file csv
 export class StudentsComponent implements OnInit {
 
-  // todo: bug del primo elemento
-  // todo: mettere selezione stile gmail
-
   enrolledStudents: Array<Student> = [];
   allStudents: Array<Student> = [];
 

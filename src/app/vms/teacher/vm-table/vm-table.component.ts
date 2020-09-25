@@ -58,8 +58,6 @@ export class VmTableComponent implements AfterViewInit{
     // console.log(this.courseName);
     this.courseService.getTeamVMConfig(this.courseName, team.id, team.name)
       .subscribe(t => {
-        // console.log(t);
-        // todo: trovare un migliore modo per aggiornare
         const v = [...this.dataSource.data];
         v.push(t);
         this.dataSource.data = v;

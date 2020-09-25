@@ -78,7 +78,6 @@ export class AddAssignmentDialogComponent implements OnInit {
   }
 
   add() {
-    // todo: validare date cioè controllare che siano rimepite
     if (this.formGroup.invalid) {
       return;
     }
