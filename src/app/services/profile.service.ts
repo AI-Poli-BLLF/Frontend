@@ -15,6 +15,9 @@ export class ProfileService {
   constructor(private httpClient: HttpClient) {
   }
 
+  // servizio di supporto per la visualizzazione delle informazioni dell'utente, studente
+  // o docente.
+
   get(): Observable<Profile> {
     return this.httpClient.get<Profile>(this.url)
       .pipe(

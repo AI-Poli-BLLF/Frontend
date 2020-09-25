@@ -5,8 +5,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Student} from '../../models/student.model';
-import {subscribeOn} from 'rxjs/operators';
 
 @Component({
   selector: 'app-draft-view',

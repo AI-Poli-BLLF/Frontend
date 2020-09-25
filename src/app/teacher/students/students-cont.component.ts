@@ -35,6 +35,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     });
   }
 
+  // chiamata al backend per aggiungere uno studente ad un corso
+  // se tutto va bene, prendo la foto e la setto per lo studente
   add(student: Student){
     this.service.enrollStudent(this.courseName, student.id)
       .subscribe(
@@ -74,6 +76,8 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
     );
   }
 
+  // vengono richiesti i dati al backend delle risorse
+  // se si verificano errori li notifico con delle snackbar
   ngAfterViewInit(): void {
     this.getEnrolledStudent();
 
@@ -122,10 +126,12 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       );
   }
 
+  // retrieve photo per ogni studente nell'array
   getPhotos(students: Student[]){
     students.forEach(s => this.getPhoto(s));
   }
 
+  // retrieve photo per singolo studente
   getPhoto(student: Student){
     this.service.getPhoto(student.id)
       .subscribe(
@@ -140,6 +146,7 @@ export class StudentsContComponent implements AfterViewInit, OnDestroy{
       );
   }
 
+  // chiamata al servizio di aggiunta al team tramite CSV
   enrollByCsv(file: File) {
     this.courseService.enrollByCsv(file, this.courseName).subscribe(
       () => this.getEnrolledStudent(),

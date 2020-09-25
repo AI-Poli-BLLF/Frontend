@@ -6,13 +6,14 @@ import {AssignmentService} from '../../../services/assignment.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../../../login/login-dialog/login-dialog.component';
 import {ActivatedRoute} from '@angular/router';
-import {Draft} from '../../../models/draft.model';
 
 @Component({
   selector: 'app-draft-evaluate',
   templateUrl: './draft-evaluate.component.html',
   styleUrls: ['./draft-evaluate.component.css']
 })
+
+// Dialog component per la valutazione di un elaborato
 export class DraftEvaluateComponent implements OnInit {
   labelValue: string;
   courseName: string;

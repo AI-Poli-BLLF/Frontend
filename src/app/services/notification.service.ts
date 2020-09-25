@@ -14,6 +14,7 @@ export class NotificationService {
 
   constructor(private httpClient: HttpClient, private auth: AuthService) {}
 
+  // restituisce le notifiche per l'utente come token
   getNotification(): Observable<Array<NotificationToken>>{
     const url = `${this.notificationUrl}/${this.auth.getId()}`;
 
@@ -29,6 +30,8 @@ export class NotificationService {
     );
   }
 
+  // permette di accettare una richiesta di cooperazione tra docenti
+  // oppure una richiesta di partecipazione a un team
   acceptRequest(token: NotificationToken){
     let url: string;
     switch (token.type){
@@ -50,6 +53,8 @@ export class NotificationService {
     );
   }
 
+  // permette di rifiutare una richiesta di cooperazione tra docenti
+  // oppure una richiesta di partecipazione a un team
   rejectRequest(token: NotificationToken){
     let url: string;
     switch (token.type){
@@ -71,6 +76,7 @@ export class NotificationService {
     );
   }
 
+  // segna una notifica come letta
   readNotification(token: NotificationToken){
     const url = `${this.notificationUrl}/read-notification`;
     return this.httpClient.put(url, token.id).pipe(

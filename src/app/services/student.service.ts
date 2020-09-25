@@ -66,6 +66,7 @@ export class StudentService {
       );
   }
 
+  // permette una post al servizio di iscrizione di uno studente a un determinato corso
   enrollStudent(courseName: string, studentId: string): Observable<any>{
     return this.httpClient.post<any>(this.urlCourses + '/' + courseName + '/enrollOne', studentId)
       .pipe(
@@ -75,6 +76,8 @@ export class StudentService {
         })
       );
   }
+
+  // permette chiamada al servizio di eliminazione di uno studente da un corso
   removeStudentFromCourse(courseName: string, studentId: string): Observable<any>{
     return this.httpClient.delete<any>(this.urlCourses + '/' + courseName + '/enrolled/' + studentId)
       .pipe(
@@ -89,6 +92,8 @@ export class StudentService {
     return this.httpClient.get(this.url + '/' + studentId + '/photo',  { responseType: 'blob' });
   }
 
+  // ritorna i corsi al quale lo studente può iscriversi
+  // quindi corsi attivi ma a cui lo studente non è ancora iscritto
   getAvailableCourse() {
     const url = `${this.url}/${this.authService.getId()}/available-courses`;
     return this.httpClient.get<Array<Course>>(url)

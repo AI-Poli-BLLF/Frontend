@@ -1,15 +1,12 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Draft} from '../../../models/draft.model';
 import {MatTableDataSource} from '@angular/material/table';
-import {Assignment} from '../../../models/assignment.model';
-import {Student} from '../../../models/student.model';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {ActivatedRoute, Route} from '@angular/router';
 import {AssignmentService} from '../../../services/assignment.service';
 import {AuthService} from '../../../services/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AddAssignmentDialogComponent} from '../add-assignment-dialog/add-assignment-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DraftEvaluateComponent} from '../draft-evaluate/draft-evaluate.component';
 import {Subscription} from 'rxjs';

@@ -63,6 +63,7 @@ export class TeamService {
       );
   }
 
+  // ritorna i membri di un team (studenti)
   getTeamMembers(courseName: string, teamId: number): Observable<Array<Student>>{
     return this.httpClient
       .get<Array<Student>>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/members')
@@ -76,6 +77,8 @@ export class TeamService {
       );
   }
 
+  // ritorna gli studenti attivi di un team
+  // o gli studenti che hanno una richiesta di partecipazione a un team pendente
   getTeamMembersByStatus(courseName: string, teamId: number, activeMembers: boolean): Observable<Array<Student>>{
     const postfix = activeMembers ? '/activeMembers' : '/pendingMembers';
     return this.httpClient
@@ -90,6 +93,7 @@ export class TeamService {
       );
   }
 
+  // ritorna il creatore del team non ancora formato
   getTeamProposer(courseName: string, teamId: number): Observable<Student> {
     return this.httpClient
       .get<Student>(this.url + '/courses/' + courseName + '/teams/' + teamId + '/proposer')
@@ -102,6 +106,7 @@ export class TeamService {
       );
   }
 
+  // ritorna tutti gli studenti che non sono ancora in un team
   getAvailableStudents(courseName: string): Observable<Student[]> {
     // console.log('AVAILABLE STUDENTS');
     return this.httpClient
@@ -118,6 +123,7 @@ export class TeamService {
       );
   }
 
+  // uno studente può proporre di formare un team ad altri studenti (members)
   proposeTeam(courseName: string, teamName: string, memberIds: string[], timeout: number) {
     // console.log('PROPOSE TEAM');
     const proposerId = this.authService.getId();
@@ -133,6 +139,7 @@ export class TeamService {
       );
   }
 
+  // ritorna dato il corso e il team, un token pendente
   getTeamConfirmationToken(courseName: string, teamId: number): Observable<Token> {
     const userId = this.authService.getId();
     // console.log('CONFIRMATION TOKEN');
@@ -146,6 +153,7 @@ export class TeamService {
       );
   }
 
+  // post per la conferma o il rifiuto a partecipare a un team
   respondToProposal(token: Token, accept: boolean) {
     // console.log('RESPOND TO PROPOSAL');
     const action: string = accept ? 'confirm/' : 'reject/';
@@ -159,6 +167,8 @@ export class TeamService {
       );
   }
 
+  // elimina il team
+  // controlli sul service del backend
   deleteTeam(courseName: string, teamId: number): Observable<any> {
     return this.httpClient
       .delete<any>(this.url + '/courses/' + courseName + '/teams/' + teamId)

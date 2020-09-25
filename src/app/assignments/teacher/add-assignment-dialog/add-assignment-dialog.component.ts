@@ -15,9 +15,6 @@ import {isNull} from 'util';
 })
 export class AddAssignmentDialogComponent implements OnInit {
   minDateR = new Date(Date.now());
-  maxDateR = new Date(2021, 0, 1);
-  minDateE = new Date(Date.now());
-  maxDateE = new Date(2021, 0, 1);
   dataR = new FormControl(new Date());
   dataE = new FormControl(new Date());
   labelValue: string;
@@ -63,7 +60,6 @@ export class AddAssignmentDialogComponent implements OnInit {
 
   add() {
     // todo: validare date cioè controllare che siano rimepite
-    // l'ho fatto di merda ma funziona, l'altro modo commentato non andava
     if (this.formGroup.invalid) {
       return;
     }

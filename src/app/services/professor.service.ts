@@ -27,7 +27,7 @@ export class ProfessorService {
       );
   }
 
-
+  // invito a uno o più docenti a partecipare alla gestione del corso
   shareCourse(courseName: string, professorId: string, memberIds: string[]): Observable<any>{
     return this.httpClient.post<any>(this.url + '/' + professorId + '/courses/' + courseName + '/cooperate' , memberIds)
       .pipe(
