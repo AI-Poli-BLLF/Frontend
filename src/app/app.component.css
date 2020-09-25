@@ -30,6 +30,10 @@ router-outlet {
   margin-right: 10px;
 }
 
+#title{
+  font-weight: normal;
+}
+
 div.welcome-container{
   width: 100%;
   height: 100%;
@@ -63,13 +67,15 @@ mat-card-title{
   line-height: 1.2em!important;
   font-size: 2.7em!important;
   margin: 5%;
+  font-weight: normal!important;
 }
 
 mat-card-subtitle{
   line-height: 1.2em!important;
-  font-size: 1.6em;
+  font-size: 1.7em;
   margin: 10%;
   margin-top: 30px!important;
+  font-weight: lighter!important;
 }
 
 #card-container{

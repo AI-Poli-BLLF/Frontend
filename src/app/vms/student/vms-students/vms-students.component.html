@@ -1,5 +1,5 @@
-<div *ngIf="team.id===-1; else elseBlock">
-  <h2>Per usare o creare le vm devi appartenere ad un team.</h2>
+<div class="no-elements" *ngIf="team.id===-1; else elseBlock">
+    <h2 >Non esistono team per questo corso.</h2>
 </div>
 <ng-template #elseBlock>
   <div>

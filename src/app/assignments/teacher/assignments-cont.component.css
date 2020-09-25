@@ -1,6 +1,7 @@
 
 h2 {
   margin: 1em;
+  font-weight: normal;
 }
 mat-sidenav-container{ height: 100%; }
 
