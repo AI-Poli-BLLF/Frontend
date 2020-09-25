@@ -34,7 +34,7 @@ export class Draft {
   }
 
   get date(): string {
-    return `${this.timestampT.getDate()}/${this.timestampT.getMonth()}/${this.timestampT.getFullYear()}`;
+    return `${this.timestampT.getDate()}/${this.timestampT.getMonth() + 1}/${this.timestampT.getFullYear()}`;
   }
 
   get timestampD(){
