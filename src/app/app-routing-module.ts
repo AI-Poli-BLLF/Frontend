@@ -23,6 +23,7 @@ import {DraftViewComponent} from './assignments/draft-view/draft-view.component'
 import {AssignmentViewComponent} from './assignments/assignment-view/assignment-view.component';
 import {CorrectionViewComponent} from './assignments/correction-view/correction-view.component';
 import {BaseViewComponent} from './base-view/base-view.component';
+import {CourseAuthGuard} from './auth/course-auth.guard';
 
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
     children: [
       {path: '', component: HomeComponent },
       {path: 'course/:name',
+        canActivate: [CourseAuthGuard],
         component: TabComponentComponent,
         children: [
           {path: '', component: HomeComponent },
@@ -60,6 +62,7 @@ const routes: Routes = [
     children: [
       {path: '', component: HomeComponent },
       {path: 'course/:name',
+        canActivate: [CourseAuthGuard],
         component: TabComponentComponent,
         children: [
           {path: '', component: HomeComponent },
