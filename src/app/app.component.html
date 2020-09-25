@@ -8,7 +8,7 @@
     <span><app-profile-view-button (logoutEvent)="pressLogoutButton()"></app-profile-view-button></span>
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet class="outlet" *ngIf="isLogged()"></router-outlet>
+<router-outlet class="outlet"></router-outlet>
 
 <div class="welcome-container" *ngIf="!isLogged()">
   <mat-grid-list cols="5" rowHeight="100%">

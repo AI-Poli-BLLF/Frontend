@@ -28,8 +28,8 @@ import {CourseAuthGuard} from './auth/course-auth.guard';
 const routes: Routes = [
   // {path: 'home', component: HomeComponent },
   {path: '', component: WelcomeComponent },
-  {path: 'home', component: WelcomeComponent },
   {path: 'confirm-registration/:token', component: TokenComponent },
+  {path: 'home', component: WelcomeComponent },
   {path: 'teacher',
     canActivate: [TeacherAuthGuard],
     component: BaseViewComponent,

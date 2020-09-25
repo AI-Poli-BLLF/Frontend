@@ -4,7 +4,7 @@ import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-welcome',
-  template: '<h2>Benvenuto!!</h2>',
+  template: '',
   styleUrls: []
 })
 // componente che una volta effettuato il login si occcupa di reindirizzare

@@ -20,6 +20,7 @@ export class TokenComponent implements OnDestroy{
     private router: Router,
     private snackBar: MatSnackBar,
     private tokenService: TokenService) {
+    console.log('TOKEN CHECK');
     this.sub = this.route.params.subscribe(params => {
       this.doPost(params.token);
     });
