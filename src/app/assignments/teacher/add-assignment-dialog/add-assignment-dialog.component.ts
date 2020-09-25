@@ -6,12 +6,37 @@ import {LoginDialogComponent} from '../../../login/login-dialog/login-dialog.com
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {Assignment} from '../../../models/assignment.model';
-import {isNull} from 'util';
+import {formatDate} from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from '@angular/material/core';
+
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
+
+class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'dd-MM-yyyy', this.locale);
+    } else {
+      return date.toDateString();
+    }
+  }
+}
 
 @Component({
   selector: 'app-add-assignment-dialog',
   templateUrl: './add-assignment-dialog.component.html',
-  styleUrls: ['./add-assignment-dialog.component.css']
+  styleUrls: ['./add-assignment-dialog.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+  ]
 })
 export class AddAssignmentDialogComponent implements OnInit {
   minDateR = new Date(Date.now());

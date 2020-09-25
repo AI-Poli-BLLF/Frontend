@@ -9,7 +9,7 @@
 
     <mat-form-field>
       <mat-label>Data inizio</mat-label>
-      <input matInput [min]="minDateR" [matDatepicker]="picker" placeholder="Scegli una data" [formControl]="dataR" required>
+      <input matInput [min]="minDateR" [matDatepicker]="picker" placeholder="Scegli una data" [formControl]="dataR" required readonly>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
 <!--      <mat-error *ngIf="checkError('dataR')">{{getDataErrorMessage()}}</mat-error>-->
@@ -17,7 +17,7 @@
 
     <mat-form-field>
       <mat-label>Data fine</mat-label>
-      <input matInput [min]="dataR.value" [matDatepicker]="picker2" placeholder="Scegli una data" [formControl]="dataE" required>
+      <input matInput [min]="dataR.value" [matDatepicker]="picker2" placeholder="Scegli una data" [formControl]="dataE" required readonly>
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
 <!--      <mat-error *ngIf="checkError('dataE')">{{getDataErrorMessage()}}</mat-error>-->
