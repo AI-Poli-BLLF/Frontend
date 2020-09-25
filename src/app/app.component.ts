@@ -54,4 +54,8 @@ export class AppComponent implements OnDestroy{
   isLogged(){
     return this.authService.isLogged();
   }
+
+  pressLogoutButton() {
+    this.loginDialog.loginOutButton.nativeElement.click();
+  }
 }

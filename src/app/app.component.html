@@ -5,7 +5,7 @@
     <span class="fill_space"></span>
     <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
     <span *ngIf="isVisible()"><app-notifications-menu></app-notifications-menu></span>
-    <span><app-profile-view-button></app-profile-view-button></span>
+    <span><app-profile-view-button (logoutEvent)="pressLogoutButton()"></app-profile-view-button></span>
   </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet class="outlet" *ngIf="isLogged()"></router-outlet>
@@ -24,12 +24,10 @@
       colspan="3">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Ciao questo è virtual labs e non so cosa scrivere</mat-card-title>
-          <mat-card-subtitle>Ti permette di fare cose sia da studente che da professore e divertirti con le tue VM</mat-card-subtitle>
+          <mat-card-title>Il nuovo modo per studenti e professori di svolgere agevolmente laboratori formativi</mat-card-title>
+          <mat-card-subtitle>Iscriviti ai tuoi corsi e crea subito un team per iniziare a lavorare sui tuoi progetti grazie alla potenza delle nostre virtual machine</mat-card-subtitle>
         </mat-card-header>
         <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
-        <!--<button mat-raised-button color="primary"><mat-icon>login</mat-icon> Login</button>
-        <button mat-raised-button color="warn"><mat-icon>person_add</mat-icon> Registrati</button>-->
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

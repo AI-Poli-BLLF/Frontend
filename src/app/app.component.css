@@ -50,10 +50,9 @@ div.welcome-container h1{
 
 mat-card{
   max-width: 50%;
-
   width: 100%;
-  line-height: 3em!important;
   border-radius: 4%!important;
+
 }
 
 mat-card-header{
@@ -61,17 +60,19 @@ mat-card-header{
 }
 
 mat-card-title{
-  font-size: 3em!important;
-  margin: 10%;
+  line-height: 1.2em!important;
+  font-size: 2.7em!important;
+  margin: 5%;
 }
 
 mat-card-subtitle{
-  font-size: 2em;
+  line-height: 1.2em!important;
+  font-size: 1.6em;
   margin: 10%;
   margin-top: 30px!important;
 }
 
 #card-container{
   background-size: cover;
-  background: url("src/assets/img/server2.jpg") no-repeat center;
+  background: url("src/assets/img/server.jpg") no-repeat center;
 }

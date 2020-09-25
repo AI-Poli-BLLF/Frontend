@@ -1,0 +1,13 @@
+<div *ngIf="isVisible()" class="open-button"  [matMenuTriggerFor]="usermenu">
+  <img class="image-cropper-small" [src]="photoPath" alt="Profile"/>
+</div>
+<mat-menu #usermenu="matMenu">
+  <button mat-menu-item (click)="openProfile()">
+    <mat-icon color="accent">person</mat-icon>
+    <span>Profilo</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon color="accent">logout</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>

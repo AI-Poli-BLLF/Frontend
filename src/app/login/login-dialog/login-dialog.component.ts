@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
@@ -11,6 +11,9 @@ import {RegistrationDialogComponent} from '../registration-dialog/registration-d
   styleUrls: ['login-dialog.component.css']
 })
 export class LoginDialogComponent implements OnInit {
+  @ViewChild('loginOutButton', {read: ElementRef})
+  loginOutButton: ElementRef;
+
   @Output()
   logInOut = new EventEmitter<string>();
 
