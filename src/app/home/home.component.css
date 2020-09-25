@@ -1,3 +1,10 @@
+h2{
+  font-weight: normal;
+}
+p{
+  color: #7f8c8d;
+  font-weight: lighter;
+}
 .div {
   font-size: 130%;
   text-align: center;

@@ -1,7 +1,6 @@
 <!--metodo per l'admin per vedere tutte le risorse utilizzate,
  vengono riciclati i component già usati sulle vm dei team e delgi studenti-->
 <div class="resources">
-  <h2>Risorse allocate</h2>
   <h3>Risorse usate</h3>
   <p>Risorse attualmente usate dagli studenti</p>
   <app-team-resources [vmConfig]="allocated" [active]="used.maxActive" [disk]="used.maxDisk" [ram]="used.maxRam" [cpu]="used.maxCpu" [vmNumber]="used.maxVm"></app-team-resources>

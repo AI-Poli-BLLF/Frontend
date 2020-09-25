@@ -1,6 +1,16 @@
+h2{
+  font-weight: normal;
+}
+
 .teams_div {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.teams_div h3{
+  color: #7f8c8d;
+  font-weight: lighter;
+  margin-left: 5px;
 }
 
 .team_card {

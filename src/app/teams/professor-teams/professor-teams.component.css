@@ -1,3 +1,12 @@
 .teams_div {
   margin: 1em;
 }
+
+.no-elements{
+  text-align: center;
+}
+.no-elements h2{
+  margin-top: 20%;
+  font-weight: lighter;
+  color: #7f8c8d;
+}

@@ -32,6 +32,11 @@ export class LoginDialogComponent implements OnInit {
     return !this.authService.isLogged();
   }
 
+  // nasconde il tasto di logout dalla navbar per studenti e professori
+  isLogoutHidden(){
+    return this.authService.isLogged() && this.authService.getRole() !== 'ROLE_ADMIN';
+  }
+
   // in base al fatto che sia loggato o meno cambio i parametri nell'indirizzo
   getQueryParams() {
     return this.authService.isLogged() ? {doLogin: 'false'} : {doLogin: 'true'};

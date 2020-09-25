@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar" color="primary" *ngIf="isLogged()">
   <mat-toolbar-row class="mat-elevation-z8">
     <a routerLink="home"><img id="logo" src="assets/img/vlablogo.png" ></a>
-    <a id="home_link" routerLink="home"><span>VirtualLabs</span></a>
+    <a id="home_link" routerLink="home"><span id="title">Virtual Labs</span></a>
     <span class="fill_space"></span>
     <span><app-login-dialog (logInOut)="logInOut($event)"></app-login-dialog></span>
     <span *ngIf="isVisible()"><app-notifications-menu></app-notifications-menu></span>

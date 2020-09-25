@@ -1,4 +1,6 @@
 <div class="teams_div">
+  <div class="no-elements" *ngIf="teams.length===0">
+    <h2 >Non esistono team per questo corso.</h2>
+  </div>
   <app-team-card [members]="teamsMembers[team.id]" (deleteTeam)="deleteTeam(team)" [team]="team" *ngFor="let team of teams"></app-team-card>
-  <h2 *ngIf="teams.length===0">Non esistono team per questo corso.</h2>
 </div>
