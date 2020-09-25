@@ -19,7 +19,7 @@ export class LoginDialogComponent implements OnInit {
 
   loginButtonState: string;
 
-  constructor(public dialog: MatDialog, private authService: AuthService,  private router: Router ) {
+  constructor(public dialog: MatDialog, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -28,25 +28,25 @@ export class LoginDialogComponent implements OnInit {
   }
 
   // se sono già loggato non mostro il tasto di registrazione
-  regIsVisible(){
+  regIsVisible() {
     return !this.authService.isLogged();
   }
 
   // in base al fatto che sia loggato o meno cambio i parametri nell'indirizzo
-  getQueryParams(){
-    return this.authService.isLogged() ? { doLogin: 'false' } : { doLogin: 'true' };
+  getQueryParams() {
+    return this.authService.isLogged() ? {doLogin: 'false'} : {doLogin: 'true'};
   }
 
   // imposto il parametro per fare la registrazione
-  getQueryParamsReg(){
-    return { doReg: 'true' };
+  getQueryParamsReg() {
+    return {doReg: 'true'};
   }
 
   // alla pressione del tasto di login se sono loggato effettuo il logout o vicevera
   // nel caso di login apro un dialog e alla sua chiusura se è andato a buon fine aggiorno la pagina
   // questo mi permetterà di caricare il welcome component ed essere indirizzato alla pagina con il ruolo corretto
   openDialog() {
-    if (!this.authService.isLogged()){
+    if (!this.authService.isLogged()) {
       const dialogRef = this.dialog.open(LoginDialogContentComponent);
       dialogRef.afterClosed().subscribe(() => {
         this.authService.isLogged() ? this.loginButtonState = 'Logout' : this.loginButtonState = 'Login';
@@ -61,14 +61,14 @@ export class LoginDialogComponent implements OnInit {
     }
   }
 
-  // apre il dialog per la registrazione, non compio azioni perchè dovrò attendere che l'utente confermi la mail
+  // apre il dialog per la registrazione, non compio azioni e alla chiusura della dialog cambio route
   openDialogReg() {
-    if (!this.authService.isLogged()){
-      this.dialog.open(RegistrationDialogComponent);
+    if (!this.authService.isLogged()) {
+      const dialogRef = this.dialog.open(RegistrationDialogComponent);
+      dialogRef.afterClosed().subscribe(() => this.router.navigate(['/']));
     }
   }
 }
-
 @Component({
   selector: 'app-dialog-content',
   templateUrl: 'login-dialog-content.component.html',
