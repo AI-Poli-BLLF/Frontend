@@ -74,9 +74,32 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     this.isIntermediate();
   }
 
+  numberSelected(){
+    return this.dataSource.data.filter(e => e.selected === true).length;
+  }
+
+  notVisibleSelected(){
+    return this.getPageData().filter(e => e.selected === true).length
+      !== this.numberSelected();
+  }
+  elementNotSelected(){
+    return this.dataSource.data.length > this.numberSelected();
+  }
+
+  isEntirePageSelected() {
+    return this.getPageData().every((u) => u.selected);
+  }
+  isAtLeastOneSelected() {
+    return this.getPageData().findIndex((u) => u.selected === true) !== -1;
+  }
+
+  getPageData() {
+    return this.dataSource._pageData(this.dataSource._orderData(this.dataSource.filteredData));
+  }
+
   selectHeaderChange($event: MatCheckboxChange) {
-    this._elements.forEach(s => s.selected = $event.checked);
-    return;
+    this.getPageData().forEach(u => u.selected = $event.checked);
+    // this._elements.forEach(s => s.selected = $event.checked);
   }
 
   refreshEnrolledStudents(){
@@ -93,4 +116,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit {
     this.update();
   }
 
+  selectAll() {
+    this.dataSource.data.forEach(u => u.selected = true);
+  }
 }

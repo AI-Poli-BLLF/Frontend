@@ -1,7 +1,11 @@
 <!--todo: fare tabella stile gmail-->
+<div>
+  <button *ngIf="isEntirePageSelected() && elementNotSelected()" (click)="selectAll()" mat-raised-button color="accent">Seleziona tutti</button>
+  <p *ngIf="notVisibleSelected()">Ci sono {{numberSelected()}} elementi selezionati.</p>
+</div>
 <table mat-table matSort [dataSource]="dataSource">
   <ng-container *ngIf="students" matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef><mat-checkbox [checked]=isChecked() [indeterminate]=isIntermediate() (change)="selectHeaderChange($event)" ></mat-checkbox></th>
+    <th mat-header-cell *matHeaderCellDef><mat-checkbox [checked]="isEntirePageSelected()" [indeterminate]="isAtLeastOneSelected() && !isEntirePageSelected()" (change)="selectHeaderChange($event)" ></mat-checkbox></th>
     <td mat-cell *matCellDef="let element"><mat-checkbox  (change)="selectChange($event, element)" [checked]="element.selected"></mat-checkbox></td>
   </ng-container>
   <ng-container matColumnDef="id">
